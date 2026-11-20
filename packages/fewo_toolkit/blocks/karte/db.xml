@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.concrete5.org/doctrine-xml/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 https://concretecms.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+    <table name="btFewoKarte">
+        <field name="bID" type="integer">
+            <unsigned/>
+            <key/>
+        </field>
+        <field name="markers" type="text">
+            <notnull/>
+        </field>
+        <field name="zoom" type="smallint">
+            <unsigned/>
+            <default value="0"/>
+            <notnull/>
+        </field>
+        <field name="height" type="smallint">
+            <unsigned/>
+            <default value="400"/>
+            <notnull/>
+        </field>
+        <field name="requireConsent" type="boolean">
+            <default value="1"/>
+            <notnull/>
+        </field>
+        <field name="tileUrl" type="string" size="255">
+            <default value="https://tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+            <notnull/>
+        </field>
+        <field name="attribution" type="string" size="255">
+            <default value="&amp;copy; &lt;a href=&quot;https://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt;"/>
+            <notnull/>
+        </field>
+    </table>
+</schema>

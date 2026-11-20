@@ -1,0 +1,33 @@
+# Lokale Entwicklungs- und Testumgebung für das Fewo Toolkit (Concrete CMS 9.5.7)
+#   docker compose up -d --build
+#   ./setup.sh            (einmalig: Concrete installieren + Paket installieren)
+#   http://localhost:8095  (admin / siehe setup.sh)
+#   http://localhost:8025  Mailpit: alle von Concrete versendeten E-Mails
+services:
+  db:
+    image: mariadb:11.4
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: concrete
+      MARIADB_USER: concrete
+      MARIADB_PASSWORD: concrete
+    volumes:
+      - db:/var/lib/mysql
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports:
+      - "8025:8025"
+  web:
+    build: .
+    ports:
+      - "8095:80"
+    depends_on:
+      - db
+      - mailpit
+    volumes:
+      - concrete:/var/www/concrete
+      - ../packages/fewo_toolkit:/var/www/concrete/public/packages/fewo_toolkit
+      - ./seed.php:/seed/seed.php:ro
+volumes:
+  db:
+  concrete:

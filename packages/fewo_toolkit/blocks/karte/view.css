@@ -1,0 +1,50 @@
+/* Fewo Toolkit – Karte */
+.fewo-map {
+    position: relative;
+    height: var(--fewo-map-height, 400px);
+    margin-block: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #e9ecef;
+    isolation: isolate;
+}
+
+.fewo-map__canvas {
+    position: absolute;
+    inset: 0;
+}
+
+.fewo-map__consent,
+.fewo-map__placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    padding: 1.5rem;
+    text-align: center;
+    background:
+        repeating-linear-gradient(45deg, rgba(0, 0, 0, .03) 0 10px, transparent 10px 20px),
+        #eef1f4;
+    color: #333;
+}
+
+.fewo-map__consent p,
+.fewo-map__placeholder p {
+    margin: 0;
+    max-width: 32rem;
+}
+
+.fewo-map__remember {
+    font-size: .875rem;
+    display: flex;
+    gap: .375rem;
+    align-items: center;
+}
+
+.fewo-map__fallback {
+    font-size: .875rem;
+}

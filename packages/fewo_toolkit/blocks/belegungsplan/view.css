@@ -1,0 +1,182 @@
+/* Fewo Toolkit – Belegungsplan
+ * Farben lassen sich im Theme überschreiben, z. B.
+ * .fewo-calendar { --fewo-booked: #b42318; }
+ */
+.fewo-calendar {
+    --fewo-free: #dff3e4;
+    --fewo-free-text: #14532d;
+    --fewo-booked: #e5484d;
+    --fewo-booked-text: #fff;
+    --fewo-request: #f5b83d;
+    --fewo-request-text: #3d2a00;
+    --fewo-past: #f1f1f1;
+    --fewo-past-text: #9a9a9a;
+    --fewo-border: rgba(0, 0, 0, .08);
+    --fewo-radius: 6px;
+    --fewo-month-min: 15rem;
+    margin-block: 1rem;
+}
+
+.fewo-calendar__title {
+    margin-block: 0 1rem;
+}
+
+.fewo-calendar__months {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--fewo-month-min), 1fr));
+    gap: 1.5rem;
+}
+
+.fewo-calendar__month-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 .5rem;
+    text-align: center;
+}
+
+.fewo-calendar__weekdays,
+.fewo-calendar__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+.fewo-calendar__weekdays {
+    font-size: .75rem;
+    opacity: .7;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.fewo-calendar__days {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.fewo-day {
+    --am: var(--fewo-free);
+    --pm: var(--fewo-free);
+    --text: var(--fewo-free-text);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8125rem;
+    font-variant-numeric: tabular-nums;
+    border-radius: var(--fewo-radius);
+    border: 1px solid var(--fewo-border);
+    color: var(--text);
+    background: linear-gradient(to bottom right, var(--am) 0 50%, var(--pm) 50% 100%);
+}
+
+.fewo-day--am-booked { --am: var(--fewo-booked); }
+.fewo-day--pm-booked { --pm: var(--fewo-booked); }
+.fewo-day--am-request { --am: var(--fewo-request); }
+.fewo-day--pm-request { --pm: var(--fewo-request); }
+
+.fewo-day--am-booked.fewo-day--pm-booked { --text: var(--fewo-booked-text); }
+.fewo-day--am-request.fewo-day--pm-request { --text: var(--fewo-request-text); }
+
+.fewo-day__number {
+    /* Lesbarkeit auf halb belegten Tagen */
+    text-shadow: 0 0 3px rgba(255, 255, 255, .6);
+}
+
+.fewo-day--am-booked.fewo-day--pm-booked .fewo-day__number {
+    text-shadow: none;
+}
+
+.fewo-day--past {
+    --am: var(--fewo-past);
+    --pm: var(--fewo-past);
+    --text: var(--fewo-past-text);
+}
+
+.fewo-day--past .fewo-day__number {
+    text-shadow: none;
+}
+
+.fewo-day--today {
+    outline: 2px solid currentColor;
+    outline-offset: 1px;
+    font-weight: 700;
+}
+
+.fewo-day--empty {
+    background: none;
+    border: 0;
+}
+
+.fewo-calendar__more {
+    margin-top: 1.5rem;
+}
+
+.fewo-calendar__more > .fewo-calendar__months {
+    margin-top: 1.5rem;
+}
+
+.fewo-calendar__more-toggle {
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 600;
+}
+
+.fewo-calendar__more-hide,
+.fewo-calendar__more[open] .fewo-calendar__more-show {
+    display: none;
+}
+
+.fewo-calendar__more[open] .fewo-calendar__more-hide {
+    display: inline;
+}
+
+.fewo-calendar__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.5rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    font-size: .875rem;
+}
+
+.fewo-calendar__legend li {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.fewo-calendar__legend .fewo-day {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.fewo-notice {
+    padding: .75rem 1rem;
+    border-radius: var(--fewo-radius, 6px);
+    margin-bottom: 1rem;
+    font-size: .875rem;
+}
+
+.fewo-notice--error {
+    background: #fdecec;
+    color: #8a1c1c;
+}
+
+.fewo-notice--warning {
+    background: #fff6e0;
+    color: #6b4b00;
+}
+
+.fewo-visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}

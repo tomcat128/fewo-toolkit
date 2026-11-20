@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+    <table name="btPannellum">
+        <field name="bID" type="I">
+            <key />
+            <unsigned />
+        </field>
+        <field name="images" type="XL">
+            <default value="" />
+        </field>
+        <field name="images_mobile" type="XL">
+            <default value="" />
+        </field>
+        <field name="viewer_code" type="XL">
+            <default value="" />
+        </field>
+        <field name="default_css_class" type="C" size="64">
+            <default value="panorama" />
+        </field>
+        <field name="aspect_ratio" type="C" size="16">
+            <default value="Auto:3:2" />
+        </field>
+    </table>
+</schema>
+

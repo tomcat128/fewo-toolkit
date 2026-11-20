@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.concrete5.org/doctrine-xml/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 https://concretecms.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+    <table name="btFewoBildergalerie">
+        <field name="bID" type="integer">
+            <unsigned/>
+            <key/>
+        </field>
+        <field name="source" type="string" size="16">
+            <default value="folder"/>
+            <notnull/>
+        </field>
+        <field name="folderID" type="integer">
+            <unsigned/>
+            <default value="0"/>
+            <notnull/>
+        </field>
+        <field name="fileSetID" type="integer">
+            <unsigned/>
+            <default value="0"/>
+            <notnull/>
+        </field>
+        <field name="sortOrder" type="string" size="16">
+            <default value="display"/>
+            <notnull/>
+        </field>
+        <field name="columnCount" type="smallint">
+            <unsigned/>
+            <default value="3"/>
+            <notnull/>
+        </field>
+        <field name="aspectRatio" type="string" size="8">
+            <default value="4:3"/>
+            <notnull/>
+        </field>
+        <field name="showCaptions" type="boolean">
+            <default value="1"/>
+            <notnull/>
+        </field>
+    </table>
+</schema>

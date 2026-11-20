@@ -1,0 +1,154 @@
+/* Fewo Toolkit – Bildergalerie */
+.fewo-gallery {
+    --fewo-gap: .5rem;
+    --fewo-radius: 6px;
+    margin-block: 1rem;
+}
+
+.fewo-gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--fewo-columns, 3), minmax(0, 1fr));
+    gap: var(--fewo-gap);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (max-width: 40rem) {
+    .fewo-gallery__grid {
+        grid-template-columns: repeat(min(var(--fewo-columns, 3), 2), minmax(0, 1fr));
+    }
+}
+
+.fewo-gallery__link {
+    display: block;
+    overflow: hidden;
+    border-radius: var(--fewo-radius);
+    aspect-ratio: var(--fewo-ratio, 4 / 3);
+    background: rgba(0, 0, 0, .05);
+}
+
+.fewo-gallery__link img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .3s ease;
+}
+
+.fewo-gallery__link:hover img,
+.fewo-gallery__link:focus-visible img {
+    transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fewo-gallery__link img {
+        transition: none;
+    }
+}
+
+/* Lightbox */
+.fewo-lightbox-open {
+    overflow: hidden;
+}
+
+.fewo-lightbox {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, .92);
+    color: #fff;
+}
+
+.fewo-lightbox::backdrop {
+    background: rgba(0, 0, 0, .6);
+}
+
+.fewo-lightbox__figure {
+    height: 100%;
+    margin: 0;
+    padding: 3.5rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .75rem;
+    box-sizing: border-box;
+}
+
+.fewo-lightbox__image {
+    max-width: 100%;
+    max-height: calc(100% - 2rem);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.fewo-lightbox__caption {
+    text-align: center;
+    max-width: 60rem;
+}
+
+.fewo-lightbox__counter {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    margin: 0;
+    font-size: .875rem;
+    opacity: .8;
+}
+
+.fewo-lightbox__button {
+    position: absolute;
+    border: 0;
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.fewo-lightbox__button:hover,
+.fewo-lightbox__button:focus-visible {
+    background: rgba(255, 255, 255, .25);
+}
+
+.fewo-lightbox__close {
+    top: .75rem;
+    right: .75rem;
+}
+
+.fewo-lightbox__prev,
+.fewo-lightbox__next {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.fewo-lightbox__prev {
+    left: .75rem;
+}
+
+.fewo-lightbox__next {
+    right: .75rem;
+}
+
+@media (max-width: 40rem) {
+    .fewo-lightbox__figure {
+        padding: 3.5rem .5rem 4.5rem;
+    }
+
+    .fewo-lightbox__prev,
+    .fewo-lightbox__next {
+        top: auto;
+        bottom: .75rem;
+        transform: none;
+    }
+}

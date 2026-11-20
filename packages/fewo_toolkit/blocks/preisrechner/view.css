@@ -1,0 +1,142 @@
+/* Fewo Toolkit – Preisrechner */
+.fewo-quote {
+    --fewo-border: rgba(0, 0, 0, .12);
+    --fewo-muted: rgba(0, 0, 0, .6);
+    --fewo-error: #b42318;
+    --fewo-radius: 6px;
+    margin-block: 1rem;
+}
+
+.fewo-quote__title {
+    margin-block: 0 1rem;
+}
+
+.fewo-quote__form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.fewo-quote__field {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.fewo-quote__field label {
+    font-weight: 600;
+    font-size: .875rem;
+}
+
+.fewo-quote__field input,
+.fewo-quote__field select {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+    background: #fff;
+    color: inherit;
+}
+
+.fewo-quote__submit {
+    width: 100%;
+    min-height: 2.75rem;
+}
+
+.fewo-quote.is-loading .fewo-quote__result {
+    opacity: .5;
+    transition: opacity .2s;
+}
+
+.fewo-quote__result:empty {
+    display: none;
+}
+
+.fewo-quote__result {
+    margin-top: 1.5rem;
+}
+
+.fewo-quote__error {
+    color: var(--fewo-error);
+    font-weight: 600;
+}
+
+.fewo-quote__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .5rem 1.5rem;
+}
+
+.fewo-quote__total {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: .75rem;
+}
+
+.fewo-quote__total-amount {
+    font-size: 1.75rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.fewo-quote__meta {
+    margin: 0;
+    color: var(--fewo-muted);
+}
+
+.fewo-quote__details {
+    margin-top: 1rem;
+}
+
+.fewo-quote__details summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.fewo-quote__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .75rem;
+    font-size: .9375rem;
+}
+
+.fewo-quote__table th,
+.fewo-quote__table td {
+    padding: .5rem .25rem;
+    border-bottom: 1px solid var(--fewo-border);
+    text-align: left;
+    vertical-align: top;
+    font-weight: normal;
+}
+
+.fewo-quote__table th small {
+    display: block;
+    color: var(--fewo-muted);
+}
+
+.fewo-quote__table tfoot tr:first-child th,
+.fewo-quote__table tfoot tr:first-child td {
+    font-weight: 700;
+}
+
+.fewo-quote__secondary th,
+.fewo-quote__secondary td {
+    color: var(--fewo-muted);
+}
+
+.fewo-quote__amount {
+    text-align: right !important;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.fewo-quote__included,
+.fewo-quote__disclaimer {
+    font-size: .8125rem;
+    color: var(--fewo-muted);
+}

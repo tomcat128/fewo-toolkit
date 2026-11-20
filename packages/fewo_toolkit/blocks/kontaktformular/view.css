@@ -1,0 +1,150 @@
+/* Fewo Toolkit – Anfrageformular */
+.fewo-form {
+    --fewo-border: rgba(0, 0, 0, .2);
+    --fewo-focus: #2563eb;
+    --fewo-error: #b42318;
+    --fewo-success-bg: #e8f6ec;
+    --fewo-success-text: #14532d;
+    --fewo-radius: 6px;
+    margin-block: 1rem;
+}
+
+.fewo-form__group {
+    border: 0;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    min-width: 0;
+}
+
+.fewo-form__group legend {
+    font-weight: 700;
+    font-size: 1.125rem;
+    margin-bottom: .75rem;
+    padding: 0;
+}
+
+.fewo-form__row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0 1rem;
+}
+
+.fewo-form__row--3 {
+    grid-template-columns: minmax(7rem, .6fr) 1fr 1fr;
+}
+
+.fewo-form__row--zip {
+    grid-template-columns: minmax(6rem, .5fr) 1fr 1fr;
+}
+
+@media (max-width: 36rem) {
+    .fewo-form__row--3,
+    .fewo-form__row--zip {
+        grid-template-columns: 1fr;
+    }
+}
+
+.fewo-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    margin-bottom: 1rem;
+}
+
+.fewo-form__field > label {
+    font-weight: 600;
+    font-size: .875rem;
+}
+
+.fewo-form input[type="text"],
+.fewo-form input[type="email"],
+.fewo-form input[type="tel"],
+.fewo-form input[type="date"],
+.fewo-form select,
+.fewo-form textarea {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    color: inherit;
+    background: #fff;
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+}
+
+.fewo-form textarea {
+    min-height: 8rem;
+    resize: vertical;
+}
+
+.fewo-form :is(input, select, textarea):focus-visible {
+    outline: 2px solid var(--fewo-focus);
+    outline-offset: 1px;
+}
+
+.fewo-form [aria-invalid="true"] {
+    border-color: var(--fewo-error);
+}
+
+.fewo-form__error {
+    color: var(--fewo-error);
+    font-size: .8125rem;
+    margin: 0;
+}
+
+.fewo-form__required {
+    color: var(--fewo-error);
+}
+
+.fewo-form__consent label {
+    display: flex;
+    gap: .5rem;
+    align-items: flex-start;
+    font-weight: normal;
+}
+
+.fewo-form__consent input {
+    margin-top: .3rem;
+    flex: none;
+}
+
+.fewo-form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem 1.5rem;
+}
+
+.fewo-form__hint {
+    margin: 0;
+    font-size: .8125rem;
+    opacity: .75;
+}
+
+.fewo-form__alert,
+.fewo-form__success {
+    padding: 1rem 1.25rem;
+    border-radius: var(--fewo-radius);
+    margin-bottom: 1.5rem;
+}
+
+.fewo-form__alert {
+    background: #fdecec;
+    color: var(--fewo-error);
+    font-weight: 600;
+}
+
+.fewo-form__success {
+    background: var(--fewo-success-bg);
+    color: var(--fewo-success-text);
+    font-size: 1.125rem;
+}
+
+/* Honeypot: für Menschen unsichtbar */
+.fewo-form__hp {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
