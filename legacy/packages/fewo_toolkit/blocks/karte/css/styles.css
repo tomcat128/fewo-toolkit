@@ -1,0 +1,30 @@
+.karte {
+    
+}
+
+.googlemap {
+    border: 1px solid BLACK; padding: 1px;
+}
+
+.canvasmap {
+    width: 100%; height: 500px; position: relative; background-color: rgb(229, 227, 223); overflow: hidden;
+}
+
+.map-filter {
+    background: #f9f9f9 none repeat scroll 0 0;
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 2px;
+}
+.map-filter > strong {
+    font-family: Verdana;
+    font-size: 13px;
+    margin-left: 3px;
+}
+.map-filter table {
+    font-family: Verdana;
+    font-size: 13px;
+}
+.karte label {
+    cursor: pointer;
+}

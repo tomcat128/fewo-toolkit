@@ -1,0 +1,244 @@
+html, body {
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	font-family: Arial;
+}
+a {
+	color: #000000;
+}
+a:hover {
+	text-decoration: none;
+}
+img {
+	border: none;
+}
+img.screen-background {
+	/* Set rules to fill background */
+	min-height: 100%;
+	min-width: 1024px;
+	
+	/* Set up proportionate scaling */
+	width: 100%;
+	height: auto;
+	
+	/* Set up positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+
+	z-index: -1;
+}
+@media screen and (max-width: 1024px) {
+	img.screen-background {
+		left: 50%;
+		margin-left: -512px; }
+}
+.relative {
+	position: relative;
+}
+/* ALLGEMEIN FUER WEBSITE */
+.website .top {
+	/*background-color: #FFFFFF;*/ /* #FFFFFF #FFDA63 */
+}
+.content hr {
+	background-color: #000000; width: 100%; height: 0px;
+	border: none;
+	border-top: 1px solid gray;
+}
+.website .bottom {
+	/*background-color: #FFA500;*/ /* #FFD200 #FFDA63 */
+}
+/* N A V I G A T I O N */
+.navigation ul {
+	font-family: Arial;
+	font-size: 15px;
+	margin:  0px;
+	padding: 0px;
+	list-style: none;
+	/*
+	background-color: #FFD200;
+	*/
+}
+.navigation ul li {
+	border-bottom: 1px dashed black;
+	text-align: left;
+}
+.navigation ul li:first-child {
+	border-top: 1px dashed black;
+}
+.navigation ul li a {
+	text-decoration: none;
+	display: block;
+	color: #000;
+   	text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.75);
+	padding: 7px 0px;
+	padding-left: 10px;
+
+	transition: all 0.15s ease-in-out 0s;
+}
+
+.navigation ul li a:hover {
+	background-color: #FFF;
+	padding-left: 20px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.navigation a.nav-selected {
+	background-color: #FFF;
+	padding-left: 10px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.35);
+}
+
+.navigation ul li a.selected,
+.navigation ul li a.nav-selected:after {
+	/*content:" »";*/
+	content:"\0000a0\0000bb"; /* &nbsp;&raquo; als "escaped unicode" */
+}
+
+.navigation ul li a.selected {
+	
+}
+.navigation ul li a.selected {
+}
+.navigation ul li a.nav-selected:hover {
+	padding-left: 10px; /* Animation unterdrücken, wenn schon aktiv */
+}
+.navigation li.nav-path-selected > ul {
+	display: block;
+}
+.navigation li > ul {
+	display: none;
+}
+.navigation h3 {
+	font-size: 15px;
+    font-family: Arial;
+    font-weight: bold;
+    padding: 10px;
+    margin:  0px;
+    color: #000000;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.75);
+}
+
+.navigation > ul > li > ul > li {
+	border-color: #999999;
+}
+
+.navigation > ul > li > ul > li:last-child {
+	border-bottom: none;
+}
+
+.navigation .br {
+	height: 20px;
+}
+
+.back {
+	background-color: white;
+	width: 100%;
+	padding: 20px 0px;
+	text-align: center;
+}
+
+.back a {
+	background-color: black;
+	color: white;
+	padding: 5px;
+	border-radius: 5px;
+	font-weight: normal;
+	/* border: 1px solid black; */
+	transition: all 0.15s ease-in-out 0s;
+}
+
+.back a:hover {
+	color: black;
+	background-color: #C0C0C0;
+}
+.body .content {
+	float: left;
+	background-color: white;
+	/*
+	width: 710px;
+	padding: 0px 20px;
+	*/
+	width: 728px; /* 730px */
+	padding: 10px;
+}
+/* C O N T E N T */
+.content {
+	font-family: Arial;
+}
+.content h1 {
+	font-family: 'Handlee',cursive;
+	font-size: 28px;
+	margin: 0px;
+}
+.content h2 {
+	font-family: 'Handlee',cursive;
+	font-size: 24px;
+	margin: 0px;
+}
+.content h3 {
+	font-family: 'Handlee',cursive;
+	font-size: 22px;
+	margin: 0px;
+}
+.content h4 {
+	margin: 0px;
+	font-size: 16px;
+}
+.content p {
+	font-size: 16px;
+	text-align: justify;
+	margin: 0 0 20px 0;
+	line-height: 20px;
+}
+
+/* Bilder */
+.content img {
+	margin: 5px;
+	border: 1px solid #d0d0d0;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.85);
+}
+div.imprint h1 {
+	border-bottom: 1px solid #b0b0b0; padding-bottom: 5px; margin-bottom: 10px;
+}
+#urlaubsideen img {
+    width: 50px;
+    height: 50px;
+}
+div.anreise_karte {
+	border: 1px solid gray; padding: 1px;
+	height: 500px;
+}
+.googlemap img {
+    box-shadow: none;
+}
+.clearfix {
+	clear: both;
+}
+/*
+ * Cookie Informations
+ */
+.cookie-hint {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    color: black;
+    padding: 10px 0;
+}
+.cookie-hint p {
+    
+}
+.cookie-hint p .more {
+    color: black;
+    padding-right: 20px;
+}
+.cookie-hint p .disable {
+    background: black;
+    color: white;
+    padding: 10px;
+}

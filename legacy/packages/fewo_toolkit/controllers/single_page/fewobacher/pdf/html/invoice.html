@@ -1,0 +1,25 @@
+<h3>Rechnungsempfänger:</h3>
+{lblInvoiceName}<br/>
+{lblInvoiceStreet}<br/>
+{lblInvoiceCity}<br />
+<hr />
+<h1><u>Rechnung</u></h1>
+<p><strong>Ferienapartment {lblPricelistName} &ndash; {lblPricelistAdress}</strong></p>
+<p align="justify">Rechnungsdatum: {lblInvoiceDate}</p>
+<p align="justify">Ihr Aufenthalt vom <strong>{lblDateStart}</strong> bis zum <strong>{lblDateEnd}</strong> für <strong>{lblPersons}</strong>:</p>
+<table border="1" cellpadding="5" style="font-size: 15px;">
+    <tr>
+        <td width="14%"></td>
+        <td width="33%" align="center"><strong>Datum</strong></td>
+        <td width="30%" align="center"><strong>Saison</strong></td>
+        <td width="23%" align="center"><strong>Preis</strong></td>
+    </tr>
+    {tblRows}
+    <tr>
+        <td colspan="3"><strong style="font-size: 1.5em;">Rechnungsbetrag</strong></td>
+        <td align="center"><strong style="font-size: 1.5em;">{lblPrice}</strong></td>
+    </tr>
+</table>
+<br />
+<h4>Der Rechnungsbetrag ist bereits beglichen. Wir bedanken uns für Ihren Aufenthalt!</h4>
+<em>Diese Rechnung ist maschinell erstellt und daher ohne Unterschrift gültig.</em>

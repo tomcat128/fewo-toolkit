@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btFwbPreisliste">
+        <field name="bID" type="I">
+            <key />
+            <unsigned />
+        </field>
+        <field name="liste" type="I">
+            <unsigned />
+            <default value="0" />
+        </field>
+        <field name="top_br" type="C" size="1">
+            <default value="N" />
+        </field>
+	</table>
+    <table name="btFwbPreislisteConfig">
+        <field name="listID" type="I">
+            <key />
+            <unsigned />
+            <autoincrement />
+        </field>
+        <field name="name" type="C" size="128">
+            <default value="" />
+        </field>
+        <field name="gebuehr_endreinigung" type="F">
+            <default value="0.00" />
+        </field>
+        <field name="mindestaufenthaltsdauer" type="I1">
+            <default value="0" />
+        </field>
+        <field name="anzahl_gaeste" type="I1">
+            <default value="0" />
+        </field>
+        <field name="anzahlung" type="I1">
+            <default value="0" />
+        </field>
+        <field name="settings" type="C" size="1024">
+            <default value="" />
+        </field>
+        <field name="inclusive" type="C" size="255">
+            <default value="" />
+        </field>
+    </table>
+    <table name="btFwbPreislisteMatrix">
+        <field name="listID" type="I">
+            <unsigned />
+            <key />
+        </field>
+        <field name="bezeichnung" type="C" size="128">
+            <default value="" />
+        </field>
+        <field name="datum_von" type="D">
+            <default value="0000-00-00" />
+            <key />
+        </field>
+        <field name="datum_bis" type="D">
+            <default value="0000-00-00" />
+            <key />
+        </field>
+        <field name="preis_pro_nacht" type="C" size="128">
+            <default value="" />
+        </field>
+    </table>
+</schema>
+

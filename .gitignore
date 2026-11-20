@@ -1,0 +1,10 @@
+# Composer-Abhängigkeiten (via `composer install` wiederherstellbar)
+vendor/
+
+# Editor-/OS-Artefakte
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/

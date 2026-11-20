@@ -1,0 +1,50 @@
+#psublist {
+    font-size: 15px;
+}
+#psublist > div {
+    clear: left; float: left;
+    margin-top: 3px;
+}
+#psublist .item-row {
+    clear: left;
+    float: left;
+}
+#psublist .item-row > div {
+    float: left;
+}
+#psublist .item-row div.night {
+    width: 80px;
+}
+#psublist .item-row div.date {
+    width: 200px;
+}
+#psublist .item-row div.persons {
+    width: 90px;
+}
+#psublist .item-row div.price {
+    width: 90px;
+    text-align: right;
+}
+#psublist .item-row div.discount {
+    width: 80px;
+    text-align: right;
+    color: green;
+}
+#psublist .item-row div.season {
+    width: 150px;
+}
+#psublist .item-row div.extra {
+    width: 520px;
+}
+#psublist .result-row {
+    width: 610px;
+    clear: left;
+    float: left;
+    border-top: 4px double black;
+}
+#psublist .result-row div.price {
+    width: 100%;
+    text-align: right;
+    font-weight: bold;
+    font-size: 16px;
+}

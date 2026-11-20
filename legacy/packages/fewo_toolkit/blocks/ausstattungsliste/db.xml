@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+    <!-- DB-Table Blocktype FeWoBacher: List of available items at holiday flat -->
+	<table name="btFwbAusstattung">
+        <field name="bID" type="I">
+            <key />
+            <unsigned />
+        </field>
+        <field name="liste" type="C" size="128">
+            <default value="" />
+        </field>
+        <field name="top_br" type="C" size="1">
+            <default value="N" />
+        </field>
+	</table>
+    <table name="btFwbAusstattungsliste">
+        <field name="aID" type="I">
+            <key />
+            <unsigned />
+            <autoincrement />
+        </field>
+        <field name="bID" type="I">
+            <unsigned />
+        </field>
+        <field name="ausstattung" type="C" size="128">
+            <default value="" />
+        </field>
+        <field name="sortierung" type="I">
+            <unsigned />
+            <default value="0" />
+        </field>
+    </table>
+    <table name="btFwbAusstattungslisteKommentare">
+        <field name="cID" type="I">
+            <key />
+            <unsigned />
+            <autoincrement />
+        </field>
+        <field name="aID" type="I">
+            <unsigned />
+        </field>
+        <field name="bID" type="I">
+            <unsigned />
+        </field>
+        <field name="kommentar" type="C" size="255">
+            <default value="" />
+        </field>
+    </table>
+</schema>

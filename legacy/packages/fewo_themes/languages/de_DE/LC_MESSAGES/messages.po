@@ -1,0 +1,77 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <lydia.moessner@seitenbau.com>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Seitenbau Blocktypesets\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-06 13:54+0100\n"
+"PO-Revision-Date: 2016-11-06 14:23+0100\n"
+"Last-Translator: Tomasz Fehrenbacher <admin@famifeh.de>\n"
+"Language-Team: Fewobacher <admin@famifeh.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../../themes\n"
+"X-Poedit-KeywordsList: t\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: fewo_hegne/elements/links.php:2
+msgid "Website.FerienInsel"
+msgstr "Ferien auf der Insel"
+
+#: fewo_hegne/elements/links.php:4
+msgid "Website.Linktext.FewoSeeherz"
+msgstr "Ferienwohnung Reichenau"
+
+#: fewo_hegne/elements/mobile-menu.php:49
+msgid "Website.ChooseLanguage"
+msgstr "Sprache auswählen"
+
+#: fewo_hegne/elements/mobile-menu.php:53
+msgid "Website.Language.Deutsch"
+msgstr "Deutsch"
+
+#: fewo_hegne/elements/mobile-menu.php:54
+msgid "Website.Language.English"
+msgstr "English"
+
+#: fewo_hegne/elements/mobile-menu.php:55
+msgid "Website.Language.Francais"
+msgstr "Français"
+
+#: fewo_hegne/elements/mobile-menu.php:94
+msgid "Website.Recommendations"
+msgstr "Link-Empfehlungen"
+
+#: fewo_hegne/elements/website.php:63 fewo_reichenau/elements/website.php:64
+msgid "Webseite.Mobile.Ferienwohnung.Titel"
+msgstr "F E R I E N A P A R T M E N T "
+
+#: fewo_hegne/elements/website.php:103
+msgid "Website.FewoHegne"
+msgstr "Ferienwohnung Hegne"
+
+#: fewo_hegne/elements/website.php:145 fewo_reichenau/elements/website.php:144
+msgid "Website.NachOben"
+msgstr "Zurück nach oben"
+
+#: fewo_reichenau/elements/links.php:2
+msgid "Website.FerienKloster"
+msgstr "Ferien am Kloster Hegne"
+
+#: fewo_reichenau/elements/links.php:4
+msgid "Website.Linktext.FewoSonnenseele"
+msgstr "Ferienapartment Sonnenseele"
+
+#: fewo_reichenau/elements/website.php:102
+msgid "Website.FewoReichenau"
+msgstr "Ferienwohnung Reichenau"
+
+#~ msgid "Link.Recommendations"
+#~ msgstr "Link-Empfehlungen"

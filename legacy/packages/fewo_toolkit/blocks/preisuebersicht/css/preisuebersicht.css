@@ -1,0 +1,66 @@
+.preisliste {
+	font-size: 15px;
+	clear: left;
+	float: left;
+	width: 708px;
+	padding: 0px 10px;
+	border: 1px solid gray;
+	padding-bottom: 10px;
+	margin-top: 10px;
+}
+
+.preisliste .period,
+.preisliste .annotation {
+	margin-top: 10px;
+	padding: 0px;
+	float: left;
+	width: 706px;
+	background: #f0f0f0;
+	box-shadow: 1px 2px 3px rgba(0,0,0,0.7);
+	border-top: 1px solid #e0e0e0;
+	border-left: 1px solid #e0e0e0;
+}
+
+.preisliste .period .title,
+.preisliste .annotation .title {
+	padding: 3px;
+}
+
+.preisliste .period .date {
+	/*
+	font-size: 11px;
+	*/
+	padding: 3px;
+	clear: left;
+	float: left;
+	width: 190px;
+}
+
+.preisliste .period .row {
+	padding: 3px;
+	float: left;
+}
+
+.preisliste .period .row .persons {
+	clear: left;
+	float: left;
+}
+
+.preisliste .period .row .price {
+	margin-left: 5px;
+	float: left;
+	width: 70px;
+	font-weight: bold;
+}
+
+.preisliste .period .row:last-child .price {
+	width: 40px;
+}
+
+ul.more_infos {
+	margin: 0px; padding: 0px 0px 0px 20px; font-size: 14px;
+}
+
+ul.more_infos ul {
+	font-weight: normal; list-style: none; margin: 0px; padding: 0px;
+}

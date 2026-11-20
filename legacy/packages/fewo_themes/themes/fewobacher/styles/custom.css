@@ -1,0 +1,60 @@
+/* Custom styles for each fewo */
+
+/* Navigation */
+#seeherzchen .header ul li a {
+    /*color: black;*/
+}
+/* Linkfarbe Header */
+#sonnenseele .header .navigation li a, 
+#sonnenseele .header ul.home li a {
+    color: black;
+}
+#seeherzchen .header .navigation li a, 
+#seeherzchen .header ul.home li a {
+    color: rgba(143,110,31,1.0);
+}
+/* Hintergrundfarbe Header */
+#sonnenseele .header .content {
+    background-color: #ffd200;
+}
+#seeherz .header .content {
+    background-color: #6d9dc3;
+}
+#seeherzchen .header .content {
+    background-color: #f9e4b7;
+}
+#seeschatz .header .content {
+    background-color: #396d41;
+}
+/* Hintergründe */
+#sonnenseele .header .image {
+    background-image: url(/packages/fewo_themes/themes/fewobacher/images/backgrounds/konstanz_freibad_horn.jpg);
+}
+#seeherz .header .image {
+    background-image: url(/packages/fewo_themes/themes/fewobacher/images/backgrounds/seeherz_bg_3.jpg);
+}
+#seeherzchen .header .image {
+    background-image: url(/packages/fewo_themes/themes/fewobacher/images/backgrounds/reichenau-aerial-view-bright.jpg);
+}
+#seeschatz .header .image {
+    background-image: url(/packages/fewo_themes/themes/fewobacher/images/backgrounds/reichenau-aerial-view-bright.jpg);
+}
+
+/* Mobiles Menu */
+#sonnenseele .header .m-nav ul.nav li a,
+#sonnenseele .header .m-nav ul.nav li span,
+#seeherzchen .header .m-nav ul.nav li a,
+#seeherzchen .header .m-nav ul.nav li span,
+#seeschatz .header .m-nav ul.nav li a,
+#seeschatz .header .m-nav ul.nav li span {
+    color: white;
+}
+#sonnenseele .header ul.nav li a:hover,
+#seeherz .header ul.nav li a:hover,
+#seeherzchen .header ul.nav li a:hover,
+#seeschatz .header ul.nav li a:hover {
+    color: black;
+}
+#seeschatz .preisliste .period .date {
+  width: 25%;
+}

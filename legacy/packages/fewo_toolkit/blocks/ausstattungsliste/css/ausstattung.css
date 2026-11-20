@@ -1,0 +1,51 @@
+.ausstattungsliste {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+    overflow: hidden;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.45);
+}
+.ausstattungsliste div.toogle {
+    clear: left;
+    margin: 5px 0px 5px 0px; padding: 0px 0px 5px 0px;
+    border-bottom: 1px solid black;
+    overflow: hidden;
+    font-size: 14px; font-weight: bold; font-family: Arial;
+}
+.ausstattungsliste div.toogle span {
+    float: left;    
+}
+.ausstattungsliste .toogle > a {
+    float: left;
+}
+.ausstattungsliste .toogle > a:not(:first-child) {
+    
+}
+.ausstattungsliste .toogle a[type="hide"],
+.ausstattungsliste .toogle a.hide-item {
+    display: none;  
+}
+.ausstattungsliste .infos {
+    display: none;
+}
+.ausstattungsliste ul {
+    margin: 0px 0px 5px 0px; padding: 0px 0px 5px 20px;
+    border-bottom: 1px solid black;
+    clear: left;
+    float: left;
+    width: 100%;
+}
+.ausstattungsliste ul li {
+    list-style: square;
+    float: left;
+    width: 50%;
+}
+.ausstattungsliste ul li span.more {
+    font-size: 12px; position: absolute; margin-left: 3px;
+}
+.ausstattungsliste ol {
+    margin: 0px 0px 0px 0px; padding: 0px 0px 0px 20px;
+    font-size: 10px;
+    clear: left;
+    float: left;
+}

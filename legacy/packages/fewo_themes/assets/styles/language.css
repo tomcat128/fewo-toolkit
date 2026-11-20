@@ -1,0 +1,26 @@
+.language-switch {
+	position: relative;
+	width: 200px;
+	padding: 0;
+	margin: 0 10px 10px 10px;
+	clear: left;
+	float: left;
+}
+.language-switch > div {
+	width: 33%;
+	float: left;
+	text-align: center;
+}
+.language-switch > div[lang=de] {
+	text-align: left;
+}
+.language-switch > div[lang=en] {
+	text-align: center;
+}
+.language-switch > div[lang=fr] {
+	text-align: right;
+}
+.language-switch img {
+	width: 36px;
+	height: 36px;
+}

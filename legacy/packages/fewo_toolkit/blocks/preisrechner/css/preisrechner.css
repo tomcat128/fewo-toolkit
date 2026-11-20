@@ -1,0 +1,82 @@
+.preisrechner {
+    border: 1px solid black;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    padding: 8px;
+}
+.preisrechner .left {
+    clear: left;
+    float: left;
+    width: 55%;
+}
+.preisrechner .right {
+    float: right;
+    width: 45%;
+}
+.preisrechner .result {
+}
+.preisrechner .row {
+    clear: left;
+    float: left;
+    margin-top: 5px;
+    width: 100%;
+}
+.preisrechner .row:first-child {
+    margin-top: 0;
+}
+.preisrechner .row .title {
+    clear: left;
+    float: left;
+    width: 90px;
+}
+.preisrechner .row .inputs {
+    float: left;
+}
+.preisrechner .row input,
+.preisrechner .row select {
+   font-size: 15px;
+}
+.preisrechner .row input[type=button] {
+    padding: 2px;
+    width: 150px;
+}
+.preisrechner .result {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+.preisrechner .result .price {
+    font-size: 35px;
+    font-weight: bold;
+    font-family: Verdana;
+}
+.preisrechner .result .nights {
+    font-size: 16px;
+}
+.preisrechner .details {
+    width: 100%;
+}
+.preisrechner .details .pricelist {
+    border-top: 1px dashed #000000;
+    width: 100%;
+    padding-top: 5px;
+    display: none;
+}
+.preisrechner .details .pricelist .error {
+    font-size: 16px;
+    color: red;
+    display: none;
+}
+.preisrechner .details .pricelist .details {
+    display: none;
+}
+.preisrechner .result img.preloader {
+    box-shadow: none;
+    border: none;
+}
+.preisrechner .result .preloader,
+.preisrechner .result span {
+    display: none;
+}

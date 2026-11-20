@@ -1,0 +1,402 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <lydia.moessner@seitenbau.com>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Seitenbau Blocktypesets\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-28 14:41+0200\n"
+"PO-Revision-Date: 2017-06-15 10:18+0200\n"
+"Last-Translator: Tomasz Fehrenbacher <admin@famifeh.de>\n"
+"Language-Team: Fewobacher <admin@famifeh.de>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: ../../../blocks\n"
+"X-Poedit-KeywordsList: t\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: ausstattungsliste/form_setup_html.php:1
+#: belegungsplan_homeaway/form_setup_html.php:1
+#: bildergalerie/form_setup_html.php:1 karte/form_setup_html.php:1
+#: kontaktformular/form_setup_html.php:1 preisrechner/form_setup_html.php:1
+#: preisuebersicht/add.php:1
+msgid "Access Denied."
+msgstr "Zugriff verweigert."
+
+#: ausstattungsliste/view.php:9
+msgid "Ausstattungsliste.Liste"
+msgstr "Liste"
+
+#: ausstattungsliste/view.php:10
+msgid "Ausstattungsliste.Anzeigen"
+msgstr "Anzeigen"
+
+#: ausstattungsliste/view.php:11
+msgid "Ausstattungsliste.Ausblenden"
+msgstr "Ausblenden"
+
+#: belegungsplan_homeaway/view.php:4
+msgid "Belegungsplan.Januar"
+msgstr "Januar"
+
+#: belegungsplan_homeaway/view.php:5
+msgid "Belegungsplan.Februar"
+msgstr "Februar"
+
+#: belegungsplan_homeaway/view.php:6
+msgid "Belegungsplan.Maerz"
+msgstr "März"
+
+#: belegungsplan_homeaway/view.php:7
+msgid "Belegungsplan.April"
+msgstr "April"
+
+#: belegungsplan_homeaway/view.php:8
+msgid "Belegungsplan.Mai"
+msgstr "Mai"
+
+#: belegungsplan_homeaway/view.php:9
+msgid "Belegungsplan.Juni"
+msgstr "Juni"
+
+#: belegungsplan_homeaway/view.php:10
+msgid "Belegungsplan.Juli"
+msgstr "Juli"
+
+#: belegungsplan_homeaway/view.php:11
+msgid "Belegungsplan.August"
+msgstr "August"
+
+#: belegungsplan_homeaway/view.php:12
+msgid "Belegungsplan.September"
+msgstr "September"
+
+#: belegungsplan_homeaway/view.php:13
+msgid "Belegungsplan.Oktober"
+msgstr "Oktober"
+
+#: belegungsplan_homeaway/view.php:14
+msgid "Belegungsplan.November"
+msgstr "November"
+
+#: belegungsplan_homeaway/view.php:15
+msgid "Belegungsplan.Dezember"
+msgstr "Dezember"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.Mo"
+msgstr "Mo"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.Di"
+msgstr "Di"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.Mi"
+msgstr "Mi"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.Do"
+msgstr "Do"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.Fr"
+msgstr "Fr"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.Sa"
+msgstr "Sa"
+
+#: belegungsplan_homeaway/view.php:39
+msgid "Belegungsplan.So"
+msgstr "So"
+
+#: kontaktformular/controller.php:119
+msgid "Kontaktformular.FehlendesFeld"
+msgstr "Das Feld '%s' muss angegeben werden."
+
+#: kontaktformular/controller.php:126
+msgid "Kontaktformular.UngueltigeEmail"
+msgstr "Die angegebene Email scheint fehlerhaft zu sein."
+
+#: kontaktformular/controller.php:132
+msgid "Kontaktformular.AnreiseVergangenheit"
+msgstr "Das Datum der Anreise liegt bereits in der Vergangenheit."
+
+#: kontaktformular/controller.php:139
+msgid "Kontaktformular.AbreiseVorAnreise"
+msgstr "Das Datum der Abreise liegt vor dem Anreisedatum"
+
+#: kontaktformular/controller.php:146
+msgid "Kontaktformular.SicherheitscodeFalsch"
+msgstr "Der eingegebene Sicherheitscode ist nicht korrekt."
+
+#: kontaktformular/controller.php:152
+msgid "Kontaktformular.Honeypot"
+msgstr "Diese Feld darf nicht ausgefüllt werden."
+
+#: kontaktformular/controller.php:158
+msgid "Kontaktformular.Ferienwohnung"
+msgstr "Bitte wählen Sie eine Ferienwohnung aus, für welche Sie sich interessieren."
+
+#: kontaktformular/controller.php:338
+msgid "Kontaktformular.Anrede"
+msgstr "Anrede"
+
+#: kontaktformular/controller.php:338
+msgid "Kontaktformular.Herr"
+msgstr "Herr"
+
+#: kontaktformular/controller.php:338
+msgid "Kontaktformular.Frau"
+msgstr "Frau"
+
+#: kontaktformular/controller.php:338
+msgid "Kontaktformular.Firma"
+msgstr "Firma"
+
+#: kontaktformular/controller.php:339
+msgid "Kontaktformular.Vorname"
+msgstr "Vorname"
+
+#: kontaktformular/controller.php:340
+msgid "Kontaktformular.Name"
+msgstr "Name"
+
+#: kontaktformular/controller.php:341
+msgid "Kontaktformular.Strasse"
+msgstr "Strasse"
+
+#: kontaktformular/controller.php:342
+msgid "Kontaktformular.Nr"
+msgstr "Nr"
+
+#: kontaktformular/controller.php:343
+msgid "Kontaktformular.PLZ"
+msgstr "PLZ"
+
+#: kontaktformular/controller.php:344
+msgid "Kontaktformular.Stadt"
+msgstr "Stadt"
+
+#: kontaktformular/controller.php:345
+msgid "Kontaktformular.Land"
+msgstr "Land"
+
+#: kontaktformular/controller.php:347
+msgid "Kontaktformular.Email"
+msgstr "Email"
+
+#: kontaktformular/controller.php:348
+msgid "Kontaktformular.Telefon"
+msgstr "Telefon"
+
+#: kontaktformular/controller.php:355 kontaktformular/controller.php:359
+msgid "Kontaktformular.Reisende"
+msgstr "Reisende"
+
+#: kontaktformular/controller.php:355
+msgid "Kontaktformular.Erwachsener"
+msgstr "Erwachsener"
+
+#: kontaktformular/controller.php:355
+msgid "Kontaktformular.Erwachsene"
+msgstr "Erwachesene"
+
+#: kontaktformular/controller.php:356 kontaktformular/controller.php:360
+msgid "Kontaktformular.Kind"
+msgstr "Kind"
+
+#: kontaktformular/controller.php:356 kontaktformular/controller.php:360
+msgid "Kontaktformular.Kinder"
+msgstr "Kinder"
+
+#: kontaktformular/controller.php:363
+msgid "Kontaktformular.Reisezeitraum"
+msgstr "Reisezeitraum"
+
+#: kontaktformular/controller.php:368
+msgid "Kontaktformular.Apartment"
+msgstr "Apartment"
+
+#: kontaktformular/controller.php:371 kontaktformular/controller.php:372
+#: kontaktformular/controller.php:373
+msgid "Kontaktformular.Personen"
+msgstr "Personen"
+
+#: kontaktformular/controller.php:377
+msgid "Kontaktformular.Nachricht"
+msgstr "Nachricht"
+
+#: kontaktformular/controller.php:380
+msgid "Kontaktformular.GefundenSuchmaschine"
+msgstr "Suchmaschine (Google, Bing, etc.)"
+
+#: kontaktformular/controller.php:381
+msgid "Kontaktformular.GefundenHomeaway"
+msgstr "Fewo-Direkt.de (HomeAway)"
+
+#: kontaktformular/controller.php:382
+msgid "Kontaktformular.GefundenEmfehlung"
+msgstr "Empfehlung durch Freunde oder Bekannte"
+
+#: kontaktformular/controller.php:383
+msgid "Kontaktformular.GefundenTouristinfo"
+msgstr "Tourist-Information, Kurverwaltung"
+
+#: kontaktformular/controller.php:385
+msgid "Kontaktformular.WoGefunden"
+msgstr "\"Wo haben Sie uns gefunden?\""
+
+#: kontaktformular/controller.php:392
+msgid "Kontaktformular.Sicherheitscode"
+msgstr "Sicherheitscode"
+
+#: kontaktformular/view.php:3
+msgid "Kontaktformular.FehlerTitel"
+msgstr "Leider ist ein Fehler aufgetreten"
+
+#: kontaktformular/view.php:13
+msgid "Kontaktformular.EmailVersendet"
+msgstr "Die Email konnte erfolgreich versendet werden!"
+
+#: kontaktformular/view.php:16
+msgid "Kontaktformular.Pflichtangaben"
+msgstr "Die mit * gekennzeichnten Felder sind Pflichangaben."
+
+#: kontaktformular/view.php:88
+msgid "Kontaktformular.Senden"
+msgstr "Kontaktformular absenden"
+
+#: preisrechner/view.php:8
+msgid "Preisrechner.Reisezeit"
+msgstr "Reisezeit"
+
+#: preisrechner/view.php:15
+msgid "Preisrechner.Personen"
+msgstr "Personen"
+
+#: preisrechner/view.php:28
+msgid "Preisrechner.Berechnen"
+msgstr "Preis berechnen"
+
+#: preisrechner/view.php:30
+msgid "Preisrechner.Speichern"
+msgstr "Angebot speichern"
+
+#: preisrechner/view.php:171
+msgid "Preisrechner.Fehler"
+msgstr "Fehler"
+
+#: preisrechner/view.php:176
+msgid "Preisrechner.FehlerUnerwartet"
+msgstr "Es ist ein unerwarteter Fehler aufgetreten."
+
+#: preisuebersicht/controller.php:249
+msgid "Preisuebersicht.StartdatumUngueltig"
+msgstr "Es wurde kein gültiges Startdatum angegeben."
+
+#: preisuebersicht/controller.php:253
+msgid "Preisuebersicht.EnddatumUngueltig"
+msgstr "Es wurde kein gültiges Enddatum angegeben."
+
+#: preisuebersicht/controller.php:257
+msgid "Preisuebersicht.AnzahlReisende"
+msgstr "Bitte die Anzahl der Reisenden angeben."
+
+#: preisuebersicht/controller.php:270
+msgid "Preisuebersicht.AnreiseVergangen"
+msgstr "Das Anreisedatum liegt in der Vergangenheit."
+
+#: preisuebersicht/controller.php:274
+msgid "Preisuebersicht.AbreiseVorAnreise"
+msgstr "Das Abreisedatum darf nicht vor oder gleich dem Anreisedatum sein."
+
+#: preisuebersicht/controller.php:287
+msgid "Preisuebersicht.Mindestaufenthaltsdauer"
+msgstr "Die Mindestaufenthaltsdauer beträgt %s Nächte"
+
+#: preisuebersicht/controller.php:295
+msgid "Preisuebersicht.GaesteMaximal"
+msgstr "Es können nicht mehr als % Gäste übernachten."
+
+#: preisuebersicht/controller.php:319
+msgid "Preisuebersicht.AnreisedatumPreisliste"
+msgstr "Für das Anreisedatum liegt keine gültige Preisliste vor."
+
+#: preisuebersicht/controller.php:323
+msgid "Preisuebersicht.AbreisedatumPreisliste"
+msgstr "Für das Abreisedatum liegt keine gültige Preisliste vor."
+
+#: preisuebersicht/controller.php:396
+msgid "Preisuebersicht.Endreinigung"
+msgstr "Endreinigung"
+
+#: preisuebersicht/controller.php:402
+msgid "Preisuebersicht.Rabatt"
+msgstr "Rabatt"
+
+#: preisuebersicht/controller.php:414
+msgid "Preisuebersicht.Kaution"
+msgstr "Kaution"
+
+#: preisuebersicht/view.php:12
+msgid "Preisuebersicht.Nachsaison"
+msgstr "Nachsaison"
+
+#: preisuebersicht/view.php:13
+msgid "Preisuebersicht.Wintersaison"
+msgstr "Wintersaison"
+
+#: preisuebersicht/view.php:14
+msgid "Preisuebersicht.Nebensaison"
+msgstr "Nebensaison"
+
+#: preisuebersicht/view.php:15
+msgid "Preisuebersicht.Vorsaison"
+msgstr "Vorsaison"
+
+#: preisuebersicht/view.php:16
+msgid "Preisuebersicht.Hauptsaison"
+msgstr "Hauptsaison"
+
+#: preisuebersicht/view.php:17
+msgid "Preisuebersicht.Hochsaison"
+msgstr "Hochsaison"
+
+#: preisuebersicht/view.php:17
+msgid "Preisuebersicht.Seenachtfest"
+msgstr "Seenachtfest"
+
+#: preisuebersicht/view.php:18
+msgid "Preisuebersicht.Ostern"
+msgstr "Ostern"
+
+#: preisuebersicht/view.php:19
+msgid "Preisuebersicht.Pfingsten"
+msgstr "Pfingsten"
+
+#: preisuebersicht/view.php:20
+msgid "Preisuebersicht.Weihnachten"
+msgstr "Weihnachten"
+
+#: preisuebersicht/view.php:40
+msgid "Preisuebersicht.Person"
+msgstr "Person"
+
+#: preisuebersicht/view.php:40
+msgid "Preisuebersicht.Personen"
+msgstr "Personen"
+
+#: preisuebersicht/view.php:51
+msgid "Preisuebersicht.KeinePreisliste"
+msgstr "Preise in anderen als den oben genannten Zeiträumen auf Anfrage."
+
+#~ msgid "Das Feld '%s' muss angegeben werden."
+#~ msgstr "Das Feld '%s' muss angegeben werden."

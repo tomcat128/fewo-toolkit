@@ -1,0 +1,1 @@
+<fewobacher <?php echo ($controller->getTask() != "view" ? "data=\"".$controller->getTask()."\"" : "");?>>

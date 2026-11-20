@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+    <!-- DB-Table Blocktype FeWoBacher -->
+    <table name="btFwbKarte">
+        <field name="bID" type="I">
+            <key />
+            <unsigned />
+        </field>
+        <field name="js_init" type="XL">
+            <default value="" />
+        </field>
+        <field name="js_points" type="XL">
+            <default value="" />
+        </field>
+        <field name="html_controls" type="XL">
+            <default value="" />
+        </field>
+    </table>
+</schema>

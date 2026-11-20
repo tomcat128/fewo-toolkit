@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+    <!-- DB-Table Blocktype FeWoBacher -->
+    <table name="btFwbSystem">
+        <field name="key" type="C" size="16">
+            <default value="" />
+            <key />
+        </field>
+        <field name="value" type="C" size="200">
+            <default value="" />
+        </field>
+    </table>
+</schema>

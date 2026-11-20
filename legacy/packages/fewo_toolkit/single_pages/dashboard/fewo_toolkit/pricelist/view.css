@@ -1,0 +1,83 @@
+/* View.php */
+.fwb-pricelist {
+    margin-right: 20px;
+}
+.pl_settings_import,
+.pl_settings_export {
+    display: none;
+}
+
+/* Matrix.php */
+.fwb-pricelist .add_season input {
+    width: 250px;
+    float: left;
+}
+.fwb-pricelist .add_season a {
+    float: left;
+    margin-left: 20px;
+}
+.list_season {
+    margin-top: 10px;
+}
+.list_season .row {
+    clear: left;
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+.list_season label {
+    font-weight: normal;
+    cursor: pointer;
+}
+.list_season .row > div {
+    float: left;
+    margin-left: 20px;
+}
+
+.list_season .row > .name {
+    width: 250px;
+}
+
+.list_season .row > .date {
+    width: 100px;
+}
+
+.list_season .row > .price {
+    width: 75px;
+}
+
+.list_season .row > .action {
+    width: 100px;
+}
+
+.list_season .row > div:first-child {
+    margin-left: 0;
+}
+
+.list_season .row input[type=text] {
+    width: 100%;
+}
+
+.list_season .title > div {
+    font-weight: bold;
+    text-align: left;
+}
+
+.list_season .template,
+.list_season .past {
+    display: none;
+}
+
+.list_season .past .name input {
+    background-color: #D2322D;
+    color: white;
+}
+
+.list_season .past .date input,
+.list_season .past .price input {
+    color: #999;
+}
+
+.ui-datepicker {
+    font-size: 13px;
+}

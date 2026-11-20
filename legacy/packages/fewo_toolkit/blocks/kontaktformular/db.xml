@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<schema version="0.3">
+    <!-- DB-Table Blocktype FeWoBacher -->
+    <table name="btFwbKontaktformular">
+        <field name="bID" type="I">
+            <key />
+            <unsigned />
+        </field>
+        <field name="formular_name" type="C" size="255">
+            <default value="" />
+        </field>
+        <field name="email_empfaenger" type="C" size="255">
+            <default value="" />
+        </field>
+        <field name="absender_cc" type="C" size="1">
+            <default value="N" />
+        </field>
+        <field name="captcha" type="C" size="1">
+            <default value="Y" />
+        </field>
+        <field name="honeypot" type="C" size="1">
+            <default value="Y" />
+        </field>
+        <field name="pricelist" type="C" size="1">
+            <default value="N" />
+        </field>
+        <field name="smtp_auth" type="C" size="255">
+            <default value="" />
+        </field>
+    </table>
+    <!-- Einstellungen der DB speichern -->
+    <table name="btFwbKontaktformularKonfiguration">
+        <field name="fID" type="I">
+            <key />
+            <unsigned />
+            <autoincrement />
+        </field>
+        <field name="name" type="C" size="255">
+            <default value="" />
+        </field>
+        <field name="settings" type="I">
+            <unsigned />
+        </field>
+        <field name="order" type="I">
+            <unsigned />
+            <default value="0" />
+        </field>
+    </table>
+</schema>

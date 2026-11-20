@@ -1,0 +1,122 @@
+.contact-table {
+    width: 70%;
+    clear: left;
+}
+.contact-table > .row {
+    width: 100%;
+    clear: both;
+    float: left;
+}
+.contact-table > .row > .label {
+    width: 30%;
+    float: left;
+    position: relative;
+}
+.contact-table > .row > .inputs {
+    width: 70%;
+    float: left;
+}
+.contact-table > .row > .label span.text {
+    display: block;
+    float: left;
+    
+    margin-top: 9px;
+    font-size: 16px;
+}
+.contact-table > .row > .inputs > .input,
+.contact-table > .row > .inputs > .input-100 {
+    width: 100%;
+}
+.contact-table > .row > .inputs > .input-80 {
+    width: 70%;
+}
+.contact-table > .row > .inputs > .input-60 {
+    width: 55%;
+}
+.contact-table > .row > .inputs > .input-50 {
+    width: 45%;
+}
+.contact-table > .row > .inputs > .input-40 {
+    width: 35%;
+}
+.contact-table > .row > .inputs > .input-20 {
+    width: 20%;
+}
+
+.contact-table > .single > .label,
+.contact-table > .single > .inputs
+{
+    float: left;
+    width: 100%;
+}
+
+.contact-table > .row > .inputs input,
+.contact-table > .row > .inputs select,
+.contact-table > .row > .inputs textarea {
+    padding: 5px;
+    border: 1px solid #d0d0d0;
+    font-size: 16px;
+    border-radius: 5px;
+    color: #000;
+}
+
+.contact-table > .row > .inputs input,
+.contact-table > .row > .inputs textarea,
+.contact-table > .row > .inputs select {
+    width: 100%;
+}
+    
+.contact-table > .row > .inputs > div {
+    margin-top: 5px;
+}
+
+.contact-table > .row > .inputs > div:last-child {
+    float: right;
+}
+.contact-table > .row > .inputs > div:first-child {
+    float: left;
+}
+.contact-table > .row > .inputs img.secure {
+    border: 1px solid gray;
+    padding: 3px;
+    border-radius: 5px;
+}
+.contact-table > .row input.submit {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.contact-table .cfhpir {
+    position: absolute;
+    top: -9999px;
+    width: 50%;
+}
+
+.status {
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.5);
+    padding: 8px;
+}
+.status h2 {
+    margin: 0;
+    padding: 0;
+}
+.success {
+    border: 2px solid #076B00;
+    background-color: #A8F7A3;
+    color: #12440E;
+}
+.error {
+    background-color: #CC0606;
+    color: #ffffff !important;
+}
+.error-list {
+    border: 2px solid #CC0606;
+    background-color: #FCC7C7;
+    color: #5B0F0E;
+}
+.error-list ul {
+    padding: 0 0 0 20px;
+    margin: 0;
+}

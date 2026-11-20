@@ -1,0 +1,603 @@
+.mobile,
+.fewo-direkt-mobile {
+	display: none;
+}
+
+.show_all_row {
+	display: none;
+}
+
+.month-hidden {
+	display: block;
+}
+
+@media screen and (max-width: 800px) {
+	/* CSS-Klassen hinzufügen: Besondere Mobile Styles */
+	body {
+		-webkit-text-size-adjust: 100%; /* Safari-Hack: Verhinder automatischen Zoom von Schriftgröße */
+	}
+	
+	body.no-scroll {
+		overflow-y: hidden;
+	}
+
+	/* Header Grafik grundsätzlich ausblenden */
+	.desktop,
+	.sonnenseele,
+	.seeherz {
+		display: none;
+	}
+
+	/* Nur in folgenden Fällen wieder einblenden */
+	#site-index .sonnenseele,
+	#site-impressum .sonnenseele,
+	#site-index .seeherz,
+	#site-impressum .seeherz
+	 {
+		display: block;
+	}
+
+	.mobile,
+	.fewo-direkt-mobile {
+		display: block;
+	}
+
+	/* Navigation */
+	.mobile .navigation a,
+	.mobile .subnavigation a {
+		display: block;
+		width: 100%;
+		text-decoration: none;
+		text-align: center;
+		padding: 10px 0;
+		background-color: white;
+	}
+
+	.mobile .navigation {
+		display: none;
+	}
+
+    .mobile .subnavigation {
+        display: block;
+    }
+
+	.mobile .navigation a:hover,
+	.mobile .subnavigation a:hover {
+		background-color: #F9E286;
+	}
+
+	.mobile .navigation a,
+	.mobile .subnavigation a
+	{
+		border-bottom: 1px solid #e0e0e0;
+	}
+
+	.mobile .navigation a:last-child {
+		/*border-bottom: none;*/
+	}
+
+	.mobile .subnavigation a:last-child {
+		margin-bottom: 5px;
+		border-bottom: 3px dashed #a0a0a0;
+	}
+
+	.mobile .subnavigation {
+		/*margin-bottom: 5px;*/
+		/*border-bottom: 3px dashed #a0a0a0;*/
+	}
+
+	.mobile .subnavigation .title {
+		text-align: center;
+		padding: 10px 0;
+		margin-top: 10px;
+	}
+
+	.mobile .subnavigation a.external {
+		background-image: url(images/external.png);
+	}
+	/* Ende Navigation */
+	.mobile-head {
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+		border-radius: 20%;
+		position: fixed;
+		top: 0;
+		z-index: 9;
+		width: 100%;
+	}
+
+	.mobile .header {
+		height: 48px;
+	}
+
+	.mobile > .header > .spacer {
+		height: 5px;
+	}
+
+	.mobile .header .subtitle {
+		font-family: Arial;
+		font-size: 10px;
+		line-height: 12px;
+		text-align: center;
+		width: 100%;
+		padding: 0;
+	}
+
+	.mobile .header .title {
+		clear: left;
+		float: left;
+		font-family: 'Marck Script', cursive;
+		font-weight: normal;
+		font-size: 24px;
+		line-height: 26px;
+		position: relative;
+		text-shadow: none;
+		color: black;
+		left: 0;
+		top: 0;
+		text-align: center;
+		width: 100%;
+		line-height: 24px;
+		padding: 3px 0 0 0;
+	}
+
+	.mobile .header .button {
+		float: right;
+	}
+
+	.mobile .nav-hamburger {
+        position: absolute;
+        width: 32px;
+        height: 25px;
+        left: 14px;
+        top: 8px;
+        font-size: 28px;
+    }
+
+	.mobile .nav-language {
+		position: absolute;
+		width: 32px;
+		height: 32px;
+		/*background-color: green;*/
+		right: 14px; 
+		top: 8px;
+	}
+
+	.mobile .footer {
+		border-top: 1px dashed #d0d0d0;
+		background-color: #FFFFFF;
+		text-align: center;
+		padding-top: 5px;
+		font-size: 32px;
+	}
+
+	.mobile .toolbar ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.mobile .toolbar ul li {
+		position: relative;
+		float: left;
+		width: 33%;
+		text-align: center;
+	}
+
+	.mobile .toolbar ul li:first-child {
+		width: 34%;
+	}
+
+	.mobile .toolbar ul li a {
+		height: 100%;
+		display: block;
+		padding-top: 7px;
+	}
+
+	.mobile .toolbar ul li:not(:first-child) a {
+		border-left: 1px solid black;
+	}
+
+	#btnMobileNavigation {
+		display: block;
+		float: right;
+		margin: 5px 10px 0 0;
+		padding: 1px;
+		cursor: pointer;
+		border: 2px solid rgba(0,0,0,0.6);
+		border-radius: 7px;
+	}
+
+	#btnMobileNavigation div {
+		width: 22px;
+		height: 2px;
+		margin: 4px;
+		background-color: rgba(0,0,0,0.6);
+	}
+	
+	/* CSS-Klassen anpassen */
+	.main {
+		padding: 0;
+		width: 100%;
+	}
+
+	.main .body {
+		width: 100%;
+	}
+
+	.body .content {
+		padding: 50px 0 0 0;
+		width: 100%;
+	}
+
+	.body .content > div {
+		padding: 5px;
+	}
+
+	.content h1 {
+		font-size: 14pt;
+	}
+
+	.content h2 {
+		font-size: 13pt;
+	}
+
+	.content h3 {
+		font-size: 12pt;
+	}
+
+	.content p {
+		text-align: left;
+		font-size: 12pt;
+	}
+
+	.content ul {
+		/*margin: 0;*/
+
+		padding-left: 0;
+		list-style: none;
+	}
+
+	p.annotations{
+		font-size: 10pt;
+	}
+
+	.preisliste {
+		width: 100%;
+		padding: 0;
+		margin: 0;
+		border: 0;
+	}
+
+	.preisliste .period,
+	.preisliste .annotation {
+		width: 100%;
+	}
+
+	.preisliste .annotation {
+		margin-bottom: 5px;
+	}
+
+	/* Preisrechner */
+	.preisrechner {
+		box-shadow: none;
+	}
+
+	.preisrechner .options {
+		width: 100%;
+	}
+
+	.preisrechner .row,
+	.preisrechner .input {
+		width: 100%;
+		margin-left: 0px;
+	}
+
+	.preisrechner .result {
+		width: 100%;
+		margin-left: 0;
+		height: auto !important;
+	}
+
+	.preisrechner .row input[type="button"] {
+		width: 48%;
+	}
+
+	.preisrechner .row input:nth-child(2)[type="button"] {
+		float: right;
+	}
+
+	.preisrechner .row .input input {
+		clear: left;
+		float: left;
+		width: 100%;
+	}
+
+	.preisrechner #Abreise {
+		margin-top: 5px;
+	}
+
+	.preisrechner .row input[type=text],
+	.preisrechner .row select {
+		font-size: 20px;
+	}
+
+	/* Kalender etwas vergroessern */
+	div.ui-datepicker{
+		font-size: 15px;
+	}
+
+	/* Belegungsplan */
+	div.belegungsplan {
+		border: none;
+		padding: 0.0%;
+		box-shadow: none;
+	}
+
+	.belegungsplan .title {
+		padding: 0;
+	}
+
+	.belegungsplan .title div {
+		
+	}
+
+	.belegungsplan .days {
+		
+	}
+
+	.belegungsplan .month {
+		width: 24%;
+		margin: 0.5%;
+	}
+
+	.weekdays div {
+		width: 13%;
+	}
+
+	.weekdays div {
+		margin: 1px 0.5%;
+	}
+
+	/* CSS-Klassen ausblenden */
+	.website .top,
+	.screen-background,
+	.body .navigation ,
+	.main .header,
+	.content p a[data-concrete5-link-launch=lightbox-image],
+	.content .back,
+	.fewo-direkt,
+	img.vhb-gaestekarte,
+	.map-filter,
+	div.karte {
+		display: none;
+	}
+
+	/* Auch wenn unschön ... sonst wird das von jQuery überschrieben */
+	.preisrechner .details,
+	.preisrechner .plist,
+	.preisrechner .dash {
+		display: none !important;
+	}
+
+	.fewo-direkt-mobile {
+		margin-top: 20px;
+		text-align: center;
+	}
+	.fewo-direkt-mobile > div > div {
+		margin: 5px 0 10px 0;
+	}
+
+	h2.karte {
+		margin-top: 10px; /* Etwas den Abstand erhöhen, da wg. fehlender Karte h1+h2 zu dicht aufeinander liegen */
+	}
+}
+
+@media screen and (max-width: 679px) {
+	/* Weitere Anpassungen */
+	.preisliste .period > div:nth-child(3) {
+		clear: left;
+	}
+	.preisliste .annotation {
+		font-size: 12px;
+	}
+	.preisliste .period .title {
+		float: left;
+	}
+	.preisliste .period .date {
+		clear: none;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.details ul {
+		margin: 0;
+		padding: 0;
+	}
+	.details ul li {
+		width: 100%;
+		list-style: none;
+	}
+}
+
+@media screen and (max-width: 479px) {
+	/* Anpassungen Preisliste */
+	.preisliste .period > div {
+		clear: left;
+	}
+
+	.preisliste .period .row .persons {
+		width: 120px;
+	}
+
+	.preisliste .period .title {
+		display: none;
+	}
+
+	.preisliste .period .date {
+		font-weight: bold;
+	}
+
+	.preisliste .period .row .persons {
+		width: 130px;
+	}
+
+}
+
+/* Mobile Hauptnavigation */
+@media screen and (min-width: 400px) {
+	.mobile .navigation a {
+		width: 50%;
+		float: left;
+	}
+}
+
+@media screen and (max-width: 550px) {
+	/* Kalender ausblenden und Button "Für alle" zeigen */
+	.show_all_row {
+		display: block;
+		clear: left;
+		float: left;
+	}
+
+	.month-hidden {
+		display: none;
+	}
+}
+
+/* Preisliste 2-spaltig zwischen 365 und 479 Pixel */
+@media screen and (min-width: 365px) and (max-width: 479px) {
+	.preisliste .period .row {
+		padding: 2px;
+	}
+	.preisliste .period .date {
+		width: 100%;
+	}
+	.preisliste .period:nth-child(2n+1) {
+		clear: left;
+		float: left;
+	}
+	.preisliste .period:nth-child(2n) {
+		float: right;
+	}
+	.preisliste .period {
+		width: 49.0%;
+	}
+	.preisliste .period .row .persons {
+		width: 100px;
+	}
+	.preisliste .period .row .price {
+		width: 50px;
+	}
+}
+
+/* Weitere Styles für Belegungsplan */
+@media screen and (max-width: 700px) {
+	.belegungsplan .month {
+		width: 32%;
+		margin: 0;
+		margin-left: 1%;
+		margin-bottom: 1%;
+	}
+
+	.weekdays div {
+		margin: 1px 0.75%;
+		width: 12.5%;
+	}
+}
+
+@media screen and (max-width: 560px) {
+	.belegungsplan .month {
+		width: 49%;
+		margin-left: 0;
+	}
+	.belegungsplan .month:nth-child(2n) {
+		margin-left: 2%;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.belegungsplan .month {
+		width: 100%;
+		margin: 0 0 5px 0;
+	}
+	.weekdays div {
+		font-size: 12px;
+		height: 21px;
+	}
+}
+
+/* Bessere Anpassung der Breite für Responsive Kalender */
+@media screen and (max-width: 800px) {
+	.weekdays div {
+	    margin: 1% 0 0 1%;
+	    width: 13%;
+	}
+	.weekdays div:nth-child(7n+1) {
+		margin-left: 0;
+	}
+	/* Folgende Regel gilt für Dienstage, Donnerstage und Samstage */
+	.weekdays div:nth-child(7n-5),
+	.weekdays div:nth-child(7n-3),
+	.weekdays div:nth-child(7n-1) {
+		width: 14%;
+	}
+}
+
+/* Styles für das Kontaktformular */
+@media screen and (max-width: 470px) {
+	input, form textarea {
+		width: 100%;
+	}
+
+	.contact-table {
+		width: 100%;
+	}
+	.contact-table .label {
+		clear: left;
+		float: left;
+		width: 100%;
+	}
+	.contact-table .label span {
+			width: 100%;
+	}
+	.contact-table .inputs {
+		clear: left;
+		float: left;
+		width: 100%;
+	}
+
+	.contact-table > .row > .inputs {
+		width: 90%;
+	}
+
+	.contact-table > .row > .inputs > div,
+	#Abreise {
+    	margin-top: 0;
+	}
+
+	.contact_form select {
+		width: 50%;
+	}
+
+	.contact_form select[name="Gefunden%20durch"] {
+		width: 100%;
+	}
+
+	.contact_form input[type="text"] {
+		width: 100%;
+	}
+
+	.contact_form input[name="Strasse"],
+	.contact_form input[name="Stadt"] {
+		width: 70%;
+	}
+
+	.contact_form input[name="Hausnummer"],
+	.contact_form input[name="Postleitzahl"] {
+		width: 25%;
+	}
+
+	.contact_form input[type="text"].hasDatepicker, form input[type="text"].hasDatepicker {
+		width: 50%;
+	}
+}
