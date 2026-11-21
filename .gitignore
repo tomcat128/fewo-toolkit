@@ -8,3 +8,17 @@ Thumbs.db
 *~
 .idea/
 .vscode/
+
+# Gebautes Upload-Paket (dev/build.sh)
+/dist/
+
+# Server-Backup der Alt-Websites (Kundendaten, groß)
+/legacy/backup_*/
+/legacy/backup_*.tar
+
+# Lokale Test-Instanz aus dem Seeherz-Backup (dev/seeherz/restore.sh): entpackte Website und Datenbank
+/dev/seeherz/data/
+
+# Python-Zwischendateien (dev/translations)
+__pycache__/
+*.pyc

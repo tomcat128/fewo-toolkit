@@ -1,8 +1,11 @@
-# Lokale Entwicklungs- und Testumgebung für das Fewo Toolkit (Concrete CMS 9.5.7)
-#   docker compose up -d --build
-#   ./setup.sh            (einmalig: Concrete installieren + Paket installieren)
+# Lokales Testprojekt für das Fewo Toolkit (Concrete CMS 9.5.7)
+# Basis: fehrenbacher/concrete5 (PHP 8.4, Apache, Concrete unter /srv/app/public) + MariaDB + Mailpit
+#
+#   docker compose up -d
+#   ./setup.sh            (einmalig: Concrete installieren + Paket + Demo-Inhalte)
 #   http://localhost:8095  (admin / siehe setup.sh)
 #   http://localhost:8025  Mailpit: alle von Concrete versendeten E-Mails
+name: fewo-toolkit-dev
 services:
   db:
     image: mariadb:11.4
@@ -11,23 +14,49 @@ services:
       MARIADB_DATABASE: concrete
       MARIADB_USER: concrete
       MARIADB_PASSWORD: concrete
+      TZ: Europe/Berlin
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     volumes:
       - db:/var/lib/mysql
   mailpit:
     image: axllent/mailpit:v1.21
     ports:
       - "8025:8025"
+  # Ollama-Attrappe für die Browser-Tests des KI-Assistenten (http://ollama-stub:11434, Modell "stub-model").
+  # Für echte Antworten im Dashboard die Adresse eines richtigen Ollama eintragen, siehe seeherz/docker-compose.yml.
+  ollama-stub:
+    image: python:3.12-alpine
+    command: python /stub/server.py
+    volumes:
+      - ./ollama-stub:/stub:ro
+    stop_signal: SIGKILL
   web:
-    build: .
+    image: fehrenbacher/concrete5:9.5.7
+    environment:
+      TZ: Europe/Berlin
     ports:
       - "8095:80"
     depends_on:
-      - db
-      - mailpit
+      db:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
     volumes:
-      - concrete:/var/www/concrete
-      - ../packages/fewo_toolkit:/var/www/concrete/public/packages/fewo_toolkit
+      # Konfiguration und hochgeladene Dateien überleben ein Neuanlegen des Containers
+      - config:/srv/app/public/application/config
+      - files:/srv/app/public/application/files
+      - languages:/srv/app/public/application/languages
+      - ../packages/fewo_tk2:/srv/app/public/packages/fewo_tk2
+      - ./php.ini:/usr/local/etc/php/conf.d/zz-fewo-dev.ini:ro
       - ./seed.php:/seed/seed.php:ro
+      - ./e2e/fixtures:/seed/e2e:ro
 volumes:
   db:
-  concrete:
+  config:
+  files:
+  languages:
