@@ -11,7 +11,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 PROJECT=fewo-seeherz-test
 URL=http://localhost:8096
-ADMIN_PASSWORD="${ADMIN_PASSWORD:-seeherz-test-admin}"
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin}"
 # Sprachmodell für den KI-Assistenten (Block "Chat"); wird beim ersten Mal heruntergeladen (gemma3:4b: 3,3 GB)
 OLLAMA_MODEL="${OLLAMA_MODEL:-gemma3:4b}"
 
@@ -57,7 +57,7 @@ for i in $(seq 1 30); do curl -s -o /dev/null "${URL}/" && break; sleep 1; done
 c5 c5:exec /seed/local.php "${ADMIN_PASSWORD}" 2>&1 | grep -v Deprecated
 
 # 5. Neues Paket neben dem alten (das alte ist Version 0.x), Sprachmodell und die Testseite mit allen neuen Blöcken
-if c5 c5:info 2>/dev/null | grep -Eq 'Fewo Toolkit \([2-9]\.'; then
+if c5 c5:info 2>/dev/null | grep -Eq 'Fewo Toolkit( 2)? \([2-9]\.'; then
   c5 c5:package:update fewo_tk2 2>&1 | grep -v Deprecated || true   # meldet einen Fehler, wenn die Version unverändert ist
 else
   c5 c5:package:install fewo_tk2 2>&1 | grep -v Deprecated

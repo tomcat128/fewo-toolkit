@@ -3,7 +3,7 @@
 # Kann beliebig oft aufgerufen werden: bereits Erledigtes wird übersprungen, das Paket aktualisiert.
 set -euo pipefail
 cd "$(dirname "$0")"
-ADMIN_PASSWORD="${ADMIN_PASSWORD:-fewo-dev-admin}"
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin}"
 C5="./concrete/bin/concrete"
 
 docker compose up -d --wait db

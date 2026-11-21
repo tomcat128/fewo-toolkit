@@ -38,9 +38,49 @@ test('Übersicht zeigt die Demo-Wohnungen mit dem Stand des letzten Abrufs', asy
   // Wohnung ohne Preisliste
   await expect(row(page, 'Seeherz – Belegung als ICS (Demo)').locator('td').nth(2)).toHaveText('nicht hinterlegt');
 
-  // Die Startseite des Pakets im Dashboard führt weiterhin zu den Anfragen
+  // Die Startseite des Pakets im Dashboard führt zu den Wohnungen
   await page.goto('/index.php/dashboard/fewo_tk2');
-  await expect(page).toHaveURL(/dashboard\/fewo_tk2\/inquiries/);
+  await expect(page).toHaveURL(/dashboard\/fewo_tk2\/apartments/);
+});
+
+test('Preise: Saisons je Gästezahl, Mindestbelegung, Mindestdauer, Endreinigung und "Jetzt aktualisieren"', async ({ page }) => {
+  await page.goto('/index.php/dashboard/fewo_tk2/prices');
+  await expect(page.getByRole('heading', { name: 'Preise', exact: true })).toBeVisible();
+  // im Menü zwischen Wohnungen und KI-Assistent
+  expect(sql("SELECT GROUP_CONCAT(p.cPath ORDER BY c.cDisplayOrder SEPARATOR ' ') FROM PagePaths p JOIN Pages c ON c.cID = p.cID WHERE p.cPath LIKE '/dashboard/fewo_tk2/%'"))
+    .toBe('/dashboard/fewo_tk2/apartments /dashboard/fewo_tk2/prices /dashboard/fewo_tk2/assistant');
+
+  const card = page.locator('.fewo-prices-card[data-apartment="Seeherz (Demo)"]');
+  await expect(card.locator('h2')).toContainText('Ferienwohnung Seeherz');
+  await expect(card.locator('[data-fewo-condition="minNights"]')).toHaveText('3 Nächte');
+  await expect(card.locator('[data-fewo-condition="cleaning"]')).toHaveText('65 € (einmalig je Aufenthalt)');
+  await expect(card.locator('[data-fewo-condition="maxGuests"]')).toHaveText('4 Gäste');
+  await expect(card.locator('[data-fewo-condition="downPayment"]')).toHaveText('30 % des Gesamtpreises');
+  await expect(card.locator('thead th')).toHaveText(['Saison', 'Zeitraum', '1 Gast', '2 Gäste', '3 Gäste', '4 Gäste', 'Mindestbelegung']);
+  const cells = (name) => card.locator('tbody tr').filter({ hasText: name }).locator('td');
+  // Nebensaison: kein Preis für eine Person hinterlegt – es gilt der für zwei, also Mindestbelegung 2
+  await expect(cells('Nebensaison').nth(0)).toHaveText(/^\d\d\.\d\d\.\d{4} – \d\d\.\d\d\.\d{4}$/);
+  await expect(cells('Nebensaison').filter({ hasText: /€|Gast|Gäste/ })).toHaveText(['75 €', '75 €', '85 €', '90 €', '2 Gäste']);
+  // Hauptsaison: eigener Preis für eine Person; für drei gilt der Preis der nächsthöheren Gästezahl
+  await expect(cells('Hauptsaison').filter({ hasText: /€|Gast|Gäste/ })).toHaveText(['85 €', '95 €', '115 €', '115 €', '1 Gast']);
+  await expect(cells('Übrige Zeiträume').nth(0)).toHaveText('Standardpreis');
+  // abgelaufene Saison der Demo-Daten fehlt
+  await expect(card.locator('tbody tr')).toHaveCount(4);
+
+  const small = page.locator('.fewo-prices-card[data-apartment="Seeherzchen (Demo)"]');
+  await expect(small.locator('[data-fewo-condition="downPayment"]')).toHaveText('keine');
+  await expect(small.locator('thead th')).toHaveText(['Saison', 'Zeitraum', '1 Gast', '2 Gäste', 'Mindestbelegung']);
+  await expect(page.locator('.fewo-prices-card[data-apartment="Seeherz – Belegung als ICS (Demo)"]')).toContainText('Für diese Wohnung ist keine Adresse der Preisliste hinterlegt.');
+
+  // "Jetzt aktualisieren" einer Wohnung und aller Wohnungen
+  const fetched = () => sql(`SELECT UNIX_TIMESTAMP(fetchedAt) FROM FewoFeeds WHERE kind = 'pricelist' ORDER BY fetchedAt DESC LIMIT 1`);
+  sql("UPDATE FewoFeeds SET fetchedAt = fetchedAt - INTERVAL 10 MINUTE, attemptedAt = attemptedAt - INTERVAL 10 MINUTE WHERE kind = 'pricelist'");
+  const before = Number(fetched());
+  await card.getByRole('button', { name: 'Jetzt aktualisieren' }).click();
+  await expect(page.getByText('Die Preise von 1 Wohnung wurden neu aus Fewo-Office geladen.')).toBeVisible();
+  expect(Number(fetched())).toBeGreaterThan(before + 300);
+  await page.locator('.ccm-dashboard-header-buttons').getByRole('button', { name: 'Jetzt aktualisieren' }).click();
+  await expect(page.getByText('Die Preise von 2 Wohnungen wurden neu aus Fewo-Office geladen.')).toBeVisible();
 });
 
 test('Wohnung anlegen: Prüfung der Eingaben, nicht erreichbare Adresse, korrigieren', async ({ page }) => {
@@ -48,7 +88,7 @@ test('Wohnung anlegen: Prüfung der Eingaben, nicht erreichbare Adresse, korrigi
   await page.getByRole('link', { name: 'Wohnung hinzufügen' }).click();
   await expect(page.locator('legend')).toHaveText('Wohnung hinzufügen');
   await expect(page.getByLabel('Aktualisierung alle')).toHaveValue('60');
-  await expect(page.getByLabel('Aktualisierung alle').locator('option')).toHaveText(['15 Minuten', '30 Minuten', '1 Stunde', '2 Stunden', '6 Stunden', '12 Stunden', '24 Stunden']);
+  await expect(page.getByLabel('Aktualisierung alle').locator('option')).toHaveText(['5 Minuten', '10 Minuten', '15 Minuten', '30 Minuten', '1 Stunde', '2 Stunden', '6 Stunden', '12 Stunden', '24 Stunden']);
 
   // Der Browser verlangt einen Namen und lässt in den Adressfeldern nur Adressen zu ...
   await page.getByRole('button', { name: 'Speichern' }).click();

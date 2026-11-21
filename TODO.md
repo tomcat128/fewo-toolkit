@@ -5,7 +5,7 @@ Testprojekt: `dev/` (siehe Abschnitt unten). Beschreibung für Anwender: `packag
 
 **Grundsatz:** Belegung und Preise kommen immer aus Fewo-Office (`/api/wohnungen/{kürzel}/belegung.json` bzw.
 `preise.json`). Im Toolkit werden keine Preise gepflegt und keine Buchungen angelegt. Die Adressen werden
-einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit › Wohnungen), die Blöcke wählen nur die Wohnung.
+einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Blöcke wählen nur die Wohnung.
 Übernommen werden nur veröffentlichte, noch nicht abgelaufene Saisons.
 
 ## Erledigt und getestet
@@ -71,15 +71,65 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit › Wohnungen), die Blö
   `/dashboard/fewo_tk2`), die Blöcke `fewo_belegungsplan`, `fewo_preisrechner` usw. – das alte `fewo_toolkit` belegt
   u. a. `preisrechner`, `kontaktformular`, `karte`
 
+- Gestaltung in Themes ohne Bootstrap (gefunden mit der Seeherz-Testinstanz, Theme `fewobacher`, Schrift 24 px), Version 2.1.1 und 2.1.2:
+  Eingabefelder von Preisrechner und Anfrageformular ragten über ihre Spalte und überlappten (`box-sizing` fehlte),
+  Schaltflächen waren ungestaltet (`.btn` gibt es dort nicht), Beschriftungen und Kalender winzig neben der Schrift
+  des Themes (Maße in `rem`). Jetzt: `box-sizing` in allen Blöcken, alle Maße in `em`, eigene Grundgestaltung der
+  Schaltflächen (`.fewo-btn`, `--fewo-accent`), die hinter `.btn` des Themes zurücktritt. Außerdem: roter Rahmen
+  fehlerhafter Eingabefelder im Anfrageformular fehlte, Sternchen der Einwilligung rutschte auf schmalen Bildschirmen
+  an den rechten Rand
+
+- [x] **KI-Assistent, Version 2.2.0:**
+  - **Name** des Assistenten (Dashboard): steht im Chat über jeder Antwort, das Sprachmodell kennt ihn
+  - **Beispielfragen** je Frage in einer Zeile – ändern, verschieben, entfernen (Block-Dialog und Dashboard)
+  - **Chat auf jeder Seite** (Dashboard): unten rechts zuerst eine kleine Schaltfläche mit Hinweistext, ein Klick
+    öffnet den Chat; eigene Texte und Beispielfragen; Gespräch und Zustand bleiben beim Seitenwechsel (nur im
+    Browser); nicht im Dashboard, im Bearbeitungsmodus und auf Seiten mit Chat-Block. Eigene Adressen
+    `/fewo_tk2/chat/{token,ask,warm}`, das Token wird erst beim Öffnen geholt (Seiten-Zwischenspeicher)
+  - **Preise rechnet der Server:** Nennt eine Frage einen Aufenthalt (auch als Nachfrage „Was würde der Aufenthalt
+    dann kosten?“), rechnet der Preisrechner des Pakets – mit Saisonwechsel, Endreinigung, Anzahlung und
+    Belegung – und das Modell gibt die Zahlen nur wieder; für „eine Nacht im Dezember“ bekommt es die Preise des
+    Monats je Zeitraum. Anlass: `gemma3:4b` ließ die Endreinigung weg und übersah den Saisonwechsel
+
+- [x] **Version 2.3.0 – keine Buchungsanfragen, Name „Fewo Toolkit 2“:**
+  - **Anfrageformular ohne Speicherung:** Aus dem Formular entsteht keine Buchungsanfrage mehr, sondern eine
+    E-Mail an die im Block hinterlegte Adresse (dazu wie bisher die abschaltbare Eingangsbestätigung an den Gast).
+    Entfallen: Dashboard-Seite „Buchungsanfragen“, Tabelle `FewoInquiries` (das Update löscht sie), Löschfrist,
+    Block-Option „Anfragen im Dashboard speichern“. Lässt sich die E-Mail nicht verschicken, sieht der Gast
+    eine Fehlermeldung. Damit sind die Einträge zu „Dashboard Anfragen“ und zur Löschfrist weiter oben überholt
+  - Das Paket heißt in der Verwaltung von Concrete **Fewo Toolkit 2** (Paketliste, Dashboard-Menü, Block-Set),
+    damit es neben dem alten „Fewo Toolkit“ zu unterscheiden ist
+  - Aktualisierung der Daten aus Fewo-Office zusätzlich alle **5** und **10 Minuten** wählbar
+  - Testinstanzen: Anmeldung jetzt `admin` / `admin`
+  - Browser-Tests: zwei veraltete Erwartungen an die Testdaten korrigiert (Ordner „Fewo Demo“, Titel des zweiten
+    Rundgangs). **Offen:** `block-dialogs.spec.js` „360°-Rundgang: Vorgaben …“ kennt noch den Dialog vor dem
+    Szenen-Editor und schlägt fehl; die zwei Tests danach laufen deshalb nicht. Ebenso `frontend.spec.js`
+    „360°-Rundgang: Räume wechseln“ (Hotspot fehlt)
+
+- [x] **Version 2.4.0 – Erklärungen zu Stichwörtern, Preise im Dashboard:**
+  - **KI-Assistent, Erklärungen zu Stichwörtern** (Dashboard › KI-Assistent): je Zeile Stichwörter und eine
+    Erklärung. Kommt ein Stichwort in der Frage vor (auch in der Frage davor, unabhängig von Schreibweise,
+    Umlauten und als Teil eines Wortes), steht die Erklärung für das Modell direkt bei der Frage und gilt vor den
+    Inhalten der Website (`KeywordNotes`). Anlass: Der Assistent behauptete einen privaten Stellplatz.
+    Mit `gemma3:4b` geprüft: „Gibt es einen privaten Stellplatz?“ → „Nein, … keinen privaten Stellplatz.“
+    **Schwächen:** Bei der Nachfrage „Und kostet der etwas?“ erfand das Modell trotzdem kostenpflichtige
+    Parkplätze; eine knappe Erklärung wendet es zu breit an („Kann ich mit dem Auto anreisen?“ → „Nein …“) –
+    Stichwörter eng wählen, Erklärung ausführlich schreiben
+  - **Dashboard „Preise“:** je Wohnung Mindestdauer, Endreinigung, Höchstbelegung, Anzahlung und alle Saisons
+    mit Preis je Gästezahl und Mindestbelegung; „Jetzt aktualisieren“ je Wohnung und für alle. Die
+    Mindestbelegung liefert Fewo-Office nicht als Feld – sie ist aus den Preisen abgeleitet (bis zu welcher
+    Gästezahl der niedrigste Preis gilt). **Entscheidung offen:** Soll Fewo-Office sie als eigenes Feld liefern?
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung
 - [ ] KI-Assistent auf dem Server: Ollama muss dort laufen (Container im selben Docker-Netz, Port 11434 nicht
   veröffentlichen) und braucht für `gemma3:4b` rund 3–4 GB freien Arbeitsspeicher; ohne Grafikkarte dauert das erste
   Einlesen der Website knapp eine Minute, danach kommen Antworten in Sekunden (README, Abschnitt „KI-Assistent“)
-- [ ] KI-Assistent – Genauigkeit: Inhaltsfragen beantwortet `gemma3:4b` meist richtig, bei Preisen und Zeiträumen
-  macht es Fehler (auch `gemma3:12b`, das ohne Grafikkarte zudem zu langsam ist). Entscheiden, ob der Hinweis unter
-  dem Chat genügt oder ob Preis- und Terminfragen fest auf Preisrechner und Belegungsplan verweisen sollen
+- [ ] KI-Assistent – Genauigkeit: Inhaltsfragen beantwortet `gemma3:4b` meist richtig. Preise eines Aufenthalts
+  und eines Monats rechnet seit 2.2.0 der Server; das Modell formuliert nur noch und lässt dabei gelegentlich
+  etwas weg (z. B. die Aufschlüsselung oder den Hinweis „belegt“). Fehleranfällig bleiben Preisfragen, in denen
+  kein Datum und kein Monat erkannt wird („Was kostet es an Ostern?“), und Fragen nach freien Zeiträumen
 - [ ] KI-Assistent – Wissen: Blöcke des alten Pakets liefern keinen Suchtext und fehlen deshalb (z. B. die alte
   Ausstattungsliste auf `/ausstattung`); mit den neuen Blöcken sind die Inhalte dabei
 - [ ] Wie Fewo-Office einen Fehler meldet (z. B. unbekanntes Kürzel), ist nur angenommen: geprüft werden HTTP-Status und `status.type` ≠ `OK`
@@ -113,7 +163,7 @@ cd dev
 ./setup.sh                      # startet die Container; einmalig: Concrete + Paket + Demo-Inhalte
 ```
 
-- Website: http://localhost:8095/index.php/fewo-demo, `/fewo-anfrage`, `/fewo-doppelt` (Admin: `admin` / `fewo-dev-admin`)
+- Website: http://localhost:8095/index.php/fewo-demo, `/fewo-anfrage`, `/fewo-doppelt` (Admin: `admin` / `admin`)
 - Wohnungen: http://localhost:8095/index.php/dashboard/fewo_tk2/apartments (drei Demo-Wohnungen)
 - E-Mails: http://localhost:8025 (Mailpit)
 - PHP-Meldungen: `docker compose logs web` (E_ALL)
@@ -135,9 +185,8 @@ dazu erzeugte 360°-Panoramen für den Rundgang.
 Ändert sich das Datenbankschema bei gleicher Paketversion, das Paket im Testprojekt deinstallieren und neu
 installieren (`c5:package:uninstall`, `c5:package:install`, danach `c5:exec /seed/seed.php`).
 
-Hinweis: Die Browser-Tests legen eigene Daten an (Anfragen von `…@e2e.test`, Wohnung "E2E Wohnung", Seite `/fewo-e2e`)
-und räumen sie wieder ab. Sie setzen die Löschfrist kurzzeitig auf 30 Tage – nicht gegen eine Installation mit
-echten Anfragen laufen lassen.
+Hinweis: Die Browser-Tests legen eigene Daten an (Wohnung "E2E Wohnung", Seite `/fewo-e2e`) und räumen sie wieder
+ab; die E-Mails der Anfragen von `…@e2e.test` landen in Mailpit. Nicht gegen eine echte Installation laufen lassen.
 
 ## Testinstanz Seeherz (echte Website aus dem Backup)
 
@@ -152,7 +201,7 @@ cd dev/seeherz
 ./restore.sh --reset    # Instanz verwerfen und neu aus dem Backup aufbauen
 ```
 
-- Website: http://localhost:8096 (Admin: `admin` / `seeherz-test-admin`), E-Mails: http://localhost:8026 (Mailpit);
+- Website: http://localhost:8096 (Admin: `admin` / `admin`), E-Mails: http://localhost:8026 (Mailpit);
   von anderen Rechnern im Netz unter `http://<Rechner>:8096` – die Instanz hat bewusst keine feste Adresse
 - Testseite mit allen neun neuen Blöcken: http://localhost:8096/fewo-toolkit-2 (`page.php`) – Belegung und Preise aus
   Fewo-Office (`…/api/wohnungen/seeherz/…`), Ausstattung, Bilder und Rundgang aus den alten Blöcken übernommen

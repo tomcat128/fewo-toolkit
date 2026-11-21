@@ -267,7 +267,6 @@ $inquiryPage = $makePage('fewo-anfrage', 'Anfrage', [
         'accommodations' => "Seeherz, 42 m², max. 4 Personen\nSeeherzchen, 24 m², max. 2 Personen",
         'referralOptions' => "Suchmaschine\nUrlaubsportal\nEmpfehlung",
         'askForAddress' => 1,
-        'storeInquiries' => 1,
         'sendConfirmation' => 1,
         'successMessage' => 'Vielen Dank für Ihre Anfrage! Wir melden uns schnellstmöglich.',
     ]],
@@ -318,7 +317,6 @@ $form = static fn (string $name, int $apartmentID): array => ['fewo_kontaktformu
     'formName' => $name,
     'recipientEmail' => 'vermieter@fewo-dev.test',
     'apartmentID' => $apartmentID,
-    'storeInquiries' => 1,
     'sendConfirmation' => 0,
     'successMessage' => 'Danke für Ihre Anfrage für ' . $name . '!',
 ]];

@@ -1,4 +1,4 @@
-// KI-Assistent: Dashboard › Fewo Toolkit › KI-Assistent und der Block "Chat (KI-Assistent)".
+// KI-Assistent: Dashboard › Fewo Toolkit › KI-Assistent, der Block "Chat (KI-Assistent)" und der Chat auf jeder Seite.
 // Statt eines Sprachmodells antwortet die Ollama-Attrappe des Testprojekts (../../ollama-stub/server.py):
 // sofort, vorhersagbar und mit der Auskunft, was bei ihr angekommen ist.
 const { AxeBuilder } = require('@axe-core/playwright');
@@ -134,6 +134,47 @@ test('Dashboard: Testfrage zeigt die Antwort oder den technischen Fehler', async
 
   // Testfragen zählen nicht zu den Fragen der Besucher
   expect(sql('SELECT COUNT(*) FROM FewoAssistantRequests')).toBe('0');
+});
+
+test('Erklärungen zu Stichwörtern: anlegen, bei passender Frage mitgeben, entfernen', async ({ page }) => {
+  await page.goto(DASHBOARD);
+  const notes = page.locator('#fewo-assistant-keywords');
+  const answer = page.locator('#fewo-assistant-test-answer');
+  const testQuestion = async (question) => {
+    await page.fill('#testQuestion', question);
+    await page.getByRole('button', { name: 'Fragen', exact: true }).click();
+    await expect(answer).toContainText('Stub-Antwort auf: ' + question);
+  };
+  await expect(notes.getByText('Noch keine Erklärungen.')).toBeVisible();
+
+  await notes.getByRole('button', { name: 'Erklärung hinzufügen' }).click();
+  await notes.locator('[name="noteKeywords[]"]').last().fill(' Stellplatz,, parken ; Stellplatz ');
+  await notes.locator('[name="noteTexts[]"]').last().fill('Die Wohnung hat keinen eigenen\nStellplatz.');
+  // Zeile ohne Erklärung: wird nicht gespeichert
+  await notes.getByRole('button', { name: 'Erklärung hinzufügen' }).click();
+  await notes.locator('[name="noteKeywords[]"]').last().fill('Sauna');
+  await save(page);
+  await expect(page.getByText('Die Einstellungen wurden gespeichert.')).toBeVisible();
+  await expect(notes.locator('[name="noteKeywords[]"]')).toHaveCount(1);
+  await expect(notes.locator('[name="noteKeywords[]"]')).toHaveValue('Stellplatz, parken');
+  await expect(notes.locator('[name="noteTexts[]"]')).toHaveValue('Die Wohnung hat keinen eigenen Stellplatz.');
+
+  // Stichwort in der Frage (Mehrzahl mit Umlaut, als Teil eines Wortes): Das Modell bekommt die Erklärung bei der Frage
+  await testQuestion('Gibt es Tiefgaragenstellplätze?');
+  await expect(answer).toContainText('Hinweis der Gastgeber zu diesem Thema (er stimmt, auch wenn auf der Website etwas anderes steht): - Die Wohnung hat keinen eigenen Stellplatz.');
+  await expect(answer).toContainText('Hinweis: ja');
+  // andere Frage: keine Erklärung
+  await testQuestion('Kennst du Geschirrspüler?');
+  await expect(answer).not.toContainText('Hinweis der Gastgeber');
+
+  // entfernen
+  await notes.getByRole('button', { name: 'Entfernen' }).click();
+  await save(page);
+  await expect(page.getByText('Die Einstellungen wurden gespeichert.')).toBeVisible();
+  await expect(notes.locator('[name="noteKeywords[]"]')).toHaveCount(0);
+  await expect(notes.getByText('Noch keine Erklärungen.')).toBeVisible();
+  await testQuestion('Gibt es einen Stellplatz?');
+  await expect(answer).not.toContainText('Hinweis der Gastgeber');
 });
 
 test.describe('Chat als Gast', () => {
@@ -273,17 +314,33 @@ test('Block-Dialog: Vorgaben beim Hinzufügen, Bearbeiten und zwei Chats auf ein
   let dialog = await openAddDialog(page, 'fewo_chat');
   await expect(dialog.locator('[name="title"]')).toHaveValue('Fragen? Unser Assistent hilft');
   await expect(dialog.locator('[name="welcomeMessage"]')).toHaveValue(/^Hallo! Ich bin der digitale Assistent dieser Website\./);
-  await expect(dialog.locator('[name="exampleQuestions"]')).toHaveValue('Was kostet eine Nacht?\nWann ist die Wohnung frei?\nWie ist die Wohnung ausgestattet?');
+  // Beispielfragen: eine Zeile je Frage, einzeln zu ändern, zu verschieben und zu entfernen
+  const questions = dialog.locator('[name="exampleQuestion[]"]');
+  const values = () => questions.evaluateAll((inputs) => inputs.map((input) => input.value));
+  expect(await values()).toEqual(['Was kostet eine Nacht?', 'Wann ist die Wohnung frei?', 'Wie ist die Wohnung ausgestattet?']);
+  await expect(dialog.getByText('Der Assistent hat noch keinen Namen.')).toBeVisible();
   await expect(dialog.locator('[name="notice"]')).toHaveValue(/Die Antworten erstellt eine KI automatisch/);
   await expect(dialog.getByRole('link', { name: 'Einstellungen des Assistenten' })).toHaveAttribute('href', /dashboard\/fewo_tk2\/assistant$/);
   await dialog.locator('[name="title"]').fill('Zweiter Chat');
-  await dialog.locator('[name="exampleQuestions"]').fill('Eins?\n\n Zwei? \nEins?\nDrei?\nVier?\nFünf?\nSechs?\nSieben?');
+  await dialog.locator('.fewo-question-row').nth(1).getByRole('button', { name: 'Entfernen' }).click();
+  await dialog.locator('.fewo-question-row').nth(1).getByRole('button', { name: 'Nach oben' }).click();
+  expect(await values()).toEqual(['Wie ist die Wohnung ausgestattet?', 'Was kostet eine Nacht?']);
+  await questions.nth(0).fill('Eins?');
+  await questions.nth(1).fill(' Zwei? ');
+  // Die Eingabetaste in der letzten Zeile legt die nächste an; mehr als sechs gehen nicht
+  for (const text of ['Eins?', 'Drei?', '', 'Vier?']) {
+    await questions.last().press('Enter');
+    await questions.last().fill(text);
+  }
+  await expect(questions).toHaveCount(6);
+  await expect(dialog.getByRole('button', { name: 'Frage hinzufügen' })).toBeDisabled();
   await submitDialog(page, dialog);
   await expect(blocks(page, 'fewo_chat')).toHaveCount(2);
 
   dialog = await openEditDialog(page, 'fewo_chat', 1);
-  // bereinigt: ohne Leerzeilen und Doppelte, höchstens sechs
-  await expect(dialog.locator('[name="exampleQuestions"]')).toHaveValue('Eins?\nZwei?\nDrei?\nVier?\nFünf?\nSechs?');
+  // bereinigt: ohne leere Zeilen und Doppelte
+  expect(await dialog.locator('[name="exampleQuestion[]"]').evaluateAll((inputs) => inputs.map((input) => input.value))).toEqual(['Eins?', 'Zwei?', 'Drei?', 'Vier?']);
+  await expect(dialog.getByRole('button', { name: 'Frage hinzufügen' })).toBeEnabled();
   await dialog.locator('[name="welcomeMessage"]').fill('');
   await dialog.locator('[name="notice"]').fill('<b>Hinweis</b> mit HTML');
   await submitDialog(page, dialog);
@@ -296,12 +353,144 @@ test('Block-Dialog: Vorgaben beim Hinzufügen, Bearbeiten und zwei Chats auf ein
   const second = chats.nth(1);
   await expect(second.getByRole('heading', { name: 'Zweiter Chat' })).toBeVisible();
   await expect(second.locator('.fewo-chat__message')).toHaveCount(0);
-  await expect(second.locator('.fewo-chat__example')).toHaveCount(6);
+  await expect(second.locator('.fewo-chat__example')).toHaveText(['Eins?', 'Zwei?', 'Drei?', 'Vier?']);
   // Texte aus dem Formular werden als Text ausgegeben, nicht als HTML
   await expect(second.locator('.fewo-chat__notice').first()).toHaveText('<b>Hinweis</b> mit HTML');
   // Jeder Chat führt sein eigenes Gespräch
   await second.getByRole('button', { name: 'Zwei?' }).click();
   await expect(second.locator('.fewo-chat__message--assistant .fewo-chat__text')).toContainText('Stub-Antwort auf: Zwei? (Verlauf: 0');
   await expect(chats.nth(0).locator('.fewo-chat__message--user')).toHaveCount(0);
+  await guest.context().close();
+});
+
+test('Name des Assistenten und Chat auf jeder Seite', async ({ page, browser }) => {
+  const HOME = '/index.php';
+  const OTHER = '/index.php/fewo-anfrage';
+  // Ausgeschaltet: kein Chat am Seitenende, die Adressen des Chats antworten nicht
+  let guest = await (await browser.newContext(GUEST)).newPage();
+  await guest.goto(HOME);
+  await expect(guest.locator('[data-fewo-chat-widget]')).toHaveCount(0);
+  expect((await guest.request.get('/index.php/fewo_tk2/chat/token')).status()).toBe(404);
+  expect((await guest.request.post('/index.php/fewo_tk2/chat/ask', { form: { question: 'Hallo' } })).status()).toBe(404);
+  await guest.context().close();
+
+  // Dashboard: Name, Chat auf jeder Seite einschalten, Texte und Beispielfragen
+  await page.goto(DASHBOARD);
+  await page.fill('#name', ' "Emma" ');
+  await page.check('#widgetEnabled');
+  await page.fill('#widgetHint', 'Fragen? Emma hilft gern.');
+  await page.fill('#widgetGreeting', 'Hallo, ich bin Emma!');
+  await page.fill('#widgetNotice', 'Hier antwortet eine KI.');
+  const section = page.locator('#fewo-assistant-widget');
+  await expect(section.getByText('Keine Beispielfragen – der Chat zeigt nur das Eingabefeld.')).toBeVisible();
+  for (const text of ['Was kostet eine Nacht?', 'Weg damit', 'Gibt es WLAN?']) {
+    await section.getByRole('button', { name: 'Frage hinzufügen' }).click();
+    await section.locator('[name="widgetQuestions[]"]').last().fill(text);
+  }
+  await section.locator('.fewo-question-row').nth(1).getByRole('button', { name: 'Entfernen' }).click();
+  await save(page);
+  await expect(page.locator('#name')).toHaveValue('Emma');
+  await expect(page.locator('#widgetEnabled')).toBeChecked();
+  expect(await section.locator('[name="widgetQuestions[]"]').evaluateAll((inputs) => inputs.map((input) => input.value))).toEqual(['Was kostet eine Nacht?', 'Gibt es WLAN?']);
+
+  // Besucher: zuerst nur die kleine Schaltfläche unten rechts
+  guest = await (await browser.newContext({ ...GUEST, viewport: { width: 1280, height: 800 } })).newPage();
+  let warmed = 0;
+  guest.on('request', (request) => { warmed += /\/fewo_tk2\/chat\/warm$/.test(request.url()) ? 1 : 0; });
+  await guest.goto(HOME);
+  const widget = guest.locator('[data-fewo-chat-widget]');
+  const launcher = widget.getByRole('button', { name: 'Fragen? Emma hilft gern.' });
+  const panel = widget.locator('[data-fewo-chat-panel]');
+  await expect(launcher).toBeVisible();
+  await expect(panel).toBeHidden();
+  const box = await launcher.boundingBox();
+  expect(box.x + box.width).toBeGreaterThan(1280 - 40);
+  expect(box.y + box.height).toBeGreaterThan(800 - 40);
+  expect(warmed, 'das Modell wird erst beim Öffnen vorbereitet').toBe(0);
+
+  // Ein Klick öffnet den Chat: Name, Begrüßung, Beispielfragen, Hinweis; der Fokus steht im Eingabefeld
+  await launcher.click();
+  await expect(panel).toBeVisible();
+  await expect(launcher).toBeHidden();
+  await expect(guest.getByRole('dialog', { name: 'Emma' })).toBeVisible();
+  await expect(panel.locator('.fewo-chat-widget__title')).toHaveText('Emma');
+  await expect(panel.locator('.fewo-chat__message .fewo-chat__author')).toHaveText('Emma');
+  await expect(panel.locator('.fewo-chat__message .fewo-chat__text')).toHaveText('Hallo, ich bin Emma!');
+  await expect(panel.locator('.fewo-chat__example')).toHaveText(['Was kostet eine Nacht?', 'Gibt es WLAN?']);
+  await expect(panel.locator('.fewo-chat__notice').first()).toHaveText('Hier antwortet eine KI.');
+  await expect(panel.locator('[name="question"]')).toBeFocused();
+  await expect.poll(() => warmed).toBe(1);
+  const accessibility = await new AxeBuilder({ page: guest }).include('[data-fewo-chat-widget]').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  expect(accessibility.violations.map((violation) => violation.id + ': ' + violation.nodes.map((node) => node.target).join(', '))).toEqual([]);
+
+  // Der Assistent kennt seinen Namen; die Antwort steht unter seinem Namen
+  let answer = await ask(panel, 'REGELN');
+  await expect(answer.locator('.fewo-chat__author')).toHaveText('Emma');
+  await expect(answer.locator('.fewo-chat__text')).toContainText('Your name is "Emma". You are the friendly digital assistant');
+  await expect(panel.locator('.fewo-chat__examples')).toBeHidden();
+
+  // Preis eines Aufenthalts: Der Server rechnet (mit Endreinigung) und gibt dem Modell das Ergebnis mit
+  const date = (days) => new Date(Date.now() + days * 86400000).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  answer = await ask(panel, `Was kostet es vom ${date(40)} bis ${date(45)} für 2 Personen?`);
+  await expect(answer.locator('.fewo-chat__text')).toContainText(`Berechnung des Buchungssystems für den Aufenthalt vom ${date(40)} bis ${date(45)} (5 Nächte):`);
+  await expect(answer.locator('.fewo-chat__text')).toContainText(/2 Gäste: (Gesamtpreis \d+.* \(einschließlich Endreinigung\) = .*Nächte? × .*\+ Endreinigung|lässt sich nicht berechnen)/);
+  // Nachfrage ohne Datum: Es gilt der Zeitraum aus dem Gespräch
+  answer = await ask(panel, 'Und zu dritt?');
+  await expect(answer.locator('.fewo-chat__text')).toContainText(`für den Aufenthalt vom ${date(40)} bis ${date(45)}`);
+  await expect(answer.locator('.fewo-chat__text')).toContainText('3 Gäste:');
+  // andere Fragen bleiben, wie sie sind
+  answer = await ask(panel, 'Kennst du Geschirrspüler?');
+  await expect(answer.locator('.fewo-chat__text')).toHaveText(/^Stub-Antwort auf: Kennst du Geschirrspüler\? \(Verlauf: 6, .*Bekannt: ja\.$/);
+
+  // Seitenwechsel: Der Chat bleibt offen, das Gespräch steht wieder da und geht mit Verlauf weiter
+  await guest.goto(OTHER);
+  await expect(panel).toBeVisible();
+  await expect(panel.locator('.fewo-chat__message--user')).toHaveCount(4);
+  await expect(panel.locator('.fewo-chat__message--assistant')).toHaveCount(5);
+  answer = await ask(panel, 'Und jetzt?');
+  await expect(answer.locator('.fewo-chat__text')).toContainText('Stub-Antwort auf: Und jetzt? (Verlauf: 6,');
+
+  // Schließen mit Escape bzw. dem Kreuz; geschlossen bleibt er auch auf der nächsten Seite
+  await guest.keyboard.press('Escape');
+  await expect(panel).toBeHidden();
+  await expect(launcher).toBeFocused();
+  await launcher.press('Enter');
+  await expect(panel).toBeVisible();
+  await panel.getByRole('button', { name: 'Chat schließen' }).click();
+  await expect(panel).toBeHidden();
+  await guest.goto(HOME);
+  await expect(launcher).toBeVisible();
+  await expect(panel).toBeHidden();
+
+  // Seite mit Chat-Block: nur der Block; Anmeldeseite: kein Chat
+  await guest.goto(DEMO);
+  await expect(guest.locator('.fewo-chat:not(.fewo-chat--widget)').first()).toBeVisible();
+  await expect(widget).toBeHidden();
+  await guest.goto('/index.php/login');
+  await expect(guest.locator('[data-fewo-chat-widget]')).toHaveCount(0);
+
+  // schmaler Bildschirm: Der Chat passt in die Breite
+  await guest.setViewportSize({ width: 390, height: 760 });
+  await guest.goto(HOME);
+  await launcher.click();
+  const size = await panel.boundingBox();
+  expect(size.x).toBeGreaterThanOrEqual(0);
+  expect(size.x + size.width).toBeLessThanOrEqual(390);
+  expect(size.y).toBeGreaterThanOrEqual(0);
+  await guest.context().close();
+
+  // Im Dashboard und im Bearbeitungsmodus erscheint er nicht
+  await expect(page.locator('[data-fewo-chat-widget]')).toHaveCount(0);
+  await enterEditMode(page, OTHER);
+  await expect(page.locator('[data-fewo-chat-widget]')).toHaveCount(0);
+
+  // Ohne Hinweistext: nur das Symbol, mit Beschriftung für Screenreader
+  await page.goto(DASHBOARD);
+  await page.fill('#widgetHint', '');
+  await save(page);
+  guest = await (await browser.newContext(GUEST)).newPage();
+  await guest.goto(HOME);
+  await expect(guest.getByRole('button', { name: 'Chat mit Emma öffnen' })).toBeVisible();
+  await expect(guest.locator('.fewo-chat-widget__hint')).toHaveCount(0);
   await guest.context().close();
 });

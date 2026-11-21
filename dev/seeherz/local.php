@@ -12,7 +12,7 @@ use Concrete\Core\Support\Facade\Application;
 use Concrete\Core\User\UserInfoRepository;
 
 $app = Application::getFacadeApplication();
-$password = (string) (($args ?? [])[0] ?? 'seeherz-test-admin');
+$password = (string) (($args ?? [])[0] ?? 'admin');
 
 // Keine feste Adresse der Website: Concrete bildet Links dann aus der aufgerufenen Adresse. So funktioniert
 // die Instanz unter http://localhost:8096 genauso wie von einem anderen Rechner unter http://<Rechner>:8096.

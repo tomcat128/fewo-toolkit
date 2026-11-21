@@ -72,9 +72,9 @@ const isoDate = (days) => {
   await dash.locator('tbody a', { hasText: 'Seeherz (Demo)' }).first().click();
   await ready();
   await shot(dash, 'dashboard-wohnung-bearbeiten');
-  await dash.goto(BASE + '/index.php/dashboard/fewo_tk2/inquiries');
+  await dash.goto(BASE + '/index.php/dashboard/fewo_tk2/prices');
   await ready();
-  await shot(dash, 'dashboard-anfragen');
+  await shot(dash, 'dashboard-preise');
   await dash.goto(BASE + '/index.php/dashboard/fewo_tk2/assistant');
   await ready();
   await shot(dash, 'dashboard-ki-assistent');

@@ -142,7 +142,7 @@ test('Anfrageformular: Vorgaben, Prüfung der Empfängeradresse, Captcha einscha
   await expect(dialog.locator('[name="successMessage"]')).toHaveValue('Vielen Dank für Ihre Anfrage! Wir melden uns so schnell wie möglich bei Ihnen.');
   await expect(dialog.locator('[name="maxGuests"]')).toHaveValue('6');
   await expect(dialog.getByLabel('Wohnung (optional)').locator('option')).toHaveText(['Keine', ...APARTMENTS.slice(1)]);
-  for (const name of ['storeInquiries', 'sendConfirmation', 'askForAddress']) {
+  for (const name of ['sendConfirmation', 'askForAddress']) {
     await expect(dialog.locator(`[name="${name}"]`)).toBeChecked();
   }
   await expect(dialog.locator('[name="useCaptcha"]')).not.toBeChecked();
@@ -162,7 +162,7 @@ test('Anfrageformular: Vorgaben, Prüfung der Empfängeradresse, Captcha einscha
   await expect(block.locator('[name="adults"] option')).toHaveCount(3);
   expect(record('btFewoKontaktformular')).toMatchObject({
     formName: 'E2E Formular', recipientEmail: 'vermieter@fewo-dev.test', apartmentID: 0, maxGuests: 3, accommodations: 'Seeherz\nSeeherzchen',
-    askForAddress: 1, useCaptcha: 0, storeInquiries: 1, sendConfirmation: 0,
+    askForAddress: 1, useCaptcha: 0, sendConfirmation: 0,
   });
 
   dialog = await openEditDialog(page, 'fewo_kontaktformular');
@@ -236,7 +236,7 @@ test('Bildergalerie: Quelle umschalten, Ordner wählen', async ({ page }) => {
   await dialog.getByLabel('Bilder aus').selectOption({ label: 'Ordner der Dateiverwaltung' });
   await expect(folder).toBeVisible();
   // Ordner werden mit ihrem Pfad angezeigt
-  await expect(folder.locator('option', { hasText: 'Fewo Demo' })).toHaveText('/Fewo Demo');
+  await expect(folder.locator('option', { hasText: /^\/Fewo Demo$/ })).toHaveText('/Fewo Demo');
   await folder.locator('select').selectOption({ label: '/Fewo Demo' });
   await dialog.getByLabel('Reihenfolge').selectOption({ label: 'Titel (A–Z)' });
   await dialog.getByLabel('Spalten').selectOption('4');
@@ -408,7 +408,6 @@ test('Veröffentlichen: Besucher sehen alle acht Blöcke, das Log bleibt sauber'
   await expect(quote.locator('.fewo-quote__total-amount')).toHaveText(/^365,00\s€$/);
 
   // Captcha: ohne und mit falschem Code abgelehnt, mit richtigem Code angenommen
-  sql("DELETE FROM FewoInquiries WHERE email LIKE '%@e2e.test'");
   await mail.clear();
   const form = view.locator('form[data-fewo-inquiry]');
   const fill = async () => {
@@ -427,7 +426,7 @@ test('Veröffentlichen: Besucher sehen alle acht Blöcke, das Log bleibt sauber'
   await view.waitForTimeout(3200);
   await form.getByRole('button', { name: 'Anfrage senden' }).click();
   await expect(view.getByText('Der Sicherheitscode ist nicht korrekt.')).toBeVisible();
-  expect(sql("SELECT COUNT(*) FROM FewoInquiries WHERE email = 'captcha@e2e.test'")).toBe('0');
+  expect(await mail.list()).toHaveLength(0);
 
   // Den richtigen Code kennt nur der Server: aus der Sitzung des Besuchers lesen
   await expect(form.locator('.fewo-form__captcha img')).toBeVisible();
@@ -441,9 +440,10 @@ test('Veröffentlichen: Besucher sehen alle acht Blöcke, das Log bleibt sauber'
   await view.waitForTimeout(3200);
   await form.getByRole('button', { name: 'Anfrage senden' }).click();
   await expect(view.locator('.fewo-form__success')).toBeVisible();
-  expect(sql("SELECT CONCAT(formName, '|', accommodation, '|', adults) FROM FewoInquiries WHERE email = 'captcha@e2e.test'")).toBe('E2E Formular|Seeherzchen|1');
-  expect(await mail.waitFor(1)).toHaveLength(1);
-  sql("DELETE FROM FewoInquiries WHERE email LIKE '%@e2e.test'");
+  const sent = await mail.waitFor(1);
+  expect(sent).toHaveLength(1);
+  expect(sent[0].Subject).toMatch(/^Neue Anfrage \(E2E Formular\): .*, Captcha$/);
+  expect((await mail.get(sent[0].ID)).Text).toMatch(/Unterkunft: +Seeherzchen\n/);
   await guest.close();
 
   // Keine PHP-Warnungen aus dem Paket und keine Fehler im Concrete-Log seit Beginn dieser Datei

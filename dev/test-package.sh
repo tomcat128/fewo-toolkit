@@ -58,8 +58,8 @@ docker exec -u www-data -w /srv/app/public ${NET}-web bash -euo pipefail -c '
   grep -q "/ Nacht" /tmp/demo.html
   ./concrete/bin/concrete c5:package:uninstall fewo_tk2 2>/dev/null | tail -1
 '
-# Nach dem Deinstallieren bleiben Anfragen und zwischengespeicherte Daten in der Datenbank
-TABLES="$(docker exec ${NET}-db mariadb -uconcrete -pconcrete concrete -N -B -e "SELECT CONCAT((SELECT COUNT(*) FROM FewoApartments), ' Wohnungen, ', (SELECT COUNT(*) FROM FewoFeeds WHERE body IS NOT NULL), ' abgerufene Adressen, ', (SELECT COUNT(*) FROM FewoInquiries), ' Anfragen')")"
+# Nach dem Deinstallieren bleiben Wohnungen und zwischengespeicherte Daten in der Datenbank
+TABLES="$(docker exec ${NET}-db mariadb -uconcrete -pconcrete concrete -N -B -e "SELECT CONCAT((SELECT COUNT(*) FROM FewoApartments), ' Wohnungen, ', (SELECT COUNT(*) FROM FewoFeeds WHERE body IS NOT NULL), ' abgerufene Adressen')")"
 echo "Nach der Deinstallation erhalten: ${TABLES}"
 
 # Nicht gezählt: Warnungen zum Sitzungsstart – sie entstehen, weil das Demo-Skript auf der Kommandozeile

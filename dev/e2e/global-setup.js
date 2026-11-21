@@ -7,14 +7,14 @@ module.exports = async (config) => {
   const page = await browser.newPage({ locale: 'de-DE' });
   await page.goto(baseURL + '/index.php/login');
   await page.fill('#uName', process.env.FEWO_ADMIN_USER || 'admin');
-  await page.fill('#uPassword', process.env.FEWO_ADMIN_PASSWORD || 'fewo-dev-admin');
+  await page.fill('#uPassword', process.env.FEWO_ADMIN_PASSWORD || 'admin');
   await Promise.all([
     page.waitForURL((url) => !url.pathname.includes('/login')),
     page.click('form.concrete-login-form button.btn-primary'),
   ]);
 
   // Hinweis von Concrete zur Datenerhebung einmalig bestätigen, er verdeckt sonst Schaltflächen
-  await page.goto(baseURL + '/index.php/dashboard/fewo_tk2/inquiries');
+  await page.goto(baseURL + '/index.php/dashboard/fewo_tk2/apartments');
   const notice = page.getByRole('button', { name: 'Akzeptieren und Schließen' });
   if (await notice.count()) {
     await notice.click();

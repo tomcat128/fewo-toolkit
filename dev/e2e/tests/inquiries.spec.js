@@ -1,12 +1,11 @@
-// Anfrageformular (als Gast) und Dashboard › Fewo Toolkit › Buchungsanfragen
+// Anfrageformular (als Gast): Die Anfrage geht per E-Mail an die im Block hinterlegte Adresse. Gespeichert wird
+// nichts – eine Seite "Buchungsanfragen" gibt es im Dashboard nicht (mehr).
 const { test, expect, sql, mail, isoDate } = require('./helpers');
 
 const FORM_PAGE = '/index.php/fewo-anfrage';
 const DASHBOARD = '/index.php/dashboard/fewo_tk2/inquiries';
 const GUEST = { cookies: [], origins: [] };
 
-const cleanup = () => sql("DELETE FROM FewoInquiries WHERE email LIKE '%@e2e.test'");
-const count = (where = '1') => Number(sql(`SELECT COUNT(*) FROM FewoInquiries WHERE email LIKE '%@e2e.test' AND ${where}`));
 
 /** Füllt das Formular als Gast aus; abgeschickt wird erst mit send(). */
 const fillForm = async (page, data = {}) => {
@@ -32,8 +31,7 @@ const fillForm = async (page, data = {}) => {
 const send = (form) => form.getByRole('button', { name: 'Anfrage senden' }).click();
 
 test.describe.configure({ mode: 'serial' });
-test.beforeAll(async () => { cleanup(); await mail.clear(); });
-test.afterAll(cleanup);
+test.beforeAll(async () => { await mail.clear(); });
 
 test.describe('als Gast', () => {
   test.use({ storageState: GUEST });
@@ -51,7 +49,6 @@ test.describe('als Gast', () => {
     await expect(form.locator('[name="lastName"]')).toHaveValue('Mustermann');
     await expect(form.locator('[name="arrival"]')).toHaveValue(isoDate(30));
     await expect(form.locator('[name="accommodation"]')).toHaveValue('Seeherz, 42 m², max. 4 Personen');
-    expect(count()).toBe(0);
     expect(await mail.list()).toHaveLength(0);
   });
 
@@ -67,7 +64,7 @@ test.describe('als Gast', () => {
     await form.evaluate((el) => el.submit());
     await expect(page.getByText('Es können höchstens 4 Gäste übernachten.')).toBeVisible();
     await expect(page.getByText('Die Abreise muss nach der Anreise liegen.')).toBeVisible();
-    expect(count()).toBe(0);
+    expect(await mail.list()).toHaveLength(0);
   });
 
   test('Köderfeld: Spam wird stillschweigend verworfen', async ({ page }) => {
@@ -77,16 +74,10 @@ test.describe('als Gast', () => {
     await page.waitForTimeout(3200);
     await send(form);
     await expect(page.locator('.fewo-form__success')).toBeVisible();
-    expect(count()).toBe(0);
     expect(await mail.list()).toHaveLength(0);
   });
 
-  test('gültige Anfrage: Dank, Speicherung und zwei E-Mails auf Deutsch', async ({ page }) => {
-    // Eine Anfrage jenseits der Löschfrist (Vorgabe: 365 Tage) verschwindet, sobald eine neue gespeichert wird
-    sql(`INSERT INTO FewoInquiries (createdAt, status, formName, accommodation, salutation, firstName, lastName, email, phone, street, postalCode, city, country, adults, children, arrival, departure, message, referralSource, currency)
-         VALUES (NOW() - INTERVAL 400 DAY, 'done', 'E2E', '', '', 'Uralt', 'Anfrage', 'uralt@e2e.test', '', '', '', '', '', 2, 0, CURDATE(), CURDATE() + INTERVAL 3 DAY, '', '', 'EUR')`);
-    expect(count("email = 'uralt@e2e.test'")).toBe(1);
-
+  test('gültige Anfrage: Dank und zwei E-Mails auf Deutsch', async ({ page }) => {
     await page.goto(FORM_PAGE);
     const form = await fillForm(page);
     await page.waitForTimeout(3200);
@@ -96,23 +87,18 @@ test.describe('als Gast', () => {
     await expect(page.locator('.fewo-form__success')).toHaveText('Vielen Dank für Ihre Anfrage! Wir melden uns schnellstmöglich.');
     await expect(page.locator('form[data-fewo-inquiry]')).toHaveCount(0);
 
-    expect(sql("SELECT CONCAT_WS('|', status, formName, accommodation, salutation, firstName, lastName, adults, children, postalCode, referralSource, quotedTotal > 0) FROM FewoInquiries WHERE email = 'erika@e2e.test'"))
-      .toBe('new|Seeherz|Seeherz, 42 m², max. 4 Personen|Frau|Erika|Mustermann|2|1|78462|Empfehlung|1');
-
-    expect(count("email = 'uralt@e2e.test'")).toBe(0);
-
     const messages = await mail.waitFor(2);
     expect(messages).toHaveLength(2);
     const notification = await mail.get(messages.find((m) => m.To[0].Address === 'vermieter@fewo-dev.test').ID);
     const confirmation = await mail.get(messages.find((m) => m.To[0].Address === 'erika@e2e.test').ID);
 
-    expect(notification.Subject).toMatch(/^Neue Buchungsanfrage \(Seeherz\): \d\d\.\d\d\.–\d\d\.\d\d\.\d{4}, Erika Mustermann$/);
+    expect(notification.Subject).toMatch(/^Neue Anfrage \(Seeherz\): \d\d\.\d\d\.–\d\d\.\d\d\.\d{4}, Erika Mustermann$/);
     expect(notification.ReplyTo[0].Address).toBe('erika@e2e.test');
     for (const text of [notification.Text, notification.HTML]) {
-      for (const expected of ['Neue Buchungsanfrage über Fewo Toolkit Dev', 'Anreise', 'Abreise', 'Nächte', 'Erwachsene', 'Kinder', 'Unverbindlicher Preis', 'Frau Erika Mustermann', 'Seestraße 5, 78462 Konstanz, Deutschland', 'Wie sind Sie auf uns aufmerksam geworden?', 'Wir kommen mit Hund.', 'Im Dashboard ansehen', '/dashboard/fewo_tk2/inquiries/detail/']) {
+      for (const expected of ['Neue Anfrage über Fewo Toolkit Dev', 'Anreise', 'Abreise', 'Nächte', 'Erwachsene', 'Kinder', 'Unverbindlicher Preis', 'Frau Erika Mustermann', 'Seestraße 5, 78462 Konstanz, Deutschland', 'Wie sind Sie auf uns aufmerksam geworden?', 'Wir kommen mit Hund.']) {
         expect(text).toContain(expected);
       }
-      expect(text).not.toMatch(/Arrival|Departure|Adults|Non-binding|View in the dashboard/);
+      expect(text).not.toMatch(/Arrival|Departure|Adults|Non-binding|Dashboard|dashboard/);
     }
     // Im Klartext steht zwischen Bezeichnung und Wert immer ein Leerzeichen
     expect(notification.Text).toMatch(/Unverbindlicher Preis: +\d+,\d\d\s€/);
@@ -128,76 +114,15 @@ test.describe('als Gast', () => {
 });
 
 test.describe('Dashboard', () => {
-  test('Liste, Detail, Status ändern, löschen', async ({ page }) => {
-    await page.goto(DASHBOARD);
-    const listRow = page.locator('tbody tr').filter({ hasText: 'Erika Mustermann' });
-    await expect(listRow).toHaveCount(1);
-    await expect(listRow).toContainText('Neu');
-    await expect(listRow).toContainText('Seeherz, 42 m², max. 4 Personen');
-    await expect(listRow).toContainText('€');
+  test('keine Buchungsanfragen: Die Website speichert nichts, das Dashboard hat dafür keine Seite', async ({ page }) => {
+    expect(sql("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name = 'FewoInquiries'")).toBe('0');
 
-    // Filter
-    await page.getByRole('link', { name: 'Erledigt', exact: true }).click();
-    await expect(listRow).toHaveCount(0);
-    await page.getByRole('link', { name: /^Neu/ }).click();
-    await expect(listRow).toHaveCount(1);
-
-    await listRow.getByRole('link', { name: 'Erika Mustermann' }).click();
-    await expect(page).toHaveURL(/inquiries\/detail\/\d+/);
-    const main = page.locator('#ccm-dashboard-content-regular');
-    for (const text of ['Reisezeitraum', '5 Nächte', 'Erwachsene: 2, Kinder: 1', 'Unverbindlicher Preis', 'erika@e2e.test', '+49 7531 123456', 'Seestraße 5', 'Empfehlung', 'Wir kommen mit Hund.']) {
-      await expect(main).toContainText(text);
-    }
-    const reply = page.getByRole('link', { name: 'Per E-Mail antworten' });
-    expect(decodeURIComponent(await reply.getAttribute('href'))).toMatch(/^mailto:erika@e2e\.test\?subject=Ihre Anfrage vom \d\d\.\d\d\.\d{4} bis \d\d\.\d\d\.\d{4}$/);
-
-    await page.getByRole('button', { name: 'Als erledigt markieren' }).click();
-    await expect(page.getByText('Der Status wurde geändert.')).toBeVisible();
-    expect(count("status = 'done'")).toBe(1);
-    await page.getByRole('button', { name: 'Als neu markieren' }).click();
-    await expect(page.getByRole('button', { name: 'Als erledigt markieren' })).toBeVisible();
-    expect(count("status = 'new'")).toBe(1);
-
-    page.once('dialog', (dialog) => dialog.dismiss());
-    await page.getByRole('button', { name: 'Anfrage löschen' }).click();
-    expect(count()).toBe(1);
-    page.once('dialog', (dialog) => {
-      expect(dialog.message()).toBe('Diese Anfrage endgültig löschen?');
-      dialog.accept();
-    });
-    await page.getByRole('button', { name: 'Anfrage löschen' }).click();
-    await expect(page.getByText('Die Anfrage wurde gelöscht.')).toBeVisible();
-    expect(count()).toBe(0);
-  });
-
-  test('Löschfrist: speichern und abgelaufene Anfragen automatisch löschen', async ({ page }) => {
-    const insert = (email, ageDays) => sql(
-      `INSERT INTO FewoInquiries (createdAt, status, formName, accommodation, salutation, firstName, lastName, email, phone, street, postalCode, city, country, adults, children, arrival, departure, message, referralSource, currency)
-       VALUES (NOW() - INTERVAL ${ageDays} DAY, 'new', 'E2E', '', '', 'Alt', 'Anfrage ${ageDays}', '${email}', '', '', '', '', '', 2, 0, CURDATE(), CURDATE() + INTERVAL 3 DAY, '', '', 'EUR')`,
-    );
-    insert('alt@e2e.test', 40);
-    insert('neu@e2e.test', 5);
-
-    // 0 = nie löschen
-    await page.goto(DASHBOARD);
-    await page.fill('#retentionDays', '0');
-    await page.locator('form[action*="save_settings"]').getByRole('button', { name: 'Speichern' }).click();
-    await expect(page.getByText('Die Einstellungen wurden gespeichert.')).toBeVisible();
-    await expect(page.locator('#retentionDays')).toHaveValue('0');
-    await page.reload();
-    expect(count()).toBe(2);
-
-    // 30 Tage: die 40 Tage alte Anfrage verschwindet beim nächsten Aufruf der Liste
-    await page.fill('#retentionDays', '30');
-    await page.locator('form[action*="save_settings"]').getByRole('button', { name: 'Speichern' }).click();
-    await expect(page.locator('#retentionDays')).toHaveValue('30');
-    await expect(page.locator('tbody tr').filter({ hasText: 'Anfrage 5' })).toHaveCount(1);
-    await expect(page.locator('tbody tr').filter({ hasText: 'Anfrage 40' })).toHaveCount(0);
-    expect(count("email = 'alt@e2e.test'")).toBe(0);
-    expect(count("email = 'neu@e2e.test'")).toBe(1);
-
-    await page.fill('#retentionDays', '365');
-    await page.locator('form[action*="save_settings"]').getByRole('button', { name: 'Speichern' }).click();
-    await expect(page.locator('#retentionDays')).toHaveValue('365');
+    // "Fewo Toolkit 2" führt zu den Wohnungen; im Menü stehen nur Wohnungen und KI-Assistent
+    await page.goto('/index.php/dashboard/fewo_tk2');
+    await expect(page).toHaveURL(/dashboard\/fewo_tk2\/apartments/);
+    await expect(page.getByRole('link', { name: 'Fewo Toolkit 2', exact: true }).first()).toBeVisible();
+    await expect(page.locator('a[href*="/dashboard/fewo_tk2/"]').filter({ hasText: /Anfragen/ })).toHaveCount(0);
+    const response = await page.goto(DASHBOARD);
+    expect(response.status()).toBe(404);
   });
 });

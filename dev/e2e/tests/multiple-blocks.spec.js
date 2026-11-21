@@ -129,7 +129,7 @@ test('360°-Rundgänge laufen unabhängig voneinander', async ({ page }) => {
   await expect(tours).toHaveCount(2);
   // Einstellungen als JSON, je ein eigenes Bild und Seitenverhältnis
   await expect(tours.nth(0).locator('.pnlm-title-box')).toHaveText('Wohnzimmer');
-  await expect(tours.nth(1).locator('.pnlm-title-box')).toHaveText('Schlafzimmer');
+  await expect(tours.nth(1).locator('.pnlm-title-box')).toHaveText('Schlafzimmer (eigene Einstellungen)');
   await expect(tours.locator('.pnlm-container canvas')).toHaveCount(2);
   const ratio = async (index) => { const box = await tours.nth(index).locator('.fewo-tour__viewer').boundingBox(); return box.width / box.height; };
   expect(Math.abs(await ratio(0) - 2)).toBeLessThan(0.02);
@@ -184,7 +184,6 @@ test('Karten: Zustimmung gilt für die angeklickte Karte, mit "immer laden" für
 });
 
 test('Anfrageformulare: Fehler und Dank erscheinen nur im abgeschickten Formular', async ({ page }) => {
-  sql("DELETE FROM FewoInquiries WHERE email LIKE '%@e2e.test'");
   await mail.clear();
   const blocks = page.locator('.fewo-form');
   await expect(blocks).toHaveCount(2);
@@ -216,10 +215,9 @@ test('Anfrageformulare: Fehler und Dank erscheinen nur im abgeschickten Formular
   await expect(blocks.nth(1).locator('.fewo-form__success')).toHaveText('Danke für Ihre Anfrage für Seeherzchen!');
   await expect(blocks.nth(0).locator('.fewo-form__success')).toHaveCount(0);
   await expect(blocks.nth(0).locator('form')).toBeVisible();
-  // 3 Nächte × 55 € + 40 € aus der Preisliste des zweiten Formulars
-  expect(sql("SELECT CONCAT(formName, '|', quotedTotal) FROM FewoInquiries WHERE email = 'doppelt@e2e.test'")).toBe('Seeherzchen|20500');
   const messages = await mail.waitFor(1);
   expect(messages).toHaveLength(1); // keine Bestätigung an den Gast, weil im Block abgeschaltet
-  expect(messages[0].Subject).toContain('Neue Buchungsanfrage (Seeherzchen)');
-  sql("DELETE FROM FewoInquiries WHERE email LIKE '%@e2e.test'");
+  expect(messages[0].Subject).toContain('Neue Anfrage (Seeherzchen)');
+  // 3 Nächte × 55 € + 40 € aus der Preisliste des zweiten Formulars
+  expect((await mail.get(messages[0].ID)).Text).toMatch(/Unverbindlicher Preis: +205,00\s€/);
 });

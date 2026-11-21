@@ -207,7 +207,6 @@ $blocks = array_merge(
             'accommodations' => 'Ferienapartment Seeherz, max. 3 Personen',
             'referralOptions' => "Suchmaschine\nUrlaubsportal\nEmpfehlung",
             'askForAddress' => 1,
-            'storeInquiries' => 1,
             'sendConfirmation' => 1,
             'successMessage' => 'Vielen Dank für Ihre Anfrage! Wir melden uns schnellstmöglich.',
         ]],
