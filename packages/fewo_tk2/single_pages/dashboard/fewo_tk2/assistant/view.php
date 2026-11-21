@@ -47,6 +47,44 @@ $number = static fn (int $value): string => number_format($value, 0, ',', '.');
             <?= $form->checkbox('enabled', 1, $settings->enabled) ?>
             <?= $form->label('enabled', t('Switch on the assistant (visitors see the chat blocks)'), ['class' => 'form-check-label']) ?>
         </div>
+        <div class="mt-3">
+            <?= $form->label('name', t('Name of the assistant (optional)')) ?>
+            <?= $form->text('name', $settings->name, ['maxlength' => FewoTk2\Assistant\AssistantSettings::MAX_NAME_CHARS, 'placeholder' => t('e.g. Emma'), 'style' => 'max-width: 20rem']) ?>
+            <div class="form-text"><?= t('Shown in the chat above each answer; the assistant also knows its name. Without a name it is called "Assistant".') ?></div>
+        </div>
+    </fieldset>
+
+    <fieldset class="mb-4" id="fewo-assistant-widget">
+        <legend><?= t('Chat on every page') ?></legend>
+        <div class="form-check">
+            <?= $form->checkbox('widgetEnabled', 1, $settings->widgetEnabled) ?>
+            <?= $form->label('widgetEnabled', t('Show the chat on every page of the website (bottom right)'), ['class' => 'form-check-label']) ?>
+        </div>
+        <div class="form-text mb-3"><?= t('Visitors first see a small button with the hint text; a click opens the chat. It needs no chat block and appears once the assistant is switched on. On pages that contain a chat block, only the block is shown.') ?></div>
+        <div class="mb-3">
+            <?= $form->label('widgetHint', t('Hint text of the button')) ?>
+            <?= $form->text('widgetHint', $settings->widgetHint, ['maxlength' => FewoTk2\Assistant\AssistantSettings::MAX_HINT_CHARS, 'style' => 'max-width: 28rem']) ?>
+            <div class="form-text"><?= t('Short invitation next to the chat symbol. Leave empty to show only the symbol.') ?></div>
+        </div>
+        <div class="mb-3">
+            <?= $form->label('widgetGreeting', t('Greeting')) ?>
+            <?= $form->textarea('widgetGreeting', $settings->widgetGreeting, ['rows' => 3, 'maxlength' => 1000]) ?>
+            <div class="form-text"><?= t('First message of the assistant in the chat.') ?></div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><?= t('Example questions') ?></label>
+            <?php Concrete\Core\View\View::element('question_rows', [
+                'name' => 'widgetQuestions',
+                'questions' => $settings->getWidgetQuestions(),
+                'max' => FewoTk2\Assistant\AssistantSettings::MAX_EXAMPLES,
+                'maxLength' => FewoTk2\Assistant\AssistantSettings::MAX_QUESTION_CHARS,
+            ], 'fewo_tk2') ?>
+        </div>
+        <div class="mb-3">
+            <?= $form->label('widgetNotice', t('Note below the input field')) ?>
+            <?= $form->textarea('widgetNotice', $settings->widgetNotice, ['rows' => 2, 'maxlength' => 1000]) ?>
+            <div class="form-text"><?= t('Tell your visitors that an AI is answering.') ?></div>
+        </div>
     </fieldset>
 
     <fieldset class="mb-4">
@@ -110,6 +148,17 @@ $number = static fn (int $value): string => number_format($value, 0, ',', '.');
             <?= $form->textarea('instructions', $settings->instructions, ['rows' => 4, 'maxlength' => 4000, 'placeholder' => t('e.g. Address visitors informally. Pets are welcome on request.')]) ?>
             <div class="form-text"><?= t('Tone of voice or facts that are not on the website. The basic rules (answer only from the website content, no invented prices) always apply.') ?></div>
         </div>
+    </fieldset>
+
+    <fieldset class="mb-4" id="fewo-assistant-keywords">
+        <legend><?= t('Explanations for keywords') ?></legend>
+        <p class="form-text mt-0"><?= t('If a visitor\'s question contains one of the keywords, the assistant receives your explanation with it and answers accordingly – even if the website says something different. Use this to correct wrong answers or to add what the website does not say. Separate several keywords with commas; upper and lower case and umlauts do not matter, and a keyword also matches inside longer words ("parking" in "parking space").') ?></p>
+        <?php Concrete\Core\View\View::element('note_rows', [
+            'notes' => $settings->notes,
+            'max' => FewoTk2\Assistant\KeywordNotes::MAX_NOTES,
+            'maxKeywords' => FewoTk2\Assistant\KeywordNotes::MAX_KEYWORDS_CHARS,
+            'maxText' => FewoTk2\Assistant\KeywordNotes::MAX_TEXT_CHARS,
+        ], 'fewo_tk2') ?>
     </fieldset>
 
     <fieldset class="mb-4">

@@ -15,7 +15,6 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var bool $askForAddress
  * @var int $privacyPageID
  * @var bool $useCaptcha
- * @var bool $storeInquiries
  * @var bool $sendConfirmation
  * @var string $successMessage
  */
@@ -27,16 +26,12 @@ $pageSelector = app('helper/form/page_selector');
     <div class="mb-3">
         <?= $form->label('recipientEmail', t('Send inquiries to')) ?>
         <?= $form->email('recipientEmail', $recipientEmail, ['required' => 'required']) ?>
-        <div class="form-text"><?= t('Emails are sent with the settings under Dashboard › System & Settings › Email. Please configure SMTP there.') ?></div>
+        <div class="form-text"><?= t('Every inquiry is sent to this address by email; the website does not store inquiries.') ?> <?= t('Emails are sent with the settings under Dashboard › System & Settings › Email. Please configure SMTP there.') ?></div>
     </div>
     <div class="mb-3">
         <?= $form->label('formName', t('Name of the form (optional)')) ?>
         <?= $form->text('formName', $formName, ['placeholder' => t('e.g. name of the apartment')]) ?>
-        <div class="form-text"><?= t('Appears in the email subject and in the dashboard.') ?></div>
-    </div>
-    <div class="form-check">
-        <?= $form->checkbox('storeInquiries', 1, (bool) $storeInquiries) ?>
-        <?= $form->label('storeInquiries', t('Save inquiries in the dashboard'), ['class' => 'form-check-label']) ?>
+        <div class="form-text"><?= t('Appears in the email subject.') ?></div>
     </div>
     <div class="form-check mb-3">
         <?= $form->checkbox('sendConfirmation', 1, (bool) $sendConfirmation) ?>

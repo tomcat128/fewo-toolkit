@@ -1,103 +1,111 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: fewo_tk2 2.1.0\n"
+"Project-Id-Version: fewo_tk2 2.4.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-21T09:50:31+01:00\n"
-"PO-Revision-Date: 2026-11-21T09:50:31+01:00\n"
+"POT-Creation-Date: 2026-11-21T23:45:11+01:00\n"
+"PO-Revision-Date: 2026-11-21T23:45:12+01:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: packages/fewo_tk2/controller.php:80
-msgid "Booking Inquiries"
-msgstr "Buchungsanfragen"
+#: packages/fewo_tk2/controller.php:91
+msgid "Apartments and the AI assistant."
+msgstr "Wohnungen und KI-Assistent."
 
-#: packages/fewo_tk2/controller.php:81
-msgid "Inquiries received through the booking inquiry form."
-msgstr "Anfragen, die über das Anfrageformular eingegangen sind."
-
-#: packages/fewo_tk2/controller.php:82
-msgid "Apartments and booking inquiries."
-msgstr "Wohnungen und Buchungsanfragen."
-
-#: packages/fewo_tk2/controller.php:83
+#: packages/fewo_tk2/controller.php:92
 msgid "Apartments"
 msgstr "Wohnungen"
 
-#: packages/fewo_tk2/controller.php:84
+#: packages/fewo_tk2/controller.php:93
 msgid "Fewo-Office URLs for occupancy and prices of each apartment."
 msgstr "Fewo-Office-Adressen für Belegung und Preise je Wohnung."
 
-#: packages/fewo_tk2/controller.php:85
+#: packages/fewo_tk2/controller.php:94
+msgid "Prices"
+msgstr "Preise"
+
+#: packages/fewo_tk2/controller.php:95
+msgid "Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office."
+msgstr "Preise, Mindestbelegung, Mindestdauer und Endreinigung jeder Wohnung, wie Fewo-Office sie liefert."
+
+#: packages/fewo_tk2/controller.php:96
 msgid "AI Assistant"
 msgstr "KI-Assistent"
 
-#: packages/fewo_tk2/controller.php:86
+#: packages/fewo_tk2/controller.php:97
 msgid "Chat that answers visitors' questions with a local language model (Ollama)."
 msgstr "Chat, der Fragen der Besucher mit einem lokalen Sprachmodell (Ollama) beantwortet."
 
-#: packages/fewo_tk2/controller.php:91
-msgid "Fewo Toolkit"
-msgstr "Fewo Toolkit"
+#: packages/fewo_tk2/controller.php:102
+msgid "Fewo Toolkit 2"
+msgstr "Fewo Toolkit 2"
 
-#: packages/fewo_tk2/controller.php:96
-msgid "Occupancy calendar, prices and price calculator with data from Fewo-Office, booking inquiries, 360° tours, an AI assistant and more for holiday apartment websites."
-msgstr "Belegungsplan, Preise und Preisrechner mit Daten aus Fewo-Office, Buchungsanfragen, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites."
+#: packages/fewo_tk2/controller.php:107
+msgid "Occupancy calendar, prices and price calculator with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites."
+msgstr "Belegungsplan, Preise und Preisrechner mit Daten aus Fewo-Office, Anfrageformular, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:64
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:118
-msgid "%1$s to %2$s"
-msgstr "%1$s bis %2$s"
-
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:77
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:54
 msgid "Prices per night by month:"
 msgstr "Preise pro Nacht nach Monaten:"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:79
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:56
 msgid "Final cleaning: %s once per stay, in addition to the price per night."
 msgstr "Endreinigung: %s einmalig je Aufenthalt, zusätzlich zum Preis pro Nacht."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:82
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:59
 msgid "Minimum stay: %d nights."
 msgstr "Mindestaufenthalt: %d Nächte."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:85
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:62
 msgid "Maximum number of guests: %d."
 msgstr "Höchstzahl der Gäste: %d."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:88
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:65
 msgid "Down payment: %s %% of the total price."
 msgstr "Anzahlung: %s %% des Gesamtpreises."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:112
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:99
+msgid "%1$s – %2$d periods with different prices:"
+msgstr "%1$s – %2$d Zeiträume mit unterschiedlichen Preisen:"
+
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:130
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:162
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:86
+msgid "%1$s to %2$s"
+msgstr "%1$s bis %2$s"
+
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:156
 msgid "%2$s to %3$s (%1$d night)"
 msgid_plural "%2$s to %3$s (%1$d nights)"
 msgstr[0] "%2$s bis %3$s (%1$d Nacht)"
 msgstr[1] "%2$s bis %3$s (%1$d Nächte)"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:120
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:164
 msgid "Availability %s: fully booked, no free nights."
 msgstr "Verfügbarkeit %s: ausgebucht, keine freien Nächte."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:123
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:167
 msgid "Free periods %s (first date = earliest arrival, second date = latest departure; every other night in this time is booked):"
 msgstr "Freie Zeiträume %s (erstes Datum = früheste Anreise, zweites Datum = späteste Abreise; alle anderen Nächte in dieser Zeit sind belegt):"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:127
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:171
 msgid "Next free period: %s."
 msgstr "Nächster freier Zeitraum: %s."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:131
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:175
 msgid "Next free period for a stay of %1$d week (%2$d nights or more): %3$s."
 msgid_plural "Next free period for a stay of %1$d weeks (%2$d nights or more): %3$s."
 msgstr[0] "Nächster freier Zeitraum für %1$d Woche (%2$d Nächte oder mehr): %3$s."
 msgstr[1] "Nächster freier Zeitraum für %1$d Wochen (%2$d Nächte oder mehr): %3$s."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:159
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:203
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:71
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:16
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:51
 #: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:33
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/view.php:37
 msgid "%s guest"
@@ -105,7 +113,8 @@ msgid_plural "%s guests"
 msgstr[0] "%s Gast"
 msgstr[1] "%s Gäste"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:160
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:204
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:72
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/view.php:40
 msgid "%1$s–%2$s guests"
 msgstr "%1$s–%2$s Gäste"
@@ -122,14 +131,93 @@ msgstr "Bitte geben Sie Ihre Frage ein."
 msgid "The assistant is very busy at the moment. Please try again later or contact us directly."
 msgstr "Der Assistent ist gerade stark gefragt. Bitte versuchen Sie es später noch einmal oder schreiben Sie uns direkt."
 
-#: packages/fewo_tk2/src/Assistant/Assistant.php:133
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:34
+#: packages/fewo_tk2/src/Assistant/Assistant.php:175
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:35
+#: packages/fewo_tk2/elements/chat_widget.php:18
 msgid "The assistant cannot answer at the moment. Please try again later or contact us directly."
 msgstr "Der Assistent kann gerade nicht antworten. Bitte versuchen Sie es später noch einmal oder schreiben Sie uns direkt."
 
-#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:98
+#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:135
+msgid "Prices per night according to the booking system (plus final cleaning once per stay):"
+msgstr "Preise pro Nacht laut Buchungssystem (zuzüglich einmalig Endreinigung je Aufenthalt):"
+
+#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:168
 msgid "Prices and availability: %s"
 msgstr "Preise und Verfügbarkeit: %s"
+
+#: packages/fewo_tk2/src/Assistant/PromptBuilder.php:127
+msgid "Information from the hosts on this topic (it is correct, even if the website says something different):"
+msgstr "Hinweis der Gastgeber zu diesem Thema (er stimmt, auch wenn auf der Website etwas anderes steht):"
+
+#: packages/fewo_tk2/src/Assistant/SettingsRepository.php:39
+msgid "Questions? I am happy to help."
+msgstr "Fragen? Ich helfe gern."
+
+#: packages/fewo_tk2/src/Assistant/SettingsRepository.php:40
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:51
+msgid "Hello! I am the digital assistant of this website. Ask me about amenities, prices, availability or the surroundings."
+msgstr "Hallo! Ich bin der digitale Assistent dieser Website. Fragen Sie mich nach Ausstattung, Preisen, freien Terminen oder der Umgebung."
+
+#: packages/fewo_tk2/src/Assistant/SettingsRepository.php:42
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:53
+msgid "What does a night cost?"
+msgstr "Was kostet eine Nacht?"
+
+#: packages/fewo_tk2/src/Assistant/SettingsRepository.php:43
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:54
+msgid "When is the apartment available?"
+msgstr "Wann ist die Wohnung frei?"
+
+#: packages/fewo_tk2/src/Assistant/SettingsRepository.php:44
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:55
+msgid "What amenities does the apartment have?"
+msgstr "Wie ist die Wohnung ausgestattet?"
+
+#: packages/fewo_tk2/src/Assistant/SettingsRepository.php:46
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:57
+msgid "The answers are generated automatically by an AI and may contain errors. Only our offer is binding."
+msgstr "Die Antworten erstellt eine KI automatisch; sie können Fehler enthalten. Verbindlich ist nur unser Angebot."
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:29
+msgid "Calculation by the booking system for the stay from %2$s to %3$s (%1$s night):"
+msgid_plural "Calculation by the booking system for the stay from %2$s to %3$s (%1$s nights):"
+msgstr[0] "Berechnung des Buchungssystems für den Aufenthalt vom %2$s bis %3$s (%1$s Nacht):"
+msgstr[1] "Berechnung des Buchungssystems für den Aufenthalt vom %2$s bis %3$s (%1$s Nächte):"
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:51
+msgid "cannot be calculated: %s"
+msgstr "lässt sich nicht berechnen: %s"
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:66
+msgid "Availability: the apartment is NOT free for the whole period – it is already booked."
+msgstr "Verfügbarkeit: Die Wohnung ist in diesem Zeitraum NICHT durchgehend frei – sie ist bereits belegt."
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:67
+msgid "Availability: the apartment is still free in this period (not binding)."
+msgstr "Verfügbarkeit: Die Wohnung ist in diesem Zeitraum noch frei (unverbindlich)."
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:74
+msgid "for information only, because the period is already booked"
+msgstr "nur zur Orientierung, denn der Zeitraum ist bereits belegt"
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:85
+#: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:48
+msgid "%1$s night × %2$s"
+msgid_plural "%1$s nights × %2$s"
+msgstr[0] "%1$s Nacht × %2$s"
+msgstr[1] "%1$s Nächte × %2$s"
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:91
+msgid "total price %1$s (including final cleaning) = %2$s + final cleaning %3$s"
+msgstr "Gesamtpreis %1$s (einschließlich Endreinigung) = %2$s + Endreinigung %3$s"
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:92
+msgid "total price %1$s = %2$s"
+msgstr "Gesamtpreis %1$s = %2$s"
+
+#: packages/fewo_tk2/src/Assistant/StayQuote.php:94
+msgid "down payment %s"
+msgstr "Anzahlung %s"
 
 #: packages/fewo_tk2/src/Block/ApartmentBlock.php:50
 msgid "No apartment has been selected or it no longer exists."
@@ -158,12 +246,12 @@ msgid "The data does not contain an occupancy list."
 msgstr "Die Daten enthalten keine Belegung."
 
 #: packages/fewo_tk2/src/Pricing/PriceCalculator.php:37
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:51
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:50
 msgid "The arrival date is in the past."
 msgstr "Das Anreisedatum liegt in der Vergangenheit."
 
 #: packages/fewo_tk2/src/Pricing/PriceCalculator.php:40
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:56
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:55
 msgid "The departure date must be after the arrival date."
 msgstr "Die Abreise muss nach der Anreise liegen."
 
@@ -176,7 +264,7 @@ msgid "Please specify the number of guests."
 msgstr "Bitte geben Sie die Anzahl der Gäste an."
 
 #: packages/fewo_tk2/src/Pricing/PriceCalculator.php:50
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:64
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:63
 msgid "A maximum of %s guests can stay."
 msgstr "Es können höchstens %s Gäste übernachten."
 
@@ -185,6 +273,7 @@ msgid "The minimum stay is %s nights."
 msgstr "Der Mindestaufenthalt beträgt %s Nächte."
 
 #: packages/fewo_tk2/src/Pricing/PriceCalculator.php:66
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:122
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/view.php:82
 msgid "Other periods"
 msgstr "Übrige Zeiträume"
@@ -209,67 +298,67 @@ msgstr "Die Daten der Preisliste sind ungültig."
 msgid "The data does not contain a price list."
 msgstr "Die Daten enthalten keine Preisliste."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:38
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:37
 msgid "Please enter your last name."
 msgstr "Bitte geben Sie Ihren Nachnamen an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:41
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:40
 msgid "Please enter your email address."
 msgstr "Bitte geben Sie Ihre E-Mail-Adresse an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:43
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:42
 msgid "Please enter a valid email address."
 msgstr "Bitte geben Sie eine gültige E-Mail-Adresse an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:49
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:48
 msgid "Please enter your arrival date."
 msgstr "Bitte geben Sie Ihr Anreisedatum an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:54
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:53
 msgid "Please enter your departure date."
 msgstr "Bitte geben Sie Ihr Abreisedatum an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:62
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:61
 msgid "Please enter the number of adults."
 msgstr "Bitte geben Sie die Anzahl der Erwachsenen an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:68
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:67
 msgid "Please choose an accommodation."
 msgstr "Bitte wählen Sie eine Unterkunft aus."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:71
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:70
 msgid "Please choose an option from the list."
 msgstr "Bitte wählen Sie einen Eintrag aus der Liste."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:74
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:73
 msgid "The postal code is too long."
 msgstr "Die Postleitzahl ist zu lang."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:77
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:76
 msgid "Please enter a valid phone number."
 msgstr "Bitte geben Sie eine gültige Telefonnummer an."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:80
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:79
 msgid "For security reasons, your message must not contain links."
 msgstr "Aus Sicherheitsgründen darf Ihre Nachricht keine Links enthalten."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:83
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:82
 msgid "Your message is too long."
 msgstr "Ihre Nachricht ist zu lang."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:86
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:85
 msgid "Please agree to the processing of your data."
 msgstr "Bitte stimmen Sie der Verarbeitung Ihrer Daten zu."
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:131
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:130
 msgid "Ms."
 msgstr "Frau"
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:131
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:130
 msgid "Mr."
 msgstr "Herr"
 
-#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:131
+#: packages/fewo_tk2/src/Inquiry/InquiryValidator.php:130
 msgid "Mx."
 msgstr "Divers"
 
@@ -298,8 +387,8 @@ msgid "The assistant is switched on and answers with the model \"%s\"."
 msgstr "Der Assistent ist eingeschaltet und antwortet mit dem Modell „%s“."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:45
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:37
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:53
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:78
+#: packages/fewo_tk2/elements/chat_widget.php:16
 msgid "Assistant"
 msgstr "Assistent"
 
@@ -307,170 +396,234 @@ msgstr "Assistent"
 msgid "Switch on the assistant (visitors see the chat blocks)"
 msgstr "Assistent einschalten (Besucher sehen die Chat-Blöcke)"
 
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:51
+msgid "Name of the assistant (optional)"
+msgstr "Name des Assistenten (optional)"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:52
+msgid "e.g. Emma"
+msgstr "z. B. Emma"
+
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:53
+msgid "Shown in the chat above each answer; the assistant also knows its name. Without a name it is called \"Assistant\"."
+msgstr "Steht im Chat über jeder Antwort; auch der Assistent selbst kennt seinen Namen. Ohne Namen heißt er „Assistent“."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:58
+msgid "Chat on every page"
+msgstr "Chat auf jeder Seite"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:61
+msgid "Show the chat on every page of the website (bottom right)"
+msgstr "Chat auf jeder Seite der Website anzeigen (unten rechts)"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:63
+msgid "Visitors first see a small button with the hint text; a click opens the chat. It needs no chat block and appears once the assistant is switched on. On pages that contain a chat block, only the block is shown."
+msgstr "Besucher sehen zuerst eine kleine Schaltfläche mit dem Hinweistext; ein Klick öffnet den Chat. Ein Chat-Block ist dafür nicht nötig. Der Chat erscheint, sobald der Assistent eingeschaltet ist. Auf Seiten mit einem Chat-Block wird nur der Block angezeigt."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:65
+msgid "Hint text of the button"
+msgstr "Hinweistext der Schaltfläche"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:67
+msgid "Short invitation next to the chat symbol. Leave empty to show only the symbol."
+msgstr "Kurze Einladung neben dem Chat-Symbol. Leer lassen, um nur das Symbol zu zeigen."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:70
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:32
+msgid "Greeting"
+msgstr "Begrüßung"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:72
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:35
+msgid "First message of the assistant in the chat."
+msgstr "Erste Nachricht des Assistenten im Chat."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:75
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:44
+#: packages/fewo_tk2/elements/chat_body.php:27
+msgid "Example questions"
+msgstr "Beispielfragen"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:84
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:54
+msgid "Note below the input field"
+msgstr "Hinweis unter dem Eingabefeld"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:86
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:57
+msgid "Tell your visitors that an AI is answering."
+msgstr "Sagen Sie Ihren Besuchern, dass eine KI antwortet."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:91
 msgid "Ollama"
 msgstr "Ollama"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:55
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:93
 msgid "Ollama URL"
 msgstr "Adresse von Ollama"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:57
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:95
 msgid "Address at which this web server reaches Ollama, e.g. http://localhost:11434 – or http://ollama:11434 if Ollama runs as a Docker container in the same network."
 msgstr "Adresse, unter der dieser Webserver Ollama erreicht, z. B. http://localhost:11434 – oder http://ollama:11434, wenn Ollama als Docker-Container im selben Netz läuft."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:60
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:98
 msgid "Model"
 msgstr "Modell"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:69
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:107
 msgid "Installed in Ollama: %s"
 msgstr "In Ollama installiert: %s"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:71
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:109
 msgid "Name of a model installed in Ollama, e.g. gemma3:4b."
 msgstr "Name eines in Ollama installierten Modells, z. B. gemma3:4b."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:76
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:114
 msgid "API key (optional)"
 msgstr "API-Schlüssel (optional)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:77
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:115
 msgid "saved – leave empty to keep it"
 msgstr "gespeichert – leer lassen, um ihn zu behalten"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:78
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:116
 msgid "Only needed if Ollama is protected by a reverse proxy that expects a bearer token. Ollama itself needs no key."
 msgstr "Nur nötig, wenn Ollama hinter einem Reverse-Proxy liegt, der ein Bearer-Token erwartet. Ollama selbst braucht keinen Schlüssel."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:82
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:120
 msgid "Delete the saved key"
 msgstr "Gespeicherten Schlüssel löschen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:87
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:125
 msgid "Maximum waiting time for an answer (seconds)"
 msgstr "Längste Wartezeit auf eine Antwort (Sekunden)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:93
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:131
 msgid "Knowledge"
 msgstr "Wissen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:95
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:133
 msgid "Website content per question"
 msgstr "Website-Inhalte je Frage"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:98
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:136
 msgid "Best: the whole website fits (see \"What the assistant knows\" below). The model then always gets everything; Ollama reads it once and afterwards answers start within seconds. If the website has more text, only the sections that match the question best are passed on – slower and less accurate."
 msgstr "Am besten passt die ganze Website hinein (siehe unten „Was der Assistent weiß“). Das Modell bekommt dann immer alles; Ollama liest es einmal ein, danach beginnen Antworten nach wenigen Sekunden. Hat die Website mehr Text, werden nur die Abschnitte weitergegeben, die am besten zur Frage passen – langsamer und ungenauer."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:101
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:139
 msgid "Include prices and free periods of the apartments (from Fewo-Office)"
 msgstr "Preise und freie Zeiträume der Wohnungen einbeziehen (aus Fewo-Office)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:104
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:142
 msgid "Pages the assistant should not know"
 msgstr "Seiten, die der Assistent nicht kennen soll"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:106
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:144
 msgid "One path per line; subpages are excluded as well. Pages that are not public or are excluded from the search index are never included."
 msgstr "Ein Pfad pro Zeile; Unterseiten sind mit ausgeschlossen. Nicht öffentliche Seiten und Seiten, die vom Suchindex ausgenommen sind, gehören nie dazu."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:109
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:147
 msgid "Additional instructions for the assistant (optional)"
 msgstr "Zusätzliche Anweisungen für den Assistenten (optional)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:110
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:148
 msgid "e.g. Address visitors informally. Pets are welcome on request."
 msgstr "z. B. Sprich die Besucher mit „du“ an. Haustiere sind auf Anfrage willkommen."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:111
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:149
 msgid "Tone of voice or facts that are not on the website. The basic rules (answer only from the website content, no invented prices) always apply."
 msgstr "Tonfall oder Angaben, die nicht auf der Website stehen. Die Grundregeln (nur aus den Inhalten der Website antworten, keine erfundenen Preise) gelten immer."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:116
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:154
+msgid "Explanations for keywords"
+msgstr "Erklärungen zu Stichwörtern"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:155
+msgid "If a visitor's question contains one of the keywords, the assistant receives your explanation with it and answers accordingly – even if the website says something different. Use this to correct wrong answers or to add what the website does not say. Separate several keywords with commas; upper and lower case and umlauts do not matter, and a keyword also matches inside longer words (\"parking\" in \"parking space\")."
+msgstr "Kommt in der Frage eines Besuchers eines der Stichwörter vor, bekommt der Assistent Ihre Erklärung dazu und antwortet entsprechend – auch wenn auf der Website etwas anderes steht. So stellen Sie falsche Antworten richtig oder ergänzen, was auf der Website fehlt. Mehrere Stichwörter mit Komma trennen; Groß- und Kleinschreibung sowie Umlaute spielen keine Rolle, und ein Stichwort trifft auch als Teil eines längeren Wortes („Stellplatz“ in „Tiefgaragenstellplatz“)."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:165
 msgid "Limits"
 msgstr "Grenzen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:119
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:168
 msgid "Questions per visitor and hour"
 msgstr "Fragen je Besucher und Stunde"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:123
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:172
 msgid "Questions per hour in total"
 msgstr "Fragen pro Stunde insgesamt"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:127
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:176
 msgid "Protects the server from overload. Questions in the last hour: %1$s, in the last 24 hours: %2$s. Questions and answers are not stored."
 msgstr "Schützt den Server vor Überlastung. Fragen in der letzten Stunde: %1$s, in den letzten 24 Stunden: %2$s. Fragen und Antworten werden nicht gespeichert."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:132
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:181
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:54
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:96
 msgid "Save"
 msgstr "Speichern"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:139
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:188
 msgid "Try it out"
 msgstr "Ausprobieren"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:143
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:192
 msgid "e.g. What does a night cost?"
 msgstr "z. B. Was kostet eine Nacht?"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:143
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:192
 msgid "Test question"
 msgstr "Testfrage"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:144
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:193
 msgid "Ask"
 msgstr "Fragen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:146
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:195
 msgid "Uses the saved settings and also works while the assistant is still switched off."
 msgstr "Verwendet die gespeicherten Einstellungen und geht auch, solange der Assistent noch ausgeschaltet ist."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:153
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:202
 msgid "Answered in %s seconds."
 msgstr "Beantwortet in %s Sekunden."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:161
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:210
 msgid "What the assistant knows"
 msgstr "Was der Assistent weiß"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:162
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:211
 msgid "Public pages of this website with the text of their blocks, plus prices and free periods from Fewo-Office. Changes are taken over when a page is published, at the latest after ten minutes."
 msgstr "Öffentliche Seiten dieser Website mit den Texten ihrer Blöcke, dazu Preise und freie Zeiträume aus Fewo-Office. Änderungen werden übernommen, sobald eine Seite veröffentlicht wird, spätestens nach zehn Minuten."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:164
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:213
 msgid "No content found yet."
 msgstr "Noch keine Inhalte gefunden."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:167
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:216
 msgid "The website has more text (%1$s characters) than is passed on per question (%2$s). Increase \"Website content per question\" or exclude pages – otherwise the assistant only sees a selection for each question."
 msgstr "Die Website hat mehr Text (%1$s Zeichen), als je Frage weitergegeben wird (%2$s). Erhöhen Sie „Website-Inhalte je Frage“ oder schließen Sie Seiten aus – sonst sieht der Assistent bei jeder Frage nur eine Auswahl."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:173
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:222
 msgid "Page"
 msgstr "Seite"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:174
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:223
 msgid "Path"
 msgstr "Pfad"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:175
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:224
 msgid "Characters"
 msgstr "Zeichen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:189
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:238
 msgid "Total"
 msgstr "Gesamt"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:198
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:247
 msgid "Read the content again now"
 msgstr "Inhalte jetzt neu einlesen"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:17
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:36
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:41
 msgid "Back to list"
 msgstr "Zurück zur Liste"
@@ -481,15 +634,14 @@ msgstr "Wohnung bearbeiten"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:24
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:41
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:32
 msgid "Add apartment"
 msgstr "Wohnung hinzufügen"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:27
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:28
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:41
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:27
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:110
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:26
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:25
 msgid "Name"
 msgstr "Name"
 
@@ -540,6 +692,7 @@ msgid "not loaded yet"
 msgstr "noch nicht geladen"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:23
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:79
 msgid "last update failed"
 msgstr "letzte Aktualisierung fehlgeschlagen"
 
@@ -548,6 +701,7 @@ msgid "OK"
 msgstr "OK"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:31
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:63
 msgid "As of %s"
 msgstr "Stand: %s"
 
@@ -598,11 +752,14 @@ msgstr[0] "%s Stunde"
 msgstr[1] "%s Stunden"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:77
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:75
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:31
 msgid "Edit"
 msgstr "Bearbeiten"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:80
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:22
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:68
 msgid "Update now"
 msgstr "Jetzt aktualisieren"
 
@@ -614,153 +771,88 @@ msgstr "Die Wohnung „%s“ löschen? Blöcke, die sie verwenden, zeigen dann k
 msgid "Delete"
 msgstr "Löschen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:20
-msgid "Your inquiry from %1$s to %2$s"
-msgstr "Ihre Anfrage vom %1$s bis %2$s"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:28
+msgid "The prices as Fewo-Office delivers them – the price overview, the price calculator and the AI assistant work with exactly these figures. Prices are maintained in Fewo-Office; \"Update now\" fetches the current state immediately."
+msgstr "Die Preise, wie Fewo-Office sie liefert – Preisübersicht, Preisrechner und KI-Assistent arbeiten mit genau diesen Zahlen. Gepflegt werden die Preise in Fewo-Office; „Jetzt aktualisieren“ ruft den aktuellen Stand sofort ab."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:22
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:40
-msgid "Received"
-msgstr "Eingegangen"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:32
+#: packages/fewo_tk2/elements/apartment_select.php:21
+msgid "There are no apartments yet."
+msgstr "Es gibt noch keine Wohnungen."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:23
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:18
-msgid "Form"
-msgstr "Formular"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:74
+msgid "No price list URL is stored for this apartment."
+msgstr "Für diese Wohnung ist keine Adresse der Preisliste hinterlegt."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:24
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:105
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:20
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:19
-msgid "Accommodation"
-msgstr "Unterkunft"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:80
+msgid "The prices below are the last state that could be loaded."
+msgstr "Die Preise unten sind der letzte Stand, der geladen werden konnte."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:25
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:42
-msgid "Travel dates"
-msgstr "Reisezeitraum"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:84
+msgid "The price list could not be loaded."
+msgstr "Die Preisliste konnte nicht geladen werden."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:25
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:87
+msgid "Minimum stay"
+msgstr "Mindestdauer"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:88
 #: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:32
 msgid "%s night"
 msgid_plural "%s nights"
 msgstr[0] "%s Nacht"
 msgstr[1] "%s Nächte"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:26
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:43
-#: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:56
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:23
-msgid "Guests"
-msgstr "Gäste"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:89
+#: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:54
+msgid "Final cleaning"
+msgstr "Endreinigung"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:26
-msgid "%1$s adults, %2$s children"
-msgstr "Erwachsene: %1$s, Kinder: %2$s"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:90
+msgid "%s (once per stay)"
+msgstr "%s (einmalig je Aufenthalt)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:27
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:24
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:25
-msgid "Non-binding price"
-msgstr "Unverbindlicher Preis"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:90
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:94
+msgid "none"
+msgstr "keine"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:29
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:141
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:27
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:66
-msgid "Email"
-msgstr "E-Mail"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:91
+msgid "Maximum occupancy"
+msgstr "Höchstbelegung"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:30
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:146
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:28
-msgid "Phone"
-msgstr "Telefon"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:93
+msgid "Down payment"
+msgstr "Anzahlung"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:31
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:29
-msgid "Address"
-msgstr "Anschrift"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:94
+msgid "%s %% of the total price"
+msgstr "%s %% des Gesamtpreises"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:32
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:183
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:34
-msgid "How did you find us?"
-msgstr "Wie sind Sie auf uns aufmerksam geworden?"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:98
+msgid "Fewo-Office does not deliver any current prices for this apartment."
+msgstr "Fewo-Office liefert für diese Wohnung keine aktuellen Preise."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:37
-msgid "Reply by email"
-msgstr "Per E-Mail antworten"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:104
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:115
+msgid "Season"
+msgstr "Saison"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:57
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:177
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:46
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:76
-msgid "Message"
-msgstr "Nachricht"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:105
+msgid "Period"
+msgstr "Zeitraum"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:64
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:46
-msgid "Status"
-msgstr "Status"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:109
+msgid "Minimum occupancy"
+msgstr "Mindestbelegung"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:69
-msgid "Mark as done"
-msgstr "Als erledigt markieren"
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:123
+msgid "standard price"
+msgstr "Standardpreis"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:72
-msgid "Mark as new"
-msgstr "Als neu markieren"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:76
-msgid "Delete this inquiry permanently?"
-msgstr "Diese Anfrage endgültig löschen?"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/detail.php:78
-msgid "Delete inquiry"
-msgstr "Anfrage löschen"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:24
-msgid "All"
-msgstr "Alle"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:27
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:61
-msgid "New"
-msgstr "Neu"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:30
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:63
-msgid "Done"
-msgstr "Erledigt"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:34
-msgid "No inquiries found."
-msgstr "Keine Anfragen gefunden."
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:44
-msgid "Accommodation / form"
-msgstr "Unterkunft / Formular"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:45
-msgid "Price"
-msgstr "Preis"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:73
-msgid "Pages"
-msgstr "Seiten"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:87
-msgid "Data protection"
-msgstr "Datenschutz"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:91
-msgid "Delete inquiries automatically after (days)"
-msgstr "Anfragen automatisch löschen nach (Tagen)"
-
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/inquiries/view.php:93
-msgid "0 = never delete. Inquiries are kept in the dashboard only; the emails in your mailbox are not affected."
-msgstr "0 = nie löschen. Gelöscht wird nur im Dashboard; die E-Mails in Ihrem Postfach bleiben unberührt."
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:130
+msgid "Prices per night. Minimum occupancy: up to this number of guests the lowest price applies – fewer guests pay the same. A night costs the price of the season in which it ends."
+msgstr "Preise je Nacht. Mindestbelegung: Bis zu dieser Gästezahl gilt der niedrigste Preis – weniger Gäste zahlen dasselbe. Eine Nacht kostet den Preis der Saison, in der sie endet."
 
 #: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:46
 msgid "The apartment was not found."
@@ -806,39 +898,54 @@ msgstr "Preisliste: %s"
 msgid "\"%1$s\": The data could not be loaded from Fewo-Office. %2$s"
 msgstr "„%1$s“: Die Daten konnten nicht aus Fewo-Office geladen werden. %2$s"
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:29
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:78
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:31
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:84
 msgid "Please enter a valid Ollama URL (http://… or https://…)."
 msgstr "Bitte geben Sie eine gültige Adresse von Ollama an (http://… oder https://…)."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:40
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:42
 msgid "%s characters"
 msgstr "%s Zeichen"
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:81
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:87
 msgid "Please choose a model before switching on the assistant."
 msgstr "Bitte wählen Sie ein Modell, bevor Sie den Assistenten einschalten."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:93
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/inquiries.php:71
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:101
 msgid "The settings have been saved."
 msgstr "Die Einstellungen wurden gespeichert."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:102
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:110
 msgid "The content of the website has been read again."
 msgstr "Die Inhalte der Website wurden neu eingelesen."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:123
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:131
 msgid "Please enter the Ollama URL and choose a model first."
 msgstr "Bitte tragen Sie zuerst die Adresse von Ollama ein und wählen Sie ein Modell."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/inquiries.php:49
-msgid "The status has been updated."
-msgstr "Der Status wurde geändert."
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/prices.php:49
+msgid "\"%1$s\": %2$s"
+msgstr "„%1$s“: %2$s"
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/inquiries.php:61
-msgid "The inquiry has been deleted."
-msgstr "Die Anfrage wurde gelöscht."
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/prices.php:56
+msgid "The prices could not be loaded from Fewo-Office. %s"
+msgstr "Die Preise konnten nicht aus Fewo-Office geladen werden. %s"
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/prices.php:58
+msgid "The prices of %s apartment have been reloaded from Fewo-Office."
+msgid_plural "The prices of %s apartments have been reloaded from Fewo-Office."
+msgstr[0] "Die Preise von %s Wohnung wurden neu aus Fewo-Office geladen."
+msgstr[1] "Die Preise von %s Wohnungen wurden neu aus Fewo-Office geladen."
+
+#: packages/fewo_tk2/controllers/chat_widget.php:25
+#: packages/fewo_tk2/controllers/chat_widget.php:34
+msgid "The chat is not available."
+msgstr "Der Chat ist nicht verfügbar."
+
+#: packages/fewo_tk2/controllers/chat_widget.php:37
+#: packages/fewo_tk2/blocks/fewo_chat/controller.php:99
+msgid "The chat has expired. Please reload the page."
+msgstr "Der Chat ist abgelaufen. Bitte laden Sie die Seite neu."
 
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:45
 msgid "Image Gallery"
@@ -952,21 +1059,26 @@ msgstr "optional"
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:18
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:35
+#: packages/fewo_tk2/elements/question_rows.php:19
 msgid "Move up"
 msgstr "Nach oben"
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:19
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:36
+#: packages/fewo_tk2/elements/question_rows.php:20
 msgid "Move down"
 msgstr "Nach unten"
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:20
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:37
+#: packages/fewo_tk2/elements/note_rows.php:22
+#: packages/fewo_tk2/elements/note_rows.php:32
+#: packages/fewo_tk2/elements/question_rows.php:21
 msgid "Remove"
 msgstr "Entfernen"
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:26
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:23
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:27
 #: packages/fewo_tk2/blocks/fewo_preisrechner/form.php:26
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:96
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/form.php:26
@@ -1011,8 +1123,8 @@ msgid "Amenities"
 msgstr "Ausstattung"
 
 #: packages/fewo_tk2/blocks/fewo_chat/controller.php:39
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:23
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:45
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:24
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:46
 msgid "Chat (AI Assistant)"
 msgstr "Chat (KI-Assistent)"
 
@@ -1024,235 +1136,180 @@ msgstr "Besucher stellen Fragen und bekommen Antworten auf Grundlage der Inhalte
 msgid "Questions? Ask our assistant"
 msgstr "Fragen? Unser Assistent hilft"
 
-#: packages/fewo_tk2/blocks/fewo_chat/controller.php:51
-msgid "Hello! I am the digital assistant of this website. Ask me about amenities, prices, availability or the surroundings."
-msgstr "Hallo! Ich bin der digitale Assistent dieser Website. Fragen Sie mich nach Ausstattung, Preisen, freien Terminen oder der Umgebung."
-
-#: packages/fewo_tk2/blocks/fewo_chat/controller.php:53
-msgid "What does a night cost?"
-msgstr "Was kostet eine Nacht?"
-
-#: packages/fewo_tk2/blocks/fewo_chat/controller.php:54
-msgid "When is the apartment available?"
-msgstr "Wann ist die Wohnung frei?"
-
-#: packages/fewo_tk2/blocks/fewo_chat/controller.php:55
-msgid "What amenities does the apartment have?"
-msgstr "Wie ist die Wohnung ausgestattet?"
-
-#: packages/fewo_tk2/blocks/fewo_chat/controller.php:57
-msgid "The answers are generated automatically by an AI and may contain errors. Only our offer is binding."
-msgstr "Die Antworten erstellt eine KI automatisch; sie können Fehler enthalten. Verbindlich ist nur unser Angebot."
-
-#: packages/fewo_tk2/blocks/fewo_chat/controller.php:94
-msgid "The chat has expired. Please reload the page."
-msgstr "Der Chat ist abgelaufen. Bitte laden Sie die Seite neu."
-
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:17
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:24
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:21
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:25
 msgid "The AI assistant is not set up yet. Visitors only see the chat once it has been switched on and a model has been selected."
 msgstr "Der KI-Assistent ist noch nicht eingerichtet. Besucher sehen den Chat erst, wenn er eingeschaltet und ein Modell gewählt ist."
 
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:18
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:25
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:22
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:26
 msgid "Set up the assistant"
 msgstr "Assistenten einrichten"
 
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:28
-msgid "Greeting"
-msgstr "Begrüßung"
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:37
+msgid "The assistant is called \"%s\"."
+msgstr "Der Assistent heißt „%s“."
 
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:30
-msgid "First message of the assistant in the chat."
-msgstr "Erste Nachricht des Assistenten im Chat."
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:38
+msgid "The assistant has no name yet."
+msgstr "Der Assistent hat noch keinen Namen."
 
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:34
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:60
-msgid "Example questions"
-msgstr "Beispielfragen"
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:39
+msgid "Change the name"
+msgstr "Namen ändern"
 
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:36
-msgid "One question per line, up to six. Visitors can ask them with one click."
-msgstr "Eine Frage pro Zeile, höchstens sechs. Besucher stellen sie mit einem Klick."
-
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:40
-msgid "Note below the input field"
-msgstr "Hinweis unter dem Eingabefeld"
-
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:43
-msgid "Tell your visitors that an AI is answering."
-msgstr "Sagen Sie Ihren Besuchern, dass eine KI antwortet."
-
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:44
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:58
 msgid "Assistant settings"
 msgstr "Einstellungen des Assistenten"
 
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:35
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:36
+#: packages/fewo_tk2/elements/chat_widget.php:19
 msgid "More on this:"
 msgstr "Mehr dazu:"
 
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:36
+#: packages/fewo_tk2/blocks/fewo_chat/view.php:37
+#: packages/fewo_tk2/elements/chat_widget.php:20
 msgid "You"
 msgstr "Sie"
 
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:50
-msgid "Conversation"
-msgstr "Gespräch"
-
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:68
-msgid "Your question"
-msgstr "Ihre Frage"
-
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:71
-msgid "e.g. Is there a parking space?"
-msgstr "z. B. Gibt es einen Parkplatz?"
-
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:72
-msgid "Send"
-msgstr "Senden"
-
-#: packages/fewo_tk2/blocks/fewo_chat/view.php:79
-msgid "The chat requires JavaScript."
-msgstr "Der Chat benötigt JavaScript."
-
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:60
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:57
 msgid "Booking Inquiry Form"
 msgstr "Anfrageformular"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:65
-msgid "Inquiry form for travel dates, guests and contact details. Inquiries are emailed and saved in the dashboard."
-msgstr "Anfrageformular für Reisezeitraum, Gäste und Kontaktdaten. Anfragen werden per E-Mail verschickt und im Dashboard gespeichert."
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:62
+msgid "Inquiry form for travel dates, guests and contact details. Every inquiry is sent by email to the address set in the block."
+msgstr "Anfrageformular für Reisezeitraum, Gäste und Kontaktdaten. Jede Anfrage geht per E-Mail an die im Block hinterlegte Adresse."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:74
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:71
 msgid "Search engine"
 msgstr "Suchmaschine"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:75
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:72
 msgid "Holiday rental portal"
 msgstr "Urlaubsportal"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:76
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:73
 msgid "Recommendation by friends"
 msgstr "Empfehlung von Bekannten"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:77
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:74
 msgid "Tourist information"
 msgstr "Tourist-Information"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:79
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:76
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:52
 msgid "Thank you for your inquiry! We will get back to you as soon as possible."
 msgstr "Vielen Dank für Ihre Anfrage! Wir melden uns so schnell wie möglich bei Ihnen."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:85
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:82
 msgid "None"
 msgstr "Keine"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:120
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:117
 msgid "The form has expired. Please submit it again."
 msgstr "Das Formular ist abgelaufen. Bitte senden Sie es erneut ab."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:125
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:122
 msgid "Please check your details and submit the form again."
 msgstr "Bitte prüfen Sie Ihre Angaben und senden Sie das Formular erneut ab."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:134
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:131
 msgid "The security code is incorrect."
 msgstr "Der Sicherheitscode ist nicht korrekt."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:150
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:147
 msgid "Your inquiry could not be sent. Please try again later or contact us directly by email or phone."
 msgstr "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es später noch einmal oder wenden Sie sich per E-Mail oder Telefon direkt an uns."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:163
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:160
 msgid "Please enter a valid recipient email address."
 msgstr "Bitte geben Sie eine gültige Empfängeradresse an."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:26
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:25
 msgid "Delivery"
 msgstr "Versand"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:28
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:27
 msgid "Send inquiries to"
 msgstr "Anfragen senden an"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:30
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:29
+msgid "Every inquiry is sent to this address by email; the website does not store inquiries."
+msgstr "Jede Anfrage geht per E-Mail an diese Adresse; die Website speichert keine Anfragen."
+
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:29
 msgid "Emails are sent with the settings under Dashboard › System & Settings › Email. Please configure SMTP there."
 msgstr "E-Mails werden mit den Einstellungen unter Verwaltung › System & Einstellungen › E-Mail › E-Mail Versandmethode verschickt. Bitte richten Sie dort SMTP ein."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:33
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:32
 msgid "Name of the form (optional)"
 msgstr "Name des Formulars (optional)"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:34
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:33
 msgid "e.g. name of the apartment"
 msgstr "z. B. Name der Ferienwohnung"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:35
-msgid "Appears in the email subject and in the dashboard."
-msgstr "Erscheint im Betreff der E-Mail und im Dashboard."
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:34
+msgid "Appears in the email subject."
+msgstr "Erscheint im Betreff der E-Mail."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:39
-msgid "Save inquiries in the dashboard"
-msgstr "Anfragen im Dashboard speichern"
-
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:43
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:38
 msgid "Send a confirmation email to the guest"
 msgstr "Bestätigung per E-Mail an den Gast senden"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:48
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:43
 msgid "Fields"
 msgstr "Felder"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:57
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:52
 msgid "Its price list determines the maximum number of guests. The non-binding price is included in the notification."
 msgstr "Ihre Preisliste bestimmt die maximale Gästeanzahl. Der unverbindliche Preis steht in der Benachrichtigung."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:61
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:56
 msgid "Max. guests"
 msgstr "Max. Gäste"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:63
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:58
 msgid "Only without apartment."
 msgstr "Nur ohne Wohnung."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:67
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:62
 msgid "Accommodations to choose from (one per line, optional)"
 msgstr "Unterkünfte zur Auswahl (eine pro Zeile, optional)"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:71
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:66
 msgid "Answers for \"How did you find us?\" (one per line, empty = hide field)"
 msgstr "Antworten auf „Wie sind Sie auf uns aufmerksam geworden?“ (eine pro Zeile, leer = Feld ausblenden)"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:76
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:71
 msgid "Ask for the postal address"
 msgstr "Anschrift abfragen"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:81
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:76
 msgid "Privacy & spam protection"
 msgstr "Datenschutz & Spamschutz"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:83
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:78
 msgid "Privacy policy page"
 msgstr "Seite mit der Datenschutzerklärung"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:85
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:80
 msgid "Linked in the mandatory consent checkbox."
 msgstr "Wird in der verpflichtenden Einwilligung verlinkt."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:89
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:84
 msgid "Use captcha (configured under Dashboard › System & Settings › Permissions › Captcha)"
 msgstr "Captcha verwenden (Einrichtung unter Verwaltung › System & Einstellungen › Berechtigungen & Zugriff › CAPTCHA-Einstellungen)"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:90
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:85
 msgid "A hidden honeypot field and a minimum fill-in time are always active."
 msgstr "Ein verstecktes Köderfeld und eine Mindestausfüllzeit sind immer aktiv."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:95
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:90
 msgid "After sending"
 msgstr "Nach dem Absenden"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:97
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:92
 msgid "Thank-you message"
 msgstr "Dankestext"
 
@@ -1273,7 +1330,7 @@ msgstr "Ihr Aufenthalt"
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:48
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:82
 #: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:21
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:20
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:19
 msgid "Arrival"
 msgstr "Anreise"
 
@@ -1281,19 +1338,25 @@ msgstr "Anreise"
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:52
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:83
 #: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:22
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:21
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:20
 msgid "Departure"
 msgstr "Abreise"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:86
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:23
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:22
 msgid "Adults"
 msgstr "Erwachsene"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:95
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:24
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:23
 msgid "Children"
 msgstr "Kinder"
+
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:105
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:20
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:18
+msgid "Accommodation"
+msgstr "Unterkunft"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:107
 msgid "Please choose"
@@ -1315,6 +1378,17 @@ msgstr "Vorname"
 msgid "Last name"
 msgstr "Nachname"
 
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:141
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:26
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:62
+msgid "Email"
+msgstr "E-Mail"
+
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:146
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:27
+msgid "Phone"
+msgstr "Telefon"
+
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:153
 msgid "Street and house number"
 msgstr "Straße und Hausnummer"
@@ -1334,6 +1408,17 @@ msgstr "Land"
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:175
 msgid "Your message"
 msgstr "Ihre Nachricht"
+
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:177
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:45
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:72
+msgid "Message"
+msgstr "Nachricht"
+
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:183
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:33
+msgid "How did you find us?"
+msgstr "Wie sind Sie auf uns aufmerksam geworden?"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:210
 msgid "I agree that my details will be used to answer my inquiry. More information can be found in the %sprivacy policy%s."
@@ -1403,16 +1488,6 @@ msgstr "Gesamtpreis"
 msgid "Price details"
 msgstr "Preis im Detail"
 
-#: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:48
-msgid "%1$s night × %2$s"
-msgid_plural "%1$s nights × %2$s"
-msgstr[0] "%1$s Nacht × %2$s"
-msgstr[1] "%1$s Nächte × %2$s"
-
-#: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:54
-msgid "Final cleaning"
-msgstr "Endreinigung"
-
 #: packages/fewo_tk2/blocks/fewo_preisrechner/result.php:66
 msgid "Down payment (%s %%)"
 msgstr "Anzahlung (%s %%)"
@@ -1429,6 +1504,11 @@ msgstr "Jetzt anfragen"
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:43
 msgid "Price calculator"
 msgstr "Preisrechner"
+
+#: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:56
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:23
+msgid "Guests"
+msgstr "Gäste"
 
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:64
 msgid "Calculate price"
@@ -2034,6 +2114,11 @@ msgstr "An-/Abreisetag"
 msgid "On request"
 msgstr "Auf Anfrage"
 
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:24
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:24
+msgid "Non-binding price"
+msgstr "Unverbindlicher Preis"
+
 #: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:27
 msgid "Your inquiry at %s"
 msgstr "Ihre Anfrage bei %s"
@@ -2056,44 +2141,115 @@ msgstr "Guten Tag,"
 msgid "Kind regards"
 msgstr "Freundliche Grüße"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:22
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:17
+msgid "Form"
+msgstr "Formular"
+
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:21
 msgid "Nights"
 msgstr "Nächte"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:38
-msgid "New booking inquiry"
-msgstr "Neue Buchungsanfrage"
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:28
+msgid "Address"
+msgstr "Anschrift"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:43
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:60
-msgid "New booking inquiry via %s"
-msgstr "Neue Buchungsanfrage über %s"
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:37
+msgid "New inquiry"
+msgstr "Neue Anfrage"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:49
-msgid "View in the dashboard: %s"
-msgstr "Im Dashboard ansehen: %s"
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:42
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:56
+msgid "New inquiry via %s"
+msgstr "Neue Anfrage über %s"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:51
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:82
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:47
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:75
 msgid "Simply reply to this email to answer the guest."
 msgstr "Antworten Sie einfach auf diese E-Mail, um dem Gast zu schreiben."
-
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:80
-msgid "View in the dashboard"
-msgstr "Im Dashboard ansehen"
 
 #: packages/fewo_tk2/elements/apartment_select.php:17
 msgid "Apartment (optional)"
 msgstr "Wohnung (optional)"
 
-#: packages/fewo_tk2/elements/apartment_select.php:21
-msgid "There are no apartments yet."
-msgstr "Es gibt noch keine Wohnungen."
-
 #: packages/fewo_tk2/elements/apartment_select.php:25
 msgid "Manage apartments"
 msgstr "Wohnungen verwalten"
 
+#: packages/fewo_tk2/elements/chat_body.php:17
+msgid "Conversation"
+msgstr "Gespräch"
+
+#: packages/fewo_tk2/elements/chat_body.php:35
+msgid "Your question"
+msgstr "Ihre Frage"
+
+#: packages/fewo_tk2/elements/chat_body.php:38
+#: packages/fewo_tk2/elements/question_rows.php:17
+msgid "e.g. Is there a parking space?"
+msgstr "z. B. Gibt es einen Parkplatz?"
+
+#: packages/fewo_tk2/elements/chat_body.php:39
+msgid "Send"
+msgstr "Senden"
+
+#: packages/fewo_tk2/elements/chat_body.php:46
+msgid "The chat requires JavaScript."
+msgstr "Der Chat benötigt JavaScript."
+
+#: packages/fewo_tk2/elements/chat_widget.php:23
+msgid "Open the chat with %s"
+msgstr "Chat mit %s öffnen"
+
+#: packages/fewo_tk2/elements/chat_widget.php:23
+msgid "Open the chat"
+msgstr "Chat öffnen"
+
+#: packages/fewo_tk2/elements/chat_widget.php:40
+msgid "Close the chat"
+msgstr "Chat schließen"
+
 #: packages/fewo_tk2/elements/feed_notice.php:25
 msgid "The last update failed (%s). The data from %s is shown."
 msgstr "Die letzte Aktualisierung ist fehlgeschlagen (%s). Angezeigt wird der Stand vom %s."
+
+#: packages/fewo_tk2/elements/note_rows.php:18
+#: packages/fewo_tk2/elements/note_rows.php:30
+msgid "Keywords"
+msgstr "Stichwörter"
+
+#: packages/fewo_tk2/elements/note_rows.php:18
+msgid "e.g. parking space, parking, car"
+msgstr "z. B. Stellplatz, Parkplatz, parken, Auto"
+
+#: packages/fewo_tk2/elements/note_rows.php:20
+#: packages/fewo_tk2/elements/note_rows.php:31
+msgid "Explanation"
+msgstr "Erklärung"
+
+#: packages/fewo_tk2/elements/note_rows.php:20
+msgid "e.g. The apartment has no parking space of its own. Free parking is available along the street."
+msgstr "z. B. Die Wohnung hat keinen eigenen Stellplatz. Parken ist kostenlos an der Straße möglich."
+
+#: packages/fewo_tk2/elements/note_rows.php:41
+msgid "No explanations yet."
+msgstr "Noch keine Erklärungen."
+
+#: packages/fewo_tk2/elements/note_rows.php:42
+msgid "Add explanation"
+msgstr "Erklärung hinzufügen"
+
+#: packages/fewo_tk2/elements/question_rows.php:17
+msgid "Example question"
+msgstr "Beispielfrage"
+
+#: packages/fewo_tk2/elements/question_rows.php:34
+msgid "No example questions – the chat shows only the input field."
+msgstr "Keine Beispielfragen – der Chat zeigt nur das Eingabefeld."
+
+#: packages/fewo_tk2/elements/question_rows.php:35
+msgid "Add question"
+msgstr "Frage hinzufügen"
+
+#: packages/fewo_tk2/elements/question_rows.php:36
+msgid "Visitors can ask these questions with one click. Up to %s questions; remove all of them to show none."
+msgstr "Besucher stellen diese Fragen mit einem Klick. Höchstens %s Fragen; ohne Fragen zeigt der Chat keine."

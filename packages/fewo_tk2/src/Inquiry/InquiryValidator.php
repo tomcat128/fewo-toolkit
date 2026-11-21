@@ -3,7 +3,6 @@
 namespace FewoTk2\Inquiry;
 
 use DateTimeImmutable;
-use FewoTk2\Entity\Inquiry;
 
 /**
  * Prüft und normalisiert die Eingaben des Anfrageformulars.

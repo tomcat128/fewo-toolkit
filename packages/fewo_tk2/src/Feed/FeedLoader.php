@@ -25,7 +25,7 @@ class FeedLoader
     public const DEFAULT_REFRESH_MINUTES = 60;
 
     /** Wählbare Aktualisierungsintervalle in Minuten. */
-    public const REFRESH_OPTIONS = [15, 30, 60, 120, 360, 720, 1440];
+    public const REFRESH_OPTIONS = [5, 10, 15, 30, 60, 120, 360, 720, 1440];
 
     private const MIN_REFRESH_MINUTES = 5;
     private const MAX_BYTES = 5 * 1024 * 1024;

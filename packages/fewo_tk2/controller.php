@@ -7,6 +7,7 @@ use Concrete\Core\Asset\Asset;
 use Concrete\Core\Asset\AssetList;
 use Concrete\Core\Block\BlockType\BlockType;
 use Concrete\Core\Block\BlockType\Set as BlockTypeSet;
+use Concrete\Core\Database\Connection\Connection;
 use Concrete\Core\Database\EntityManager\Provider\ProviderAggregateInterface;
 use Concrete\Core\Database\EntityManager\Provider\StandardPackageProvider;
 use Concrete\Core\Http\Client\Client;
@@ -15,8 +16,12 @@ use Concrete\Core\Logging\LoggerFactory;
 use Concrete\Core\Package\Package;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Page\Single as SinglePage;
+use Concrete\Core\Routing\RouterInterface;
+use Concrete\Core\View\View;
 use Doctrine\ORM\EntityManagerInterface;
 use FewoTk2\Assistant\Assistant;
+use FewoTk2\Assistant\AssistantSettings;
+use FewoTk2\Assistant\ChatResponder;
 use FewoTk2\Assistant\KnowledgeBase;
 use FewoTk2\Assistant\OllamaClient;
 use FewoTk2\Assistant\SettingsRepository;
@@ -35,9 +40,15 @@ class Controller extends Package implements ProviderAggregateInterface
 {
     public const BLOCK_TYPE_SET = 'fewo_tk2';
 
+    /**
+     * Name in der Verwaltung von Concrete (Paket, Dashboard-Menü, Block-Set). Mit der "2", damit das Paket
+     * neben dem alten "Fewo Toolkit" (fewo_toolkit) zu unterscheiden ist.
+     */
+    public const DISPLAY_NAME = 'Fewo Toolkit 2';
+
     protected $pkgHandle = 'fewo_tk2';
 
-    protected $pkgVersion = '2.1.0';
+    protected $pkgVersion = '2.4.0';
 
     protected $appVersionRequired = '9.5.0';
 
@@ -66,9 +77,9 @@ class Controller extends Package implements ProviderAggregateInterface
      * Dashboard-Seiten: Pfad => [Name, Beschreibung] (englisch, werden über t() übersetzt).
      */
     private const SINGLE_PAGES = [
-        '/dashboard/fewo_tk2' => ['Fewo Toolkit', 'Apartments and booking inquiries.'],
+        '/dashboard/fewo_tk2' => [self::DISPLAY_NAME, 'Apartments and the AI assistant.'],
         '/dashboard/fewo_tk2/apartments' => ['Apartments', 'Fewo-Office URLs for occupancy and prices of each apartment.'],
-        '/dashboard/fewo_tk2/inquiries' => ['Booking Inquiries', 'Inquiries received through the booking inquiry form.'],
+        '/dashboard/fewo_tk2/prices' => ['Prices', 'Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.'],
         '/dashboard/fewo_tk2/assistant' => ['AI Assistant', 'Chat that answers visitors\' questions with a local language model (Ollama).'],
     ];
 
@@ -77,23 +88,23 @@ class Controller extends Package implements ProviderAggregateInterface
      */
     private static function translatableStrings(): void
     {
-        t('Booking Inquiries');
-        t('Inquiries received through the booking inquiry form.');
-        t('Apartments and booking inquiries.');
+        t('Apartments and the AI assistant.');
         t('Apartments');
         t('Fewo-Office URLs for occupancy and prices of each apartment.');
+        t('Prices');
+        t('Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.');
         t('AI Assistant');
         t('Chat that answers visitors\' questions with a local language model (Ollama).');
     }
 
     public function getPackageName()
     {
-        return t('Fewo Toolkit');
+        return t('Fewo Toolkit 2');
     }
 
     public function getPackageDescription()
     {
-        return t('Occupancy calendar, prices and price calculator with data from Fewo-Office, booking inquiries, 360° tours, an AI assistant and more for holiday apartment websites.');
+        return t('Occupancy calendar, prices and price calculator with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites.');
     }
 
     public function getEntityManagerProvider()
@@ -114,6 +125,7 @@ class Controller extends Package implements ProviderAggregateInterface
     public function upgrade()
     {
         parent::upgrade();
+        $this->removeStoredInquiries();
         $this->installOrUpgrade($this->getPackageEntity());
     }
 
@@ -146,7 +158,24 @@ class Controller extends Package implements ProviderAggregateInterface
             $director->addListener($event, fn () => $this->app->make(KnowledgeBase::class)->clear());
         }
 
+        // Chat auf jeder Seite (unten rechts), wenn er im Dashboard eingeschaltet ist
+        $this->app->bind(ChatResponder::class, static fn ($app) => new ChatResponder($app));
+        $router = $this->app->make(RouterInterface::class);
+        $router->get('/fewo_tk2/chat/token', 'Concrete\Package\FewoTk2\Controller\ChatWidget::token');
+        $router->post('/fewo_tk2/chat/ask', 'Concrete\Package\FewoTk2\Controller\ChatWidget::ask');
+        $router->post('/fewo_tk2/chat/warm', 'Concrete\Package\FewoTk2\Controller\ChatWidget::warm');
+        $director->addListener('on_page_view', function ($event): void {
+            $this->addChatWidget($event->getPageObject());
+        });
+
         $assets = AssetList::getInstance();
+        // dieselben Dateien wie der Block "Chat"
+        $assets->register('javascript', 'fewo_tk2/chat', 'blocks/fewo_chat/view.js', ['position' => Asset::ASSET_POSITION_FOOTER, 'minify' => false, 'combine' => false], $this);
+        $assets->register('css', 'fewo_tk2/chat', 'blocks/fewo_chat/view.css', ['minify' => false, 'combine' => false], $this);
+        $assets->registerGroup('fewo_tk2/chat', [
+            ['javascript', 'fewo_tk2/chat'],
+            ['css', 'fewo_tk2/chat'],
+        ]);
         $assets->register('javascript', 'fewo_tk2/leaflet', 'assets/leaflet/leaflet.js', ['position' => Asset::ASSET_POSITION_FOOTER, 'minify' => false, 'combine' => false], $this);
         $assets->register('css', 'fewo_tk2/leaflet', 'assets/leaflet/leaflet.css', ['minify' => false, 'combine' => false], $this);
         $assets->registerGroup('fewo_tk2/leaflet', [
@@ -161,11 +190,48 @@ class Controller extends Package implements ProviderAggregateInterface
         ]);
     }
 
+    /**
+     * Hängt den Chat an das Ende der Seite. Nicht im Dashboard, auf Systemseiten (Anmeldung …) und im
+     * Bearbeitungsmodus – dort würde er die Werkzeuge von Concrete verdecken.
+     */
+    private function addChatWidget($page): void
+    {
+        if (!$page instanceof Page || $page->isError() || $page->isAdminArea() || $page->isSystemPage() || $page->isEditMode() || $page->isMasterCollection()) {
+            return;
+        }
+        $settings = $this->app->make(SettingsRepository::class)->get();
+        if (!$settings->isWidgetActive()) {
+            return;
+        }
+        ob_start();
+        View::element('chat_widget', ['settings' => $settings, 'maxLength' => AssistantSettings::MAX_QUESTION_CHARS], 'fewo_tk2');
+        $view = View::getInstance();
+        $view->requireAsset('fewo_tk2/chat');
+        $view->addFooterItem((string) ob_get_clean());
+    }
+
+    /**
+     * Bis Version 2.2 speicherte das Anfrageformular jede Anfrage, und das Dashboard zeigte sie unter
+     * "Buchungsanfragen". Seit 2.3 geht eine Anfrage nur noch per E-Mail an den Vermieter – die Seite und die
+     * Tabelle mit den gespeicherten Anfragen entfallen.
+     */
+    private function removeStoredInquiries(): void
+    {
+        $page = Page::getByPath('/dashboard/fewo_tk2/inquiries');
+        if (is_object($page) && !$page->isError()) {
+            $page->delete();
+        }
+        $this->app->make(Connection::class)->executeStatement('DROP TABLE IF EXISTS FewoInquiries');
+    }
+
     private function installOrUpgrade($pkg): void
     {
         $set = BlockTypeSet::getByHandle(self::BLOCK_TYPE_SET);
         if ($set === null) {
-            $set = BlockTypeSet::add(self::BLOCK_TYPE_SET, 'Fewo Toolkit', $pkg);
+            $set = BlockTypeSet::add(self::BLOCK_TYPE_SET, self::DISPLAY_NAME, $pkg);
+        } elseif ($set->getBlockTypeSetName() !== self::DISPLAY_NAME) {
+            // bis Version 2.2.0 hieß das Set wie das alte Paket
+            $set->updateBlockTypeSetName(self::DISPLAY_NAME);
         }
 
         foreach (self::BLOCK_TYPES as $handle) {
@@ -178,6 +244,7 @@ class Controller extends Package implements ProviderAggregateInterface
             }
         }
 
+        $order = 0;
         foreach (self::SINGLE_PAGES as $path => [$name, $description]) {
             $page = Page::getByPath($path);
             if (!is_object($page) || $page->isError()) {
@@ -185,6 +252,10 @@ class Controller extends Package implements ProviderAggregateInterface
             }
             if (is_object($page) && !$page->isError()) {
                 $page->update(['cName' => $name, 'cDescription' => $description]);
+                if ($path !== '/dashboard/fewo_tk2') {
+                    // Reihenfolge im Menü wie in SINGLE_PAGES – später hinzugekommene Seiten stünden sonst am Ende
+                    $page->updateDisplayOrder($order++);
+                }
             }
         }
 

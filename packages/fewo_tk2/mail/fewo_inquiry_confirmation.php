@@ -11,7 +11,7 @@ use FewoTk2\Support\Money;
  * Enthält bewusst keine frei eingegebenen Texte (Name, Nachricht), damit das
  * Formular nicht zum Versand von Spam an fremde Adressen missbraucht werden kann.
  *
- * @var FewoTk2\Entity\Inquiry $inquiry
+ * @var FewoTk2\Inquiry\Inquiry $inquiry
  * @var FewoTk2\Pricing\Quote|null $quote
  * @var string $siteName
  */

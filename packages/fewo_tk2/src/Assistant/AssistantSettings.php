@@ -20,6 +20,10 @@ final class AssistantSettings
     public const DEFAULT_CONTEXT = 48000;
 
     public const MAX_QUESTION_CHARS = 500;
+    public const MAX_NAME_CHARS = 60;
+    /** So viele Beispielfragen zeigt ein Chat höchstens. */
+    public const MAX_EXAMPLES = 6;
+    public const MAX_HINT_CHARS = 80;
 
     public function __construct(
         public readonly bool $enabled = false,
@@ -33,6 +37,25 @@ final class AssistantSettings
         public readonly int $timeout = 120,
         public readonly int $visitorLimit = 20,
         public readonly int $siteLimit = 200,
+        /** Name des Assistenten, z. B. "Emma"; leer = kein eigener Name (im Chat steht dann "Assistent") */
+        public readonly string $name = '',
+        /** Chat auf jeder Seite der Website (unten rechts), unabhängig von Chat-Blöcken */
+        public readonly bool $widgetEnabled = false,
+        /** Kurzer Text der Schaltfläche, die den Chat öffnet, z. B. "Fragen? Ich helfe gern." */
+        public readonly string $widgetHint = '',
+        /** Erste Nachricht des Assistenten im Chat auf jeder Seite */
+        public readonly string $widgetGreeting = '',
+        /** Beispielfragen des Chats auf jeder Seite, eine pro Zeile */
+        public readonly string $widgetQuestions = '',
+        /** Hinweis unter dem Eingabefeld, z. B. dass eine KI antwortet */
+        public readonly string $widgetNotice = '',
+        /**
+         * Erklärungen zu Stichwörtern (siehe KeywordNotes): Kommt ein Stichwort in einer Frage vor, bekommt das
+         * Sprachmodell die Erklärung mit.
+         *
+         * @var array<int, array{keywords: string, text: string}>
+         */
+        public readonly array $notes = [],
     ) {
     }
 
@@ -59,6 +82,14 @@ final class AssistantSettings
             $int('timeout', 120, 10, 600),
             $int('visitorLimit', 20, 1, 1000),
             $int('siteLimit', 200, 1, 100000),
+            // einzeilig und ohne Steuerzeichen: Der Name steht im Chat und in den Regeln für das Sprachmodell
+            mb_substr(trim((string) preg_replace('/[\x00-\x1F\x7F"\s]+/u', ' ', (string) ($data['name'] ?? ''))), 0, self::MAX_NAME_CHARS),
+            !empty($data['widgetEnabled']),
+            mb_substr(trim((string) preg_replace('/\s+/u', ' ', (string) ($data['widgetHint'] ?? ''))), 0, self::MAX_HINT_CHARS),
+            $text('widgetGreeting', 1000),
+            implode("\n", self::questionLines($data['widgetQuestions'] ?? '')),
+            $text('widgetNotice', 1000),
+            KeywordNotes::sanitize($data['notes'] ?? []),
         );
     }
 
@@ -68,6 +99,46 @@ final class AssistantSettings
     public function toArray(): array
     {
         return get_object_vars($this);
+    }
+
+    /**
+     * Beispielfragen eines Chats: ohne Leerzeilen und Doppelte, auf die zulässige Länge gekürzt, höchstens MAX_EXAMPLES.
+     *
+     * @param mixed $value Text mit einer Frage pro Zeile oder Liste der Fragen (Formularfelder)
+     *
+     * @return string[]
+     */
+    public static function questionLines(mixed $value): array
+    {
+        if (is_array($value)) {
+            // ein Feld je Frage: Zeilenumbrüche darin trennen keine Fragen
+            $value = implode("\n", array_map(static fn ($line): string => is_scalar($line) ? (string) preg_replace('/\s+/u', ' ', (string) $line) : '', $value));
+        }
+        $lines = [];
+        foreach (preg_split('/\R/u', is_scalar($value) ? (string) $value : '') ?: [] as $line) {
+            $line = mb_substr(trim($line), 0, self::MAX_QUESTION_CHARS);
+            if ($line !== '') {
+                $lines[] = $line;
+            }
+        }
+
+        return array_slice(array_values(array_unique($lines)), 0, self::MAX_EXAMPLES);
+    }
+
+    /**
+     * @return string[] Beispielfragen des Chats auf jeder Seite
+     */
+    public function getWidgetQuestions(): array
+    {
+        return self::questionLines($this->widgetQuestions);
+    }
+
+    /**
+     * Wird der Chat auf jeder Seite angezeigt?
+     */
+    public function isWidgetActive(): bool
+    {
+        return $this->widgetEnabled && $this->isReady();
     }
 
     /**

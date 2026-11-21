@@ -1,4 +1,15 @@
-/* Fewo Toolkit – Chat (KI-Assistent) */
+/* Fewo Toolkit – Chat (KI-Assistent)
+ * Alle Maße in em: Der Block folgt der Schriftgröße des Themes.
+ */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-chat),
+:where(.fewo-chat) *,
+:where(.fewo-chat) *::before,
+:where(.fewo-chat) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-chat {
     --fewo-border: rgba(0, 0, 0, .2);
     --fewo-focus: #2563eb;
@@ -8,27 +19,27 @@
     --fewo-chat-bg: #f4f6f8;
     --fewo-chat-user-bg: #dbeafe;
     --fewo-chat-assistant-bg: #fff;
-    --fewo-chat-height: 22rem;
-    margin-block: 1rem;
-    max-width: 44rem;
+    --fewo-chat-height: 22em;
+    margin-block: 1em;
+    max-width: 44em;
 }
 
 .fewo-chat__title {
-    margin-block: 0 1rem;
+    margin-block: 0 .5em;
 }
 
 .fewo-chat__log {
     display: flex;
     flex-direction: column;
-    gap: .75rem;
-    min-height: 6rem;
+    gap: .75em;
+    min-height: 6em;
     max-height: var(--fewo-chat-height);
     overflow-y: auto;
-    padding: 1rem;
+    padding: 1em;
     background: var(--fewo-chat-bg);
     border: 1px solid var(--fewo-border);
     border-radius: var(--fewo-radius);
-    font-size: 1rem;
+    font-size: 1em;
     line-height: 1.45;
 }
 
@@ -41,7 +52,7 @@
 
 .fewo-chat__message {
     max-width: 85%;
-    padding: .6rem .85rem;
+    padding: .6em .85em;
     border-radius: calc(var(--fewo-radius) * 2);
     background: var(--fewo-chat-assistant-bg);
     border: 1px solid rgba(0, 0, 0, .08);
@@ -61,10 +72,10 @@
 
 .fewo-chat__author {
     display: block;
-    font-size: .75rem;
+    font-size: .75em;
     font-weight: 600;
     color: var(--fewo-muted);
-    margin-bottom: .15rem;
+    margin-bottom: .2em;
 }
 
 .fewo-chat__text {
@@ -75,7 +86,7 @@
 .fewo-chat__message[aria-busy="true"] .fewo-chat__text:empty::after {
     content: "● ● ●";
     letter-spacing: .1em;
-    font-size: .7rem;
+    font-size: .7em;
     color: var(--fewo-muted);
     animation: fewo-chat-wait 1.2s ease-in-out infinite;
 }
@@ -92,29 +103,29 @@
 }
 
 .fewo-chat__sources {
-    margin: .5rem 0 0;
-    font-size: .8125rem;
+    margin: .6em 0 0;
+    font-size: .8125em;
     color: var(--fewo-muted);
 }
 
 /* Unterstrichen: Links müssen sich nicht nur durch die Farbe vom Text abheben */
 .fewo-chat__sources a {
-    margin-left: .35rem;
+    margin-left: .43em;
     text-decoration: underline;
 }
 
 .fewo-chat__examples {
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem;
-    margin-top: .75rem;
+    gap: .5em;
+    margin-top: .75em;
 }
 
 .fewo-chat__example {
     font: inherit;
-    font-size: .875rem;
+    font-size: .875em;
     line-height: 1.3;
-    padding: .35rem .75rem;
+    padding: .4em .86em;
     border: 1px solid var(--fewo-border);
     border-radius: 999px;
     background: #fff;
@@ -133,27 +144,28 @@
 }
 
 .fewo-chat__form {
-    margin-top: .75rem;
+    margin-top: .75em;
 }
 
 .fewo-chat__label {
     display: block;
     font-weight: 600;
-    font-size: .875rem;
-    margin-bottom: .25rem;
+    font-size: .875em;
+    margin-bottom: .29em;
 }
 
 .fewo-chat__row {
     display: flex;
-    gap: .5rem;
+    gap: .5em;
 }
 
 .fewo-chat input[type="text"] {
     flex: 1 1 auto;
     min-width: 0;
+    min-height: max(2.75rem, 2.2em);
+    margin: 0;
     font: inherit;
-    font-size: 1rem;
-    padding: .5rem .75rem;
+    padding: .375em .75em;
     border: 1px solid var(--fewo-border);
     border-radius: var(--fewo-radius);
     background: #fff;
@@ -165,20 +177,234 @@
 }
 
 .fewo-chat__notice {
-    margin: .5rem 0 0;
-    font-size: .8125rem;
+    margin: .6em 0 0;
+    font-size: .8125em;
     color: var(--fewo-muted);
 }
 
 /* Hinweis für Redakteure, solange der Assistent nicht eingerichtet ist */
 .fewo-notice {
-    padding: .75rem 1rem;
+    padding: .85em 1.15em;
     border-radius: var(--fewo-radius, 6px);
-    margin-bottom: 1rem;
-    font-size: .875rem;
+    margin-bottom: 1.15em;
+    font-size: .875em;
 }
 
 .fewo-notice--warning {
     background: #fff6e0;
     color: #6b4b00;
+}
+
+/* Schaltflächen: Rückfall für Themes ohne eigene Gestaltung von .btn (z. B. ohne Bootstrap).
+ * Das Gewicht liegt absichtlich unter dem einer Klasse: Gestaltet das Theme .btn, gilt das Theme.
+ * Farbe anpassen: .fewo-btn { --fewo-accent: #b42318; --fewo-accent-hover: #8a1c1c; } */
+html :is(a, button):where(.fewo-btn) {
+    display: inline-block;
+    padding: .5em 1.1em;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    color: var(--fewo-accent-text, #fff);
+    background-color: var(--fewo-accent, #0b65c2);
+    border: 1px solid transparent;
+    border-radius: var(--fewo-radius, 6px);
+    cursor: pointer;
+}
+
+html :is(a, button):where(.fewo-btn):hover {
+    background-color: var(--fewo-accent-hover, #094f99);
+}
+
+html :is(a, button):where(.fewo-btn):focus-visible {
+    outline: 2px solid var(--fewo-accent, #0b65c2);
+    outline-offset: 2px;
+}
+
+html :is(a, button):where(.fewo-btn):disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+/* ------------------------------------------------------------------------------------------------
+ * Chat auf jeder Seite (Dashboard › Fewo Toolkit › KI-Assistent): unten rechts zuerst eine kleine
+ * Schaltfläche mit Hinweistext, ein Klick öffnet den Chat.
+ * Er hängt direkt am <body>, deshalb feste Maße (rem) und eine eigene, neutrale Schrift. Anpassen im Theme:
+ * .fewo-chat-widget { --fewo-accent: #b42318; --fewo-chat-offset-y: 5rem; --fewo-chat-font: inherit; }
+ * ------------------------------------------------------------------------------------------------ */
+:where(.fewo-chat-widget),
+:where(.fewo-chat-widget) *,
+:where(.fewo-chat-widget) *::before,
+:where(.fewo-chat-widget) *::after {
+    box-sizing: border-box;
+}
+
+.fewo-chat-widget {
+    --fewo-accent: #0b65c2;
+    --fewo-accent-hover: #094f99;
+    --fewo-accent-text: #fff;
+    --fewo-chat-offset-x: 1rem;
+    --fewo-chat-offset-y: 1rem;
+    position: fixed;
+    right: var(--fewo-chat-offset-x);
+    bottom: var(--fewo-chat-offset-y);
+    z-index: 1040;
+    font-family: var(--fewo-chat-font, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: left;
+    color: #1f2933;
+}
+
+.fewo-chat-widget[hidden],
+.fewo-chat-widget__panel[hidden],
+.fewo-chat-widget.is-open .fewo-chat-widget__launcher {
+    display: none;
+}
+
+.fewo-chat-widget__launcher {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    max-width: min(20rem, calc(100vw - 2 * var(--fewo-chat-offset-x)));
+    min-height: 3rem;
+    margin: 0;
+    padding: .625rem 1.125rem .625rem .875rem;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: left;
+    color: var(--fewo-accent-text);
+    background: var(--fewo-accent);
+    border: 0;
+    border-radius: 1.5rem;
+    box-shadow: 0 .25rem 1rem rgba(0, 0, 0, .28);
+    cursor: pointer;
+}
+
+.fewo-chat-widget__launcher--icon {
+    padding: .75rem;
+    border-radius: 50%;
+}
+
+.fewo-chat-widget__launcher:hover {
+    background: var(--fewo-accent-hover);
+}
+
+.fewo-chat-widget__launcher:focus-visible,
+.fewo-chat-widget__close:focus-visible {
+    outline: 3px solid var(--fewo-accent);
+    outline-offset: 3px;
+}
+
+.fewo-chat-widget__icon {
+    flex: none;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.fewo-chat-widget__panel {
+    display: flex;
+    flex-direction: column;
+    width: min(24rem, calc(100vw - 2 * var(--fewo-chat-offset-x)));
+    height: min(36rem, calc(100vh - 2 * var(--fewo-chat-offset-y)));
+    height: min(36rem, calc(100dvh - 2 * var(--fewo-chat-offset-y)));
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, .15);
+    border-radius: 12px;
+    box-shadow: 0 .5rem 2rem rgba(0, 0, 0, .3);
+}
+
+.fewo-chat-widget__header {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    padding: .5rem .5rem .5rem 1rem;
+    color: var(--fewo-accent-text);
+    background: var(--fewo-accent);
+}
+
+.fewo-chat-widget__close {
+    flex: none;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.fewo-chat-widget__close:hover {
+    background: rgba(255, 255, 255, .2);
+}
+
+.fewo-chat-widget__close:focus-visible {
+    outline-color: currentColor;
+    outline-offset: -3px;
+}
+
+/* der Chat füllt das Fenster, das Gespräch nimmt den freien Platz */
+.fewo-chat--widget {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-width: none;
+    margin: 0;
+    padding: .75rem;
+}
+
+.fewo-chat--widget .fewo-chat__log {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    padding: .75rem;
+    font-size: .9375rem;
+}
+
+.fewo-chat--widget .fewo-chat__message {
+    max-width: 92%;
+}
+
+/* Beispielfragen nur zu Beginn: Danach gehört der Platz dem Gespräch */
+.fewo-chat--widget.is-started .fewo-chat__examples {
+    display: none;
+}
+
+.fewo-chat--widget .fewo-chat__example {
+    font-size: .8125rem;
+}
+
+/* Beschriftung des Eingabefelds nur für Screenreader – der Platzhalter zeigt, was hinein soll */
+.fewo-chat--widget .fewo-chat__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.fewo-chat--widget .fewo-chat__notice {
+    font-size: .75rem;
+}
+
+@media (max-width: 30rem) {
+    .fewo-chat-widget {
+        --fewo-chat-offset-x: .5rem;
+        --fewo-chat-offset-y: .5rem;
+    }
 }

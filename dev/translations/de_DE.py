@@ -6,11 +6,9 @@ Schlüssel: englischer Quelltext (msgid). Wert: Übersetzung, bei Mehrzahlformen
 
 TRANSLATIONS = {
     # Paket
-    "Occupancy calendar, prices and price calculator with data from Fewo-Office, booking inquiries, 360° tours, an AI assistant and more for holiday apartment websites.":
-        "Belegungsplan, Preise und Preisrechner mit Daten aus Fewo-Office, Buchungsanfragen, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites.",
-    "Booking Inquiries": "Buchungsanfragen",
-    "Inquiries received through the booking inquiry form.": "Anfragen, die über das Anfrageformular eingegangen sind.",
-    "Fewo Toolkit": "Fewo Toolkit",
+    "Occupancy calendar, prices and price calculator with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites.":
+        "Belegungsplan, Preise und Preisrechner mit Daten aus Fewo-Office, Anfrageformular, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites.",
+    "Fewo Toolkit 2": "Fewo Toolkit 2",
 
     # Daten aus Fewo-Office (Belegung und Preisliste)
     "The data is neither JSON nor XML.": "Die Daten sind weder JSON noch XML.",
@@ -69,7 +67,7 @@ TRANSLATIONS = {
     "Final cleaning": "Endreinigung",
 
     # Dashboard: Wohnungen
-    "Apartments and booking inquiries.": "Wohnungen und Buchungsanfragen.",
+    "Apartments and the AI assistant.": "Wohnungen und KI-Assistent.",
     "Apartments": "Wohnungen",
     "Fewo-Office URLs for occupancy and prices of each apartment.": "Fewo-Office-Adressen für Belegung und Preise je Wohnung.",
     "Apartment": "Wohnung",
@@ -99,6 +97,32 @@ TRANSLATIONS = {
     "Delete": "Löschen",
     "Cancel": "Abbrechen",
     "Update now": "Jetzt aktualisieren",
+
+    # Dashboard: Preise
+    "Prices": "Preise",
+    "Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.":
+        "Preise, Mindestbelegung, Mindestdauer und Endreinigung jeder Wohnung, wie Fewo-Office sie liefert.",
+    "The prices as Fewo-Office delivers them – the price overview, the price calculator and the AI assistant work with exactly these figures. Prices are maintained in Fewo-Office; \"Update now\" fetches the current state immediately.":
+        "Die Preise, wie Fewo-Office sie liefert – Preisübersicht, Preisrechner und KI-Assistent arbeiten mit genau diesen Zahlen. Gepflegt werden die Preise in Fewo-Office; „Jetzt aktualisieren“ ruft den aktuellen Stand sofort ab.",
+    "No price list URL is stored for this apartment.": "Für diese Wohnung ist keine Adresse der Preisliste hinterlegt.",
+    "The prices below are the last state that could be loaded.": "Die Preise unten sind der letzte Stand, der geladen werden konnte.",
+    "The price list could not be loaded.": "Die Preisliste konnte nicht geladen werden.",
+    "Minimum stay": "Mindestdauer",
+    "%s (once per stay)": "%s (einmalig je Aufenthalt)",
+    "none": "keine",
+    "Maximum occupancy": "Höchstbelegung",
+    "Minimum occupancy": "Mindestbelegung",
+    "Down payment": "Anzahlung",
+    "%s %% of the total price": "%s %% des Gesamtpreises",
+    "Fewo-Office does not deliver any current prices for this apartment.": "Fewo-Office liefert für diese Wohnung keine aktuellen Preise.",
+    "Season": "Saison",
+    "Period": "Zeitraum",
+    "standard price": "Standardpreis",
+    "Prices per night. Minimum occupancy: up to this number of guests the lowest price applies – fewer guests pay the same. A night costs the price of the season in which it ends.":
+        "Preise je Nacht. Mindestbelegung: Bis zu dieser Gästezahl gilt der niedrigste Preis – weniger Gäste zahlen dasselbe. Eine Nacht kostet den Preis der Saison, in der sie endet.",
+    "\"%1$s\": %2$s": "„%1$s“: %2$s",
+    "The prices could not be loaded from Fewo-Office. %s": "Die Preise konnten nicht aus Fewo-Office geladen werden. %s",
+    "The prices of %s apartment have been reloaded from Fewo-Office.": ["Die Preise von %s Wohnung wurden neu aus Fewo-Office geladen.", "Die Preise von %s Wohnungen wurden neu aus Fewo-Office geladen."],
     "Delete the apartment \"%s\"? Blocks using it will no longer show any data.":
         "Die Wohnung „%s“ löschen? Blöcke, die sie verwenden, zeigen dann keine Daten mehr an.",
     "The apartment was not found.": "Die Wohnung wurde nicht gefunden.",
@@ -119,40 +143,17 @@ TRANSLATIONS = {
         "Ihre Preisliste bestimmt die maximale Gästeanzahl. Der unverbindliche Preis steht in der Benachrichtigung.",
     "Only without apartment.": "Nur ohne Wohnung.",
 
-    # Dashboard: Anfragen
-    "Your inquiry from %1$s to %2$s": "Ihre Anfrage vom %1$s bis %2$s",
-    "Received": "Eingegangen",
+    # E-Mails und Formular: Angaben der Anfrage
     "Form": "Formular",
     "Accommodation": "Unterkunft",
-    "Travel dates": "Reisezeitraum",
     "%s night": ["%s Nacht", "%s Nächte"],
     "Guests": "Gäste",
-    "%1$s adults, %2$s children": "Erwachsene: %1$s, Kinder: %2$s",
     "Non-binding price": "Unverbindlicher Preis",
     "Email": "E-Mail",
     "Phone": "Telefon",
     "Address": "Anschrift",
     "How did you find us?": "Wie sind Sie auf uns aufmerksam geworden?",
-    "Reply by email": "Per E-Mail antworten",
     "Message": "Nachricht",
-    "Status": "Status",
-    "Mark as done": "Als erledigt markieren",
-    "Mark as new": "Als neu markieren",
-    "Delete this inquiry permanently?": "Diese Anfrage endgültig löschen?",
-    "Delete inquiry": "Anfrage löschen",
-    "All": "Alle",
-    "New": "Neu",
-    "Done": "Erledigt",
-    "No inquiries found.": "Keine Anfragen gefunden.",
-    "Accommodation / form": "Unterkunft / Formular",
-    "Price": "Preis",
-    "Pages": "Seiten",
-    "Data protection": "Datenschutz",
-    "Delete inquiries automatically after (days)": "Anfragen automatisch löschen nach (Tagen)",
-    "0 = never delete. Inquiries are kept in the dashboard only; the emails in your mailbox are not affected.":
-        "0 = nie löschen. Gelöscht wird nur im Dashboard; die E-Mails in Ihrem Postfach bleiben unberührt.",
-    "The status has been updated.": "Der Status wurde geändert.",
-    "The inquiry has been deleted.": "Die Anfrage wurde gelöscht.",
     "The settings have been saved.": "Die Einstellungen wurden gespeichert.",
 
     # Block Preisübersicht
@@ -241,8 +242,8 @@ TRANSLATIONS = {
 
     # Block Anfrageformular
     "Booking Inquiry Form": "Anfrageformular",
-    "Inquiry form for travel dates, guests and contact details. Inquiries are emailed and saved in the dashboard.":
-        "Anfrageformular für Reisezeitraum, Gäste und Kontaktdaten. Anfragen werden per E-Mail verschickt und im Dashboard gespeichert.",
+    "Inquiry form for travel dates, guests and contact details. Every inquiry is sent by email to the address set in the block.":
+        "Anfrageformular für Reisezeitraum, Gäste und Kontaktdaten. Jede Anfrage geht per E-Mail an die im Block hinterlegte Adresse.",
     "Search engine": "Suchmaschine",
     "Holiday rental portal": "Urlaubsportal",
     "Recommendation by friends": "Empfehlung von Bekannten",
@@ -261,8 +262,9 @@ TRANSLATIONS = {
         "E-Mails werden mit den Einstellungen unter Verwaltung › System & Einstellungen › E-Mail › E-Mail Versandmethode verschickt. Bitte richten Sie dort SMTP ein.",
     "Name of the form (optional)": "Name des Formulars (optional)",
     "e.g. name of the apartment": "z. B. Name der Ferienwohnung",
-    "Appears in the email subject and in the dashboard.": "Erscheint im Betreff der E-Mail und im Dashboard.",
-    "Save inquiries in the dashboard": "Anfragen im Dashboard speichern",
+    "Appears in the email subject.": "Erscheint im Betreff der E-Mail.",
+    "Every inquiry is sent to this address by email; the website does not store inquiries.":
+        "Jede Anfrage geht per E-Mail an diese Adresse; die Website speichert keine Anfragen.",
     "Send a confirmation email to the guest": "Bestätigung per E-Mail an den Gast senden",
     "Fields": "Felder",
     "Accommodations to choose from (one per line, optional)": "Unterkünfte zur Auswahl (eine pro Zeile, optional)",
@@ -468,11 +470,9 @@ TRANSLATIONS = {
     "Hello,": "Guten Tag,",
     "Kind regards": "Freundliche Grüße",
     "Nights": "Nächte",
-    "New booking inquiry": "Neue Buchungsanfrage",
-    "New booking inquiry via %s": "Neue Buchungsanfrage über %s",
-    "View in the dashboard: %s": "Im Dashboard ansehen: %s",
+    "New inquiry": "Neue Anfrage",
+    "New inquiry via %s": "Neue Anfrage über %s",
     "Simply reply to this email to answer the guest.": "Antworten Sie einfach auf diese E-Mail, um dem Gast zu schreiben.",
-    "View in the dashboard": "Im Dashboard ansehen",
 
     # KI-Assistent: Paket und Dashboard
     "AI Assistant": "KI-Assistent",
@@ -522,6 +522,18 @@ TRANSLATIONS = {
     "e.g. Address visitors informally. Pets are welcome on request.": "z. B. Sprich die Besucher mit „du“ an. Haustiere sind auf Anfrage willkommen.",
     "Tone of voice or facts that are not on the website. The basic rules (answer only from the website content, no invented prices) always apply.":
         "Tonfall oder Angaben, die nicht auf der Website stehen. Die Grundregeln (nur aus den Inhalten der Website antworten, keine erfundenen Preise) gelten immer.",
+    "Explanations for keywords": "Erklärungen zu Stichwörtern",
+    "If a visitor's question contains one of the keywords, the assistant receives your explanation with it and answers accordingly – even if the website says something different. Use this to correct wrong answers or to add what the website does not say. Separate several keywords with commas; upper and lower case and umlauts do not matter, and a keyword also matches inside longer words (\"parking\" in \"parking space\").":
+        "Kommt in der Frage eines Besuchers eines der Stichwörter vor, bekommt der Assistent Ihre Erklärung dazu und antwortet entsprechend – auch wenn auf der Website etwas anderes steht. So stellen Sie falsche Antworten richtig oder ergänzen, was auf der Website fehlt. Mehrere Stichwörter mit Komma trennen; Groß- und Kleinschreibung sowie Umlaute spielen keine Rolle, und ein Stichwort trifft auch als Teil eines längeren Wortes („Stellplatz“ in „Tiefgaragenstellplatz“).",
+    "Keywords": "Stichwörter",
+    "Explanation": "Erklärung",
+    "e.g. parking space, parking, car": "z. B. Stellplatz, Parkplatz, parken, Auto",
+    "e.g. The apartment has no parking space of its own. Free parking is available along the street.":
+        "z. B. Die Wohnung hat keinen eigenen Stellplatz. Parken ist kostenlos an der Straße möglich.",
+    "No explanations yet.": "Noch keine Erklärungen.",
+    "Add explanation": "Erklärung hinzufügen",
+    "Information from the hosts on this topic (it is correct, even if the website says something different):":
+        "Hinweis der Gastgeber zu diesem Thema (er stimmt, auch wenn auf der Website etwas anderes steht):",
     "Limits": "Grenzen",
     "Questions per visitor and hour": "Fragen je Besucher und Stunde",
     "Questions per hour in total": "Fragen pro Stunde insgesamt",
@@ -587,7 +599,44 @@ TRANSLATIONS = {
     "Greeting": "Begrüßung",
     "First message of the assistant in the chat.": "Erste Nachricht des Assistenten im Chat.",
     "Example questions": "Beispielfragen",
-    "One question per line, up to six. Visitors can ask them with one click.": "Eine Frage pro Zeile, höchstens sechs. Besucher stellen sie mit einem Klick.",
+    "Example question": "Beispielfrage",
+    "No example questions – the chat shows only the input field.": "Keine Beispielfragen – der Chat zeigt nur das Eingabefeld.",
+    "Add question": "Frage hinzufügen",
+    "Visitors can ask these questions with one click. Up to %s questions; remove all of them to show none.":
+        "Besucher stellen diese Fragen mit einem Klick. Höchstens %s Fragen; ohne Fragen zeigt der Chat keine.",
+    "The assistant is called \"%s\".": "Der Assistent heißt „%s“.",
+    "The assistant has no name yet.": "Der Assistent hat noch keinen Namen.",
+    "Change the name": "Namen ändern",
+
+    # Name des Assistenten und Chat auf jeder Seite
+    "Name of the assistant (optional)": "Name des Assistenten (optional)",
+    "e.g. Emma": "z. B. Emma",
+    "Shown in the chat above each answer; the assistant also knows its name. Without a name it is called \"Assistant\".":
+        "Steht im Chat über jeder Antwort; auch der Assistent selbst kennt seinen Namen. Ohne Namen heißt er „Assistent“.",
+    "Chat on every page": "Chat auf jeder Seite",
+    "Show the chat on every page of the website (bottom right)": "Chat auf jeder Seite der Website anzeigen (unten rechts)",
+    "Visitors first see a small button with the hint text; a click opens the chat. It needs no chat block and appears once the assistant is switched on. On pages that contain a chat block, only the block is shown.":
+        "Besucher sehen zuerst eine kleine Schaltfläche mit dem Hinweistext; ein Klick öffnet den Chat. Ein Chat-Block ist dafür nicht nötig. Der Chat erscheint, sobald der Assistent eingeschaltet ist. Auf Seiten mit einem Chat-Block wird nur der Block angezeigt.",
+    "Hint text of the button": "Hinweistext der Schaltfläche",
+    "Short invitation next to the chat symbol. Leave empty to show only the symbol.": "Kurze Einladung neben dem Chat-Symbol. Leer lassen, um nur das Symbol zu zeigen.",
+    "Questions? I am happy to help.": "Fragen? Ich helfe gern.",
+    "Open the chat with %s": "Chat mit %s öffnen",
+    "Open the chat": "Chat öffnen",
+    "Close the chat": "Chat schließen",
+    "The chat is not available.": "Der Chat ist nicht verfügbar.",
+
+    # Vom Server berechneter Preis eines Aufenthalts (für das Sprachmodell)
+    "Calculation by the booking system for the stay from %2$s to %3$s (%1$s night):":
+        ["Berechnung des Buchungssystems für den Aufenthalt vom %2$s bis %3$s (%1$s Nacht):", "Berechnung des Buchungssystems für den Aufenthalt vom %2$s bis %3$s (%1$s Nächte):"],
+    "Prices per night according to the booking system (plus final cleaning once per stay):": "Preise pro Nacht laut Buchungssystem (zuzüglich einmalig Endreinigung je Aufenthalt):",
+    "%1$s – %2$d periods with different prices:": "%1$s – %2$d Zeiträume mit unterschiedlichen Preisen:",
+    "cannot be calculated: %s": "lässt sich nicht berechnen: %s",
+    "total price %1$s (including final cleaning) = %2$s + final cleaning %3$s": "Gesamtpreis %1$s (einschließlich Endreinigung) = %2$s + Endreinigung %3$s",
+    "total price %1$s = %2$s": "Gesamtpreis %1$s = %2$s",
+    "for information only, because the period is already booked": "nur zur Orientierung, denn der Zeitraum ist bereits belegt",
+    "down payment %s": "Anzahlung %s",
+    "Availability: the apartment is still free in this period (not binding).": "Verfügbarkeit: Die Wohnung ist in diesem Zeitraum noch frei (unverbindlich).",
+    "Availability: the apartment is NOT free for the whole period – it is already booked.": "Verfügbarkeit: Die Wohnung ist in diesem Zeitraum NICHT durchgehend frei – sie ist bereits belegt.",
     "Note below the input field": "Hinweis unter dem Eingabefeld",
     "Tell your visitors that an AI is answering.": "Sagen Sie Ihren Besuchern, dass eine KI antwortet.",
     "Assistant settings": "Einstellungen des Assistenten",

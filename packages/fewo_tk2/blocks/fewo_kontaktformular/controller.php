@@ -8,12 +8,10 @@ use Concrete\Core\Logging\LoggerFactory;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Support\Facade\Url;
 use DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
 use FewoTk2\Block\AddDefaults;
 use FewoTk2\Block\ApartmentBlock;
-use FewoTk2\Entity\Inquiry;
+use FewoTk2\Inquiry\Inquiry;
 use FewoTk2\Inquiry\InquiryMailer;
-use FewoTk2\Inquiry\InquiryRetention;
 use FewoTk2\Inquiry\InquiryValidator;
 use FewoTk2\Pricing\PriceCalculator;
 use FewoTk2\Pricing\Pricelist;
@@ -39,7 +37,6 @@ class Controller extends BlockController
     public $askForAddress = true;
     public $privacyPageID = 0;
     public $useCaptcha = false;
-    public $storeInquiries = true;
     public $sendConfirmation = true;
     public $successMessage = '';
 
@@ -62,7 +59,7 @@ class Controller extends BlockController
 
     public function getBlockTypeDescription()
     {
-        return t('Inquiry form for travel dates, guests and contact details. Inquiries are emailed and saved in the dashboard.');
+        return t('Inquiry form for travel dates, guests and contact details. Every inquiry is sent by email to the address set in the block.');
     }
 
     public function add()
@@ -178,7 +175,6 @@ class Controller extends BlockController
             'askForAddress' => !empty($args['askForAddress']) ? 1 : 0,
             'privacyPageID' => (int) ($args['privacyPageID'] ?? 0),
             'useCaptcha' => !empty($args['useCaptcha']) ? 1 : 0,
-            'storeInquiries' => !empty($args['storeInquiries']) ? 1 : 0,
             'sendConfirmation' => !empty($args['sendConfirmation']) ? 1 : 0,
             'successMessage' => trim((string) ($args['successMessage'] ?? '')),
         ]);
@@ -246,46 +242,23 @@ class Controller extends BlockController
     }
 
     /**
-     * Speichert die Anfrage und verschickt die E-Mails.
+     * Verschickt die Anfrage per E-Mail an die im Block hinterlegte Adresse. Gespeichert wird nichts.
      *
-     * @return bool false, wenn die Anfrage weder gespeichert noch zugestellt werden konnte
+     * @return bool false, wenn die E-Mail an den Vermieter nicht verschickt werden konnte
      */
     private function deliver(Inquiry $inquiry, ?Quote $quote): bool
     {
         $logger = $this->app->make(LoggerFactory::class)->createLogger(Channels::CHANNEL_APPLICATION);
-        $stored = false;
-        if ($this->storeInquiries) {
-            try {
-                $em = $this->app->make(EntityManagerInterface::class);
-                $em->persist($inquiry);
-                $em->flush();
-                $stored = true;
-            } catch (Throwable $e) {
-                $logger->error('Fewo Toolkit: inquiry could not be saved: ' . $e->getMessage());
-            }
-            try {
-                // Bei dieser Gelegenheit abgelaufene Anfragen entfernen (Löschfrist aus dem Dashboard)
-                $this->app->make(InquiryRetention::class)->purgeExpired();
-            } catch (Throwable $e) {
-                $logger->warning('Fewo Toolkit: expired inquiries could not be removed: ' . $e->getMessage());
-            }
-        }
-
         $mailer = $this->app->make(InquiryMailer::class);
-        $notified = false;
         try {
-            $mailer->sendNotification(
-                $inquiry,
-                (string) $this->recipientEmail,
-                $quote,
-                $stored ? (string) Url::to('/dashboard/fewo_tk2/inquiries', 'detail', $inquiry->getId()) : null
-            );
-            $notified = true;
+            $mailer->sendNotification($inquiry, (string) $this->recipientEmail, $quote);
         } catch (Throwable $e) {
             $logger->error('Fewo Toolkit: inquiry notification could not be sent: ' . $e->getMessage());
+
+            return false;
         }
 
-        if ($this->sendConfirmation && ($notified || $stored)) {
+        if ($this->sendConfirmation) {
             try {
                 $mailer->sendConfirmation($inquiry, $quote, (string) $this->recipientEmail);
             } catch (Throwable $e) {
@@ -293,7 +266,7 @@ class Controller extends BlockController
             }
         }
 
-        return $notified || $stored;
+        return true;
     }
 
     private function redirectToSuccess(): RedirectResponse

@@ -6,8 +6,9 @@ Bildergalerie, Karte, 360°-Rundgang und ein Chat mit KI-Assistent.
 
 **Belegung und Preise kommen immer aus Fewo-Office.** Auf der Website werden weder Preise gepflegt noch
 Buchungen angelegt: Die Blöcke rufen die öffentlichen Export-Schnittstellen von Fewo-Office ab und zeigen an,
-was dort hinterlegt ist. Im Dashboard der Website stehen die Wohnungen mit ihren Adressen in Fewo-Office und
-die eingegangenen Anfragen.
+was dort hinterlegt ist. Im Dashboard der Website (Verwaltung › **Fewo Toolkit 2**) stehen die Wohnungen mit
+ihren Adressen in Fewo-Office und die Einstellungen des KI-Assistenten. **Buchungsanfragen gibt es auf der
+Website nicht:** Das Anfrageformular schickt eine E-Mail an die im Block hinterlegte Adresse und speichert nichts.
 
 - **Voraussetzungen:** Concrete CMS ab 9.5, PHP ab 8.1. Getestet mit Concrete 9.5.7 und PHP 8.4
   (Docker-Image `fehrenbacher/concrete5:9.5.7`), auch ohne die PHP-Erweiterung `intl`.
@@ -22,18 +23,18 @@ die eingegangenen Anfragen.
 ## Installation
 
 1. `fewo_tk2-<Version>.zip` entpacken und den Ordner `fewo_tk2` nach `packages/` der Website kopieren.
-2. Verwaltung › Concrete erweitern › **Funktionen hinzufügen** › Fewo Toolkit › **Installieren**
+2. Verwaltung › Concrete erweitern › **Funktionen hinzufügen** › Fewo Toolkit 2 › **Installieren**
    (oder `concrete/bin/concrete c5:package:install fewo_tk2`).
-3. Die Blöcke stehen danach im Block-Set **Fewo Toolkit** bereit, die Verwaltung unter
-   Verwaltung › **Fewo Toolkit**.
-4. Nur für den Chat: Ollama installieren und unter Verwaltung › Fewo Toolkit › **KI-Assistent** eintragen
+3. Die Blöcke stehen danach im Block-Set **Fewo Toolkit 2** bereit, die Verwaltung unter
+   Verwaltung › **Fewo Toolkit 2**.
+4. Nur für den Chat: Ollama installieren und unter Verwaltung › Fewo Toolkit 2 › **KI-Assistent** eintragen
    (siehe [KI-Assistent](#ki-assistent-chat-mit-ollama)).
 
 Aktualisieren: Ordner ersetzen, dann an derselben Stelle **Aktualisieren** wählen
 (oder `c5:package:update fewo_tk2`).
 
 Deinstallieren entfernt die Blöcke von allen Seiten, die Dashboard-Seiten und die Einstellungen des Pakets.
-Die Tabellen mit den Wohnungen (`FewoApartments`), den Anfragen (`FewoInquiries`) und den zwischengespeicherten
+Die Tabellen mit den Wohnungen (`FewoApartments`) und den zwischengespeicherten
 Daten aus Fewo-Office (`FewoFeeds`) bleiben in der Datenbank und stehen nach einer erneuten Installation
 wieder zur Verfügung. Ebenfalls erhalten bleibt die kleine Zähltabelle des Chats (`FewoAssistantRequests`,
 leert sich von selbst).
@@ -42,7 +43,7 @@ leert sich von selbst).
 
 ### Wohnungen und ihre Daten aus Fewo-Office
 
-Die Adressen in Fewo-Office werden **einmal je Wohnung** hinterlegt: Verwaltung › Fewo Toolkit › **Wohnungen** ›
+Die Adressen in Fewo-Office werden **einmal je Wohnung** hinterlegt: Verwaltung › Fewo Toolkit 2 › **Wohnungen** ›
 *Wohnung hinzufügen*. In den Blöcken (Belegungsplan, Preisübersicht, Preisrechner, Anfrageformular) wird danach
 nur noch die Wohnung ausgewählt.
 
@@ -64,7 +65,7 @@ Mindestens eine der beiden Adressen ist nötig. Die Übersicht zeigt je Wohnung 
   Läuft eine Saison ab, verschwindet sie am Folgetag von der Website – auch wenn die Daten seither nicht neu
   abgerufen wurden. Die Website bewahrt keine alten Preislisten auf.
 - **Aktualisierung:** Die Antwort wird in der Datenbank zwischengespeichert und nach Ablauf des bei der Wohnung
-  eingestellten Intervalls (15 Minuten bis 24 Stunden, Vorgabe 1 Stunde) beim nächsten Seitenaufruf neu
+  eingestellten Intervalls (5 Minuten bis 24 Stunden, Vorgabe 1 Stunde) beim nächsten Seitenaufruf neu
   geladen – ein Cronjob ist nicht nötig. **Jetzt aktualisieren** in der Übersicht und das Speichern einer
   Wohnung rufen sofort ab; ein Tippfehler in der Adresse fällt so gleich auf.
 - **Störungen:** Ist Fewo-Office nicht erreichbar oder liefert es etwas Unbrauchbares (z. B. eine
@@ -74,10 +75,25 @@ Mindestens eine der beiden Adressen ist nötig. Die Übersicht zeigt je Wohnung 
   einen Hinweis statt des Belegungsplans; der Preisrechner wird nicht angezeigt.
 - **Wohnung gelöscht:** Blöcke, die sie verwenden, zeigen keine Daten mehr; Redakteure sehen dort einen Hinweis.
 
+### Preise im Überblick
+
+Verwaltung › Fewo Toolkit 2 › **Preise** zeigt je Wohnung, was Fewo-Office liefert und womit Preisübersicht,
+Preisrechner und KI-Assistent arbeiten: **Mindestdauer**, **Endreinigung**, Höchstbelegung und Anzahlung sowie
+jede Saison mit Zeitraum, Preis je Nacht für jede Gästezahl und **Mindestbelegung**; der Standardpreis steht
+als „Übrige Zeiträume“ darunter. **Jetzt aktualisieren** ruft die Preisliste einer Wohnung (Schaltfläche an
+der Wohnung) oder aller Wohnungen (oben rechts) sofort neu ab. Ändern lassen sich die Preise nur in Fewo-Office.
+
+Die Mindestbelegung ist in Fewo-Office kein eigenes Feld, sie ergibt sich aus den Preisen: Bis zu dieser
+Gästezahl gilt der niedrigste Preis. Kosten eine und zwei Personen gleich viel – oder ist erst ab zwei Personen
+ein Preis hinterlegt –, ist die Mindestbelegung 2. Mindestdauer und Endreinigung gelten in Fewo-Office je
+Wohnung, nicht je Saison.
+
 ### E-Mail-Versand (Anfrageformular)
 
-Das Formular verschickt eine Benachrichtigung an den Vermieter und – wenn im Block eingeschaltet – eine
-Eingangsbestätigung an den Gast. Verwendet werden die E-Mail-Einstellungen von Concrete:
+Aus dem Formular entsteht keine Buchungsanfrage auf der Website, sondern eine E-Mail: Jede Anfrage geht an die
+Adresse, die im Block unter **Anfragen senden an** hinterlegt ist, und – wenn im Block eingeschaltet – als
+Eingangsbestätigung an den Gast. Gespeichert wird auf der Website nichts; das Postfach des Vermieters ist der
+einzige Ort, an dem die Anfrage liegt. Verwendet werden die E-Mail-Einstellungen von Concrete:
 
 - Verwaltung › System & Einstellungen › E-Mail › **E-Mail Versandmethode**: „Externer SMTP Server“ wählen
   und die Zugangsdaten des Postfachs eintragen. Ohne SMTP landen die Nachrichten bei vielen Anbietern im Spam.
@@ -85,8 +101,11 @@ Eingangsbestätigung an den Gast. Verwendet werden die E-Mail-Einstellungen von 
   SMTP-Postfach passen. Antworten gehen automatisch an den Gast bzw. an den Vermieter (Reply-To).
   Ist keine Standardadresse hinterlegt, gilt die Absenderadresse für Formulare, sonst die des Hauptbenutzers.
 
-Kann eine Anfrage weder gespeichert noch verschickt werden, sieht der Gast eine Fehlermeldung; der Grund
-steht im Concrete-Log (Verwaltung › Berichte › Protokolle).
+Kann die E-Mail an den Vermieter nicht verschickt werden, sieht der Gast eine Fehlermeldung und kann es erneut
+versuchen; der Grund steht im Concrete-Log (Verwaltung › Berichte › Protokolle).
+
+Bis Version 2.2 wurden Anfragen zusätzlich gespeichert (Verwaltung › Fewo Toolkit › Buchungsanfragen). Das
+Update auf 2.3 entfernt diese Seite und löscht die Tabelle `FewoInquiries` mit den gespeicherten Anfragen.
 
 ### Spamschutz und Captcha
 
@@ -99,9 +118,9 @@ erscheint, legt Concrete fest: Verwaltung › System & Einstellungen › Berecht
 
 - Im Formular lässt sich die Seite mit der Datenschutzerklärung auswählen; sie wird in der verpflichtenden
   Einwilligung verlinkt.
-- Gespeicherte Anfragen werden nach der **Löschfrist** entfernt (Verwaltung › Fewo Toolkit › Buchungsanfragen,
-  Vorgabe 365 Tage, 0 = nie). Gelöscht wird ohne Cronjob: beim Öffnen der Anfragen im Dashboard und jedes Mal,
-  wenn eine neue Anfrage eingeht. Die E-Mails im Postfach des Vermieters sind davon nicht betroffen.
+- Anfragen werden auf der Website nicht gespeichert: Die Angaben stehen nur in der E-Mail an den Vermieter
+  (und, falls eingeschaltet, in der Eingangsbestätigung an den Gast). Für das Löschen ist damit allein das
+  Postfach maßgeblich.
 - Die Karte überträgt erst nach einem Klick Daten an OpenStreetMap. „Karten immer laden“ merkt sich die
   Zustimmung im Browser des Besuchers (`localStorage`), nicht auf dem Server.
 - Der Chat schickt Fragen nur an den eigenen Server und von dort an Ollama. Fragen und Antworten werden
@@ -118,14 +137,14 @@ Sprachmodell, das mit [Ollama](https://ollama.com) auf dem eigenen Server läuft
 - Die **öffentlichen Seiten** der Website – dieselben, die Concrete in die `sitemap.xml` aufnimmt
   (veröffentlicht, für Gäste sichtbar) – mit den Texten, die ihre Blöcke für die Suche bereitstellen. Seiten mit
   dem Attribut „Vom Suchindex ausschließen“ und die im Dashboard ausgeschlossenen Pfade gehören nicht dazu.
-- **Preise und freie Zeiträume** der Wohnungen aus Fewo-Office (Verwaltung › Fewo Toolkit › Wohnungen): Preise
+- **Preise und freie Zeiträume** der Wohnungen aus Fewo-Office (Verwaltung › Fewo Toolkit 2 › Wohnungen): Preise
   pro Nacht nach Monaten für die nächsten 15 Monate, Endreinigung, Mindestaufenthalt, Anzahlung und die freien
   Zeiträume der nächsten 12 Monate.
 - Änderungen gelten sofort: Sobald eine Seite veröffentlicht, verschoben oder gelöscht wird, liest der
   Assistent die Inhalte neu ein (spätestens nach zehn Minuten); Preise und Belegung folgen dem
   Aktualisierungsintervall der Wohnung.
 - Nicht erfasst werden Blöcke, die Concrete keinen Suchtext liefern – etwa die Blöcke des alten Fewo Toolkit.
-  Unter Verwaltung › Fewo Toolkit › KI-Assistent › **Was der Assistent weiß** steht, welche Seiten mit wie viel
+  Unter Verwaltung › Fewo Toolkit 2 › KI-Assistent › **Was der Assistent weiß** steht, welche Seiten mit wie viel
   Text dabei sind.
 
 **1. Ollama installieren**
@@ -176,13 +195,40 @@ Wahl: Das Modell sollte Deutsch gut beherrschen und mindestens 16.000 Token Kont
 Die **Testfrage im Dashboard** ist der schnellste Weg, ein Modell mit den eigenen Inhalten zu beurteilen –
 am besten mit Fragen nach Preisen und freien Terminen, dort unterscheiden sich die Modelle am meisten.
 
-**3. Im Dashboard einrichten** (Verwaltung › Fewo Toolkit › **KI-Assistent**)
+**3. Im Dashboard einrichten** (Verwaltung › Fewo Toolkit 2 › **KI-Assistent**)
 
 1. **Adresse von Ollama** eintragen und speichern – die Seite zeigt, ob die Verbindung steht und welche Modelle
    installiert sind.
 2. **Modell** wählen, unter **Ausprobieren** ein paar typische Fragen stellen (geht, bevor der Assistent
    eingeschaltet ist; zeigt bei Problemen die Fehlermeldung von Ollama).
-3. **Assistent einschalten** und den Block **Chat (KI-Assistent)** auf einer Seite einfügen.
+3. **Assistent einschalten** und den Block **Chat (KI-Assistent)** auf einer Seite einfügen – oder den
+   **Chat auf jeder Seite** einschalten (siehe unten).
+
+**Name des Assistenten**
+
+Unter **Name des Assistenten** bekommt der Assistent einen Namen, z. B. „Emma“. Er steht im Chat über jeder
+Antwort, und auch das Sprachmodell kennt ihn („Wie heißt du?“). Ohne Namen heißt er „Assistent“.
+
+**Chat auf jeder Seite**
+
+Mit dem Häkchen **Chat auf jeder Seite der Website anzeigen (unten rechts)** erscheint der Chat ohne Block auf
+allen Seiten: zuerst nur als kleine Schaltfläche mit dem Hinweistext („Fragen? Ich helfe gern.“), nach einem
+Klick als Chat-Fenster. Hinweistext, Begrüßung, Beispielfragen und der Hinweis unter dem Eingabefeld werden
+an derselben Stelle im Dashboard gepflegt.
+
+- Das Gespräch und der Zustand (offen oder geschlossen) bleiben beim Wechsel der Seite erhalten – gespeichert
+  nur im Browser des Besuchers (`sessionStorage`), bis der Tab geschlossen wird.
+- Das Sprachmodell wird erst beim Öffnen des Chats vorbereitet, nicht bei jedem Seitenaufruf.
+- Auf Seiten mit einem Chat-Block erscheint nur der Block. Im Dashboard, auf der Anmeldeseite und im
+  Bearbeitungsmodus erscheint der Chat nicht; ohne JavaScript bleibt er unsichtbar.
+- Position und Farbe lassen sich im Theme anpassen, z. B. wenn dort schon ein „Nach oben“-Knopf sitzt:
+  `.fewo-chat-widget { --fewo-chat-offset-y: 5rem; --fewo-accent: #0b65c2; }`
+
+**Beispielfragen**
+
+Die Beispielfragen zum Anklicken stehen je Frage in einer eigenen Zeile und lassen sich ändern, verschieben
+und entfernen (höchstens sechs; ohne Fragen zeigt der Chat keine) – für den Chat auf jeder Seite im Dashboard,
+für einen Chat-Block in dessen Bearbeitungsdialog.
 
 Weitere Einstellungen:
 
@@ -192,6 +238,7 @@ Weitere Einstellungen:
 | Preise und freie Zeiträume einbeziehen | Angaben aus Fewo-Office mitgeben (Vorgabe: ja). |
 | Seiten, die der Assistent nicht kennen soll | Pfade, je Zeile einer, z. B. `/impressum`; gilt auch für Unterseiten. |
 | Zusätzliche Anweisungen | Tonfall („Sprich die Gäste mit du an“) oder Angaben, die nicht auf der Website stehen („Hunde auf Anfrage“). |
+| Erklärungen zu Stichwörtern | Je Zeile Stichwörter (durch Komma getrennt) und eine Erklärung. Kommt eines der Stichwörter in der Frage vor, bekommt das Modell die Erklärung direkt bei der Frage mit – sie gilt vor den Inhalten der Website. Damit stellen Sie falsche Antworten richtig („Stellplatz, Parkplatz, parken“ → „Die Wohnung hat keinen privaten Stellplatz. Parken ist … möglich.“). Groß-/Kleinschreibung und Umlaute spielen keine Rolle, ein Stichwort trifft auch als Teil eines Wortes („Stellplätze“, „Tiefgaragenstellplatz“); Stichwörter mit weniger als vier Zeichen („TV“) nur als ganzes Wort. Bei einer Nachfrage zählt die Frage davor mit. Je genauer die Erklärung, desto besser die Antwort: Steht dort nur, was es nicht gibt, kann das Modell auch nicht sagen, was es stattdessen gibt. Höchstens 30 Erklärungen. |
 | Längste Wartezeit | Nach so vielen Sekunden ohne Antwort bricht die Anfrage ab (Vorgabe 120). |
 | Fragen je Besucher / insgesamt pro Stunde | Schutz vor Überlastung (Vorgabe 20 / 200). Wer die Grenze erreicht, wird um Geduld gebeten. |
 
@@ -213,13 +260,34 @@ einem Server ohne freien Speicher in dieser Größe ist der Assistent nicht sinn
   verneinen, was nicht dasteht, bei fehlenden Angaben an die Gastgeber verweisen) senken das Risiko, schließen
   es aber nicht aus. Der Hinweis unter dem Eingabefeld („Die Antworten erstellt eine KI …“) sollte stehen
   bleiben.
-- Am fehleranfälligsten sind **Preise und Zeiträume**: Im Test nannte `gemma3:4b` für „eine Nacht im Dezember“
-  nur den Weihnachtspreis statt beider Saisons, `gemma3:12b` für drei Gäste den Preis für zwei. Verbindlich
-  bleiben Preisrechner, Belegungsplan und das Angebot der Gastgeber.
-- Preise nennt der Assistent pro Nacht; für den Gesamtpreis verweist er auf den Preisrechner. Freie Zeiträume
-  sind unverbindlich wie im Belegungsplan.
+- Am fehleranfälligsten sind **Preise und Zeiträume**. Deshalb rechnet nicht das Sprachmodell, sondern der
+  Server (siehe „Preise rechnet der Server“). Verbindlich bleiben Preisrechner, Belegungsplan und das Angebot
+  der Gastgeber; freie Zeiträume sind unverbindlich wie im Belegungsplan.
 - Der Assistent kann nichts buchen, nichts ändern und keine Nachrichten weitergeben.
-- Jeder Besucher führt sein eigenes Gespräch; es endet mit dem Verlassen der Seite.
+- Jeder Besucher führt sein eigenes Gespräch. Im Chat-Block endet es mit dem Verlassen der Seite, im Chat auf
+  jeder Seite mit dem Schließen des Tabs.
+
+**Preise rechnet der Server**
+
+Kleine Sprachmodelle verrechnen sich: Sie vergessen die Endreinigung oder den Wechsel der Saison mitten im
+Aufenthalt. Das Paket nimmt ihnen das Rechnen deshalb ab und hängt das Ergebnis an die Frage; das Modell gibt
+die Zahlen nur wieder.
+
+- **Aufenthalt mit Datum** („Was kostet es vom 16. bis 21.12. für 2 Personen?“, „5 Nächte ab 3.2. zu dritt“,
+  „from 28 December to 3 January“): Der Server rechnet mit dem Preisrechner des Pakets – dieselben Regeln wie
+  der Block Preisrechner und Fewo-Office, also mit Saisonwechsel, Endreinigung und Anzahlung – und prüft die
+  Belegung. Ist die Gästezahl nicht genannt, steht der Preis für jede Gästezahl dabei.
+- **Nachfrage ohne Datum** („Was würde der Aufenthalt dann kosten?“, „Und zu dritt?“, „Und für 10 Nächte?“): Es
+  gilt der Zeitraum, der im Gespräch zuletzt genannt wurde – auch in einer Antwort des Assistenten.
+- **Preis in einem Monat** („Was kostet eine Nacht im Dezember?“): Der Server gibt die Preise dieses Monats mit,
+  bei einem Saisonwechsel jeden Zeitraum einzeln.
+- Ohne Datum nennt der Assistent keinen Gesamtpreis, sondern fragt nach Anreise, Abreise und Gästezahl oder
+  verweist auf den Preisrechner.
+
+Erkannt werden deutsche und englische Datumsangaben (`20.12.`, `20.12.2026`, `20. Dezember`, `December 20`,
+`2026-12-20`), Zeiträume („vom … bis …“), Dauern („5 Nächte“, „eine Woche“) und Gästezahlen („2 Personen“, „zu
+dritt“, „2 Erwachsene und 1 Kind“). Was nicht erkannt wird, beantwortet das Modell wie bisher aus den Preisen
+der Website – dort bleibt es fehleranfällig.
 
 **Datenschutz**
 
@@ -248,12 +316,12 @@ einem Server ohne freien Speicher in dieser Größe ist der Assistent nicht sinn
 | **Belegungsplan** | Freie und belegte Tage der gewählten Wohnung | An- und Abreisetage werden halb belegt dargestellt. Pro Zeile stehen so viele Kalenderblätter, wie anfangs Monate sichtbar sind – auch bei den aufgeklappten Monaten; auf schmalen Bildschirmen entsprechend weniger. |
 | **Preisübersicht** | Saisons und Preise der gewählten Wohnung | Anordnung wählbar: **Kacheln nebeneinander** oder **Liste untereinander**. Gleiche Preise werden zu Bereichen zusammengefasst („1–2 Gäste“). Der Standardpreis der Wohnung erscheint als „Übrige Zeiträume“. Bedingungen: Mindestaufenthalt, Endreinigung, Anzahlung. |
 | **Preisrechner** | Gäste berechnen den Preis ihres Aufenthalts | Rechnet wie Fewo-Office und prüft die Belegung der Wohnung (siehe unten). Funktioniert auch ohne JavaScript. Optional führt eine Schaltfläche mit Reisedaten zum Anfrageformular. |
-| **Anfrageformular** | Unverbindliche Anfrage mit Reisezeitraum, Gästen und Kontaktdaten | Die Anfrage wird per E-Mail verschickt und im Dashboard gespeichert – eine Buchung entsteht dadurch nicht. Mit einer Wohnung steht der unverbindliche Preis in der Benachrichtigung und im Dashboard. |
+| **Anfrageformular** | Unverbindliche Anfrage mit Reisezeitraum, Gästen und Kontaktdaten | Die Anfrage geht per E-Mail an die im Block hinterlegte Adresse; gespeichert wird nichts, und eine Buchung entsteht dadurch nicht. Mit einer Wohnung steht der unverbindliche Preis in der Benachrichtigung. |
 | **Ausstattungsliste** | Liste mit optionalen Fußnoten, auf Wunsch aufklappbar | Spaltenzahl wählbar (1 bis 4); auf schmalen Bildschirmen werden es automatisch weniger. |
 | **Bildergalerie** | Bilder aus einem Ordner der Dateiverwaltung oder einem Dateiset mit Großansicht | Bildunterschrift = Beschreibung oder Titel der Datei. Bedienung per Tastatur und Wischen. |
 | **Karte** | OpenStreetMap-Karte mit Markierungen | Koordinaten lassen sich als Paar einfügen („47.7102, 9.1024“). |
 | **360°-Rundgang** | 360°-Panoramen und Rundgänge durch mehrere Räume (Pannellum) | Nachfolger des Blocks „Pannellum 360° Viewer“ der alten Website; Bilder und Einstellungen lassen sich unverändert übernehmen (siehe unten). |
-| **Chat (KI-Assistent)** | Besucher stellen Fragen und bekommen Antworten aus den Inhalten der Website | Braucht Ollama (siehe [KI-Assistent](#ki-assistent-chat-mit-ollama)). Überschrift, Begrüßung, Beispielfragen zum Anklicken und der Hinweis unter dem Eingabefeld sind frei wählbar. Solange der Assistent nicht eingerichtet ist, sehen Besucher den Block nicht. |
+| **Chat (KI-Assistent)** | Besucher stellen Fragen und bekommen Antworten aus den Inhalten der Website | Braucht Ollama (siehe [KI-Assistent](#ki-assistent-chat-mit-ollama)). Überschrift, Begrüßung, Beispielfragen zum Anklicken (je Frage eine Zeile, einzeln zu ändern und zu entfernen) und der Hinweis unter dem Eingabefeld sind frei wählbar. Solange der Assistent nicht eingerichtet ist, sehen Besucher den Block nicht. Ohne Block geht es mit dem Chat auf jeder Seite. |
 
 Mehrere Blöcke desselben Typs auf einer Seite sind möglich.
 
@@ -387,6 +455,17 @@ Datumsfelder des Preisrechners), `--fewo-tour-ratio` und `--fewo-tour-height` (3
 `--fewo-chat-bg`, `--fewo-chat-user-bg`, `--fewo-chat-assistant-bg` und `--fewo-chat-height` (Chat: Hintergrund
 des Gesprächs, der eigenen Fragen und der Antworten, größte Höhe des Gesprächs). Wer Farben ändert, sollte die
 Kontraste prüfen.
+
+**Schriftgröße:** Alle Maße der Blöcke sind in `em` angegeben. Die Blöcke folgen damit der Schriftgröße des
+Themes – ob 16 px oder 24 px – und bleiben in sich stimmig. Eingabefelder sind mindestens 44 px hoch.
+
+**Schaltflächen:** Die Schaltflächen tragen die Klassen `btn btn-primary fewo-btn`. Gestaltet das Theme `.btn`
+(alle Themes mit Bootstrap, z. B. Atomik), gilt das Theme. Sonst greift die Grundgestaltung des Pakets, deren
+Farbe sich anpassen lässt:
+
+```css
+.fewo-btn { --fewo-accent: #0b65c2; --fewo-accent-hover: #094f99; --fewo-accent-text: #fff; }
+```
 
 ## Entwicklung und Tests
 

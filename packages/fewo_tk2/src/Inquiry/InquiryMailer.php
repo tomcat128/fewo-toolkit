@@ -5,7 +5,6 @@ namespace FewoTk2\Inquiry;
 use Concrete\Core\Application\Application;
 use Concrete\Core\Mail\Service as MailService;
 use Concrete\Core\User\UserInfoRepository;
-use FewoTk2\Entity\Inquiry;
 use FewoTk2\Pricing\Quote;
 
 /**
@@ -19,14 +18,13 @@ class InquiryMailer
     {
     }
 
-    public function sendNotification(Inquiry $inquiry, string $recipient, ?Quote $quote, ?string $dashboardUrl): void
+    public function sendNotification(Inquiry $inquiry, string $recipient, ?Quote $quote): void
     {
         $mail = $this->createMail();
         $mail->to($recipient);
         $mail->replyto($inquiry->getEmail(), $inquiry->getFullName());
         $mail->addParameter('inquiry', $inquiry);
         $mail->addParameter('quote', $quote);
-        $mail->addParameter('dashboardUrl', $dashboardUrl);
         $mail->addParameter('siteName', $this->getSiteName());
         $mail->load('fewo_inquiry_notification', 'fewo_tk2');
         $mail->sendMail();

@@ -20,13 +20,31 @@ class SettingsRepository
 
     public function get(): AssistantSettings
     {
-        return $this->settings ??= AssistantSettings::fromArray((array) $this->getConfig()->get(self::CONFIG_KEY . '.settings', []));
+        // Texte des Chats auf jeder Seite: Vorgaben, solange sie noch nie gespeichert wurden (leer gespeichert bleibt leer)
+        return $this->settings ??= AssistantSettings::fromArray((array) $this->getConfig()->get(self::CONFIG_KEY . '.settings', []) + self::widgetDefaults());
     }
 
     public function save(AssistantSettings $settings): void
     {
         $this->getConfig()->save(self::CONFIG_KEY . '.settings', $settings->toArray());
         $this->settings = $settings;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function widgetDefaults(): array
+    {
+        return [
+            'widgetHint' => t('Questions? I am happy to help.'),
+            'widgetGreeting' => t('Hello! I am the digital assistant of this website. Ask me about amenities, prices, availability or the surroundings.'),
+            'widgetQuestions' => implode("\n", [
+                t('What does a night cost?'),
+                t('When is the apartment available?'),
+                t('What amenities does the apartment have?'),
+            ]),
+            'widgetNotice' => t('The answers are generated automatically by an AI and may contain errors. Only our offer is binding.'),
+        ];
     }
 
     /**

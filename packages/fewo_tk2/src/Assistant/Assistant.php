@@ -67,14 +67,56 @@ class Assistant
         }
 
         [$pages, $facts, $complete, $allPages, $window] = $this->getContext($settings, $question);
+        $calculation = $settings->includeApartments ? $this->calculateStay($question, $history) : '';
+        // Erklärungen zu Stichwörtern: aus der Frage und – für Nachfragen wie "Und was kostet der?" – der Frage davor
+        $previous = array_values(array_filter(PromptBuilder::history($history), static fn (array $message): bool => $message['role'] === 'user'));
+        $notes = KeywordNotes::match($settings->notes, $question, $previous !== [] ? $previous[count($previous) - 1]['content'] : '');
 
         return new PreparedQuestion(
             $settings,
-            PromptBuilder::build($this->getSiteName(), Localization::activeLocale(), $this->getToday(), $settings->instructions, $pages, $facts, $history, $question),
+            PromptBuilder::build($this->getSiteName(), Localization::activeLocale(), $this->getToday(), $settings->instructions, $pages, $facts, $history, $question, $settings->name, $calculation, $notes),
             Retriever::sources($question, $allPages),
             $complete,
             $window
         );
+    }
+
+    /**
+     * Angaben des Buchungssystems zur Frage, die das Sprachmodell nur wiedergeben soll.
+     * Nennt die Frage einen Aufenthalt ("vom 20. bis 27.12. zu dritt"), rechnet der Server dessen Preis aus –
+     * mit Saisonwechsel und Endreinigung, wie der Preisrechner. Das Sprachmodell gibt die Zahlen nur wieder.
+     * Bei einer Preisfrage ohne Datum ("Was würde der Aufenthalt dann kosten?") gilt der Zeitraum, der im
+     * Gespräch zuletzt genannt wurde – vom Besucher oder in einer Antwort.
+     *
+     * @param array<int, mixed> $history
+     */
+    private function calculateStay(string $question, array $history): string
+    {
+        $today = $this->getToday();
+        $stay = StayParser::parse($question, $today);
+        // "Was kostet eine Nacht im Dezember?": die Preise dieses Monats, mit beiden Saisons bei einem Wechsel
+        $months = $stay->arrival === null && StayParser::isMonthPriceQuestion($question) ? StayParser::months($question, $today) : [];
+        if ($months !== []) {
+            return $this->knowledgeBase->getMonthPrices($months);
+        }
+        if (!$stay->hasDates() || $stay->guests === null) {
+            // ohne Datum in der Frage: nur, wenn sie sich auf den Aufenthalt aus dem bisherigen Gespräch bezieht
+            if ($stay->arrival === null && !StayParser::isFollowUpPriceQuestion($question)) {
+                return '';
+            }
+            foreach (array_reverse(PromptBuilder::history($history)) as $message) {
+                $stay = $stay->completedBy(StayParser::parse($message['content'], $today));
+                if ($stay->hasDates() && $stay->guests !== null) {
+                    break;
+                }
+            }
+        }
+        $departure = $stay->getDeparture();
+        if ($stay->arrival === null || $departure === null || $departure <= $stay->arrival) {
+            return '';
+        }
+
+        return $this->knowledgeBase->getStayCalculation($stay->arrival, $departure, $stay->guests);
     }
 
     /**
@@ -96,7 +138,7 @@ class Assistant
             // Die Inhalte wechseln mit jeder Frage: nichts, was sich vorab verarbeiten ließe
             return false;
         }
-        $system = PromptBuilder::system($this->getSiteName(), Localization::activeLocale(), $this->getToday(), $settings->instructions, $pages, $facts);
+        $system = PromptBuilder::system($this->getSiteName(), Localization::activeLocale(), $this->getToday(), $settings->instructions, $pages, $facts, $settings->name);
         if (!$this->markWarm($settings, $system, $window, true)) {
             return false;
         }

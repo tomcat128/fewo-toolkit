@@ -1,9 +1,30 @@
-/* Fewo Toolkit – Chat (KI-Assistent): schickt die Frage ab und zeigt die Antwort, während sie entsteht */
+/* Fewo Toolkit – Chat (KI-Assistent): schickt die Frage ab und zeigt die Antwort, während sie entsteht.
+ * Für den Block "Chat" und für den Chat auf jeder Seite (unten rechts, siehe initWidget). */
 (() => {
     'use strict';
 
     /** So viele frühere Nachrichten gehen mit jeder Frage mit (der Server begrenzt zusätzlich). */
     const MAX_HISTORY = 6;
+    /** So viele Fragen mit Antwort merkt sich der Chat auf jeder Seite, solange der Tab offen ist. */
+    const MAX_STORED = 20;
+
+    /** Speicher des Browser-Tabs; nicht verfügbar z. B. bei gesperrten Cookies. */
+    const storage = {
+        get(key) {
+            try {
+                return window.sessionStorage.getItem(key);
+            } catch (e) {
+                return null;
+            }
+        },
+        set(key, value) {
+            try {
+                window.sessionStorage.setItem(key, value);
+            } catch (e) {
+                // dann eben ohne Gedächtnis
+            }
+        },
+    };
 
     const readJson = (value) => {
         try {
@@ -32,7 +53,20 @@
         const examples = Array.from(chat.querySelectorAll('[data-fewo-chat-example]'));
         const labels = readJson(chat.dataset.labels);
         const history = [];
+        // Chat auf jeder Seite: Das Gespräch bleibt beim Wechsel der Seite erhalten (nur im Browser des Besuchers)
+        const storeKey = chat.dataset.persist ? 'fewo-chat:' + chat.dataset.persist : '';
+        const stored = [];
+        let token = chat.dataset.token || '';
         let busy = false;
+
+        /** Token des Chats; beim Chat auf jeder Seite wird es erst bei Bedarf vom Server geholt. */
+        const getToken = async () => {
+            if (!token && chat.dataset.tokenUrl) {
+                const response = await fetch(chat.dataset.tokenUrl, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+                token = String((await response.json()).token || '');
+            }
+            return token;
+        };
 
         const scrollDown = () => {
             log.scrollTop = log.scrollHeight;
@@ -83,6 +117,7 @@
                 return;
             }
             setBusy(true);
+            chat.classList.add('is-started');
             addMessage('user', question);
             const message = addMessage('assistant', '');
             const body = message.querySelector('.fewo-chat__text');
@@ -109,7 +144,7 @@
 
             try {
                 const data = new FormData();
-                data.append('fewo_token', chat.dataset.token);
+                data.append('fewo_token', await getToken());
                 data.append('question', question);
                 data.append('history', JSON.stringify(history.slice(-MAX_HISTORY)));
                 const response = await fetch(chat.dataset.url, {
@@ -118,6 +153,10 @@
                     credentials: 'same-origin',
                     headers: { Accept: 'application/x-ndjson, application/json', 'X-Requested-With': 'XMLHttpRequest' },
                 });
+                if (response.status === 403 && chat.dataset.tokenUrl) {
+                    // abgelaufen: beim nächsten Versuch ein neues Token holen
+                    token = '';
+                }
                 if (response.body && response.body.getReader) {
                     const reader = response.body.getReader();
                     const decoder = new TextDecoder();
@@ -147,6 +186,10 @@
                 body.textContent = tidy(answer).trim();
                 history.push({ role: 'user', content: question }, { role: 'assistant', content: answer });
                 showSources(message, sources);
+                if (storeKey) {
+                    stored.push({ question, answer, sources: Array.isArray(sources) ? sources : [] });
+                    storage.set(storeKey, JSON.stringify(stored.slice(-MAX_STORED)));
+                }
             }
             if (error) {
                 if (answer) {
@@ -162,13 +205,43 @@
         };
 
         // Der Server lässt das Sprachmodell die Website-Inhalte schon einlesen, während der Besucher noch tippt
-        const warmUp = () => {
-            const data = new FormData();
-            data.append('fewo_token', chat.dataset.token);
-            fetch(chat.dataset.warmUrl, { method: 'POST', body: data, credentials: 'same-origin', keepalive: true }).catch(() => {});
+        let warmed = false;
+        const warmUp = async () => {
+            if (warmed || !chat.dataset.warmUrl) {
+                return;
+            }
+            warmed = true;
+            try {
+                const data = new FormData();
+                data.append('fewo_token', await getToken());
+                await fetch(chat.dataset.warmUrl, { method: 'POST', body: data, credentials: 'same-origin', keepalive: true });
+            } catch (e) {
+                // nur eine Vorbereitung – die Frage selbst meldet Fehler
+            }
         };
-        if (chat.dataset.warmUrl) {
+        if (chat.closest('[data-fewo-chat-widget]')) {
+            // Chat auf jeder Seite: erst beim Öffnen, sonst liefe das bei jedem Seitenaufruf
+            chat.addEventListener('fewo:open', () => {
+                warmUp();
+                scrollDown();
+            });
+        } else {
             (window.requestIdleCallback || ((callback) => setTimeout(callback, 500)))(warmUp);
+        }
+
+        // gemerktes Gespräch wieder anzeigen
+        if (storeKey) {
+            const saved = readJson(storage.get(storeKey) || '[]');
+            (Array.isArray(saved) ? saved : []).slice(-MAX_STORED).forEach((entry) => {
+                if (!entry || typeof entry.question !== 'string' || typeof entry.answer !== 'string') {
+                    return;
+                }
+                addMessage('user', entry.question);
+                showSources(addMessage('assistant', tidy(entry.answer).trim()), entry.sources);
+                history.push({ role: 'user', content: entry.question }, { role: 'assistant', content: entry.answer });
+                stored.push(entry);
+            });
+            chat.classList.toggle('is-started', stored.length > 0);
         }
 
         form.addEventListener('submit', (event) => {
@@ -185,7 +258,63 @@
         });
     };
 
-    const boot = () => document.querySelectorAll('[data-fewo-chat]').forEach(init);
+    /**
+     * Chat auf jeder Seite: unten rechts zuerst nur eine kleine Schaltfläche mit Hinweistext; ein Klick (oder
+     * Eingabe-/Leertaste) öffnet den Chat. Ob er offen war, bleibt beim Wechsel der Seite erhalten.
+     */
+    const initWidget = (root) => {
+        if (root.dataset.fewoReady) {
+            return;
+        }
+        root.dataset.fewoReady = '1';
+        // Die Seite enthält schon einen Chat-Block: kein zweiter Chat daneben
+        if (document.querySelector('[data-fewo-chat]:not(.fewo-chat--widget)')) {
+            return;
+        }
+        const OPEN_KEY = 'fewo-chat:widget-open';
+        const launcher = root.querySelector('[data-fewo-chat-open]');
+        const panel = root.querySelector('[data-fewo-chat-panel]');
+        const chat = root.querySelector('[data-fewo-chat]');
+        const input = chat.querySelector('[name="question"]');
+
+        const open = (focus) => {
+            panel.hidden = false;
+            root.classList.add('is-open');
+            launcher.setAttribute('aria-expanded', 'true');
+            storage.set(OPEN_KEY, '1');
+            chat.dispatchEvent(new CustomEvent('fewo:open'));
+            if (focus) {
+                input.focus({ preventScroll: true });
+            }
+        };
+        const close = (focus) => {
+            panel.hidden = true;
+            root.classList.remove('is-open');
+            launcher.setAttribute('aria-expanded', 'false');
+            storage.set(OPEN_KEY, '0');
+            if (focus) {
+                launcher.focus({ preventScroll: true });
+            }
+        };
+        launcher.addEventListener('click', () => open(true));
+        root.querySelector('[data-fewo-chat-close]').addEventListener('click', () => close(true));
+        root.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !panel.hidden) {
+                event.preventDefault();
+                close(true);
+            }
+        });
+
+        root.hidden = false;
+        if (storage.get(OPEN_KEY) === '1') {
+            open(false);
+        }
+    };
+
+    const boot = () => {
+        document.querySelectorAll('[data-fewo-chat]').forEach(init);
+        document.querySelectorAll('[data-fewo-chat-widget]').forEach(initWidget);
+    };
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot);

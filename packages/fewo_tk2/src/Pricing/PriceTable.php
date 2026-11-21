@@ -51,6 +51,18 @@ final class PriceTable
      * exakter Treffer, sonst die nächsthöhere hinterlegte Gästeanzahl (nie zu günstig anbieten),
      * sonst die höchste hinterlegte.
      */
+    /**
+     * Mindestbelegung: bis zu dieser Gästezahl gilt der niedrigste Preis – weniger Gäste zahlen denselben Preis
+     * (z. B. 2, wenn eine und zwei Personen gleich viel kosten oder erst ab zwei Personen ein Preis hinterlegt ist).
+     * Fewo-Office kennt dafür kein eigenes Feld; der Wert ergibt sich aus den Preisen.
+     *
+     * @return int 0 = keine Preise
+     */
+    public function getMinOccupancy(): int
+    {
+        return $this->ranges()[0]['max'] ?? 0;
+    }
+
     public function forGuests(int $guests): ?int
     {
         foreach ($this->prices as $count => $cents) {

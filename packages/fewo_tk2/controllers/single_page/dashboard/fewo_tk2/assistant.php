@@ -2,11 +2,13 @@
 
 namespace Concrete\Package\FewoTk2\Controller\SinglePage\Dashboard\FewoTk2;
 
+use Concrete\Core\Cache\Page\PageCache;
 use Concrete\Core\Page\Controller\DashboardPageController;
 use DateTimeImmutable;
 use FewoTk2\Assistant\Assistant as AssistantService;
 use FewoTk2\Assistant\AssistantException;
 use FewoTk2\Assistant\AssistantSettings;
+use FewoTk2\Assistant\KeywordNotes;
 use FewoTk2\Assistant\KnowledgeBase;
 use FewoTk2\Assistant\OllamaClient;
 use FewoTk2\Assistant\OllamaException;
@@ -72,6 +74,10 @@ class Assistant extends DashboardPageController
             $input['apiKey'] = $current->apiKey;
         }
         $input['includeApartments'] = !empty($input['includeApartments']);
+        // Ohne Zeilen schickt das Formular das Feld gar nicht: alle Beispielfragen entfernt
+        $input['widgetQuestions'] = $input['widgetQuestions'] ?? [];
+        // Erklärungen zu Stichwörtern: je Zeile ein Feld mit Stichwörtern und eines mit dem Text
+        $input['notes'] = KeywordNotes::fromForm($input['noteKeywords'] ?? [], $input['noteTexts'] ?? []);
         $settings = AssistantSettings::fromArray($input);
 
         if ($settings->getBaseUrl() === null) {
@@ -88,6 +94,8 @@ class Assistant extends DashboardPageController
         }
 
         $repository->save($settings);
+        // Der Chat auf jeder Seite steht im HTML der Seiten: zwischengespeicherte Seiten verwerfen
+        PageCache::getLibrary()->flush();
         // Ausgeschlossene Seiten können sich geändert haben
         $this->app->make(KnowledgeBase::class)->clear();
         $this->flash('success', t('The settings have been saved.'));

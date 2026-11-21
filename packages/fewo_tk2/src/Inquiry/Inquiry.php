@@ -1,169 +1,64 @@
 <?php
 
-namespace FewoTk2\Entity;
+namespace FewoTk2\Inquiry;
 
 use DateTimeImmutable;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Eine über das Anfrageformular eingegangene Buchungsanfrage.
+ * Die Angaben aus dem Anfrageformular, geprüft und gekürzt, für die E-Mails an Vermieter und Gast.
  *
- * @ORM\Entity
- * @ORM\Table(name="FewoInquiries", indexes={@ORM\Index(name="created", columns={"createdAt"})})
+ * Die Website speichert keine Anfragen – die Angaben leben nur für die Dauer des Absendens.
  */
 class Inquiry
 {
-    public const STATUS_NEW = 'new';
-    public const STATUS_DONE = 'done';
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", options={"unsigned": true})
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected ?int $id = null;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     */
-    protected DateTimeImmutable $createdAt;
-
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    protected string $status = self::STATUS_NEW;
-
     /**
      * Name des Formulars (aus der Block-Konfiguration).
-     *
-     * @ORM\Column(type="string", length=255)
      */
     protected string $formName = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $accommodation = '';
 
-    /**
-     * @ORM\Column(type="string", length=32)
-     */
     protected string $salutation = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $firstName = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $lastName = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $email = '';
 
-    /**
-     * @ORM\Column(type="string", length=64)
-     */
     protected string $phone = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $street = '';
 
-    /**
-     * @ORM\Column(type="string", length=16)
-     */
     protected string $postalCode = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $city = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $country = '';
 
-    /**
-     * @ORM\Column(type="smallint", options={"unsigned": true})
-     */
     protected int $adults = 1;
 
-    /**
-     * @ORM\Column(type="smallint", options={"unsigned": true})
-     */
     protected int $children = 0;
 
-    /**
-     * @ORM\Column(type="date_immutable")
-     */
     protected DateTimeImmutable $arrival;
 
-    /**
-     * @ORM\Column(type="date_immutable")
-     */
     protected DateTimeImmutable $departure;
 
-    /**
-     * @ORM\Column(type="text")
-     */
     protected string $message = '';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     protected string $referralSource = '';
 
     /**
      * Unverbindlich berechneter Gesamtpreis in Cent (falls eine Preisliste verknüpft war).
-     *
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
     protected ?int $quotedTotal = null;
 
-    /**
-     * @ORM\Column(type="string", length=3)
-     */
     protected string $currency = 'EUR';
 
     public function __construct()
     {
-        $this->createdAt = new DateTimeImmutable();
         $this->arrival = new DateTimeImmutable('today');
         $this->departure = new DateTimeImmutable('tomorrow');
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function getCreatedAt(): DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function getStatus(): string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): self
-    {
-        $this->status = $status === self::STATUS_DONE ? self::STATUS_DONE : self::STATUS_NEW;
-
-        return $this;
-    }
-
-    public function isNew(): bool
-    {
-        return $this->status === self::STATUS_NEW;
     }
 
     public function getFormName(): string

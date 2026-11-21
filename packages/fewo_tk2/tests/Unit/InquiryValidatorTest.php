@@ -3,7 +3,7 @@
 namespace FewoTk2\Tests\Unit;
 
 use DateTimeImmutable;
-use FewoTk2\Entity\Inquiry;
+use FewoTk2\Inquiry\Inquiry;
 use FewoTk2\Inquiry\InquiryMailer;
 use FewoTk2\Inquiry\InquiryValidator;
 use PHPUnit\Framework\TestCase;
@@ -167,7 +167,6 @@ final class InquiryValidatorTest extends TestCase
         self::assertSame('Seeherz', $inquiry->getAccommodation());
         self::assertSame('78462', $inquiry->getPostalCode());
         self::assertSame("Wir kommen mit Hund.\nIst das möglich?", $inquiry->getMessage());
-        self::assertTrue($inquiry->isNew());
     }
 
     public function testFillIgnoresUnknownSalutationAndHiddenFields(): void

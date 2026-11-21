@@ -41,32 +41,9 @@ final class ApartmentFactSheet
         $lines = [];
         $month = $today;
         for ($i = 0; $i < self::PRICE_MONTHS_AHEAD; $i++) {
-            $last = $month->modify('last day of this month');
-            // Aufeinanderfolgende Tage mit derselben Saison zusammenfassen
-            $segments = [];
-            for ($day = $month; $day <= $last; $day = $day->modify('+1 day')) {
-                $season = $pricelist->findSeason($day);
-                $prices = $season !== null && !$season->prices->isEmpty() ? $season->prices : $pricelist->defaultPrices;
-                $name = $season !== null && !$season->prices->isEmpty() ? $season->name : '';
-                $key = $name . '|' . json_encode($prices->all());
-                $index = count($segments) - 1;
-                if ($index >= 0 && $segments[$index]['key'] === $key) {
-                    $segments[$index]['to'] = $day;
-                } else {
-                    $segments[] = ['key' => $key, 'from' => $day, 'to' => $day, 'name' => $name, 'prices' => $prices];
-                }
-            }
-            $parts = [];
-            foreach ($segments as $segment) {
-                if ($segment['prices']->isEmpty()) {
-                    continue;
-                }
-                $parts[] = t('%1$s to %2$s', $segment['from']->format(self::DATE), $segment['to']->format(self::DATE))
-                    . ($segment['name'] !== '' ? ' (' . $segment['name'] . ')' : '')
-                    . ': ' . self::table($segment['prices'], $pricelist->currency);
-            }
-            if ($parts !== []) {
-                $lines[] = '- ' . self::monthName($month, $locale) . ': ' . implode('; ', $parts);
+            $line = self::month($pricelist, $month, $locale);
+            if ($line !== '') {
+                $lines[] = '- ' . $line;
             }
             $month = $month->modify('first day of next month');
         }
@@ -89,6 +66,73 @@ final class ApartmentFactSheet
         }
 
         return implode("\n", $lines);
+    }
+
+    /**
+     * Preise pro Nacht eines Monats in einer Zeile, z. B. "Dezember 2026: 01.12.2026 bis 18.12.2026 (Wintersaison):
+     * 1–2 Gäste 45 €, 3 Gäste 55 €; 19.12.2026 bis 31.12.2026 (Weihnachten): …"; leer, wenn es keine Preise gibt.
+     *
+     * @param DateTimeImmutable $from erster Tag, ab dem der Monat betrachtet wird (z. B. heute)
+     */
+    public static function month(Pricelist $pricelist, DateTimeImmutable $from, ?string $locale = null): string
+    {
+        $parts = self::monthPeriods($pricelist, $from);
+
+        return $parts === [] ? '' : self::monthName($from, $locale) . ': ' . implode('; ', $parts);
+    }
+
+    /**
+     * Die Preise eines Monats als eigene Zeile je Zeitraum – für die Antwort auf "Was kostet eine Nacht im
+     * Dezember?": Mit allen Zeiträumen in einer Zeile nannte das kleine Testmodell nur den ersten.
+     *
+     * @return string[] erste Zeile: Monat und Zahl der Zeiträume; leer, wenn es keine Preise gibt
+     */
+    public static function monthLines(Pricelist $pricelist, DateTimeImmutable $from, ?string $locale = null): array
+    {
+        $parts = self::monthPeriods($pricelist, $from);
+        if ($parts === []) {
+            return [];
+        }
+        $name = self::monthName($from, $locale);
+
+        return array_merge(
+            [count($parts) > 1 ? t('%1$s – %2$d periods with different prices:', $name, count($parts)) : $name . ':'],
+            array_map(static fn (string $part): string => '- ' . $part, $parts)
+        );
+    }
+
+    /**
+     * @return string[] je Zeitraum mit gleicher Saison: "01.12.2026 bis 18.12.2026 (Wintersaison): 1–2 Gäste 45 €, …"
+     */
+    private static function monthPeriods(Pricelist $pricelist, DateTimeImmutable $from): array
+    {
+        $from = $from->setTime(0, 0);
+        $last = $from->modify('last day of this month');
+        // Aufeinanderfolgende Tage mit derselben Saison zusammenfassen
+        $segments = [];
+        for ($day = $from; $day <= $last; $day = $day->modify('+1 day')) {
+            $season = $pricelist->findSeason($day);
+            $prices = $season !== null && !$season->prices->isEmpty() ? $season->prices : $pricelist->defaultPrices;
+            $name = $season !== null && !$season->prices->isEmpty() ? $season->name : '';
+            $key = $name . '|' . json_encode($prices->all());
+            $index = count($segments) - 1;
+            if ($index >= 0 && $segments[$index]['key'] === $key) {
+                $segments[$index]['to'] = $day;
+            } else {
+                $segments[] = ['key' => $key, 'from' => $day, 'to' => $day, 'name' => $name, 'prices' => $prices];
+            }
+        }
+        $parts = [];
+        foreach ($segments as $segment) {
+            if ($segment['prices']->isEmpty()) {
+                continue;
+            }
+            $parts[] = t('%1$s to %2$s', $segment['from']->format(self::DATE), $segment['to']->format(self::DATE))
+                . ($segment['name'] !== '' ? ' (' . $segment['name'] . ')' : '')
+                . ': ' . self::table($segment['prices'], $pricelist->currency);
+        }
+
+        return $parts;
     }
 
     /**

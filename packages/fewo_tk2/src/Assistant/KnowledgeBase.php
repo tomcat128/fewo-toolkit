@@ -66,6 +66,76 @@ class KnowledgeBase
     }
 
     /**
+     * Preis eines Aufenthalts für jede Wohnung mit Preisliste, berechnet wie im Preisrechner (siehe StayQuote);
+     * leer, wenn es keine Preisliste gibt.
+     *
+     * @param int|null $guests null = unbekannt: Preis für jede Gästezahl
+     */
+    public function getStayCalculation(DateTimeImmutable $arrival, DateTimeImmutable $departure, ?int $guests): string
+    {
+        $today = new DateTimeImmutable('today', new DateTimeZone(date_default_timezone_get()));
+        $arrival = $today->setDate((int) $arrival->format('Y'), (int) $arrival->format('n'), (int) $arrival->format('j'));
+        $departure = $today->setDate((int) $departure->format('Y'), (int) $departure->format('n'), (int) $departure->format('j'));
+        $parts = [];
+        foreach ($this->app->make(ApartmentRepository::class)->findAll() as $apartment) {
+            try {
+                if ($apartment->getPricelistUrl() === '') {
+                    continue;
+                }
+                $pricelist = $this->app->make(PricelistLoader::class)->load($apartment->getPricelistUrl(), $apartment->getRefreshMinutes())->pricelist;
+                if ($pricelist === null) {
+                    continue;
+                }
+                $occupancy = null;
+                $url = FeedLoader::normalizeUrl($apartment->getOccupancyUrl());
+                $body = $url !== null ? $this->app->make(OccupancyLoader::class)->load($url, $apartment->getRefreshMinutes())->getBody() : null;
+                if ($body !== null) {
+                    $occupancy = new Occupancy((new BookingReader($today->getTimezone()))->read($body, $arrival->modify('-1 day'), $departure->modify('+1 day')));
+                }
+                $parts[] = StayQuote::describe($apartment->getName(), $pricelist, $occupancy, $arrival, $departure, $guests, $today);
+            } catch (Throwable) {
+                // Daten nicht lesbar: kein berechneter Preis für diese Wohnung
+            }
+        }
+
+        return $parts === [] ? '' : StayQuote::heading($arrival, $departure) . "\n" . implode("\n", $parts);
+    }
+
+    /**
+     * Preise pro Nacht in den gefragten Monaten für jede Wohnung mit Preisliste – mit beiden Abschnitten, wenn
+     * die Saison mitten im Monat wechselt; leer, wenn es keine Preise gibt.
+     *
+     * @param DateTimeImmutable[] $months erster Tag jedes Monats
+     */
+    public function getMonthPrices(array $months): string
+    {
+        $today = new DateTimeImmutable('today', new DateTimeZone(date_default_timezone_get()));
+        $parts = [];
+        foreach ($this->app->make(ApartmentRepository::class)->findAll() as $apartment) {
+            try {
+                $pricelist = $apartment->getPricelistUrl() !== ''
+                    ? $this->app->make(PricelistLoader::class)->load($apartment->getPricelistUrl(), $apartment->getRefreshMinutes())->pricelist
+                    : null;
+                $lines = [];
+                foreach ($pricelist !== null ? $months : [] as $month) {
+                    $from = $today->setDate((int) $month->format('Y'), (int) $month->format('n'), 1);
+                    // im laufenden Monat erst ab heute
+                    foreach (ApartmentFactSheet::monthLines($pricelist, $from < $today && $from->format('Y-m') === $today->format('Y-m') ? $today : $from) as $index => $line) {
+                        $lines[] = $index === 0 ? $apartment->getName() . ', ' . $line : $line;
+                    }
+                }
+                if ($lines !== []) {
+                    $parts[] = implode("\n", $lines);
+                }
+            } catch (Throwable) {
+                // Daten nicht lesbar: keine Angabe für diese Wohnung
+            }
+        }
+
+        return $parts === [] ? '' : t('Prices per night according to the booking system (plus final cleaning once per stay):') . "\n" . implode("\n", $parts);
+    }
+
+    /**
      * Preise und freie Zeiträume je Wohnung. Nicht zwischengespeichert: Die Daten aus Fewo-Office
      * haben ihren eigenen Zwischenspeicher (siehe FeedLoader) und sind so immer auf dessen Stand.
      *

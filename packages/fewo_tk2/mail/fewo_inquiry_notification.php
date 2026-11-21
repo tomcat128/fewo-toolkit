@@ -8,9 +8,8 @@ use FewoTk2\Support\Money;
 /**
  * Benachrichtigung an den Vermieter über eine neue Anfrage.
  *
- * @var FewoTk2\Entity\Inquiry $inquiry
+ * @var FewoTk2\Inquiry\Inquiry $inquiry
  * @var FewoTk2\Pricing\Quote|null $quote
- * @var string|null $dashboardUrl
  * @var string $siteName
  */
 
@@ -35,18 +34,15 @@ $rows = [
 ];
 $rows = array_filter($rows, static fn ($value) => $value !== '');
 
-$subject = t('New booking inquiry') . ($inquiry->getFormName() !== '' ? ' (' . $inquiry->getFormName() . ')' : '')
+$subject = t('New inquiry') . ($inquiry->getFormName() !== '' ? ' (' . $inquiry->getFormName() . ')' : '')
     . ': ' . $inquiry->getArrival()->format('d.m.') . '–' . $inquiry->getDeparture()->format('d.m.Y')
     . ', ' . $inquiry->getFullName();
 
 // Klartext
-$body = t('New booking inquiry via %s', $siteName) . "\n\n";
+$body = t('New inquiry via %s', $siteName) . "\n\n";
 $body .= InquiryMailer::textRows($rows);
 if ($inquiry->getMessage() !== '') {
     $body .= "\n" . t('Message') . ":\n" . $inquiry->getMessage() . "\n";
-}
-if ($dashboardUrl) {
-    $body .= "\n" . t('View in the dashboard: %s', $dashboardUrl) . "\n";
 }
 $body .= "\n" . t('Simply reply to this email to answer the guest.') . "\n";
 
@@ -57,7 +53,7 @@ ob_start();
 <!DOCTYPE html>
 <html lang="<?= $e(substr(Concrete\Core\Localization\Localization::activeLocale(), 0, 2)) ?>">
 <body style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #222; line-height: 1.5;">
-<h2 style="font-size: 18px; margin: 0 0 16px;"><?= $e(t('New booking inquiry via %s', $siteName)) ?></h2>
+<h2 style="font-size: 18px; margin: 0 0 16px;"><?= $e(t('New inquiry via %s', $siteName)) ?></h2>
 <table cellpadding="6" cellspacing="0" style="border-collapse: collapse; min-width: 320px;">
     <?php foreach ($rows as $label => $value) { ?>
         <tr>
@@ -75,9 +71,6 @@ ob_start();
 <?php if ($inquiry->getMessage() !== '') { ?>
     <h3 style="font-size: 15px; margin: 20px 0 6px;"><?= $e(t('Message')) ?></h3>
     <p style="margin: 0;"><?= nl2br($e($inquiry->getMessage())) ?></p>
-<?php } ?>
-<?php if ($dashboardUrl) { ?>
-    <p style="margin-top: 24px;"><a href="<?= $e($dashboardUrl) ?>"><?= $e(t('View in the dashboard')) ?></a></p>
 <?php } ?>
 <p style="margin-top: 24px; color: #666; font-size: 13px;"><?= $e(t('Simply reply to this email to answer the guest.')) ?></p>
 </body>

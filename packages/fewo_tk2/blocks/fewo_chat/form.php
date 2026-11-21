@@ -6,11 +6,15 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var Concrete\Core\Form\Service\Form $form
  * @var string $title
  * @var string $welcomeMessage
- * @var string $exampleQuestions
+ * @var string $exampleQuestions eine Frage pro Zeile
  * @var string $notice
  * @var bool $assistantReady
  * @var string $assistantUrl
+ * @var string $assistantName Name aus den Einstellungen des Assistenten, leer = kein Name
+ * @var int $maxExamples
+ * @var int $maxLength
  */
+
 ?>
 <?php if (!$assistantReady) { ?>
     <div class="alert alert-warning">
@@ -27,13 +31,23 @@ defined('C5_EXECUTE') or die('Access Denied.');
 <div class="mb-3">
     <?= $form->label('welcomeMessage', t('Greeting')) ?>
     <?= $form->textarea('welcomeMessage', $welcomeMessage, ['rows' => 3]) ?>
-    <div class="form-text"><?= t('First message of the assistant in the chat.') ?></div>
+    <div class="form-text">
+        <?= t('First message of the assistant in the chat.') ?>
+        <?= $assistantName !== ''
+            ? t('The assistant is called "%s".', h($assistantName))
+            : t('The assistant has no name yet.') ?>
+        <a href="<?= h($assistantUrl) ?>" target="_blank" rel="noopener"><?= t('Change the name') ?></a>
+    </div>
 </div>
 
 <div class="mb-3">
-    <?= $form->label('exampleQuestions', t('Example questions')) ?>
-    <?= $form->textarea('exampleQuestions', $exampleQuestions, ['rows' => 4]) ?>
-    <div class="form-text"><?= t('One question per line, up to six. Visitors can ask them with one click.') ?></div>
+    <label class="form-label"><?= t('Example questions') ?></label>
+    <?php Concrete\Core\View\View::element('question_rows', [
+        'name' => 'exampleQuestion',
+        'questions' => FewoTk2\Assistant\AssistantSettings::questionLines((string) $exampleQuestions),
+        'max' => $maxExamples,
+        'maxLength' => $maxLength,
+    ], 'fewo_tk2') ?>
 </div>
 
 <div class="mb-3">

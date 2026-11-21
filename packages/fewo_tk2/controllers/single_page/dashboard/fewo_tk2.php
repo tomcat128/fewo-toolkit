@@ -8,6 +8,6 @@ class FewoTk2 extends DashboardPageController
 {
     public function view()
     {
-        return $this->buildRedirect('/dashboard/fewo_tk2/inquiries');
+        return $this->buildRedirect('/dashboard/fewo_tk2/apartments');
     }
 }
