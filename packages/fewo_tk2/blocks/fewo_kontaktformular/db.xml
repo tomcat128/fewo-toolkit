@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.concrete5.org/doctrine-xml/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 https://concretecms.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+    <table name="btFewoKontaktformular">
+        <field name="bID" type="integer">
+            <unsigned/>
+            <key/>
+        </field>
+        <field name="formName" type="string" size="255">
+            <default value=""/>
+            <notnull/>
+        </field>
+        <field name="recipientEmail" type="string" size="255">
+            <default value=""/>
+            <notnull/>
+        </field>
+        <field name="apartmentID" type="integer">
+            <unsigned/>
+            <default value="0"/>
+            <notnull/>
+        </field>
+        <field name="maxGuests" type="smallint">
+            <unsigned/>
+            <default value="6"/>
+            <notnull/>
+        </field>
+        <field name="accommodations" type="text">
+            <notnull/>
+        </field>
+        <field name="referralOptions" type="text">
+            <notnull/>
+        </field>
+        <field name="askForAddress" type="boolean">
+            <default value="1"/>
+            <notnull/>
+        </field>
+        <field name="privacyPageID" type="integer">
+            <unsigned/>
+            <default value="0"/>
+            <notnull/>
+        </field>
+        <field name="useCaptcha" type="boolean">
+            <default value="0"/>
+            <notnull/>
+        </field>
+        <field name="storeInquiries" type="boolean">
+            <default value="1"/>
+            <notnull/>
+        </field>
+        <field name="sendConfirmation" type="boolean">
+            <default value="1"/>
+            <notnull/>
+        </field>
+        <field name="successMessage" type="text">
+            <notnull/>
+        </field>
+    </table>
+</schema>

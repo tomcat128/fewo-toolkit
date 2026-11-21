@@ -1,0 +1,326 @@
+/* Fewo Toolkit – Preisrechner */
+.fewo-quote {
+    --fewo-border: rgba(0, 0, 0, .12);
+    --fewo-muted: rgba(0, 0, 0, .6);
+    --fewo-error: #b42318;
+    --fewo-radius: 6px;
+    margin-block: 1rem;
+}
+
+.fewo-quote__title {
+    margin-block: 0 1rem;
+}
+
+.fewo-quote__form {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    gap: 1rem;
+    align-items: end;
+}
+
+.fewo-quote__field {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+}
+
+.fewo-quote__field label {
+    font-weight: 600;
+    font-size: .875rem;
+}
+
+.fewo-quote__field input,
+.fewo-quote__field select {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: .5rem .75rem;
+    font: inherit;
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+    background: #fff;
+    color: inherit;
+}
+
+.fewo-quote__submit {
+    width: 100%;
+    min-height: 2.75rem;
+}
+
+.fewo-quote.is-loading .fewo-quote__result {
+    opacity: .5;
+    transition: opacity .2s;
+}
+
+.fewo-quote__result:empty {
+    display: none;
+}
+
+.fewo-quote__result {
+    margin-top: 1.5rem;
+}
+
+.fewo-quote__error {
+    color: var(--fewo-error);
+    font-weight: 600;
+}
+
+.fewo-quote__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .5rem 1.5rem;
+}
+
+.fewo-quote__total {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: .75rem;
+}
+
+.fewo-quote__total-amount {
+    font-size: 1.75rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.fewo-quote__meta {
+    margin: 0;
+    color: var(--fewo-muted);
+}
+
+.fewo-quote__details {
+    margin-top: 1rem;
+}
+
+.fewo-quote__details summary {
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.fewo-quote__table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .75rem;
+    font-size: .9375rem;
+}
+
+.fewo-quote__table th,
+.fewo-quote__table td {
+    padding: .5rem .25rem;
+    border-bottom: 1px solid var(--fewo-border);
+    text-align: left;
+    vertical-align: top;
+    font-weight: normal;
+}
+
+.fewo-quote__table th small {
+    display: block;
+    color: var(--fewo-muted);
+}
+
+.fewo-quote__table tfoot tr:first-child th,
+.fewo-quote__table tfoot tr:first-child td {
+    font-weight: 700;
+}
+
+.fewo-quote__secondary th,
+.fewo-quote__secondary td {
+    color: var(--fewo-muted);
+}
+
+.fewo-quote__amount {
+    text-align: right !important;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.fewo-quote__included,
+.fewo-quote__disclaimer {
+    font-size: .8125rem;
+    color: var(--fewo-muted);
+}
+
+/* Felder "Anreise"/"Abreise", wenn sie den eigenen Kalender öffnen (statt des Kalenders des Browsers) */
+.fewo-quote__field input.fewo-quote__date {
+    cursor: pointer;
+    padding-right: 2.5rem;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E") no-repeat right .75rem center / 1.125rem;
+}
+
+/* Kalender der beiden Felder mit der Belegung der Wohnung (wird per JavaScript aufgebaut und
+ * unter dem angeklickten Feld eingeblendet) */
+.fewo-quote__calendar {
+    --fewo-free: #dff3e4;
+    --fewo-free-text: #14532d;
+    --fewo-booked: #e5484d;
+    --fewo-booked-text: #fff;
+    --fewo-selected: #1d4ed8;
+    --fewo-selected-text: #fff;
+    --fewo-past: #f1f1f1;
+    --fewo-past-text: #767676;
+    position: absolute;
+    z-index: 30;
+    box-sizing: border-box;
+    width: min(100%, 38rem);
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .18);
+}
+
+.fewo-quote__calendar[hidden] {
+    display: none;
+}
+
+.fewo-quote__calendar-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .75rem;
+}
+
+.fewo-quote__calendar-hint {
+    flex: 1;
+}
+
+.fewo-quote__calendar-nav {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.5rem;
+    line-height: 1;
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+    background: #fff;
+    color: inherit;
+    cursor: pointer;
+}
+
+.fewo-quote__calendar-nav:disabled {
+    opacity: .4;
+    cursor: default;
+}
+
+.fewo-quote__calendar-months {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1.5rem;
+}
+
+.fewo-quote__calendar-month-title {
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: .5rem;
+}
+
+.fewo-quote__calendar-weekdays,
+.fewo-quote__calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+.fewo-quote__calendar-weekdays {
+    font-size: .75rem;
+    text-align: center;
+    color: var(--fewo-muted);
+    margin-bottom: 3px;
+}
+
+.fewo-quote__day {
+    --am: var(--fewo-free);
+    --pm: var(--fewo-free);
+    aspect-ratio: 1;
+    min-width: 0;
+    padding: 0;
+    font: inherit;
+    font-size: .8125rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--fewo-free-text);
+    border: 1px solid rgba(0, 0, 0, .08);
+    border-radius: var(--fewo-radius);
+    background: linear-gradient(to bottom right, var(--am) 0 50%, var(--pm) 50% 100%);
+    background-origin: border-box;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.fewo-quote__day.is-booked-am { --am: var(--fewo-booked); }
+.fewo-quote__day.is-booked { --pm: var(--fewo-booked); }
+.fewo-quote__day.is-booked.is-booked-am { color: var(--fewo-booked-text); }
+
+.fewo-quote__day.is-past {
+    --am: var(--fewo-past);
+    --pm: var(--fewo-past);
+    color: var(--fewo-past-text);
+}
+
+.fewo-quote__day.is-disabled {
+    cursor: not-allowed;
+}
+
+/* freie Tage, die gerade nicht wählbar sind (z. B. hinter der nächsten Belegung) */
+.fewo-quote__day.is-disabled:not(.is-booked):not(.is-booked-am):not(.is-past) {
+    opacity: .55;
+}
+
+.fewo-quote__day.is-selected {
+    --am: var(--fewo-selected);
+    --pm: var(--fewo-selected);
+    color: var(--fewo-selected-text);
+}
+
+/* An- und Abreisetag: nur die Hälfte des Tages gehört zum Aufenthalt */
+.fewo-quote__day.is-arrival:not(.is-departure) { --am: var(--fewo-free); color: var(--fewo-free-text); font-weight: 700; }
+.fewo-quote__day.is-departure { --pm: var(--fewo-free); color: var(--fewo-free-text); font-weight: 700; }
+.fewo-quote__day.is-arrival.is-booked-am { --am: var(--fewo-booked); }
+.fewo-quote__day.is-departure.is-booked { --pm: var(--fewo-booked); }
+
+.fewo-quote__day:not(.is-disabled):hover,
+.fewo-quote__day:focus-visible {
+    outline: 2px solid var(--fewo-selected);
+    outline-offset: 1px;
+}
+
+.fewo-quote__calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1.5rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    font-size: .875rem;
+}
+
+.fewo-quote__calendar-legend li {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.fewo-quote__calendar-legend .fewo-quote__day {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: default;
+}
+
+/* Hinweise zum Datenabruf – nur für Redakteure sichtbar */
+.fewo-notice {
+    padding: .75rem 1rem;
+    border-radius: var(--fewo-radius, 6px);
+    margin-bottom: 1rem;
+    font-size: .875rem;
+}
+
+.fewo-notice--error {
+    background: #fdecec;
+    color: #8a1c1c;
+}
+
+.fewo-notice--warning {
+    background: #fff6e0;
+    color: #6b4b00;
+}

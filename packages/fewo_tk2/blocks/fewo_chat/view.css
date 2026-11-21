@@ -1,0 +1,184 @@
+/* Fewo Toolkit – Chat (KI-Assistent) */
+.fewo-chat {
+    --fewo-border: rgba(0, 0, 0, .2);
+    --fewo-focus: #2563eb;
+    --fewo-error: #b42318;
+    --fewo-muted: rgba(0, 0, 0, .6);
+    --fewo-radius: 6px;
+    --fewo-chat-bg: #f4f6f8;
+    --fewo-chat-user-bg: #dbeafe;
+    --fewo-chat-assistant-bg: #fff;
+    --fewo-chat-height: 22rem;
+    margin-block: 1rem;
+    max-width: 44rem;
+}
+
+.fewo-chat__title {
+    margin-block: 0 1rem;
+}
+
+.fewo-chat__log {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    min-height: 6rem;
+    max-height: var(--fewo-chat-height);
+    overflow-y: auto;
+    padding: 1rem;
+    background: var(--fewo-chat-bg);
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+    font-size: 1rem;
+    line-height: 1.45;
+}
+
+.fewo-chat__log:focus-visible,
+.fewo-chat__example:focus-visible,
+.fewo-chat input[type="text"]:focus-visible {
+    outline: 2px solid var(--fewo-focus);
+    outline-offset: 2px;
+}
+
+.fewo-chat__message {
+    max-width: 85%;
+    padding: .6rem .85rem;
+    border-radius: calc(var(--fewo-radius) * 2);
+    background: var(--fewo-chat-assistant-bg);
+    border: 1px solid rgba(0, 0, 0, .08);
+    align-self: flex-start;
+    overflow-wrap: anywhere;
+}
+
+.fewo-chat__message--user {
+    align-self: flex-end;
+    background: var(--fewo-chat-user-bg);
+}
+
+.fewo-chat__message--error {
+    color: var(--fewo-error);
+    border-color: currentColor;
+}
+
+.fewo-chat__author {
+    display: block;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--fewo-muted);
+    margin-bottom: .15rem;
+}
+
+.fewo-chat__text {
+    white-space: pre-wrap;
+}
+
+/* Drei Punkte, solange noch keine Antwort da ist */
+.fewo-chat__message[aria-busy="true"] .fewo-chat__text:empty::after {
+    content: "● ● ●";
+    letter-spacing: .1em;
+    font-size: .7rem;
+    color: var(--fewo-muted);
+    animation: fewo-chat-wait 1.2s ease-in-out infinite;
+}
+
+@keyframes fewo-chat-wait {
+    0%, 100% { opacity: .25; }
+    50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fewo-chat__message[aria-busy="true"] .fewo-chat__text:empty::after {
+        animation: none;
+    }
+}
+
+.fewo-chat__sources {
+    margin: .5rem 0 0;
+    font-size: .8125rem;
+    color: var(--fewo-muted);
+}
+
+/* Unterstrichen: Links müssen sich nicht nur durch die Farbe vom Text abheben */
+.fewo-chat__sources a {
+    margin-left: .35rem;
+    text-decoration: underline;
+}
+
+.fewo-chat__examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-top: .75rem;
+}
+
+.fewo-chat__example {
+    font: inherit;
+    font-size: .875rem;
+    line-height: 1.3;
+    padding: .35rem .75rem;
+    border: 1px solid var(--fewo-border);
+    border-radius: 999px;
+    background: #fff;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.fewo-chat__example:hover:not(:disabled) {
+    background: var(--fewo-chat-user-bg);
+}
+
+.fewo-chat__example:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.fewo-chat__form {
+    margin-top: .75rem;
+}
+
+.fewo-chat__label {
+    display: block;
+    font-weight: 600;
+    font-size: .875rem;
+    margin-bottom: .25rem;
+}
+
+.fewo-chat__row {
+    display: flex;
+    gap: .5rem;
+}
+
+.fewo-chat input[type="text"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    font: inherit;
+    font-size: 1rem;
+    padding: .5rem .75rem;
+    border: 1px solid var(--fewo-border);
+    border-radius: var(--fewo-radius);
+    background: #fff;
+    color: inherit;
+}
+
+.fewo-chat__submit {
+    flex: 0 0 auto;
+}
+
+.fewo-chat__notice {
+    margin: .5rem 0 0;
+    font-size: .8125rem;
+    color: var(--fewo-muted);
+}
+
+/* Hinweis für Redakteure, solange der Assistent nicht eingerichtet ist */
+.fewo-notice {
+    padding: .75rem 1rem;
+    border-radius: var(--fewo-radius, 6px);
+    margin-bottom: 1rem;
+    font-size: .875rem;
+}
+
+.fewo-notice--warning {
+    background: #fff6e0;
+    color: #6b4b00;
+}

@@ -1,0 +1,77 @@
+/* Fewo Toolkit – 360°-Rundgang (Pannellum)
+ * Die Höhe ergibt sich aus dem Seitenverhältnis. Mit "Manuell" bestimmt das Theme die Höhe, z. B.
+ * .fewo-tour.mein-rundgang { --fewo-tour-height: 486px; }
+ */
+.fewo-tour {
+    --fewo-tour-ratio: 3 / 2;
+    --fewo-tour-height: 400px;
+    --fewo-radius: 6px;
+    margin-block: 1rem;
+}
+
+.fewo-tour__title {
+    margin-block: 0 1rem;
+}
+
+.fewo-tour__viewer {
+    width: 100%;
+    aspect-ratio: var(--fewo-tour-ratio);
+    border-radius: var(--fewo-radius);
+    overflow: hidden;
+}
+
+.fewo-tour--manual .fewo-tour__viewer {
+    aspect-ratio: auto;
+    height: var(--fewo-tour-height);
+}
+
+.fewo-tour__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+    background: repeating-linear-gradient(45deg, rgba(0, 0, 0, .03) 0 10px, transparent 10px 20px), #f4f4f4;
+}
+
+.fewo-tour__placeholder p {
+    margin: 0;
+}
+
+.fewo-tour__error {
+    padding: .75rem 1rem;
+    border-radius: var(--fewo-radius);
+    background: #fdecec;
+    color: #8a1c1c;
+    font-size: .875rem;
+}
+
+.fewo-tour__error small {
+    display: block;
+    font-family: monospace;
+}
+
+/* Bilder und Texte im Viewer nicht vom Theme umgestalten lassen */
+.fewo-tour .pnlm-container img {
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+    max-width: none;
+}
+
+/* Hotspots des alten Blocks ("cssClass": "custom-hotspot", createTooltipFunc: hotspotFontAwesome) */
+.fewo-tour .custom-hotspot {
+    font-size: 14px;
+    width: 22px;
+    height: 22px;
+    background-color: #000;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, .85);
+    border: 4px solid rgba(255, 255, 255, .8);
+    box-sizing: content-box;
+    cursor: pointer;
+}
+
+.fewo-tour .custom-hotspot:hover {
+    box-shadow: 0 0 4px #fff;
+}
