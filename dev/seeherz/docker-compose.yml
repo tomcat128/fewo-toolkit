@@ -1,0 +1,73 @@
+# Lokale Test-Instanz der Website "Ferienapartment Seeherz" aus dem Server-Backup (legacy/backup_*/)
+# Aufbau wie auf dem Server: Concrete CMS 9.5.7 mit den alten Paketen fewo_toolkit und fewo_themes,
+# MariaDB 11.2.2 mit dem gesicherten Datenverzeichnis – dazu das neue Paket fewo_tk2 aus diesem Repository.
+#
+#   ./restore.sh           (Backup entpacken, Container starten, für den lokalen Betrieb einrichten)
+#   http://localhost:8096  Website (Anmeldung: siehe Ausgabe von restore.sh)
+#   http://localhost:8026  Mailpit: alle von dieser Instanz versendeten E-Mails
+#
+# Konfiguration, Dateien und Datenbank liegen in Volumes; data/ bleibt der unveränderte Stand des Backups.
+name: fewo-seeherz-test
+services:
+  db:
+    image: mariadb:11.2.2
+    environment:
+      TZ: Europe/Berlin
+    healthcheck:
+      # kein healthcheck.sh: dessen Benutzer gibt es im gesicherten Datenverzeichnis nicht
+      test: ["CMD", "mariadb-admin", "ping", "--silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    networks:
+      default:
+        aliases:
+          - seeherz_db   # so heißt der Datenbankserver in application/config/database.php
+    volumes:
+      - db:/var/lib/mysql
+  mailpit:
+    image: axllent/mailpit:v1.21
+    ports:
+      - "8026:8025"
+  # Lokales Sprachmodell für den KI-Assistenten (Block "Chat"); nur im internen Netz erreichbar: http://ollama:11434
+  ollama:
+    image: ollama/ollama
+    environment:
+      TZ: Europe/Berlin
+      OLLAMA_KEEP_ALIVE: 30m
+    volumes:
+      - ollama:/root/.ollama
+  web:
+    image: fehrenbacher/concrete5:9.5.7
+    environment:
+      TZ: Europe/Berlin
+      APP_ID: SEEHERZ
+    ports:
+      - "8096:80"
+    depends_on:
+      db:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+    volumes:
+      # wie auf dem Server: gemeinsamer Quelltext der alten Pakete und Blöcke
+      - ./data/sites/concrete5/application/blocks:/srv/app/public/application/blocks
+      - ./data/sites/concrete5/packages/fewo_themes:/srv/app/public/packages/fewo_themes
+      - ./data/sites/concrete5/packages/fewo_toolkit:/srv/app/public/packages/fewo_toolkit
+      - ./data/sites/seeherz/.htaccess:/srv/app/public/.htaccess:ro
+      # kein Matomo: Aufrufe der Testinstanz gehören nicht in die Statistik der echten Website
+      - ./no-tracking.inc.php:/srv/app/public/packages/fewo_themes/themes/fewobacher/includes/tracking.seeherz.inc.php:ro
+      - config:/srv/app/public/application/config
+      - files:/srv/app/public/application/files
+      - languages:/srv/app/public/application/languages
+      # neu
+      - ../../packages/fewo_tk2:/srv/app/public/packages/fewo_tk2
+      - ../php.ini:/usr/local/etc/php/conf.d/zz-fewo-dev.ini:ro
+      - ./local.php:/seed/local.php:ro
+      - ./page.php:/seed/page.php:ro
+volumes:
+  ollama:
+  db:
+  config:
+  files:
+  languages:
