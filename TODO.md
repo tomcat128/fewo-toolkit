@@ -1,45 +1,102 @@
 # ToDo – Fewo Toolkit 2.0 (Concrete CMS 9.5.7)
 
-Stand: 20.11.2026. Das neue Paket liegt unter `packages/fewo_toolkit/`, das alte unter `legacy/`.
-Testumgebung: `dev/` (siehe Abschnitt unten).
+Stand: 20.11.2026. Das neue Paket liegt unter `packages/fewo_tk2/`, das alte unter `legacy/`.
+Testprojekt: `dev/` (siehe Abschnitt unten). Beschreibung für Anwender: `packages/fewo_tk2/README.md`.
+
+**Grundsatz:** Belegung und Preise kommen immer aus Fewo-Office (`/api/wohnungen/{kürzel}/belegung.json` bzw.
+`preise.json`). Im Toolkit werden keine Preise gepflegt und keine Buchungen angelegt. Die Adressen werden
+einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit › Wohnungen), die Blöcke wählen nur die Wohnung.
+Übernommen werden nur veröffentlichte, noch nicht abgelaufene Saisons.
 
 ## Erledigt und getestet
 
-- [x] Paket-Grundgerüst für Concrete 9.5 / PHP 8.1+, Doctrine-Entities (Preislisten, Saisons, Anfragen, ICS-Zwischenspeicher)
-- [x] Installation und Deinstallation über `c5:package:install` in Concrete 9.5.7 getestet
-- [x] Unit-Tests (27 Tests): Preisberechnung, ICS-Parser, Belegungslogik, XML-Import im alten Format, Geldbeträge
-- [x] Block **Belegungsplan**: beliebiger ICS-Feed, Zwischenspeicher in der Datenbank, halbe Wechseltage, "auf Anfrage", ohne Cronjob
-- [x] Block **Preisübersicht**: Saisons mit Preisbereichen ("1–2 Gäste"), Bedingungen
-- [x] Block **Preisrechner**: Ajax und ohne JavaScript, Link zum Anfrageformular mit Vorbelegung
-- [x] Block **Anfrageformular**: Validierung, Honeypot, Zeitsperre, Einwilligung, Speicherung, Mail an Vermieter und Gast (mit Mailpit getestet)
-- [x] Block **Ausstattungsliste**, **Bildergalerie** (Ordner/Dateiset, Lightbox ohne Bibliothek), **Karte** (Leaflet/OSM lokal, Zwei-Klick-Lösung)
-- [x] Dashboard: Preislisten (Liste, Bearbeiten, Kopieren, Löschen, Import) und Anfragen (Liste, Detail, Status, Löschfrist) laden fehlerfrei
+- [x] Paket-Grundgerüst für Concrete 9.5 / PHP 8.1+, Doctrine-Entities (Wohnungen, Anfragen, Zwischenspeicher für Daten aus Fewo-Office)
+- [x] Installation und Deinstallation in Concrete 9.5.7 (PHP 8.4) getestet – auch mit dem gebauten ZIP in einer frischen Installation (`dev/test-package.sh`)
+- [x] Unit-Tests (97 Tests): Preisberechnung nach den Regeln von Fewo-Office, Belegung und Preisliste aus Fewo-Office in allen Formaten (JSON, XML, ICS – mit unveränderten Antworten der Schnittstelle unter `tests/fixtures/fewo-office-*`), ungültige Antworten, Belegungslogik, Geldbeträge, Formularprüfung (`InquiryValidator`), ICS-Parser
+- [x] Browser-Tests (61 Tests, Playwright, `dev/e2e`): Dashboard (Wohnungen, Anfragen), Block-Dialoge, Besucheransicht, mehrere gleiche Blöcke, Barrierefreiheit
+- [x] Deutsche Übersetzung: alle 490 Texte (`languages/de_DE`), Frontend, Block-Formulare, Dashboard und E-Mails auf Deutsch geprüft
+- [x] Dashboard **Wohnungen**: Adressen der Belegung und der Preisliste je Wohnung, Aktualisierungsintervall, Stand des letzten Abrufs mit Fehlergrund, "Jetzt aktualisieren", Prüfung der Eingaben, löschen; getrennte Zwischenspeicher für Belegung und Preisliste (eine falsch eingetragene Adresse stört keine andere Wohnung)
+- [x] Block **Belegungsplan**: Belegung aus Fewo-Office (JSON empfohlen, XML und ICS werden am Inhalt erkannt), Zwischenspeicher in der Datenbank, halbe Wechseltage, ohne Cronjob; Fewo-Office nicht erreichbar oder unbrauchbare Antwort (letzter Stand bleibt, Hinweis nur für Redakteure, kein Abruf bei jedem Seitenaufruf), "jetzt neu laden"; aufgeklappte Monate in derselben Spaltenzahl wie die erste Zeile (= Anzahl der anfangs sichtbaren Monate)
+- [x] Block **Preisübersicht**: Preisliste aus Fewo-Office (JSON oder XML), Anordnung wählbar (Kacheln nebeneinander / Liste untereinander), Preisbereiche ("1–2 Gäste"), Standardpreis als "Übrige Zeiträume", abgelaufene Saisons werden aussortiert, Bedingungen (Mindestaufenthalt, Endreinigung, Anzahlung)
+- [x] Block **Preisrechner**: rechnet wie Fewo-Office (Preis des Tages, an dem die Nacht endet; Standardpreis als Lückenfüller; nächsthöhere Gästeanzahl), prüft die Belegung der Wohnung (die Felder Anreise/Abreise öffnen einen eigenen Kalender mit gesperrten belegten Tagen an Stelle des Browser-Kalenders, per Tastatur bedienbar; Prüfung auf dem Server auch ohne JavaScript), Ajax und ohne JavaScript, Link zum Anfrageformular mit Vorbelegung
+- [x] Block **Anfrageformular**: Validierung, Honeypot, Zeitsperre, Einwilligung, Speicherung, Mail an Vermieter und Gast (Mailpit), Captcha (falscher und richtiger Code)
+- [x] Block **Ausstattungsliste** (1–4 Spalten wählbar), **Bildergalerie** (Ordner/Dateiset, Großansicht mit Tastatur und Wischen), **Karte** (Leaflet/OSM lokal, Zwei-Klick-Lösung, "Karten immer laden")
+- [x] Dashboard **Anfragen**: Liste, Filter, Detail, Status ändern, löschen, Löschfrist speichern, automatisches Löschen
+- [x] Block **360°-Rundgang** (Pannellum 2.5.6, im Paket enthalten): Nachfolger des alten Blocks aus `legacy/application/blocks/pannellum` – gleiche Felder (Bilder, Bilder für Mobilgeräte, Einstellungen), ohne jQuery und ohne Geräteerkennung auf dem Server, Seitenverhältnis per CSS, Platzhalter im Bearbeitungsmodus, Fehlermeldung bei ungültigen Einstellungen
+- [x] Block-Dialoge (Hinzufügen/Bearbeiten) aller 8 Blöcke inkl. dynamischer Zeilen, Koordinaten-Eingabe und Galerie-Quelle
+- [x] Mehrere Blöcke desselben Typs auf einer Seite (`/fewo-doppelt`)
+- [x] Mobile Ansicht (390 px), Barrierefreiheit und Kontraste (axe, WCAG 2.1 A/AA) im Theme Atomik
+- [x] Concrete-Log und PHP-Log (E_ALL, PHP 8.4): keine Warnungen aus dem Paket
+- [x] README für das Paket, Bildschirmfotos der Blöcke (`docs/screenshots/`, erzeugt mit `dev/e2e/make-screenshots.js`)
+- [x] Paket für den Upload: `dev/build.sh` → `dist/fewo_tk2-2.1.0.zip` (ohne `vendor/`, `tests/`, `composer.*`)
+- [x] **KI-Assistent** (Version 2.1.0): Block **Chat (KI-Assistent)** und Dashboard **KI-Assistent**. Ein Sprachmodell,
+  das über Ollama auf dem eigenen Server läuft, beantwortet Fragen der Besucher aus den aktuellen Inhalten der Website:
+  öffentliche Seiten (wie in der `sitemap.xml`, Texte der Blöcke) plus Preise nach Monaten und freie Zeiträume aus
+  Fewo-Office. Antwort erscheint Wort für Wort; Begrenzung je Besucher und Stunde; Fragen werden nicht gespeichert.
+  Im Dashboard: Adresse von Ollama, Modell (Liste der installierten), API-Schlüssel für einen Proxy, Umfang der
+  Inhalte, ausgeschlossene Seiten, zusätzliche Anweisungen, Grenzen, Testfrage, Übersicht „Was der Assistent weiß“
+- [x] KI-Assistent – Geschwindigkeit: Passt die Website ins Budget (Vorgabe 48.000 Zeichen), bekommt das Modell immer
+  alle Inhalte in derselben Reihenfolge. Ollama liest sie einmal ein (beim Anzeigen des Chats angestoßen), danach
+  beginnen Antworten nach 1–3 Sekunden – gemessen in der Seeherz-Testinstanz ohne Grafikkarte
+- [x] Aktualisierung von 2.0.0 auf 2.1.0 (`c5:package:update`) im Testprojekt und in der Seeherz-Testinstanz: neuer Block,
+  neue Dashboard-Seite und neue Tabelle kommen dazu, das Dashboard-Menü zeigt die neue Seite sofort
+
+- [x] Abruf der echten Fewo-Office-Adressen (`…/wohnungen/sonnenseele/belegung.{json,xml,ics}`, `preise.{json,xml}`) aus dem Testprojekt heraus
+
+### Entfernt (kommt jetzt aus Fewo-Office)
+
+- Dashboard "Preislisten" samt Bearbeiten, Kopieren, "+1 Jahr" und Import aus dem alten Toolkit
+- Tabellen `FewoPricelists`, `FewoPricelistSeasons`, `FewoCalendarFeeds` (ersetzt durch `FewoFeeds`)
+- Kaution, Inklusivleistungen, Hinweistext und Mindestaufenthalt je Saison – diese Angaben gibt es in der Schnittstelle nicht
+- Einstellung "Welcher Tag bestimmt den Saisonpreis einer Nacht?" – es gilt immer die Regel von Fewo-Office
+
+### Dabei gefundene und behobene Fehler
+
+- Zwei Anfrageformulare oder Preisrechner (ohne JavaScript) auf einer Seite: HTTP 500 beim Absenden
+- "Hinzufügen"-Dialoge aller Blöcke: Vorgaben wurden ignoriert (z. B. "Bedingungen anzeigen"), PHP-Warnungen wegen undefinierter Variablen
+- Belegungsplan: schmaler roter bzw. grüner Streifen am Rand halb belegter Tage (An- und Abreisetage)
+- Großansicht der Galerie: Klick auf den Hintergrund schloss sie nicht
+- Galerie "Neueste/Älteste zuerst": zufällige Reihenfolge bei Bildern, die in derselben Sekunde hochgeladen wurden
+- Anfrageformular: Fehlermeldung bzw. Dank bekam nach dem Absenden nicht den Fokus (Screenreader)
+- E-Mails (Klartext): Bezeichnung und Wert klebten zusammen bzw. waren bei Umlauten verschoben; doppelte Zeilenabstände in der HTML-Nachricht
+- Karte: Getippte Koordinaten wurden zu früh aufgeteilt ("47.71, 9" → falsche Werte); Zeilenenden im Markierungstext
+- Ausstattungsliste: Rücksprung-Link der Fußnoten nur an der Farbe erkennbar
+- Sicherheit: Zeilenumbrüche in einzeiligen Formularfeldern (Name, Ort …) werden entfernt, damit sie nicht in Mail-Kopfzeilen landen
+- Löschfrist: abgelaufene Anfragen wurden nur beim Öffnen des Dashboards gelöscht – jetzt auch bei jeder neuen Anfrage
+- Testprojekt: `c5:exec` meldete auch bei Erfolg einen Fehler; Demo-Kalender gingen beim Neuanlegen des Containers verloren
+- Anfrageformular: ohne Standard-Absenderadresse in Concrete (Auslieferungszustand, so auch auf seeherz.com) wurde die
+  Anfrage gespeichert, aber keine E-Mail verschickt – jetzt Rückfall auf die Absenderadresse für Formulare bzw. die
+  des Hauptbenutzers (gefunden mit der Seeherz-Testinstanz)
+- Kollision mit dem alten Paket auf derselben Website: Paket heißt jetzt `fewo_tk2` (Namespace `FewoTk2`, Dashboard
+  `/dashboard/fewo_tk2`), die Blöcke `fewo_belegungsplan`, `fewo_preisrechner` usw. – das alte `fewo_toolkit` belegt
+  u. a. `preisrechner`, `kontaktformular`, `karte`
 
 ## Offen
 
-### Übersetzung (wichtig)
-- [ ] Alle Texte sind derzeit englische Quelltexte. Deutsche Übersetzung anlegen:
-      `c5:package:translate fewo_toolkit` → `languages/de_DE/LC_MESSAGES/messages.po` ausfüllen → `.mo` erzeugen
-- [ ] Danach Frontend, Block-Formulare, Dashboard und E-Mails auf Deutsch prüfen
+### Braucht echte Daten bzw. eine Entscheidung
+- [ ] KI-Assistent auf dem Server: Ollama muss dort laufen (Container im selben Docker-Netz, Port 11434 nicht
+  veröffentlichen) und braucht für `gemma3:4b` rund 3–4 GB freien Arbeitsspeicher; ohne Grafikkarte dauert das erste
+  Einlesen der Website knapp eine Minute, danach kommen Antworten in Sekunden (README, Abschnitt „KI-Assistent“)
+- [ ] KI-Assistent – Genauigkeit: Inhaltsfragen beantwortet `gemma3:4b` meist richtig, bei Preisen und Zeiträumen
+  macht es Fehler (auch `gemma3:12b`, das ohne Grafikkarte zudem zu langsam ist). Entscheiden, ob der Hinweis unter
+  dem Chat genügt oder ob Preis- und Terminfragen fest auf Preisrechner und Belegungsplan verweisen sollen
+- [ ] KI-Assistent – Wissen: Blöcke des alten Pakets liefern keinen Suchtext und fehlen deshalb (z. B. die alte
+  Ausstattungsliste auf `/ausstattung`); mit den neuen Blöcken sind die Inhalte dabei
+- [ ] Wie Fewo-Office einen Fehler meldet (z. B. unbekanntes Kürzel), ist nur angenommen: geprüft werden HTTP-Status und `status.type` ≠ `OK`
+- [ ] Standardpreise (`default_prices`) sind bei der Wohnung "sonnenseele" leer – mit echten Werten gegenprüfen
+- [ ] 360°-Rundgang mit den Bildern und Einstellungen eines **echten** Rundgangs der alten Website prüfen (bisher nur mit erzeugten Testpanoramen; Mehrfachauflösung/`multires` ist ungetestet)
+- [ ] E-Mail-Versand über den echten SMTP-Server (Zustellung, Spam-Bewertung, Absenderadresse)
+- [ ] Theme-Anbindung: CSS-Variablen an das neue Theme anpassen, Kontraste dort erneut prüfen (`dev/e2e/tests/accessibility.spec.js`)
 
-### Noch nicht getestet
-- [ ] Dashboard-Formulare absenden: Preisliste speichern, Validierungsfehler, Saison "+1 Jahr", Spalten bei geänderter Gästeanzahl
-- [ ] Import einer echten Preisliste aus dem alten Toolkit (XML-Datei und eingefügter Text)
-- [ ] Anfragen-Dashboard: Status ändern, Löschen, Löschfrist speichern und automatisches Löschen
-- [ ] Block-Bearbeitungsdialoge im Browser (Hinzufügen/Bearbeiten aller 7 Blöcke, dynamische Zeilen in Ausstattungsliste, Karte, Galerie-Quelle)
-- [ ] Im Browser: Lightbox (Tastatur, Wischen), Karte nach Zustimmung, "Karten immer laden", Preisrechner-Ajax, mobile Ansicht
-- [ ] Captcha im Anfrageformular
-- [ ] Concrete-Logs nach Warnungen durchsehen (die letzte Prüfung wurde abgebrochen)
-- [ ] Belegungsplan: Verhalten bei nicht erreichbarem Feed, "jetzt neu laden", Feeds von Airbnb, Booking.com, Fewo-direkt, Smoobu
-- [ ] Mehrere Blöcke desselben Typs auf einer Seite
-
-### Ergänzungen
-- [ ] Unit-Tests für `InquiryValidator`
-- [ ] README für das Paket: Installation, Konfiguration (SMTP, Captcha), Umstieg vom alten Toolkit
-- [ ] Barrierefreiheit und Kontraste prüfen (z. B. axe/Lighthouse), Screenshots der Blöcke
-- [ ] Theme-Anbindung: CSS-Variablen an das neue Theme anpassen
-- [ ] Paket für den Upload bauen (`c5:package:pack`, ohne `vendor/`, `tests/`, `composer.*`)
-- [ ] Sicherheits-Review vor dem Livegang
+### Sicherheits-Review – verbleibende Punkte (vor dem Livegang entscheiden)
+Geprüft: Ausgaben maskiert, alle ändernden Dashboard-Aktionen mit Token und per POST, XML-Import ohne externe Entitäten,
+Mail-Kopfzeilen, Größenbegrenzung für abgerufene Daten (5 MB), XML ohne Dokumenttyp-Definitionen.
+- [ ] Das Anfrageformular prüft die Belegung nicht (Anfragen für belegte Zeiträume sind möglich) – so gewollt?
+- [ ] Anfrageformular ohne Captcha hat keine Mengenbegrenzung je Absender – bei Spam Captcha einschalten oder Begrenzung ergänzen
+- [ ] Adressen für Belegung und Preisliste: Der Server ruft jede http(s)-Adresse ab, die ein Redakteur einträgt (auch interne). Unkritisch, solange nur vertrauenswürdige Personen Blöcke bearbeiten – sonst auf die Fewo-Office-Domain beschränken
+- [ ] Karte: Die "Quellenangabe (HTML)" wird unverändert ausgegeben – ebenfalls nur für Redakteure erreichbar
+- [ ] 360°-Rundgang: Einstellungen in der Schreibweise des alten Blocks (kein reines JSON) werden im Browser der Besucher als JavaScript ausgewertet – wie beim HTML-Block von Concrete nur vertrauenswürdige Personen bearbeiten lassen; sonst auf JSON beschränken
+- [ ] Fehlermeldungen des Abrufs (für Redakteure) sind bei Verbindungsfehlern englisch, weil sie vom HTTP-Client stammen
 
 ### Bewusst zurückgestellt (laut Absprache)
 - [ ] PDF-Angebot/-Rechnung
@@ -47,15 +104,64 @@ Testumgebung: `dev/` (siehe Abschnitt unten).
 - [ ] Plugin-Widgets (Pegelstand, Wetter, Bewertungen)
 - [ ] Neues Theme als Ersatz für `fewo_themes`
 
-## Testumgebung
+## Testprojekt
+
+Basis ist das Docker-Image `fehrenbacher/concrete5:9.5.7` (PHP 8.4, Apache) mit MariaDB 11.4 und Mailpit.
 
 ```bash
 cd dev
-docker compose up -d --build
-./setup.sh                      # einmalig: Concrete 9.5.7 + Paket + Demo-Inhalte
+./setup.sh                      # startet die Container; einmalig: Concrete + Paket + Demo-Inhalte
 ```
 
-- Website: http://localhost:8095/index.php/fewo-demo und /fewo-anfrage (Admin: `admin` / `fewo-dev-admin`)
+- Website: http://localhost:8095/index.php/fewo-demo, `/fewo-anfrage`, `/fewo-doppelt` (Admin: `admin` / `fewo-dev-admin`)
+- Wohnungen: http://localhost:8095/index.php/dashboard/fewo_tk2/apartments (drei Demo-Wohnungen)
 - E-Mails: http://localhost:8025 (Mailpit)
-- Unit-Tests: `cd packages/fewo_toolkit && composer install && vendor/bin/phpunit`
-- Pausieren: `docker compose stop` (Daten bleiben erhalten)
+- PHP-Meldungen: `docker compose logs web` (E_ALL)
+- Pausieren: `docker compose stop` (Daten bleiben erhalten), alles löschen: `docker compose down -v`
+
+| Aufgabe | Befehl |
+| --- | --- |
+| Unit-Tests | `cd packages/fewo_tk2 && docker run --rm -u "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp/composer -v "$PWD":/app -w /app composer:2 install` (einmalig), dann `docker run --rm -v "$PWD":/app -w /app --entrypoint php fehrenbacher/concrete5:9.5.7 vendor/bin/phpunit` |
+| Browser-Tests | `cd dev/e2e && npm install && npx playwright install chromium` (einmalig), dann `npx playwright test` |
+| Übersetzung aktualisieren | neue Texte in `dev/translations/de_DE.py` eintragen, dann `dev/translate.sh` |
+| Bildschirmfotos | `cd dev/e2e && node make-screenshots.js` |
+| Paket bauen und prüfen | `dev/build.sh`, danach `dev/test-package.sh` |
+| KI-Assistent ohne Sprachmodell testen | läuft automatisch: Das Testprojekt enthält die Ollama-Attrappe `dev/ollama-stub/server.py` (Dienst `ollama-stub`, Modell `stub-model`), die sofort und vorhersagbar antwortet. Für echte Antworten im Dashboard die Adresse eines richtigen Ollama eintragen – oder die Seeherz-Testinstanz verwenden |
+
+Die Demo-Seiten rufen nicht fewo-office.com ab, sondern Dateien im selben Format, die `dev/seed.php` unter
+`application/files/fewo-demo-*` ablegt (Daten relativ zum heutigen Tag, inklusive einer abgelaufenen Saison),
+dazu erzeugte 360°-Panoramen für den Rundgang.
+`seed.php` und `php.ini` sind einzeln in den Container eingebunden: nach Änderungen `docker compose restart web`.
+Ändert sich das Datenbankschema bei gleicher Paketversion, das Paket im Testprojekt deinstallieren und neu
+installieren (`c5:package:uninstall`, `c5:package:install`, danach `c5:exec /seed/seed.php`).
+
+Hinweis: Die Browser-Tests legen eigene Daten an (Anfragen von `…@e2e.test`, Wohnung "E2E Wohnung", Seite `/fewo-e2e`)
+und räumen sie wieder ab. Sie setzen die Löschfrist kurzzeitig auf 30 Tage – nicht gegen eine Installation mit
+echten Anfragen laufen lassen.
+
+## Testinstanz Seeherz (echte Website aus dem Backup)
+
+`dev/seeherz/` baut die Website „Ferienapartment Seeherz“ lokal so auf, wie sie auf dem Server läuft: Concrete 9.5.7,
+MariaDB 11.2.2 mit dem gesicherten Datenverzeichnis, die alten Pakete `fewo_toolkit` und `fewo_themes` – und daneben
+das neue Paket `fewo_tk2`. Quelle ist das Server-Backup unter `legacy/backup_*/` (nicht in Git, enthält Kundendaten
+und Zugangsdaten).
+
+```bash
+cd dev/seeherz
+./restore.sh            # erster Aufruf: Backup entpacken und Instanz aufbauen; danach: starten und aktualisieren
+./restore.sh --reset    # Instanz verwerfen und neu aus dem Backup aufbauen
+```
+
+- Website: http://localhost:8096 (Admin: `admin` / `seeherz-test-admin`), E-Mails: http://localhost:8026 (Mailpit);
+  von anderen Rechnern im Netz unter `http://<Rechner>:8096` – die Instanz hat bewusst keine feste Adresse
+- Testseite mit allen neun neuen Blöcken: http://localhost:8096/fewo-toolkit-2 (`page.php`) – Belegung und Preise aus
+  Fewo-Office (`…/api/wohnungen/seeherz/…`), Ausstattung, Bilder und Rundgang aus den alten Blöcken übernommen
+- Die alten Seiten (`/preise-verfuegbarkeit`, `/rundgang`, `/kontakt` …) laufen unverändert mit den alten Blöcken
+- Nach außen abgeschottet (`local.php`): E-Mails von Concrete und vom alten Kontaktformular (eigenes SMTP-Konto im
+  Block) gehen nur an Mailpit, Matomo ist abgeschaltet, das Kennwort des Hauptbenutzers ist lokal neu gesetzt
+- KI-Assistent mit echtem Sprachmodell: eigener Ollama-Container (nur im internen Netz, `http://ollama:11434`).
+  `restore.sh` lädt beim ersten Mal das Modell (`OLLAMA_MODEL`, Vorgabe `gemma3:4b`, 3,3 GB) und schaltet den Assistenten
+  ein; Einstellungen unter http://localhost:8096/index.php/dashboard/fewo_tk2/assistant
+- `data/` ist der entpackte Stand des Backups und bleibt unverändert; gearbeitet wird in Docker-Volumes
+- Im Backup vom 21.11.2026 ist der SQL-Dump leer (0 Byte); die Datenbank stammt deshalb aus dem mitgesicherten
+  Datenverzeichnis (`/var/www/database/seeherz`)
