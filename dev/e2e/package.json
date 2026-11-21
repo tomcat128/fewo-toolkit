@@ -1,0 +1,12 @@
+{
+  "name": "fewo-toolkit-e2e",
+  "private": true,
+  "description": "Browser-Tests für das Fewo Toolkit gegen das lokale Testprojekt (dev/)",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "1.65.1"
+  }
+}
