@@ -1,40 +1,53 @@
-/* Fewo Toolkit – Preisrechner */
+/* Fewo Toolkit – Preisrechner
+ * Alle Maße in em: Der Block folgt der Schriftgröße des Themes.
+ */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-quote),
+:where(.fewo-quote) *,
+:where(.fewo-quote) *::before,
+:where(.fewo-quote) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-quote {
     --fewo-border: rgba(0, 0, 0, .12);
     --fewo-muted: rgba(0, 0, 0, .6);
     --fewo-error: #b42318;
     --fewo-radius: 6px;
-    margin-block: 1rem;
+    margin-block: 1em;
 }
 
 .fewo-quote__title {
-    margin-block: 0 1rem;
+    margin-block: 0 .5em;
 }
 
 .fewo-quote__form {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(10em, 1fr));
+    gap: 1em;
     align-items: end;
 }
 
 .fewo-quote__field {
     display: flex;
     flex-direction: column;
-    gap: .25rem;
+    gap: .25em;
 }
 
 .fewo-quote__field label {
     font-weight: 600;
-    font-size: .875rem;
+    font-size: .875em;
 }
 
 .fewo-quote__field input,
 .fewo-quote__field select {
     width: 100%;
-    min-height: 2.75rem;
-    padding: .5rem .75rem;
+    /* mindestens 44 px (Bedienung per Finger), bei großer Schrift des Themes entsprechend mehr */
+    min-height: max(2.75rem, 2.2em);
+    margin: 0;
+    padding: .375em .75em;
     font: inherit;
     border: 1px solid var(--fewo-border);
     border-radius: var(--fewo-radius);
@@ -44,7 +57,7 @@
 
 .fewo-quote__submit {
     width: 100%;
-    min-height: 2.75rem;
+    min-height: max(2.75rem, 2.2em);
 }
 
 .fewo-quote.is-loading .fewo-quote__result {
@@ -57,7 +70,7 @@
 }
 
 .fewo-quote__result {
-    margin-top: 1.5rem;
+    margin-top: 1.5em;
 }
 
 .fewo-quote__error {
@@ -70,18 +83,18 @@
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between;
-    gap: .5rem 1.5rem;
+    gap: .5em 1.5em;
 }
 
 .fewo-quote__total {
     margin: 0;
     display: flex;
     align-items: baseline;
-    gap: .75rem;
+    gap: .75em;
 }
 
 .fewo-quote__total-amount {
-    font-size: 1.75rem;
+    font-size: 1.75em;
     font-variant-numeric: tabular-nums;
 }
 
@@ -91,7 +104,7 @@
 }
 
 .fewo-quote__details {
-    margin-top: 1rem;
+    margin-top: 1em;
 }
 
 .fewo-quote__details summary {
@@ -102,13 +115,13 @@
 .fewo-quote__table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: .75rem;
-    font-size: .9375rem;
+    margin-top: .8em;
+    font-size: .9375em;
 }
 
 .fewo-quote__table th,
 .fewo-quote__table td {
-    padding: .5rem .25rem;
+    padding: .5em .25em;
     border-bottom: 1px solid var(--fewo-border);
     text-align: left;
     vertical-align: top;
@@ -138,15 +151,23 @@
 
 .fewo-quote__included,
 .fewo-quote__disclaimer {
-    font-size: .8125rem;
+    font-size: .8125em;
     color: var(--fewo-muted);
+}
+
+.fewo-quote__disclaimer {
+    margin: 1.2em 0;
+}
+
+.fewo-quote__cta {
+    margin: 0;
 }
 
 /* Felder "Anreise"/"Abreise", wenn sie den eigenen Kalender öffnen (statt des Kalenders des Browsers) */
 .fewo-quote__field input.fewo-quote__date {
     cursor: pointer;
-    padding-right: 2.5rem;
-    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E") no-repeat right .75rem center / 1.125rem;
+    padding-right: 2.5em;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2' stroke-linecap='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E") no-repeat right .75em center / 1.125em;
 }
 
 /* Kalender der beiden Felder mit der Belegung der Wohnung (wird per JavaScript aufgebaut und
@@ -163,24 +184,32 @@
     position: absolute;
     z-index: 30;
     box-sizing: border-box;
-    width: min(100%, 38rem);
-    padding: 1rem;
+    /* Der Kalender ist ein Bedienelement mit fester, kompakter Größe: Seine Schrift wird nie größer als die
+     * Grundschrift des Browsers, auch wenn das Theme große Schrift verwendet. */
+    font-size: min(1em, 1rem);
+    width: min(100%, 32em);
+    padding: .875em;
     background: #fff;
     border: 1px solid var(--fewo-border);
     border-radius: var(--fewo-radius);
-    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .18);
+    box-shadow: 0 .5em 1.5em rgba(0, 0, 0, .18);
 }
 
 .fewo-quote__calendar[hidden] {
     display: none;
 }
 
+/* Nur ein Monat, wenn zwei nicht nebeneinander passen (setzt das JavaScript) */
+.fewo-quote__calendar.is-single {
+    width: min(100%, 19em);
+}
+
 .fewo-quote__calendar-header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: .5rem;
-    margin-bottom: .75rem;
+    gap: .375em;
+    margin-bottom: .5em;
 }
 
 .fewo-quote__calendar-hint {
@@ -188,9 +217,11 @@
 }
 
 .fewo-quote__calendar-nav {
-    width: 2.75rem;
-    height: 2.75rem;
-    font-size: 1.5rem;
+    /* 2.25 × Schrift des Kalenders bei 1.5-facher Schrift der Pfeile */
+    width: 1.5em;
+    height: 1.5em;
+    padding: 0;
+    font-size: 1.5em;
     line-height: 1;
     border: 1px solid var(--fewo-border);
     border-radius: var(--fewo-radius);
@@ -206,14 +237,14 @@
 
 .fewo-quote__calendar-months {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+    gap: 1.25em;
 }
 
 .fewo-quote__calendar-month-title {
     font-weight: 600;
     text-align: center;
-    margin-bottom: .5rem;
+    margin-bottom: .375em;
 }
 
 .fewo-quote__calendar-weekdays,
@@ -224,7 +255,7 @@
 }
 
 .fewo-quote__calendar-weekdays {
-    font-size: .75rem;
+    font-size: .75em;
     text-align: center;
     color: var(--fewo-muted);
     margin-bottom: 3px;
@@ -237,7 +268,7 @@
     min-width: 0;
     padding: 0;
     font: inherit;
-    font-size: .8125rem;
+    font-size: .8125em;
     font-variant-numeric: tabular-nums;
     color: var(--fewo-free-text);
     border: 1px solid rgba(0, 0, 0, .08);
@@ -288,31 +319,32 @@
 .fewo-quote__calendar-legend {
     display: flex;
     flex-wrap: wrap;
-    gap: .5rem 1.5rem;
+    gap: .5em 1.5em;
     list-style: none;
-    margin: 1rem 0 0;
+    margin: .9em 0 0;
     padding: 0;
-    font-size: .875rem;
+    font-size: .8125em;
 }
 
 .fewo-quote__calendar-legend li {
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: .5em;
 }
 
 .fewo-quote__calendar-legend .fewo-quote__day {
-    width: 1.25rem;
-    height: 1.25rem;
+    font-size: 1em;
+    width: 1.43em;
+    height: 1.43em;
     cursor: default;
 }
 
 /* Hinweise zum Datenabruf – nur für Redakteure sichtbar */
 .fewo-notice {
-    padding: .75rem 1rem;
+    padding: .85em 1.15em;
     border-radius: var(--fewo-radius, 6px);
-    margin-bottom: 1rem;
-    font-size: .875rem;
+    margin-bottom: 1.15em;
+    font-size: .875em;
 }
 
 .fewo-notice--error {
@@ -323,4 +355,36 @@
 .fewo-notice--warning {
     background: #fff6e0;
     color: #6b4b00;
+}
+
+/* Schaltflächen: Rückfall für Themes ohne eigene Gestaltung von .btn (z. B. ohne Bootstrap).
+ * Das Gewicht liegt absichtlich unter dem einer Klasse: Gestaltet das Theme .btn, gilt das Theme.
+ * Farbe anpassen: .fewo-btn { --fewo-accent: #b42318; --fewo-accent-hover: #8a1c1c; } */
+html :is(a, button):where(.fewo-btn) {
+    display: inline-block;
+    padding: .5em 1.1em;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    color: var(--fewo-accent-text, #fff);
+    background-color: var(--fewo-accent, #0b65c2);
+    border: 1px solid transparent;
+    border-radius: var(--fewo-radius, 6px);
+    cursor: pointer;
+}
+
+html :is(a, button):where(.fewo-btn):hover {
+    background-color: var(--fewo-accent-hover, #094f99);
+}
+
+html :is(a, button):where(.fewo-btn):focus-visible {
+    outline: 2px solid var(--fewo-accent, #0b65c2);
+    outline-offset: 2px;
+}
+
+html :is(a, button):where(.fewo-btn):disabled {
+    opacity: .6;
+    cursor: default;
 }

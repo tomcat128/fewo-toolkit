@@ -1,28 +1,40 @@
-/* Fewo Toolkit – Ausstattungsliste */
+/* Fewo Toolkit – Ausstattungsliste
+ * Alle Maße in em: Der Block folgt der Schriftgröße des Themes.
+ */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-amenities),
+:where(.fewo-amenities) *,
+:where(.fewo-amenities) *::before,
+:where(.fewo-amenities) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-amenities {
-    margin-block: 1rem;
+    margin-block: 1em;
 }
 
 .fewo-amenities__title {
-    margin-block: 0 .75rem;
+    margin-block: 0 .5em;
 }
 
 summary.fewo-amenities__title {
     cursor: pointer;
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 1.125em;
+    margin-block: 0 .667em;
 }
 
 .fewo-amenities__list {
-    columns: var(--fewo-columns, 2) 12rem;
-    column-gap: 2rem;
+    columns: var(--fewo-columns, 2) 12em;
+    column-gap: 2em;
     margin: 0;
-    padding-left: 1.25rem;
+    padding-left: 1.25em;
 }
 
 .fewo-amenities__list li {
     break-inside: avoid;
-    padding: .125rem 0;
+    padding: .125em 0;
 }
 
 .fewo-amenities__list sup a {
@@ -30,9 +42,9 @@ summary.fewo-amenities__title {
 }
 
 .fewo-amenities__notes {
-    margin: 1rem 0 0;
-    padding-left: 1.5rem;
-    font-size: .875rem;
+    margin: 1.15em 0 0;
+    padding-left: 1.7em;
+    font-size: .875em;
     opacity: .85;
 }
 

@@ -1,8 +1,21 @@
 /* Fewo Toolkit – Bildergalerie */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-gallery),
+:where(.fewo-gallery) *,
+:where(.fewo-gallery) *::before,
+:where(.fewo-gallery) *::after,
+:where(.fewo-lightbox),
+:where(.fewo-lightbox) *,
+:where(.fewo-lightbox) *::before,
+:where(.fewo-lightbox) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-gallery {
-    --fewo-gap: .5rem;
+    --fewo-gap: .5em;
     --fewo-radius: 6px;
-    margin-block: 1rem;
+    margin-block: 1em;
 }
 
 .fewo-gallery__grid {
@@ -47,7 +60,7 @@
     }
 }
 
-/* Lightbox */
+/* Großansicht: hängt direkt am <body>, deshalb feste Maße (rem) statt der Schriftgröße des Themes */
 .fewo-lightbox-open {
     overflow: hidden;
 }
@@ -78,7 +91,6 @@
     align-items: center;
     justify-content: center;
     gap: .75rem;
-    box-sizing: border-box;
 }
 
 .fewo-lightbox__image {
@@ -110,6 +122,7 @@
     color: #fff;
     width: 3rem;
     height: 3rem;
+    padding: 0;
     border-radius: 50%;
     font-size: 2rem;
     line-height: 1;

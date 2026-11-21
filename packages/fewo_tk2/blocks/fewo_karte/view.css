@@ -1,8 +1,19 @@
-/* Fewo Toolkit – Karte */
+/* Fewo Toolkit – Karte
+ * Alle Maße in em: Der Block folgt der Schriftgröße des Themes.
+ */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-map),
+:where(.fewo-map) *,
+:where(.fewo-map) *::before,
+:where(.fewo-map) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-map {
     position: relative;
     height: var(--fewo-map-height, 400px);
-    margin-block: 1rem;
+    margin-block: 1em;
     border-radius: 8px;
     overflow: hidden;
     background: #e9ecef;
@@ -23,8 +34,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: .75rem;
-    padding: 1.5rem;
+    gap: .75em;
+    padding: 1.5em;
     text-align: center;
     background:
         repeating-linear-gradient(45deg, rgba(0, 0, 0, .03) 0 10px, transparent 10px 20px),
@@ -35,16 +46,56 @@
 .fewo-map__consent p,
 .fewo-map__placeholder p {
     margin: 0;
-    max-width: 32rem;
+    max-width: 32em;
 }
 
 .fewo-map__remember {
-    font-size: .875rem;
+    font-size: .875em;
     display: flex;
-    gap: .375rem;
+    gap: .43em;
     align-items: center;
 }
 
+.fewo-map__remember input {
+    width: 1.15em;
+    height: 1.15em;
+    margin: 0;
+    /* Kästchen übernehmen die Schriftgröße sonst nicht und blieben neben großer Schrift winzig */
+    font-size: inherit;
+}
+
 .fewo-map__fallback {
-    font-size: .875rem;
+    font-size: .875em;
+}
+
+/* Schaltflächen: Rückfall für Themes ohne eigene Gestaltung von .btn (z. B. ohne Bootstrap).
+ * Das Gewicht liegt absichtlich unter dem einer Klasse: Gestaltet das Theme .btn, gilt das Theme.
+ * Farbe anpassen: .fewo-btn { --fewo-accent: #b42318; --fewo-accent-hover: #8a1c1c; } */
+html :is(a, button):where(.fewo-btn) {
+    display: inline-block;
+    padding: .5em 1.1em;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    color: var(--fewo-accent-text, #fff);
+    background-color: var(--fewo-accent, #0b65c2);
+    border: 1px solid transparent;
+    border-radius: var(--fewo-radius, 6px);
+    cursor: pointer;
+}
+
+html :is(a, button):where(.fewo-btn):hover {
+    background-color: var(--fewo-accent-hover, #094f99);
+}
+
+html :is(a, button):where(.fewo-btn):focus-visible {
+    outline: 2px solid var(--fewo-accent, #0b65c2);
+    outline-offset: 2px;
+}
+
+html :is(a, button):where(.fewo-btn):disabled {
+    opacity: .6;
+    cursor: default;
 }

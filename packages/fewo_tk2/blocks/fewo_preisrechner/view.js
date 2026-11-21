@@ -98,6 +98,8 @@
         let viewMonth = (arrival.value || min).slice(0, 7);
         let focusDate = arrival.value || min;
         let reopening = false;
+        /** Anzahl der sichtbaren Monate: zwei nebeneinander, auf schmalen Bildschirmen einer. */
+        let monthCount = 2;
 
         popup.hidden = true;
         popup.setAttribute('role', 'dialog');
@@ -185,12 +187,16 @@
             });
             hint.textContent = active === 'departure' && from ? labels.selectDeparture : labels.selectArrival;
             previous.disabled = viewMonth <= min.slice(0, 7);
-            next.disabled = addMonths(viewMonth, 1) >= max.slice(0, 7);
+            next.disabled = addMonths(viewMonth, monthCount - 1) >= max.slice(0, 7);
         };
 
         const render = () => {
             months.replaceChildren();
-            [viewMonth, addMonths(viewMonth, 1)].forEach((month) => {
+            // Zwei Monate brauchen rund 26 Schriftgrößen Breite (siehe view.css); sonst nur einen zeigen,
+            // statt beide untereinander zu stapeln
+            monthCount = form.clientWidth < 26 * parseFloat(getComputedStyle(popup).fontSize) ? 1 : 2;
+            popup.classList.toggle('is-single', monthCount === 1);
+            Array.from({ length: monthCount }, (unused, index) => addMonths(viewMonth, index)).forEach((month) => {
                 const section = document.createElement('div');
                 section.className = 'fewo-quote__calendar-month';
                 const title = document.createElement('div');

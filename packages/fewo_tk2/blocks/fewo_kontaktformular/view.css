@@ -1,4 +1,15 @@
-/* Fewo Toolkit – Anfrageformular */
+/* Fewo Toolkit – Anfrageformular
+ * Alle Maße in em: Der Block folgt der Schriftgröße des Themes.
+ */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-form),
+:where(.fewo-form) *,
+:where(.fewo-form) *::before,
+:where(.fewo-form) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-form {
     --fewo-border: rgba(0, 0, 0, .2);
     --fewo-focus: #2563eb;
@@ -6,35 +17,35 @@
     --fewo-success-bg: #e8f6ec;
     --fewo-success-text: #14532d;
     --fewo-radius: 6px;
-    margin-block: 1rem;
+    margin-block: 1em;
 }
 
 .fewo-form__group {
     border: 0;
-    margin: 0 0 1.5rem;
+    margin: 0 0 1.5em;
     padding: 0;
     min-width: 0;
 }
 
 .fewo-form__group legend {
     font-weight: 700;
-    font-size: 1.125rem;
-    margin-bottom: .75rem;
+    font-size: 1.125em;
+    margin-bottom: .667em;
     padding: 0;
 }
 
 .fewo-form__row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-    gap: 0 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+    gap: 0 1em;
 }
 
 .fewo-form__row--3 {
-    grid-template-columns: minmax(7rem, .6fr) 1fr 1fr;
+    grid-template-columns: minmax(7em, .6fr) 1fr 1fr;
 }
 
 .fewo-form__row--zip {
-    grid-template-columns: minmax(6rem, .5fr) 1fr 1fr;
+    grid-template-columns: minmax(6em, .5fr) 1fr 1fr;
 }
 
 @media (max-width: 36rem) {
@@ -47,13 +58,13 @@
 .fewo-form__field {
     display: flex;
     flex-direction: column;
-    gap: .25rem;
-    margin-bottom: 1rem;
+    gap: .25em;
+    margin-bottom: 1em;
 }
 
 .fewo-form__field > label {
     font-weight: 600;
-    font-size: .875rem;
+    font-size: .875em;
 }
 
 .fewo-form input[type="text"],
@@ -63,8 +74,10 @@
 .fewo-form select,
 .fewo-form textarea {
     width: 100%;
-    min-height: 2.75rem;
-    padding: .5rem .75rem;
+    /* mindestens 44 px (Bedienung per Finger), bei großer Schrift des Themes entsprechend mehr */
+    min-height: max(2.75rem, 2.2em);
+    margin: 0;
+    padding: .375em .75em;
     font: inherit;
     color: inherit;
     background: #fff;
@@ -73,7 +86,7 @@
 }
 
 .fewo-form textarea {
-    min-height: 8rem;
+    min-height: 8em;
     resize: vertical;
 }
 
@@ -82,13 +95,14 @@
     outline-offset: 1px;
 }
 
-.fewo-form [aria-invalid="true"] {
+/* gleiches Gewicht wie die Regel für die Felder oben, sonst bliebe der Rahmen der Eingabefelder grau */
+.fewo-form :is(input, select, textarea)[aria-invalid="true"] {
     border-color: var(--fewo-error);
 }
 
 .fewo-form__error {
     color: var(--fewo-error);
-    font-size: .8125rem;
+    font-size: .8125em;
     margin: 0;
 }
 
@@ -96,36 +110,43 @@
     color: var(--fewo-error);
 }
 
+/* Kästchen links, der Text läuft daneben als ein Absatz (das Sternchen bleibt am Textende) */
 .fewo-form__consent label {
-    display: flex;
-    gap: .5rem;
-    align-items: flex-start;
+    display: block;
+    position: relative;
+    padding-left: 1.75em;
     font-weight: normal;
 }
 
 .fewo-form__consent input {
-    margin-top: .3rem;
-    flex: none;
+    position: absolute;
+    left: 0;
+    top: .15em;
+    width: 1.15em;
+    height: 1.15em;
+    margin: 0;
+    /* Kästchen übernehmen die Schriftgröße sonst nicht und blieben neben großer Schrift winzig */
+    font-size: inherit;
 }
 
 .fewo-form__actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: .5rem 1.5rem;
+    gap: .5em 1.5em;
 }
 
 .fewo-form__hint {
     margin: 0;
-    font-size: .8125rem;
+    font-size: .8125em;
     opacity: .75;
 }
 
 .fewo-form__alert,
 .fewo-form__success {
-    padding: 1rem 1.25rem;
+    padding: 1em 1.25em;
     border-radius: var(--fewo-radius);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.5em;
 }
 
 .fewo-form__alert {
@@ -135,9 +156,11 @@
 }
 
 .fewo-form__success {
+    padding: .9em 1.1em;
+    margin-bottom: 1.33em;
     background: var(--fewo-success-bg);
     color: var(--fewo-success-text);
-    font-size: 1.125rem;
+    font-size: 1.125em;
 }
 
 /* Honeypot: für Menschen unsichtbar */
@@ -147,4 +170,36 @@
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+/* Schaltflächen: Rückfall für Themes ohne eigene Gestaltung von .btn (z. B. ohne Bootstrap).
+ * Das Gewicht liegt absichtlich unter dem einer Klasse: Gestaltet das Theme .btn, gilt das Theme.
+ * Farbe anpassen: .fewo-btn { --fewo-accent: #b42318; --fewo-accent-hover: #8a1c1c; } */
+html :is(a, button):where(.fewo-btn) {
+    display: inline-block;
+    padding: .5em 1.1em;
+    font: inherit;
+    font-weight: 600;
+    line-height: 1.3;
+    text-align: center;
+    text-decoration: none;
+    color: var(--fewo-accent-text, #fff);
+    background-color: var(--fewo-accent, #0b65c2);
+    border: 1px solid transparent;
+    border-radius: var(--fewo-radius, 6px);
+    cursor: pointer;
+}
+
+html :is(a, button):where(.fewo-btn):hover {
+    background-color: var(--fewo-accent-hover, #094f99);
+}
+
+html :is(a, button):where(.fewo-btn):focus-visible {
+    outline: 2px solid var(--fewo-accent, #0b65c2);
+    outline-offset: 2px;
+}
+
+html :is(a, button):where(.fewo-btn):disabled {
+    opacity: .6;
+    cursor: default;
 }

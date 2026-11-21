@@ -27,7 +27,7 @@ $first = $markerList[0];
         <?php if ($config['requireConsent']) { ?>
             <div class="fewo-map__consent" data-fewo-map-consent>
                 <p><?= t('When the map is loaded, data is transferred to OpenStreetMap.') ?></p>
-                <button type="button" class="btn btn-primary" data-fewo-map-load><?= t('Load map') ?></button>
+                <button type="button" class="btn btn-primary fewo-btn" data-fewo-map-load><?= t('Load map') ?></button>
                 <label class="fewo-map__remember">
                     <input type="checkbox" data-fewo-map-remember> <?= t('Always load maps') ?>
                 </label>

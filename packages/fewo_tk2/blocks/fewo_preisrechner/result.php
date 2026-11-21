@@ -75,6 +75,6 @@ $money = static fn (int $cents): string => h(Money::format($cents, $quote->curre
 
 <?php if ($inquiryUrl) { ?>
     <p class="fewo-quote__cta">
-        <a class="btn btn-primary" href="<?= h($inquiryUrl) ?>"><?= t('Send booking inquiry') ?></a>
+        <a class="btn btn-primary fewo-btn" href="<?= h($inquiryUrl) ?>"><?= t('Send booking inquiry') ?></a>
     </p>
 <?php } ?>

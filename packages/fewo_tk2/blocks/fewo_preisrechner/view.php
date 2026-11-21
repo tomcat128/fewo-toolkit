@@ -61,7 +61,7 @@ $selectedGuests = (int) ($values['guests'] ?? 0) ?: min(2, $pricelist->maxGuests
             </select>
         </div>
         <div class="fewo-quote__actions">
-            <button type="submit" class="fewo-quote__submit btn btn-primary"><?= t('Calculate price') ?></button>
+            <button type="submit" class="fewo-quote__submit btn btn-primary fewo-btn"><?= t('Calculate price') ?></button>
         </div>
 
         <?php if ($bookedRanges !== null) {

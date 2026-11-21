@@ -217,7 +217,7 @@ $label = static function (string $name, string $text, bool $required = false) us
             </div>
 
             <div class="fewo-form__actions">
-                <button type="submit" class="btn btn-primary fewo-form__submit"><?= t('Send inquiry') ?></button>
+                <button type="submit" class="btn btn-primary fewo-btn fewo-form__submit"><?= t('Send inquiry') ?></button>
                 <p class="fewo-form__hint"><span aria-hidden="true">*</span> <?= t('Required field') ?></p>
             </div>
         </form>

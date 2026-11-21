@@ -2,15 +2,24 @@
  * Die Höhe ergibt sich aus dem Seitenverhältnis. Mit "Manuell" bestimmt das Theme die Höhe, z. B.
  * .fewo-tour.mein-rundgang { --fewo-tour-height: 486px; }
  */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-tour),
+:where(.fewo-tour) *,
+:where(.fewo-tour) *::before,
+:where(.fewo-tour) *::after {
+    box-sizing: border-box;
+}
+
 .fewo-tour {
     --fewo-tour-ratio: 3 / 2;
     --fewo-tour-height: 400px;
     --fewo-radius: 6px;
-    margin-block: 1rem;
+    margin-block: 1em;
 }
 
 .fewo-tour__title {
-    margin-block: 0 1rem;
+    margin-block: 0 .5em;
 }
 
 .fewo-tour__viewer {
@@ -29,7 +38,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 1.5em;
     text-align: center;
     background: repeating-linear-gradient(45deg, rgba(0, 0, 0, .03) 0 10px, transparent 10px 20px), #f4f4f4;
 }
@@ -39,11 +48,11 @@
 }
 
 .fewo-tour__error {
-    padding: .75rem 1rem;
+    padding: .85em 1.15em;
     border-radius: var(--fewo-radius);
     background: #fdecec;
     color: #8a1c1c;
-    font-size: .875rem;
+    font-size: .875em;
 }
 
 .fewo-tour__error small {
