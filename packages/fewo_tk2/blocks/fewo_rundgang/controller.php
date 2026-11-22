@@ -9,6 +9,7 @@ use Concrete\Core\Package\PackageService;
 use Concrete\Core\Page\Page;
 use Concrete\Core\Permission\Checker;
 use FewoTk2\Block\AddDefaults;
+use FewoTk2\Support\ImageMemory;
 use FewoTk2\Tour\TourConfig;
 use Throwable;
 
@@ -210,6 +211,10 @@ class Controller extends BlockController
         if ($width <= self::MOBILE_MAX_WIDTH || $height < 1) {
             return null;
         }
+        if (!ImageMemory::canResize($width, $height)) {
+            // zu wenig Arbeitsspeicher für dieses Bild: es bleibt beim Original (ein Abbruch wäre nicht abzufangen)
+            return null;
+        }
         try {
             $thumbnail = $this->app->make('helper/image')->getThumbnail(
                 $version->getFile(),
@@ -219,13 +224,15 @@ class Controller extends BlockController
 
             return isset($thumbnail->src) ? $this->localUrl((string) $thumbnail->src) : null;
         } catch (Throwable) {
-            // z. B. zu wenig Arbeitsspeicher für ein sehr großes Bild: dann bleibt es beim Original
             return null;
         }
     }
 
     private function getThumbnailUrl(Version $version): string
     {
+        if (!ImageMemory::canResize((int) $version->getAttribute('width'), (int) $version->getAttribute('height'))) {
+            return $this->localUrl((string) $version->getURL());
+        }
         try {
             $thumbnail = $this->app->make('helper/image')->getThumbnail($version->getFile(), 240, 120, true);
 

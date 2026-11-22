@@ -33,7 +33,8 @@ docker exec -u www-data -w /srv/app/public ${NET}-web bash -euo pipefail -c "
   test ! -e packages/fewo_tk2/vendor
   ${C5} c5:package:install fewo_tk2 2>&1 | grep -v Deprecated
   ${C5} c5:config set -g concrete.debug.error_reporting 32767 >/dev/null 2>&1
-  ${C5} c5:exec /tmp/seed.php 2>&1 | grep -v Deprecated
+  # mehr Speicher: Die Testdaten erzeugen 360°-Panoramen mit 4096 px Breite
+  php -d memory_limit=1G ${C5} c5:exec /tmp/seed.php 2>&1 | grep -v Deprecated
 "
 
 echo "Seiten abrufen …"

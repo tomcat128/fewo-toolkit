@@ -12,6 +12,7 @@ use Concrete\Core\Tree\Node\Node;
 use Concrete\Core\Tree\Node\Type\File as FileNode;
 use Concrete\Core\Tree\Node\Type\FileFolder;
 use FewoTk2\Block\AddDefaults;
+use FewoTk2\Support\ImageMemory;
 
 class Controller extends BlockController
 {
@@ -90,8 +91,16 @@ class Controller extends BlockController
             if ($version === null) {
                 continue;
             }
-            $thumb = $imageHelper->getThumbnail($file, $thumbWidth, $thumbHeight, true);
-            $large = $imageHelper->getThumbnail($file, 2000, 2000, false);
+            $width = (int) $version->getAttribute('width');
+            $height = (int) $version->getAttribute('height');
+            if (ImageMemory::canResize($width, $height)) {
+                $thumb = $imageHelper->getThumbnail($file, $thumbWidth, $thumbHeight, true);
+                $large = $imageHelper->getThumbnail($file, 2000, 2000, false);
+            } else {
+                // Zu wenig Arbeitsspeicher, um dieses Bild zu verkleinern (der Abbruch ließe die ganze Seite
+                // ausfallen): Original zeigen, den Zuschnitt übernimmt das Stylesheet.
+                $thumb = $large = (object) ['src' => (string) $version->getURL(), 'width' => $width, 'height' => $height];
+            }
             $caption = trim((string) $version->getDescription()) ?: trim((string) $version->getTitle());
             // Dateinamen (z. B. "IMG_1234.jpg") nicht als Bildunterschrift anzeigen
             if ($caption === $version->getFileName()) {
