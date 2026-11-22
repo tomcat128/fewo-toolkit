@@ -6,6 +6,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var string $title
  * @var int $columnCount
  * @var bool $collapsible
+ * @var string $listStyle
  * @var array $itemList
  */
 
@@ -44,7 +45,7 @@ ob_start();
 <?php }
 $content = ob_get_clean();
 ?>
-<div class="fewo-amenities" id="<?= $id ?>">
+<div class="fewo-amenities fewo-amenities--<?= h($listStyle) ?>" id="<?= $id ?>">
     <?php if ($collapsible) { ?>
         <details class="fewo-amenities__details">
             <summary class="fewo-amenities__title"><?= h($title !== '' ? $title : t('Amenities')) ?></summary>

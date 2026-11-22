@@ -14,12 +14,7 @@
             <default value=""/>
             <notnull/>
         </field>
-        <field name="showPeriod" type="boolean">
-            <default value="1"/>
-            <notnull/>
-        </field>
-        <!-- Stufen der Wichtigkeit als JSON: [{code, label, color}, …]; leer = Vorgaben -->
-        <field name="importanceLevels" type="text">
-        </field>
+        <!-- Bis Version 2.8 standen hier auch showPeriod und importanceLevels; seit 2.9 gelten sie für alle Blöcke
+             (Dashboard › Neuigkeiten). Das Update übernimmt die Werte des zuletzt angelegten Blocks. -->
     </table>
 </schema>

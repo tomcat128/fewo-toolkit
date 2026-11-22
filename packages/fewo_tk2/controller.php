@@ -27,6 +27,10 @@ use FewoTk2\Assistant\OllamaClient;
 use FewoTk2\Assistant\SettingsRepository;
 use FewoTk2\Assistant\UsageLimiter;
 use FewoTk2\Feed\FeedLoader;
+use FewoTk2\Mail\MailSettingsRepository;
+use FewoTk2\News\ImportanceLevels;
+use FewoTk2\News\NewsSettings;
+use FewoTk2\News\NewsSettingsRepository;
 use GuzzleHttp\Client as GuzzleClient;
 
 /**
@@ -48,7 +52,7 @@ class Controller extends Package implements ProviderAggregateInterface
 
     protected $pkgHandle = 'fewo_tk2';
 
-    protected $pkgVersion = '2.7.0';
+    protected $pkgVersion = '2.9.0';
 
     protected $appVersionRequired = '9.5.0';
 
@@ -81,7 +85,9 @@ class Controller extends Package implements ProviderAggregateInterface
         '/dashboard/fewo_tk2' => [self::DISPLAY_NAME, 'Apartments and the AI assistant.'],
         '/dashboard/fewo_tk2/apartments' => ['Apartments', 'Fewo-Office URLs for occupancy, prices and news of each apartment.'],
         '/dashboard/fewo_tk2/prices' => ['Prices', 'Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.'],
+        '/dashboard/fewo_tk2/news' => ['News', 'How the news from Fewo-Office are shown: importance levels, colours, period of validity.'],
         '/dashboard/fewo_tk2/assistant' => ['AI Assistant', 'Chat that answers visitors\' questions with a local language model (Ollama).'],
+        '/dashboard/fewo_tk2/mail' => ['Sending Emails', 'How the inquiry form sends emails: with the settings of Concrete or an SMTP mailbox of its own.'],
     ];
 
     /**
@@ -96,6 +102,9 @@ class Controller extends Package implements ProviderAggregateInterface
         t('Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.');
         t('AI Assistant');
         t('Chat that answers visitors\' questions with a local language model (Ollama).');
+        t('How the news from Fewo-Office are shown: importance levels, colours, period of validity.');
+        t('Sending Emails');
+        t('How the inquiry form sends emails: with the settings of Concrete or an SMTP mailbox of its own.');
     }
 
     public function getPackageName()
@@ -125,6 +134,8 @@ class Controller extends Package implements ProviderAggregateInterface
 
     public function upgrade()
     {
+        // vor parent::upgrade(): Danach fehlen die Spalten des Blocks, aus denen die Einstellungen stammen
+        $this->adoptNewsSettingsFromBlocks();
         parent::upgrade();
         $this->removeStoredInquiries();
         $this->installOrUpgrade($this->getPackageEntity());
@@ -138,8 +149,13 @@ class Controller extends Package implements ProviderAggregateInterface
             $app->make(LoggerFactory::class)->createLogger(Channels::CHANNEL_APPLICATION)
         ));
 
+        $this->refreshDashboardMenu();
+
         // KI-Assistent
         $this->app->singleton(SettingsRepository::class);
+        // E-Mail-Versand des Anfrageformulars (eigenes SMTP-Postfach oder Concrete)
+        $this->app->singleton(MailSettingsRepository::class);
+        $this->app->singleton(NewsSettingsRepository::class);
         // Eigener HTTP-Client statt des Clients von Concrete: Ollama läuft im eigenen Netz (kein Proxy der Website),
         // und ein für Concrete eingeschaltetes Protokoll der HTTP-Aufrufe würde die Antworten mitschreiben und
         // erst vollständig statt Wort für Wort durchreichen.
@@ -212,6 +228,32 @@ class Controller extends Package implements ProviderAggregateInterface
     }
 
     /**
+     * Concrete merkt sich das Dashboard-Menü in der Sitzung. Wird das Paket über die Konsole oder von einem anderen
+     * Benutzer aktualisiert, sähe man neue Seiten (z. B. "E-Mail-Versand") erst nach erneuter Anmeldung. Deshalb
+     * wird das Menü einmal je Sitzung und Paketversion verworfen – nur auf Seiten der Verwaltung und nur, wenn schon
+     * eine Sitzung besteht (Besucher bekommen dadurch keine).
+     */
+    private function refreshDashboardMenu(): void
+    {
+        if ($this->app->isRunThroughCommandLineInterface()) {
+            return;
+        }
+        try {
+            $request = $this->app->make(\Concrete\Core\Http\Request::class);
+            if (!str_contains((string) $request->getPathInfo(), 'dashboard') || !$request->hasPreviousSession()) {
+                return;
+            }
+            $session = $this->app->make('session');
+            if ($session->get('fewo_tk2.menu_version') !== $this->pkgVersion) {
+                $this->app->make(NavigationCache::class)->clear();
+                $session->set('fewo_tk2.menu_version', $this->pkgVersion);
+            }
+        } catch (\Throwable) {
+            // Im schlimmsten Fall erscheinen neue Seiten erst nach erneuter Anmeldung
+        }
+    }
+
+    /**
      * Bis Version 2.2 speicherte das Anfrageformular jede Anfrage, und das Dashboard zeigte sie unter
      * "Buchungsanfragen". Seit 2.3 geht eine Anfrage nur noch per E-Mail an den Vermieter – die Seite und die
      * Tabelle mit den gespeicherten Anfragen entfallen.
@@ -223,6 +265,32 @@ class Controller extends Package implements ProviderAggregateInterface
             $page->delete();
         }
         $this->app->make(Connection::class)->executeStatement('DROP TABLE IF EXISTS FewoInquiries');
+    }
+
+    /**
+     * Bis Version 2.8 stellte jeder Block "Neuigkeiten" Stufen und Gültigkeitszeitraum selbst ein; seit 2.9 gilt das
+     * für alle Blöcke (Dashboard › Neuigkeiten). Einmalig werden die Werte des zuletzt angelegten Blocks übernommen,
+     * damit sich das Aussehen durch das Update nicht ändert.
+     */
+    private function adoptNewsSettingsFromBlocks(): void
+    {
+        try {
+            $repository = $this->app->make(NewsSettingsRepository::class);
+            $db = $this->app->make(Connection::class);
+            if ($repository->isSaved() || !$db->getSchemaManager()->tablesExist(['btFewoNeuigkeiten'])) {
+                return;
+            }
+            $columns = array_map('strtolower', array_keys($db->getSchemaManager()->listTableColumns('btFewoNeuigkeiten')));
+            if (!in_array('importancelevels', $columns, true) || !in_array('showperiod', $columns, true)) {
+                return;
+            }
+            $row = $db->fetchAssociative('SELECT importanceLevels, showPeriod FROM btFewoNeuigkeiten ORDER BY bID DESC LIMIT 1');
+            if ($row !== false) {
+                $repository->save(new NewsSettings(ImportanceLevels::decode((string) $row['importanceLevels']), (bool) $row['showPeriod']));
+            }
+        } catch (\Throwable) {
+            // Ohne übernommene Werte gelten die Vorgaben
+        }
     }
 
     private function installOrUpgrade($pkg): void

@@ -218,6 +218,6 @@ test('Anfrageformulare: Fehler und Dank erscheinen nur im abgeschickten Formular
   const messages = await mail.waitFor(1);
   expect(messages).toHaveLength(1); // keine Bestätigung an den Gast, weil im Block abgeschaltet
   expect(messages[0].Subject).toContain('Neue Anfrage (Seeherzchen)');
-  // 3 Nächte × 55 € + 40 € aus der Preisliste des zweiten Formulars
-  expect((await mail.get(messages[0].ID)).Text).toMatch(/Unverbindlicher Preis: +205,00\s€/);
+  // Die Mail nennt keinen Preis – den macht der Vermieter in seinem Angebot
+  expect((await mail.get(messages[0].ID)).Text).not.toMatch(/Preis|€/);
 });

@@ -292,7 +292,7 @@ $inquiryPage = $makePage('fewo-anfrage', 'Anfrage', [
 ]);
 
 $makePage('fewo-demo', 'Fewo Demo', [
-    ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Neuigkeiten', 'showPeriod' => 1]],
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Neuigkeiten']],
     ['fewo_belegungsplan', [
         'title' => 'Belegungsplan',
         'apartmentID' => $seeherz,
@@ -324,6 +324,23 @@ $makePage('fewo-demo', 'Fewo Demo', [
     $chat,
 ]);
 
+// Ausstattungsliste in allen sechs Stilen mit denselben Einträgen
+$amenityItems = ['WLAN', 'Geschirrspüler', 'Kaffeemaschine', 'Balkon mit Seeblick', 'Waschmaschine', 'Fahrradkeller', 'Bettwäsche und Handtücher', 'Kinderbett'];
+$amenityNotes = ['kostenlos', '', 'Filterkaffee und Nespresso', '', 'im Keller, mit Trockner', '', '', 'auf Anfrage'];
+$styleBlocks = [];
+foreach (['plain' => 'Schlicht', 'checks' => 'Häkchen', 'tiles' => 'Kacheln', 'card' => 'Karte mit Kopfzeile', 'lines' => 'Trennlinien', 'chips' => 'Etiketten'] as $style => $label) {
+    $styleBlocks[] = ['fewo_ausstattungsliste', [
+        'title' => 'Ausstattung – ' . $label, 'itemName' => $amenityItems, 'itemNote' => $amenityNotes,
+        'columnCount' => $style === 'tiles' ? 4 : 2, 'collapsible' => 0, 'listStyle' => $style,
+    ]];
+}
+// aufklappbar im Stil "Karte"
+$styleBlocks[] = ['fewo_ausstattungsliste', [
+    'title' => 'Karte, aufklappbar', 'itemName' => ['Sauna', 'Fitnessraum'], 'itemNote' => ['', ''], 'columnCount' => 2, 'collapsible' => 1, 'listStyle' => 'card',
+]];
+// Reine Musterseite: nicht im Suchindex und damit nicht im Wissen des KI-Assistenten (dieselben Einträge sechsmal)
+$makePage('fewo-ausstattung', 'Fewo Ausstattung', $styleBlocks)->setAttribute('exclude_search_index', true);
+
 // Jeden Block zweimal auf einer Seite – die Blöcke dürfen sich nicht gegenseitig stören
 $calendar = static fn (string $title, int $apartmentID, string $keywords): array => ['fewo_belegungsplan', [
     'title' => $title,
@@ -347,10 +364,9 @@ $map = static fn (string $title, string $lat, string $lng): array => ['fewo_kart
     'markerLat' => [$lat], 'markerLng' => [$lng], 'markerTitle' => [$title], 'markerText' => [''], 'zoom' => 13, 'height' => 300, 'requireConsent' => 1,
 ]];
 $makePage('fewo-doppelt', 'Fewo Doppelt', [
-    // Neuigkeiten als XML, ohne Überschrift und Zeitraum, mit eigener Bezeichnung und Farbe für "notice"
-    ['fewo_neuigkeiten', ['apartmentID' => $seeherzchen, 'title' => '', 'showPeriod' => 0,
-        'levelCode' => ['notice', 'info'], 'levelLabel' => ['Gut zu wissen', 'Information'], 'levelColor' => ['#1565c0', '#2e7d32']]],
-    ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Aktuelles Seeherz', 'showPeriod' => 1]],
+    // Neuigkeiten als XML, ohne Überschrift
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherzchen, 'title' => '']],
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Aktuelles Seeherz']],
     // Belegung im ICS-Format; "Betriebsferien" wird hier als "auf Anfrage" dargestellt
     $calendar('Belegung Seeherz', $seeherzIcs, 'Betriebsferien'),
     $calendar('Belegung Seeherzchen', $seeherzchen, ''),

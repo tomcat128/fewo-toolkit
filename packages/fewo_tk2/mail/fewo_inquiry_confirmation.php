@@ -3,7 +3,6 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 use FewoTk2\Inquiry\InquiryMailer;
-use FewoTk2\Support\Money;
 
 /**
  * Eingangsbestätigung an den Gast.
@@ -12,7 +11,6 @@ use FewoTk2\Support\Money;
  * Formular nicht zum Versand von Spam an fremde Adressen missbraucht werden kann.
  *
  * @var FewoTk2\Inquiry\Inquiry $inquiry
- * @var FewoTk2\Pricing\Quote|null $quote
  * @var string $siteName
  */
 
@@ -21,7 +19,6 @@ $rows = array_filter([
     t('Arrival') => $inquiry->getArrival()->format('d.m.Y'),
     t('Departure') => $inquiry->getDeparture()->format('d.m.Y'),
     t('Guests') => (string) $inquiry->getGuests(),
-    t('Non-binding price') => $quote ? Money::format($quote->getTotal(), $quote->currency, null, false) : '',
 ], static fn ($value) => $value !== '');
 
 $subject = t('Your inquiry at %s', $siteName);

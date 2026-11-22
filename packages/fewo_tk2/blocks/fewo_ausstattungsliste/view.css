@@ -61,3 +61,132 @@ summary.fewo-amenities__title {
     clip: rect(0, 0, 0, 0) !important;
     white-space: nowrap !important;
 }
+
+/* ------------------------------------------------------------------------------------------------------------------
+ * Stile (im Block wählbar). "Schlicht" ist die Grundgestaltung oben. Farben über CSS-Variablen im Theme änderbar:
+ *   --fewo-amenities-accent   Häkchen, Kopfzeile der Karte, Rand der Etiketten
+ *   --fewo-amenities-surface  Hintergrund von Kacheln, Kopfzeile der Karte und Etiketten
+ *   --fewo-amenities-border   Linien und Ränder
+ * ------------------------------------------------------------------------------------------------------------------ */
+.fewo-amenities {
+    --fewo-amenities-accent: #2a7f62;
+    --fewo-amenities-accent-text: #fff;
+    --fewo-amenities-surface: #f5f3ee;
+    --fewo-amenities-border: rgba(0, 0, 0, .12);
+    --fewo-amenities-radius: 8px;
+}
+
+/* Raster mit höchstens so vielen Spalten wie eingestellt, auf schmalen Bildschirmen weniger */
+.fewo-amenities--tiles .fewo-amenities__list,
+.fewo-amenities--checks .fewo-amenities__list,
+.fewo-amenities--lines .fewo-amenities__list,
+.fewo-amenities--card .fewo-amenities__list {
+    --fewo-gap: .6em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(max(11em, calc((100% - (var(--fewo-columns, 2) - 1) * var(--fewo-gap)) / var(--fewo-columns, 2))), 1fr));
+    gap: .15em var(--fewo-gap);
+    columns: auto;
+    list-style: none;
+    padding-left: 0;
+}
+
+/* 1. Häkchen: ein Haken vor jedem Eintrag statt eines Punkts */
+.fewo-amenities--checks .fewo-amenities__list li,
+.fewo-amenities--card .fewo-amenities__list li {
+    position: relative;
+    padding: .2em 0 .2em 1.6em;
+}
+
+.fewo-amenities--checks .fewo-amenities__list li::before,
+.fewo-amenities--card .fewo-amenities__list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .3em;
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+    background: var(--fewo-amenities-accent);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.4 14.2L4.4 10l1.4-1.4 2.8 2.8 5.6-5.6 1.4 1.4-7 7z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.4 14.2L4.4 10l1.4-1.4 2.8 2.8 5.6-5.6 1.4 1.4-7 7z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* 2. Kacheln: jeder Eintrag in einem eigenen Feld */
+.fewo-amenities--tiles .fewo-amenities__list {
+    gap: var(--fewo-gap);
+}
+
+.fewo-amenities--tiles .fewo-amenities__list li {
+    background: var(--fewo-amenities-surface);
+    border: 1px solid var(--fewo-amenities-border);
+    border-radius: var(--fewo-amenities-radius);
+    padding: .65em .9em;
+    display: flex;
+    align-items: center;
+    min-height: 3em;
+}
+
+.fewo-amenities--tiles .fewo-amenities__list sup {
+    margin-left: .2em;
+}
+
+/* 3. Karte: Rahmen mit Kopfzeile, Einträge mit Häkchen */
+.fewo-amenities--card {
+    border: 1px solid var(--fewo-amenities-border);
+    border-radius: var(--fewo-amenities-radius);
+    overflow: hidden;
+}
+
+.fewo-amenities--card > .fewo-amenities__title,
+.fewo-amenities--card summary.fewo-amenities__title {
+    display: block;
+    margin: 0;
+    padding: .6em 1em;
+    background: var(--fewo-amenities-accent);
+    color: var(--fewo-amenities-accent-text);
+    font-size: 1.125em;
+}
+
+.fewo-amenities--card summary.fewo-amenities__title {
+    display: list-item;
+}
+
+.fewo-amenities--card .fewo-amenities__list {
+    padding: .8em 1em;
+}
+
+.fewo-amenities--card .fewo-amenities__notes {
+    margin: 0;
+    padding: .6em 1em .8em 2.7em;
+    border-top: 1px solid var(--fewo-amenities-border);
+}
+
+/* 4. Liste mit Trennlinien: ruhig und übersichtlich, gut für lange Listen */
+.fewo-amenities--lines .fewo-amenities__list {
+    /* Breiterer Abstand zwischen den Spalten; er geht in die Breite der Spalten ein, sonst passt nur eine */
+    --fewo-gap: 2em;
+    row-gap: 0;
+}
+
+.fewo-amenities--lines .fewo-amenities__list li {
+    padding: .5em .1em;
+    border-bottom: 1px solid var(--fewo-amenities-border);
+}
+
+/* 5. Etiketten: Einträge als runde Schildchen nebeneinander */
+.fewo-amenities--chips .fewo-amenities__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5em;
+    columns: auto;
+    list-style: none;
+    padding-left: 0;
+}
+
+.fewo-amenities--chips .fewo-amenities__list li {
+    padding: .3em .9em;
+    border: 1px solid var(--fewo-amenities-accent);
+    border-radius: 2em;
+    background: var(--fewo-amenities-surface);
+    line-height: 1.4;
+}

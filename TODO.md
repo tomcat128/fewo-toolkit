@@ -164,6 +164,27 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
   Hintergrund der Meldung werden aus der Farbe berechnet (`ImportanceLevels`). Die CSS-Variablen je Stufe aus
   2.6.1 entfallen
 
+- [x] **Version 2.8.0 – eigenes SMTP-Postfach, Stile der Ausstattungsliste:**
+  - Dashboard **E-Mail-Versand**: Concrete (Vorgabe) oder eigenes SMTP-Postfach wie in der Mitgliederverwaltung
+    (Server, Verschlüsselung/Port, Benutzer, Passwort, Absender), Testversand. Passwort verschlüsselt (libsodium,
+    Schlüssel in der Datenbank, Einstellungen in der Konfigurationsdatei). Kein eigener EHLO-Name (GMX-Erfahrung
+    aus der Mitgliederverwaltung). Gilt für Benachrichtigung und Eingangsbestätigung
+  - **Ausstattungsliste:** Stil wählbar – Schlicht (bisher, Vorgabe), Häkchen, Kacheln, Karte mit Kopfzeile, Liste
+    mit Trennlinien, Etiketten. Farben über `--fewo-amenities-*`. Demo-Seite `/fewo-ausstattung` mit allen Stilen;
+    in der Seeherz-Testseite reihum
+  - **Offen:** Versand über einen echten SMTP-Server mit Anmeldung (bisher nur Mailpit ohne Anmeldung geprüft)
+
+- [x] **Version 2.9.0 – Einstellungen der Neuigkeiten im Dashboard:** Neue Seite Fewo Toolkit 2 › **Neuigkeiten**
+  mit den Stufen der Wichtigkeit und dem Schalter für den Gültigkeitszeitraum, gültig für alle Blöcke. Im Block
+  bleiben Wohnung und Überschrift (mit Link zur Seite). Das Update übernimmt die Werte des zuletzt angelegten
+  Blocks (in der Seeherz-Instanz geprüft) und entfernt die Spalten aus dem Block. Der Dialog des Anfrageformulars
+  verweist für den Versand auf Fewo Toolkit 2 › E-Mail-Versand statt auf die Einstellungen von Concrete
+  - Anfrage-Mails ohne „Unverbindlicher Preis“ (Benachrichtigung und Eingangsbestätigung), „Wie sind Sie auf uns
+    aufmerksam geworden?“ heißt in der Mail kurz „Wo gefunden?“ (im Formular bleibt die Frage ausführlich)
+  - SMTP: Die Website meldet sich mit ihrer Domain (EHLO), optional anderer Name – vorher leer, mailbox.org lehnte
+    mit „501 Syntax: HELO hostname“ ab. Dashboard-Menü wird nach einem Update einmal je Sitzung neu aufgebaut.
+    Ollama hinter Caddy mit Token: Anleitung im README, verständliche Meldung bei falschem API-Schlüssel
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung

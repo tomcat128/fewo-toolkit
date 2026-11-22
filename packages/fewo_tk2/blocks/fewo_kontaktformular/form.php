@@ -26,7 +26,7 @@ $pageSelector = app('helper/form/page_selector');
     <div class="mb-3">
         <?= $form->label('recipientEmail', t('Send inquiries to')) ?>
         <?= $form->email('recipientEmail', $recipientEmail, ['required' => 'required']) ?>
-        <div class="form-text"><?= t('Every inquiry is sent to this address by email; the website does not store inquiries.') ?> <?= t('Emails are sent with the settings under Dashboard › System & Settings › Email. Please configure SMTP there.') ?></div>
+        <div class="form-text"><?= t('Every inquiry is sent to this address by email; the website does not store inquiries.') ?> <?= t('How the emails are sent – with the settings of Concrete or an SMTP mailbox of its own – is set under <a href="%s" target="_blank">Fewo Toolkit 2 › Sending Emails</a>.', h((string) Concrete\Core\Support\Facade\Url::to('/dashboard/fewo_tk2/mail'))) ?></div>
     </div>
     <div class="mb-3">
         <?= $form->label('formName', t('Name of the form (optional)')) ?>
@@ -49,7 +49,7 @@ $pageSelector = app('helper/form/page_selector');
                 'apartmentOptions' => $apartmentOptions,
                 'apartmentsUrl' => $apartmentsUrl,
                 'required' => false,
-                'help' => t('Its price list determines the maximum number of guests. The non-binding price is included in the notification.'),
+                'help' => t('Its price list determines the maximum number of guests.'),
             ], 'fewo_tk2') ?>
         </div>
         <div class="col-sm-4 mb-3">

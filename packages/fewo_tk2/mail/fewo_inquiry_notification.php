@@ -3,13 +3,13 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 use FewoTk2\Inquiry\InquiryMailer;
-use FewoTk2\Support\Money;
 
 /**
  * Benachrichtigung an den Vermieter über eine neue Anfrage.
  *
+ * Ohne Preis: Den rechnet der Vermieter selbst in seinem Angebot.
+ *
  * @var FewoTk2\Inquiry\Inquiry $inquiry
- * @var FewoTk2\Pricing\Quote|null $quote
  * @var string $siteName
  */
 
@@ -21,7 +21,6 @@ $rows = [
     t('Nights') => (string) $inquiry->getNights(),
     t('Adults') => (string) $inquiry->getAdults(),
     t('Children') => (string) $inquiry->getChildren(),
-    t('Non-binding price') => $quote ? Money::format($quote->getTotal(), $quote->currency, null, false) : '',
     t('Name') => trim($inquiry->getSalutation() . ' ' . $inquiry->getFullName()),
     t('Email') => $inquiry->getEmail(),
     t('Phone') => $inquiry->getPhone(),
@@ -30,7 +29,8 @@ $rows = [
         trim($inquiry->getPostalCode() . ' ' . $inquiry->getCity()),
         $inquiry->getCountry(),
     ]))),
-    t('How did you find us?') => $inquiry->getReferralSource(),
+    // in der Mail kurz; im Formular fragt der Block ausführlicher
+    t('Where found?') => $inquiry->getReferralSource(),
 ];
 $rows = array_filter($rows, static fn ($value) => $value !== '');
 

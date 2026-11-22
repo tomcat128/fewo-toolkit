@@ -95,14 +95,15 @@ test.describe('als Gast', () => {
     expect(notification.Subject).toMatch(/^Neue Anfrage \(Seeherz\): \d\d\.\d\d\.–\d\d\.\d\d\.\d{4}, Erika Mustermann$/);
     expect(notification.ReplyTo[0].Address).toBe('erika@e2e.test');
     for (const text of [notification.Text, notification.HTML]) {
-      for (const expected of ['Neue Anfrage über Fewo Toolkit Dev', 'Anreise', 'Abreise', 'Nächte', 'Erwachsene', 'Kinder', 'Unverbindlicher Preis', 'Frau Erika Mustermann', 'Seestraße 5, 78462 Konstanz, Deutschland', 'Wie sind Sie auf uns aufmerksam geworden?', 'Wir kommen mit Hund.']) {
+      for (const expected of ['Neue Anfrage über Fewo Toolkit Dev', 'Anreise', 'Abreise', 'Nächte', 'Erwachsene', 'Kinder', 'Frau Erika Mustermann', 'Seestraße 5, 78462 Konstanz, Deutschland', 'Wo gefunden?', 'Wir kommen mit Hund.']) {
         expect(text).toContain(expected);
       }
       expect(text).not.toMatch(/Arrival|Departure|Adults|Non-binding|Dashboard|dashboard/);
+      // kein Preis in der Mail, und die Frage nach der Herkunft kurz statt wie im Formular
+      expect(text).not.toMatch(/Unverbindlicher Preis|€|aufmerksam geworden/);
     }
     // Im Klartext steht zwischen Bezeichnung und Wert immer ein Leerzeichen
-    expect(notification.Text).toMatch(/Unverbindlicher Preis: +\d+,\d\d\s€/);
-    expect(notification.Text).toMatch(/aufmerksam geworden\?: +Empfehlung/);
+    expect(notification.Text).toMatch(/Wo gefunden\?: +Empfehlung/);
 
     expect(confirmation.Subject).toBe('Ihre Anfrage bei Fewo Toolkit Dev');
     expect(confirmation.ReplyTo[0].Address).toBe('vermieter@fewo-dev.test');

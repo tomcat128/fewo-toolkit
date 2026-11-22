@@ -99,6 +99,8 @@ final class OllamaClientTest extends TestCase
         $cases = [
             'HTTP status 404: model \'x\' not found' => new Response(404, [], '{"error":"model \'x\' not found"}'),
             'HTTP status 502' => new Response(502, [], '<html><body>Bad Gateway</body></html>'),
+            // Proxy (z. B. Caddy) mit Token davor, leere Antwort
+            'HTTP status 401. The API key is missing or wrong' => new Response(401, [], ''),
             'out of memory' => new Response(200, [], self::line('Teil') . '{"error":"out of memory"}' . "\n"),
             'empty answer' => new Response(200, [], self::line('', true)),
             'cannot be reached at http://ollama:11434' => new ConnectException('Connection refused', new Request('POST', 'http://ollama:11434/api/chat')),

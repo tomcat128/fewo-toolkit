@@ -80,7 +80,7 @@ class OllamaClient
 
         $body = $response->getBody();
         if ($response->getStatusCode() !== 200) {
-            throw new OllamaException($this->describeError($response, (string) $body->read(2000)));
+            throw new OllamaException($this->describeError($response, $this->readSafely($body)));
         }
 
         $answer = '';
@@ -173,7 +173,25 @@ class OllamaClient
     {
         $data = json_decode($body, true);
         $detail = is_array($data) && is_string($data['error'] ?? null) ? $data['error'] : trim(mb_substr(strip_tags($body), 0, 200));
+        $message = sprintf('Ollama answered with HTTP status %d%s', $response->getStatusCode(), $detail !== '' ? ': ' . $detail : '.');
+        // Ollama selbst kennt keine Anmeldung: 401/403 kommen vom vorgeschalteten Proxy (z. B. Caddy mit Token)
+        if (in_array($response->getStatusCode(), [401, 403], true)) {
+            $message .= ' The API key is missing or wrong (the reverse proxy in front of Ollama refused the request).';
+        }
 
-        return sprintf('Ollama answered with HTTP status %d%s', $response->getStatusCode(), $detail !== '' ? ': ' . $detail : '.');
+        return $message;
+    }
+
+    /**
+     * Anfang einer Fehlerantwort. Eine leere Antwort (etwa "401" eines Proxys ohne Text) lässt sich bei gestreamten
+     * Anfragen nicht lesen – dann bleibt es beim Statuscode.
+     */
+    private function readSafely(\Psr\Http\Message\StreamInterface $body): string
+    {
+        try {
+            return (string) $body->read(2000);
+        } catch (Throwable) {
+            return '';
+        }
     }
 }

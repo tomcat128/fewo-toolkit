@@ -704,9 +704,6 @@ TRANSLATIONS = {
     "e.g. Information": "z. B. Information",
     "Colour": "Farbe",
     "Choose a colour": "Farbe wählen",
-    "Move up": "Nach oben",
-    "Move down": "Nach unten",
-    "Order": "Reihenfolge",
     "Add level": "Stufe hinzufügen",
     "Restore defaults": "Vorgaben wiederherstellen",
     "Fewo-Office marks each news item with a code: info, notice or important. Here you decide which label and colour each code gets. The order of the rows is the order on the page – the first level is shown at the top. News with a code that is not listed are shown in grey without a label.":
@@ -714,4 +711,82 @@ TRANSLATIONS = {
     "Each importance level needs a code (letters, digits, \"-\" or \"_\", e.g. info).": "Jede Stufe braucht einen Code (Buchstaben, Ziffern, „-“ oder „_“, z. B. info).",
     "Each code may only be assigned to one importance level.": "Jeder Code darf nur einer Stufe zugeordnet sein.",
     "Include prices, free periods and current news of the apartments (from Fewo-Office)": "Preise, freie Zeiträume und aktuelle Neuigkeiten der Wohnungen einbeziehen (aus Fewo-Office)",
+
+    # E-Mail-Versand (eigenes SMTP-Postfach oder Concrete)
+    "Sending Emails": "E-Mail-Versand",
+    "How the inquiry form sends emails: with the settings of Concrete or an SMTP mailbox of its own.": "Wie das Anfrageformular E-Mails verschickt: mit den Einstellungen von Concrete oder über ein eigenes SMTP-Postfach.",
+    "Please enter the SMTP server, e.g. smtp.example.com.": "Bitte geben Sie den SMTP-Server an, z. B. smtp.example.com.",
+    "Please enter a valid sender address.": "Bitte geben Sie eine gültige Absenderadresse an.",
+    "A password without a user name is not used. Please enter the user name as well.": "Ein Passwort ohne Benutzername wird nicht verwendet. Bitte geben Sie auch den Benutzernamen an.",
+    "The settings for sending emails have been saved.": "Die Einstellungen für den E-Mail-Versand wurden gespeichert.",
+    "Please enter a valid address for the test email.": "Bitte geben Sie eine gültige Adresse für die Testmail an.",
+    "Test email from %s": "Testmail von %s",
+    "this test email confirms that the inquiry form of %s can send emails.": "diese Testmail bestätigt, dass das Anfrageformular von %s E-Mails verschicken kann.",
+    "Sent via the SMTP mailbox %1$s (port %2$s) with the sender %3$s.": "Verschickt über das SMTP-Postfach %1$s (Port %2$s) mit dem Absender %3$s.",
+    "Sent with the email settings of Concrete.": "Verschickt mit den E-Mail-Einstellungen von Concrete.",
+    "Sent on %s.": "Verschickt am %s.",
+    "The test email could not be sent: %s": "Die Testmail konnte nicht verschickt werden: %s",
+    "Sending emails is switched off in Concrete. The test email was only logged, not sent.": "Der E-Mail-Versand ist in Concrete abgeschaltet. Die Testmail wurde nur protokolliert, nicht verschickt.",
+    "The test email has been sent to %s.": "Die Testmail wurde an %s verschickt.",
+    "STARTTLS (port 587)": "STARTTLS (Port 587)",
+    "SSL/TLS (port 465)": "SSL/TLS (Port 465)",
+    "The inquiry form sends the inquiry to you and, if switched on, a confirmation to the guest. Choose how these emails are sent.":
+        "Das Anfrageformular schickt die Anfrage an Sie und, falls eingeschaltet, eine Eingangsbestätigung an den Gast. Hier legen Sie fest, wie diese E-Mails verschickt werden.",
+    "Sending emails is switched off in Concrete – no email leaves the website, they are only logged. Switch it on under <a href=\"%s\">System & Settings › Email</a>.":
+        "Der E-Mail-Versand ist in Concrete abgeschaltet – keine E-Mail verlässt die Website, sie werden nur protokolliert. Einschalten unter <a href=\"%s\">System & Einstellungen › E-Mail</a>.",
+    "The stored SMTP password cannot be read on this website (e.g. settings copied from another installation). Please enter it again and save.":
+        "Das gespeicherte SMTP-Passwort lässt sich auf dieser Website nicht lesen (z. B. Einstellungen aus einer anderen Installation übernommen). Bitte neu eintragen und speichern.",
+    "Sending": "Versand",
+    "Use the email settings of Concrete": "E-Mail-Einstellungen von Concrete verwenden",
+    "Currently via the SMTP server %s.": "Derzeit über den SMTP-Server %s.",
+    "Currently via the mail function of the web server (PHP mail), which many providers treat as spam.": "Derzeit über die Mail-Funktion des Webservers (PHP mail), die viele Anbieter als Spam einstufen.",
+    "Change the settings of Concrete": "Einstellungen von Concrete ändern",
+    "Use an SMTP mailbox of its own": "Eigenes SMTP-Postfach verwenden",
+    "Only for the emails of the Fewo Toolkit – the rest of the website keeps the settings of Concrete.": "Nur für die E-Mails des Fewo Toolkit – die übrige Website behält die Einstellungen von Concrete.",
+    "SMTP mailbox": "SMTP-Postfach",
+    "SMTP server": "SMTP-Server",
+    "Encryption": "Verschlüsselung",
+    "Port": "Port",
+    "User name": "Benutzername",
+    "Password": "Passwort",
+    "Stored – overwrite to change": "Gespeichert – zum Ändern überschreiben",
+    "Remove the stored password": "Gespeichertes Passwort entfernen",
+    "Sender address": "Absenderadresse",
+    "Must belong to the mailbox, otherwise the emails end up in the spam folder or are rejected.": "Muss zum Postfach gehören, sonst landen die E-Mails im Spamordner oder werden abgelehnt.",
+    "Sender name": "Absendername",
+    "Empty: the name of the website.": "Leer: der Name der Website.",
+    "The password is stored encrypted. Replies of guests go to their own address (Reply-To), not to the sender address.":
+        "Das Passwort wird verschlüsselt gespeichert. Antworten auf die Benachrichtigung gehen an die Adresse des Gastes (Antwort an), nicht an die Absenderadresse.",
+    "Test email": "Testmail",
+    "Sends a test email with the saved settings. Save changes first.": "Verschickt eine Testmail mit den gespeicherten Einstellungen. Änderungen vorher speichern.",
+    "Recipient of the test email": "Empfänger der Testmail",
+    "Recipient": "Empfänger",
+    "Send test email": "Testmail senden",
+
+    # Ausstattungsliste: Stile
+    "Style": "Stil",
+    "Plain – bullet points": "Schlicht – Aufzählungspunkte",
+    "Check marks": "Häkchen",
+    "Tiles": "Kacheln",
+    "Card with header": "Karte mit Kopfzeile",
+    "List with dividing lines": "Liste mit Trennlinien",
+    "Labels side by side": "Etiketten nebeneinander",
+    "\"Labels side by side\" fills the width line by line and ignores the number of columns.": "„Etiketten nebeneinander“ füllt die Breite Zeile für Zeile und beachtet die Spaltenzahl nicht.",
+
+    # Neuigkeiten: Einstellungen im Dashboard
+    "How the news from Fewo-Office are shown: importance levels, colours, period of validity.": "Wie die Neuigkeiten aus Fewo-Office erscheinen: Stufen der Wichtigkeit, Farben, Gültigkeitszeitraum.",
+    "The settings for the news have been saved.": "Die Einstellungen für die Neuigkeiten wurden gespeichert.",
+    "News are written in Fewo-Office. Here you decide how the blocks \"News\" show them – the settings apply to all news blocks of this website.":
+        "Neuigkeiten werden in Fewo-Office geschrieben. Hier legen Sie fest, wie die Blöcke „Neuigkeiten“ sie zeigen – die Einstellungen gelten für alle Neuigkeiten-Blöcke dieser Website.",
+    "The address of the news of each apartment is stored under <a href=\"%s\">Apartments</a>; in the block you only choose the apartment and a heading.":
+        "Die Adresse der Neuigkeiten jeder Wohnung steht unter <a href=\"%s\">Wohnungen</a>; im Block wählen Sie nur die Wohnung und eine Überschrift.",
+    "Importance levels, colours and the period of validity apply to all news blocks: <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › News</a>.":
+        "Stufen der Wichtigkeit, Farben und Gültigkeitszeitraum gelten für alle Neuigkeiten-Blöcke: <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › Neuigkeiten</a>.",
+    "How the emails are sent – with the settings of Concrete or an SMTP mailbox of its own – is set under <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › Sending Emails</a>.":
+        "Wie die E-Mails verschickt werden – mit den Einstellungen von Concrete oder über ein eigenes SMTP-Postfach –, legen Sie unter <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › E-Mail-Versand</a> fest.",
+    "Name of this website for the SMTP server (EHLO, optional)": "Name dieser Website für den SMTP-Server (EHLO, optional)",
+    "Empty: %s (the domain of the website). Only change it if the provider asks for it – never enter the domain of the sender address here.":
+        "Leer: %s (die Domain der Website). Nur ändern, wenn der Anbieter es verlangt – hier nie die Domain der Absenderadresse eintragen.",
+    "Where found?": "Wo gefunden?",
+    "Its price list determines the maximum number of guests.": "Ihre Preisliste bestimmt die höchste Zahl der Gäste.",
 }

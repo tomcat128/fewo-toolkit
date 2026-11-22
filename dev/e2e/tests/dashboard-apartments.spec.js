@@ -54,7 +54,7 @@ test('Preise: Saisons je Gästezahl, Mindestbelegung, Mindestdauer, Endreinigung
   await expect(page.getByRole('heading', { name: 'Preise', exact: true })).toBeVisible();
   // im Menü zwischen Wohnungen und KI-Assistent
   expect(sql("SELECT GROUP_CONCAT(p.cPath ORDER BY c.cDisplayOrder SEPARATOR ' ') FROM PagePaths p JOIN Pages c ON c.cID = p.cID WHERE p.cPath LIKE '/dashboard/fewo_tk2/%'"))
-    .toBe('/dashboard/fewo_tk2/apartments /dashboard/fewo_tk2/prices /dashboard/fewo_tk2/assistant');
+    .toBe('/dashboard/fewo_tk2/apartments /dashboard/fewo_tk2/prices /dashboard/fewo_tk2/news /dashboard/fewo_tk2/assistant /dashboard/fewo_tk2/mail');
 
   const card = page.locator('.fewo-prices-card[data-apartment="Seeherz (Demo)"]');
   await expect(card.locator('h2')).toContainText('Ferienwohnung Seeherz');

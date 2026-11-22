@@ -8,6 +8,7 @@ use FewoTk2\Feed\InvalidFeedException;
 use FewoTk2\News\ImportanceLevels;
 use FewoTk2\News\NewsItem;
 use FewoTk2\News\NewsReader;
+use FewoTk2\News\NewsSettings;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -221,5 +222,25 @@ final class NewsTest extends TestCase
             ApartmentFactSheet::news($items)
         );
         self::assertSame('', ApartmentFactSheet::news([]));
+    }
+
+    public function testSettingsForAllNewsBlocks(): void
+    {
+        // Nie gespeichert: Vorgaben, Zeitraum sichtbar
+        $defaults = NewsSettings::fromArray([]);
+        self::assertSame(ImportanceLevels::defaults(), $defaults->levels);
+        self::assertTrue($defaults->showPeriod);
+
+        $settings = NewsSettings::fromArray(['levels' => [['code' => 'Info', 'label' => 'Gut zu wissen', 'color' => '#1565C0']], 'showPeriod' => false]);
+        self::assertSame([['code' => 'info', 'label' => 'Gut zu wissen', 'color' => '#1565c0']], $settings->levels);
+        self::assertFalse($settings->showPeriod);
+        // gespeichert und wieder gelesen
+        self::assertEquals($settings, NewsSettings::fromArray($settings->toArray()));
+        // ohne gültige Stufen: Vorgaben
+        self::assertSame(ImportanceLevels::defaults(), NewsSettings::fromArray(['levels' => [['code' => '']]])->levels);
+
+        self::assertSame([], NewsSettings::validateCodes(['important', 'notice', 'info']));
+        self::assertSame(['Each code may only be assigned to one importance level.'], NewsSettings::validateCodes(['info', ' INFO ']));
+        self::assertSame(['Each importance level needs a code (letters, digits, "-" or "_", e.g. info).'], NewsSettings::validateCodes(['info', 'mit Leerzeichen']));
     }
 }

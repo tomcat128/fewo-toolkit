@@ -57,7 +57,9 @@ $em->flush();
 $apartmentID = (int) $apartment->getId();
 echo "Wohnung #{$apartmentID} Seeherz\n";
 
-// 2. Ausstattung: je alter Liste ein neuer Block, Anmerkungen aus den Kommentaren
+// 2. Ausstattung: je alter Liste ein neuer Block, Anmerkungen aus den Kommentaren; reihum in den sechs Stilen
+// der Ausstattungsliste, damit alle im Theme dieser Website zu sehen sind
+$amenityStyles = ['plain', 'checks', 'tiles', 'card', 'lines', 'chips'];
 $amenities = [];
 foreach ($legacyBlocks('/ausstattung', 'ausstattungsliste') as $bID) {
     $items = $db->fetchAllAssociative(
@@ -76,6 +78,7 @@ foreach ($legacyBlocks('/ausstattung', 'ausstattungsliste') as $bID) {
         'itemNote' => array_column($items, 'kommentar'),
         'columnCount' => 2,
         'collapsible' => 0,
+        'listStyle' => $amenityStyles[count($amenities) % count($amenityStyles)],
     ]];
 }
 echo count($amenities) . " Ausstattungslisten von /ausstattung\n";
@@ -198,7 +201,7 @@ $blocks = array_merge(
     [
         ['content', ['content' => '<h1>Fewo Toolkit 2</h1><p>Testseite: alle Blöcke des neuen Pakets mit den Inhalten dieser Website. Belegung und Preise kommen aus Fewo-Office, Ausstattung, Bilder und Rundgang aus den bisherigen Blöcken.</p>']],
         $chat,
-        ['fewo_neuigkeiten', ['apartmentID' => $apartmentID, 'title' => 'Neuigkeiten', 'showPeriod' => 1]],
+        ['fewo_neuigkeiten', ['apartmentID' => $apartmentID, 'title' => 'Neuigkeiten']],
         ['fewo_belegungsplan', ['title' => 'Belegungsplan', 'apartmentID' => $apartmentID, 'monthsVisible' => 3, 'monthsTotal' => 15, 'onRequestKeywords' => '', 'showLegend' => 1]],
         ['fewo_preisuebersicht', ['apartmentID' => $apartmentID, 'title' => 'Preise', 'layout' => 'tiles', 'showConditions' => 1]],
         // "Jetzt anfragen" führt zum Anfrageformular weiter unten auf derselben Seite

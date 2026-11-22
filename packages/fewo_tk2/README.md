@@ -106,7 +106,8 @@ Wohnung, nicht je Saison.
 Aus dem Formular entsteht keine Buchungsanfrage auf der Website, sondern eine E-Mail: Jede Anfrage geht an die
 Adresse, die im Block unter **Anfragen senden an** hinterlegt ist, und – wenn im Block eingeschaltet – als
 Eingangsbestätigung an den Gast. Gespeichert wird auf der Website nichts; das Postfach des Vermieters ist der
-einzige Ort, an dem die Anfrage liegt. Verwendet werden die E-Mail-Einstellungen von Concrete:
+einzige Ort, an dem die Anfrage liegt. Verschickt wird über ein eigenes SMTP-Postfach des Pakets (siehe nächster
+Abschnitt) oder, in der Vorgabe, mit den E-Mail-Einstellungen von Concrete:
 
 - Verwaltung › System & Einstellungen › E-Mail › **E-Mail Versandmethode**: „Externer SMTP Server“ wählen
   und die Zugangsdaten des Postfachs eintragen. Ohne SMTP landen die Nachrichten bei vielen Anbietern im Spam.
@@ -119,6 +120,25 @@ versuchen; der Grund steht im Concrete-Log (Verwaltung › Berichte › Protokol
 
 Bis Version 2.2 wurden Anfragen zusätzlich gespeichert (Verwaltung › Fewo Toolkit › Buchungsanfragen). Das
 Update auf 2.3 entfernt diese Seite und löscht die Tabelle `FewoInquiries` mit den gespeicherten Anfragen.
+
+### E-Mail-Versand: Concrete oder eigenes SMTP-Postfach
+
+Verwaltung › Fewo Toolkit 2 › **E-Mail-Versand** legt fest, wie das Anfrageformular seine E-Mails verschickt:
+
+- **E-Mail-Einstellungen von Concrete verwenden** (Vorgabe): wie die übrige Website, eingestellt unter
+  System & Einstellungen › E-Mail.
+- **Eigenes SMTP-Postfach verwenden**, wie in der Mitgliederverwaltung: SMTP-Server, Verschlüsselung (STARTTLS mit
+  Port 587, SSL/TLS mit Port 465 oder keine), Port, Benutzername, Passwort, Absenderadresse und Absendername (leer:
+  Name der Website). Gilt nur für die E-Mails des Fewo Toolkit. Beim Server meldet sich die Website mit ihrer
+  Domain (EHLO); ein anderer Name lässt sich eintragen, falls der Anbieter das verlangt. Die Absenderadresse muss zum Postfach gehören, sonst
+  landen die E-Mails im Spam. Antworten auf die Benachrichtigung gehen weiter an den Gast (Antwort an).
+- Das Passwort wird verschlüsselt in der Konfiguration des Pakets gespeichert, der Schlüssel liegt getrennt in der
+  Datenbank. Das Feld bleibt beim Bearbeiten leer („Gespeichert – zum Ändern überschreiben“); leer gespeichert
+  behält das alte Passwort, „Gespeichertes Passwort entfernen“ löscht es. Lässt es sich nicht entschlüsseln
+  (Einstellungen aus einer anderen Installation), weist die Seite darauf hin.
+- **Testmail senden** prüft die gespeicherten Einstellungen; ein Fehler (Server nicht erreichbar, Anmeldung
+  abgelehnt) erscheint mit dem Grund.
+- Ist der Versand in Concrete ganz abgeschaltet, verschickt auch das eigene Postfach nichts – die Seite warnt dann.
 
 ### Spamschutz und Captcha
 
@@ -192,6 +212,45 @@ Ollama braucht keinen Cloud-Zugang und keinen Schlüssel. Zwei übliche Wege:
 Ollama hat **keine Anmeldung**: Port 11434 darf nicht aus dem Internet erreichbar sein (kein veröffentlichter
 Port, Firewall). Liegt Ollama auf einem anderen Rechner hinter einem Reverse-Proxy mit Bearer-Token, lässt sich
 das Token im Dashboard als API-Schlüssel hinterlegen.
+
+- *Auf einem anderen Server hinter Caddy:* Caddy übernimmt HTTPS und lässt nur Anfragen mit dem richtigen Token
+  durch; die Website trägt die Adresse und das Token im Dashboard ein.
+
+  ```yaml
+  # docker-compose.yml auf dem Ollama-Server
+  services:
+    ollama:
+      image: ollama/ollama
+      restart: always
+      environment:
+        - OLLAMA_KEEP_ALIVE=24h        # Modell geladen lassen: die erste Antwort kommt sonst spät
+      volumes:
+        - ./ollama:/root/.ollama
+      networks: [caddy]                # Caddy im Container: dasselbe Netz, keine "ports"
+      # Caddy direkt auf dem Server: stattdessen  ports: ["127.0.0.1:11434:11434"]
+  networks:
+    caddy:
+      external: true                   # Name des Netzes, in dem der Caddy-Container läuft
+  ```
+
+  ```caddyfile
+  ollama.example.de {
+      @authorized header Authorization "Bearer {$OLLAMA_TOKEN}"
+      handle @authorized {
+          reverse_proxy ollama:11434 {   # Caddy direkt auf dem Server: 127.0.0.1:11434
+              flush_interval -1          # Antwort Wort für Wort durchreichen
+              header_up -Authorization
+          }
+      }
+      respond 401
+  }
+  ```
+
+  Token erzeugen mit `openssl rand -hex 32`, für Caddy als Umgebungsvariable `OLLAMA_TOKEN` setzen (oder
+  direkt in den Caddyfile schreiben), Caddy neu laden. Im Dashboard der Website: Adresse
+  `https://ollama.example.de`, API-Schlüssel = das Token. Ein fehlendes oder falsches Token meldet der Testlauf im
+  Dashboard als „HTTP status 401 … The API key is missing or wrong“. Zusätzlich lässt sich der Zugang auf die
+  Adresse des Webservers beschränken (`remote_ip` im Matcher).
 
 **2. Modell wählen**
 
@@ -333,10 +392,10 @@ der Website – dort bleibt es fehleranfällig.
 | --- | --- | --- |
 | **Belegungsplan** | Freie und belegte Tage der gewählten Wohnung | An- und Abreisetage werden halb belegt dargestellt. Pro Zeile stehen so viele Kalenderblätter, wie anfangs Monate sichtbar sind – auch bei den aufgeklappten Monaten; auf schmalen Bildschirmen entsprechend weniger. |
 | **Preisübersicht** | Saisons und Preise der gewählten Wohnung | Anordnung wählbar: **Kacheln nebeneinander** oder **Liste untereinander**. Gleiche Preise werden zu Bereichen zusammengefasst („1–2 Gäste“). Der Standardpreis der Wohnung erscheint als „Übrige Zeiträume“. Bedingungen: Mindestaufenthalt, Endreinigung, Anzahlung. |
-| **Neuigkeiten** | Aktuelle Hinweise der Gastgeber aus Fewo-Office (z. B. „Schwimmbad geschlossen“) | Markiert nach der Wichtigkeit aus Fewo-Office – farbig und mit der Bezeichnung als Text. Im Block einstellbar unter **Stufen der Wichtigkeit**: je Zeile der Code aus dem Feed (`info`, `notice`, `important`), die Bezeichnung und die Farbe (Farbwähler); die Reihenfolge der Zeilen ist die Reihenfolge der Anzeige. Vorgabe: **Wichtige Mitteilung** (rot), **Hinweis** (gelb), **Information** (grün). Neuigkeiten mit einem Code, der im Block fehlt, erscheinen grau ohne Bezeichnung. Die Schrift auf dem Schild wird je nach Farbe schwarz oder weiß. Jede Neuigkeit erscheint vom ersten bis zum letzten Tag ihres Zeitraums – auch wenn die Daten seit dem Ende nicht neu abgerufen wurden. Gibt es keine, zeigt der Block nichts an (im Bearbeitungsmodus einen Platzhalter). Überschrift wählbar; der Gültigkeitszeitraum lässt sich mit einem Schalter ein- und ausblenden. Absätze und Zeilenumbrüche des Textes bleiben erhalten. Nur für Wohnungen mit Adresse der Neuigkeiten. |
+| **Neuigkeiten** | Aktuelle Hinweise der Gastgeber aus Fewo-Office (z. B. „Schwimmbad geschlossen“) | Markiert nach der Wichtigkeit aus Fewo-Office – farbig und mit der Bezeichnung als Text. Für alle Neuigkeiten-Blöcke einstellbar unter Verwaltung › Fewo Toolkit 2 › **Neuigkeiten** (im Block nur Wohnung und Überschrift), dort unter **Stufen der Wichtigkeit**: je Zeile der Code aus dem Feed (`info`, `notice`, `important`), die Bezeichnung und die Farbe (Farbwähler); die Reihenfolge der Zeilen ist die Reihenfolge der Anzeige. Vorgabe: **Wichtige Mitteilung** (rot), **Hinweis** (gelb), **Information** (grün). Neuigkeiten mit einem Code, der im Block fehlt, erscheinen grau ohne Bezeichnung. Die Schrift auf dem Schild wird je nach Farbe schwarz oder weiß. Jede Neuigkeit erscheint vom ersten bis zum letzten Tag ihres Zeitraums – auch wenn die Daten seit dem Ende nicht neu abgerufen wurden. Gibt es keine, zeigt der Block nichts an (im Bearbeitungsmodus einen Platzhalter). Überschrift wählbar; der Gültigkeitszeitraum lässt sich im Dashboard mit einem Schalter ein- und ausblenden. Absätze und Zeilenumbrüche des Textes bleiben erhalten. Nur für Wohnungen mit Adresse der Neuigkeiten. |
 | **Preisrechner** | Gäste berechnen den Preis ihres Aufenthalts | Rechnet wie Fewo-Office und prüft die Belegung der Wohnung (siehe unten). Funktioniert auch ohne JavaScript. Optional führt eine Schaltfläche mit Reisedaten zum Anfrageformular. |
-| **Anfrageformular** | Unverbindliche Anfrage mit Reisezeitraum, Gästen und Kontaktdaten | Die Anfrage geht per E-Mail an die im Block hinterlegte Adresse; gespeichert wird nichts, und eine Buchung entsteht dadurch nicht. Mit einer Wohnung steht der unverbindliche Preis in der Benachrichtigung. |
-| **Ausstattungsliste** | Liste mit optionalen Fußnoten, auf Wunsch aufklappbar | Spaltenzahl wählbar (1 bis 4); auf schmalen Bildschirmen werden es automatisch weniger. |
+| **Anfrageformular** | Unverbindliche Anfrage mit Reisezeitraum, Gästen und Kontaktdaten | Die Anfrage geht per E-Mail an die im Block hinterlegte Adresse; gespeichert wird nichts, und eine Buchung entsteht dadurch nicht. Die Mails nennen keinen Preis; mit einer Wohnung begrenzt deren Preisliste nur die Zahl der Gäste. |
+| **Ausstattungsliste** | Liste mit optionalen Fußnoten, auf Wunsch aufklappbar | Spaltenzahl wählbar (1 bis 4); auf schmalen Bildschirmen werden es automatisch weniger. Sechs Stile: **Schlicht** (Aufzählungspunkte, Vorgabe), **Häkchen**, **Kacheln**, **Karte mit Kopfzeile**, **Liste mit Trennlinien**, **Etiketten nebeneinander** (füllt die Breite Zeile für Zeile, ohne Spalten). |
 | **Bildergalerie** | Bilder aus einem Ordner der Dateiverwaltung oder einem Dateiset mit Großansicht | Bildunterschrift = Beschreibung oder Titel der Datei. Bedienung per Tastatur und Wischen. |
 | **Karte** | OpenStreetMap-Karte mit Markierungen | Koordinaten lassen sich als Paar einfügen („47.7102, 9.1024“). |
 | **360°-Rundgang** | 360°-Panoramen und Rundgänge durch mehrere Räume (Pannellum) | Nachfolger des Blocks „Pannellum 360° Viewer“ der alten Website; Bilder und Einstellungen lassen sich unverändert übernehmen (siehe unten). |
@@ -473,7 +532,9 @@ eines Kalenderblatts im Belegungsplan), `--fewo-card-border`
 (Preisübersicht), `--fewo-muted` (Preisrechner), `--fewo-success-bg`, `--fewo-success-text`
 (Anfrageformular), `--fewo-gap` (Bildergalerie), `--fewo-selected` (gewählter Zeitraum im Kalender der
 Datumsfelder des Preisrechners), `--fewo-tour-ratio` und `--fewo-tour-height` (360°-Rundgang),
-`--fewo-news-text` und `--fewo-news-period` (Neuigkeiten: Text, Zeile mit dem Zeitraum; die Farben der Stufen
+`--fewo-amenities-accent`, `--fewo-amenities-accent-text`, `--fewo-amenities-surface`, `--fewo-amenities-border`
+und `--fewo-amenities-radius` (Stile der Ausstattungsliste: Häkchen und Kopfzeile der Karte, Schrift darauf,
+Hintergrund von Kacheln und Etiketten, Linien, Rundung), `--fewo-news-text` und `--fewo-news-period` (Neuigkeiten: Text, Zeile mit dem Zeitraum; die Farben der Stufen
 werden im Block eingestellt), `--fewo-chat-bg`, `--fewo-chat-user-bg`, `--fewo-chat-assistant-bg` und `--fewo-chat-height` (Chat: Hintergrund
 des Gesprächs, der eigenen Fragen und der Antworten, größte Höhe des Gesprächs). Wer Farben ändert, sollte die
 Kontraste prüfen.

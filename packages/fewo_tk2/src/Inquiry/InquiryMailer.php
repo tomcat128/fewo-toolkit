@@ -4,13 +4,12 @@ namespace FewoTk2\Inquiry;
 
 use Concrete\Core\Application\Application;
 use Concrete\Core\Mail\Service as MailService;
-use Concrete\Core\User\UserInfoRepository;
-use FewoTk2\Pricing\Quote;
+use FewoTk2\Mail\MailerFactory;
 
 /**
  * Versendet die Benachrichtigung an den Vermieter und die Eingangsbestätigung
- * an den Gast. Versand über die in Concrete konfigurierten Mail-Einstellungen
- * (Dashboard > System > E-Mail > SMTP).
+ * an den Gast – über das eigene SMTP-Postfach des Pakets (Verwaltung › Fewo Toolkit 2 › E-Mail-Versand) oder,
+ * wenn keines eingerichtet ist, über die Mail-Einstellungen von Concrete (siehe MailerFactory).
  */
 class InquiryMailer
 {
@@ -18,13 +17,12 @@ class InquiryMailer
     {
     }
 
-    public function sendNotification(Inquiry $inquiry, string $recipient, ?Quote $quote): void
+    public function sendNotification(Inquiry $inquiry, string $recipient): void
     {
         $mail = $this->createMail();
         $mail->to($recipient);
         $mail->replyto($inquiry->getEmail(), $inquiry->getFullName());
         $mail->addParameter('inquiry', $inquiry);
-        $mail->addParameter('quote', $quote);
         $mail->addParameter('siteName', $this->getSiteName());
         $mail->load('fewo_inquiry_notification', 'fewo_tk2');
         $mail->sendMail();
@@ -34,7 +32,7 @@ class InquiryMailer
      * Die Bestätigung enthält bewusst keine Freitexte des Absenders, damit das
      * Formular nicht zum Versand von Spam an fremde Adressen missbraucht werden kann.
      */
-    public function sendConfirmation(Inquiry $inquiry, ?Quote $quote, string $replyTo): void
+    public function sendConfirmation(Inquiry $inquiry, string $replyTo): void
     {
         $mail = $this->createMail();
         $mail->to($inquiry->getEmail());
@@ -42,7 +40,6 @@ class InquiryMailer
             $mail->replyto($replyTo);
         }
         $mail->addParameter('inquiry', $inquiry);
-        $mail->addParameter('quote', $quote);
         $mail->addParameter('siteName', $this->getSiteName());
         $mail->load('fewo_inquiry_confirmation', 'fewo_tk2');
         $mail->sendMail();
@@ -68,42 +65,7 @@ class InquiryMailer
 
     private function createMail(): MailService
     {
-        /** @var MailService $mail */
-        $mail = $this->app->make('mail');
-        // Fehler als Exception melden statt sie nur zu protokollieren
-        $mail->setIsThrowOnFailure(true);
-        $sender = $this->getFallbackSender();
-        if ($sender !== '') {
-            $mail->from($sender);
-        }
-
-        return $mail;
-    }
-
-    /**
-     * Absender, falls in Concrete keine Standard-Absenderadresse hinterlegt ist (Auslieferungszustand):
-     * wie beim Formular-Block von Concrete die Absenderadresse für Formulare, sonst die des Hauptbenutzers.
-     * Leer, wenn Concrete seine Standardadresse verwenden kann.
-     */
-    private function getFallbackSender(): string
-    {
-        $config = $this->app->make('config');
-        if (self::isAddress($config->get('concrete.email.default.address'))) {
-            return '';
-        }
-        $address = $config->get('concrete.email.form_block.address');
-        if (self::isAddress($address)) {
-            return (string) $address;
-        }
-        $admin = $this->app->make(UserInfoRepository::class)->getByID(USER_SUPER_ID);
-        $address = $admin !== null ? $admin->getUserEmail() : '';
-
-        return self::isAddress($address) ? (string) $address : '';
-    }
-
-    private static function isAddress(mixed $value): bool
-    {
-        return is_string($value) && filter_var($value, FILTER_VALIDATE_EMAIL) !== false;
+        return $this->app->make(MailerFactory::class)->create();
     }
 
     private function getSiteName(): string

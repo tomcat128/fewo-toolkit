@@ -7,6 +7,8 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var string $title
  * @var int $columnCount
  * @var bool $collapsible
+ * @var string $listStyle
+ * @var array<string, string> $styleOptions
  * @var array $itemList
  */
 
@@ -25,6 +27,12 @@ $uid = 'fewo-items-' . bin2hex(random_bytes(4));
 <div class="mb-3">
     <?= $form->label('title', t('Heading (optional)')) ?>
     <?= $form->text('title', $title, ['placeholder' => t('e.g. Kitchen')]) ?>
+</div>
+
+<div class="mb-3">
+    <?= $form->label('listStyle', t('Style')) ?>
+    <?= $form->select('listStyle', $styleOptions, $listStyle) ?>
+    <div class="form-text"><?= t('"Labels side by side" fills the width line by line and ignores the number of columns.') ?></div>
 </div>
 
 <div class="row">

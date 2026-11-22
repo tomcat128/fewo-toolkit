@@ -9,7 +9,11 @@ class Controller extends BlockController
 {
     use AddDefaults;
 
+    /** Darstellungen der Liste; die erste ist die Vorgabe (so sahen die Listen bis Version 2.7 aus). */
+    public const STYLES = ['plain', 'checks', 'tiles', 'card', 'lines', 'chips'];
+
     public $title = '';
+    public $listStyle = 'plain';
     public $items = '[]';
     public $columnCount = 2;
     public $collapsible = false;
@@ -42,16 +46,39 @@ class Controller extends BlockController
     {
         $this->setAddDefaults();
         $this->set('itemList', []);
+        $this->set('styleOptions', self::getStyleOptions());
     }
 
     public function edit()
     {
         $this->set('itemList', $this->getItems());
+        $this->set('styleOptions', self::getStyleOptions());
     }
 
     public function view()
     {
         $this->set('itemList', $this->getItems());
+        $this->set('listStyle', self::sanitizeStyle($this->listStyle));
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public static function getStyleOptions(): array
+    {
+        return [
+            'plain' => t('Plain – bullet points'),
+            'checks' => t('Check marks'),
+            'tiles' => t('Tiles'),
+            'card' => t('Card with header'),
+            'lines' => t('List with dividing lines'),
+            'chips' => t('Labels side by side'),
+        ];
+    }
+
+    public static function sanitizeStyle(mixed $style): string
+    {
+        return in_array($style, self::STYLES, true) ? (string) $style : self::STYLES[0];
     }
 
     /**
@@ -81,6 +108,7 @@ class Controller extends BlockController
             'items' => json_encode($items, JSON_UNESCAPED_UNICODE),
             'columnCount' => max(1, min(4, (int) ($args['columnCount'] ?? 2))),
             'collapsible' => !empty($args['collapsible']) ? 1 : 0,
+            'listStyle' => self::sanitizeStyle($args['listStyle'] ?? ''),
         ]);
     }
 }

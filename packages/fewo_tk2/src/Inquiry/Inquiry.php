@@ -48,13 +48,6 @@ class Inquiry
 
     protected string $referralSource = '';
 
-    /**
-     * Unverbindlich berechneter Gesamtpreis in Cent (falls eine Preisliste verknüpft war).
-     */
-    protected ?int $quotedTotal = null;
-
-    protected string $currency = 'EUR';
-
     public function __construct()
     {
         $this->arrival = new DateTimeImmutable('today');
@@ -276,30 +269,6 @@ class Inquiry
     public function setReferralSource(string $referralSource): self
     {
         $this->referralSource = self::line($referralSource, 255);
-
-        return $this;
-    }
-
-    public function getQuotedTotal(): ?int
-    {
-        return $this->quotedTotal;
-    }
-
-    public function setQuotedTotal(?int $cents): self
-    {
-        $this->quotedTotal = $cents;
-
-        return $this;
-    }
-
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency(string $currency): self
-    {
-        $this->currency = strtoupper(substr($currency, 0, 3)) ?: 'EUR';
 
         return $this;
     }

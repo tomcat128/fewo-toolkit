@@ -1,52 +1,76 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: fewo_tk2 2.7.0\n"
+"Project-Id-Version: fewo_tk2 2.9.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-22T19:51:54+01:00\n"
-"PO-Revision-Date: 2026-11-22T19:51:54+01:00\n"
+"POT-Creation-Date: 2026-11-22T22:00:46+01:00\n"
+"PO-Revision-Date: 2026-11-22T22:00:46+01:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: packages/fewo_tk2/controller.php:92
+#: packages/fewo_tk2/controller.php:98
 msgid "Apartments and the AI assistant."
 msgstr "Wohnungen und KI-Assistent."
 
-#: packages/fewo_tk2/controller.php:93
+#: packages/fewo_tk2/controller.php:99
 msgid "Apartments"
 msgstr "Wohnungen"
 
-#: packages/fewo_tk2/controller.php:94
+#: packages/fewo_tk2/controller.php:100
 msgid "Fewo-Office URLs for occupancy, prices and news of each apartment."
 msgstr "Adressen in Fewo-Office für Belegung, Preise und Neuigkeiten jeder Wohnung."
 
-#: packages/fewo_tk2/controller.php:95
+#: packages/fewo_tk2/controller.php:101
 msgid "Prices"
 msgstr "Preise"
 
-#: packages/fewo_tk2/controller.php:96
+#: packages/fewo_tk2/controller.php:102
 msgid "Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office."
 msgstr "Preise, Mindestbelegung, Mindestdauer und Endreinigung jeder Wohnung, wie Fewo-Office sie liefert."
 
-#: packages/fewo_tk2/controller.php:97
+#: packages/fewo_tk2/controller.php:103
 msgid "AI Assistant"
 msgstr "KI-Assistent"
 
-#: packages/fewo_tk2/controller.php:98
+#: packages/fewo_tk2/controller.php:104
 msgid "Chat that answers visitors' questions with a local language model (Ollama)."
 msgstr "Chat, der Fragen der Besucher mit einem lokalen Sprachmodell (Ollama) beantwortet."
 
-#: packages/fewo_tk2/controller.php:103
+#: packages/fewo_tk2/controller.php:105
+msgid "How the news from Fewo-Office are shown: importance levels, colours, period of validity."
+msgstr "Wie die Neuigkeiten aus Fewo-Office erscheinen: Stufen der Wichtigkeit, Farben, Gültigkeitszeitraum."
+
+#: packages/fewo_tk2/controller.php:106
+msgid "Sending Emails"
+msgstr "E-Mail-Versand"
+
+#: packages/fewo_tk2/controller.php:107
+msgid "How the inquiry form sends emails: with the settings of Concrete or an SMTP mailbox of its own."
+msgstr "Wie das Anfrageformular E-Mails verschickt: mit den Einstellungen von Concrete oder über ein eigenes SMTP-Postfach."
+
+#: packages/fewo_tk2/controller.php:112
 msgid "Fewo Toolkit 2"
 msgstr "Fewo Toolkit 2"
 
-#: packages/fewo_tk2/controller.php:108
+#: packages/fewo_tk2/controller.php:117
 msgid "Occupancy calendar, prices, price calculator and news with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites."
 msgstr "Belegungsplan, Preise, Preisrechner und Neuigkeiten mit Daten aus Fewo-Office, Anfrageformular, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites."
+
+#: packages/fewo_tk2/src/Mail/MailSettings.php:102
+msgid "Please enter the SMTP server, e.g. smtp.example.com."
+msgstr "Bitte geben Sie den SMTP-Server an, z. B. smtp.example.com."
+
+#: packages/fewo_tk2/src/Mail/MailSettings.php:105
+msgid "Please enter a valid sender address."
+msgstr "Bitte geben Sie eine gültige Absenderadresse an."
+
+#: packages/fewo_tk2/src/Mail/MailSettings.php:108
+msgid "A password without a user name is not used. Please enter the user name as well."
+msgstr "Ein Passwort ohne Benutzername wird nicht verwendet. Bitte geben Sie auch den Benutzernamen an."
 
 #: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:55
 msgid "Prices per night by month:"
@@ -262,6 +286,14 @@ msgstr "Die Daten der Neuigkeiten sind ungültig."
 #: packages/fewo_tk2/src/News/NewsReader.php:32
 msgid "The data does not contain any news."
 msgstr "Die Daten enthalten keine Neuigkeiten."
+
+#: packages/fewo_tk2/src/News/NewsSettings.php:53
+msgid "Each importance level needs a code (letters, digits, \"-\" or \"_\", e.g. info)."
+msgstr "Jede Stufe braucht einen Code (Buchstaben, Ziffern, „-“ oder „_“, z. B. info)."
+
+#: packages/fewo_tk2/src/News/NewsSettings.php:56
+msgid "Each code may only be assigned to one importance level."
+msgstr "Jeder Code darf nur einer Stufe zugeordnet sein."
 
 #: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:32
 msgid "The data is neither JSON nor XML."
@@ -620,6 +652,8 @@ msgstr "Schützt den Server vor Überlastung. Fragen in der letzten Stunde: %1$s
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:207
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:60
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:109
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:36
 msgid "Save"
 msgstr "Speichern"
 
@@ -684,7 +718,7 @@ msgid "Read the content again now"
 msgstr "Inhalte jetzt neu einlesen"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:17
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:41
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:42
 msgid "Back to list"
 msgstr "Zurück zur Liste"
 
@@ -701,7 +735,7 @@ msgstr "Wohnung hinzufügen"
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:27
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:27
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:110
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:25
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:24
 msgid "Name"
 msgstr "Name"
 
@@ -796,7 +830,7 @@ msgid "Price list"
 msgstr "Preisliste"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:58
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:38
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:39
 #: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:22
 #: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:41
 #: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:47
@@ -936,6 +970,166 @@ msgstr "Standardpreis"
 msgid "Prices per night. Minimum occupancy: up to this number of guests the lowest price applies – fewer guests pay the same. A night costs the price of the season in which it ends."
 msgstr "Preise je Nacht. Mindestbelegung: Bis zu dieser Gästezahl gilt der niedrigste Preis – weniger Gäste zahlen dasselbe. Eine Nacht kostet den Preis der Saison, in der sie endet."
 
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:23
+msgid "STARTTLS (port 587)"
+msgstr "STARTTLS (Port 587)"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:24
+msgid "SSL/TLS (port 465)"
+msgstr "SSL/TLS (Port 465)"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:25
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:79
+msgid "None"
+msgstr "Keine"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:28
+msgid "The inquiry form sends the inquiry to you and, if switched on, a confirmation to the guest. Choose how these emails are sent."
+msgstr "Das Anfrageformular schickt die Anfrage an Sie und, falls eingeschaltet, eine Eingangsbestätigung an den Gast. Hier legen Sie fest, wie diese E-Mails verschickt werden."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:31
+msgid "Sending emails is switched off in Concrete – no email leaves the website, they are only logged. Switch it on under <a href=\"%s\">System & Settings › Email</a>."
+msgstr "Der E-Mail-Versand ist in Concrete abgeschaltet – keine E-Mail verlässt die Website, sie werden nur protokolliert. Einschalten unter <a href=\"%s\">System & Einstellungen › E-Mail</a>."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:34
+msgid "The stored SMTP password cannot be read on this website (e.g. settings copied from another installation). Please enter it again and save."
+msgstr "Das gespeicherte SMTP-Passwort lässt sich auf dieser Website nicht lesen (z. B. Einstellungen aus einer anderen Installation übernommen). Bitte neu eintragen und speichern."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:41
+msgid "Sending"
+msgstr "Versand"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:44
+msgid "Use the email settings of Concrete"
+msgstr "E-Mail-Einstellungen von Concrete verwenden"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:47
+msgid "Currently via the SMTP server %s."
+msgstr "Derzeit über den SMTP-Server %s."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:48
+msgid "Currently via the mail function of the web server (PHP mail), which many providers treat as spam."
+msgstr "Derzeit über die Mail-Funktion des Webservers (PHP mail), die viele Anbieter als Spam einstufen."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:49
+msgid "Change the settings of Concrete"
+msgstr "Einstellungen von Concrete ändern"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:54
+msgid "Use an SMTP mailbox of its own"
+msgstr "Eigenes SMTP-Postfach verwenden"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:55
+msgid "Only for the emails of the Fewo Toolkit – the rest of the website keeps the settings of Concrete."
+msgstr "Nur für die E-Mails des Fewo Toolkit – die übrige Website behält die Einstellungen von Concrete."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:60
+msgid "SMTP mailbox"
+msgstr "SMTP-Postfach"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:63
+msgid "SMTP server"
+msgstr "SMTP-Server"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:67
+msgid "Encryption"
+msgstr "Verschlüsselung"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:71
+msgid "Port"
+msgstr "Port"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:75
+msgid "User name"
+msgstr "Benutzername"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:79
+msgid "Password"
+msgstr "Passwort"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:80
+msgid "Stored – overwrite to change"
+msgstr "Gespeichert – zum Ändern überschreiben"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:84
+msgid "Remove the stored password"
+msgstr "Gespeichertes Passwort entfernen"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:89
+msgid "Sender address"
+msgstr "Absenderadresse"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:91
+msgid "Must belong to the mailbox, otherwise the emails end up in the spam folder or are rejected."
+msgstr "Muss zum Postfach gehören, sonst landen die E-Mails im Spamordner oder werden abgelehnt."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:94
+msgid "Sender name"
+msgstr "Absendername"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:96
+msgid "Empty: the name of the website."
+msgstr "Leer: der Name der Website."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:100
+msgid "Name of this website for the SMTP server (EHLO, optional)"
+msgstr "Name dieser Website für den SMTP-Server (EHLO, optional)"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:102
+msgid "Empty: %s (the domain of the website). Only change it if the provider asks for it – never enter the domain of the sender address here."
+msgstr "Leer: %s (die Domain der Website). Nur ändern, wenn der Anbieter es verlangt – hier nie die Domain der Absenderadresse eintragen."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:104
+msgid "The password is stored encrypted. Replies of guests go to their own address (Reply-To), not to the sender address."
+msgstr "Das Passwort wird verschlüsselt gespeichert. Antworten auf die Benachrichtigung gehen an die Adresse des Gastes (Antwort an), nicht an die Absenderadresse."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:117
+msgid "Test email"
+msgstr "Testmail"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:118
+msgid "Sends a test email with the saved settings. Save changes first."
+msgstr "Verschickt eine Testmail mit den gespeicherten Einstellungen. Änderungen vorher speichern."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:120
+msgid "Recipient of the test email"
+msgstr "Empfänger der Testmail"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:120
+msgid "Recipient"
+msgstr "Empfänger"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/mail/view.php:121
+msgid "Send test email"
+msgstr "Testmail senden"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:14
+msgid "News are written in Fewo-Office. Here you decide how the blocks \"News\" show them – the settings apply to all news blocks of this website."
+msgstr "Neuigkeiten werden in Fewo-Office geschrieben. Hier legen Sie fest, wie die Blöcke „Neuigkeiten“ sie zeigen – die Einstellungen gelten für alle Neuigkeiten-Blöcke dieser Website."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:15
+msgid "The address of the news of each apartment is stored under <a href=\"%s\">Apartments</a>; in the block you only choose the apartment and a heading."
+msgstr "Die Adresse der Neuigkeiten jeder Wohnung steht unter <a href=\"%s\">Wohnungen</a>; im Block wählen Sie nur die Wohnung und eine Überschrift."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:21
+#: packages/fewo_tk2/blocks/fewo_rundgang/form.php:147
+#: packages/fewo_tk2/blocks/fewo_karte/form.php:46
+#: packages/fewo_tk2/blocks/fewo_belegungsplan/form.php:38
+msgid "Display"
+msgstr "Darstellung"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:24
+msgid "Show the period of validity"
+msgstr "Gültigkeitszeitraum anzeigen"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:25
+msgid "Below the title, e.g. „Valid from 01.12. to 24.12.“. When switched off, only the title and text are shown."
+msgstr "Unter dem Titel, z. B. „Gültig vom 01.12. bis 24.12.“. Ausgeschaltet erscheinen nur Titel und Text."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/news/view.php:30
+msgid "Importance levels"
+msgstr "Stufen der Wichtigkeit"
+
 #: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:53
 msgid "The apartment was not found."
 msgstr "Die Wohnung wurde nicht gefunden."
@@ -1017,6 +1211,56 @@ msgstr "Die Inhalte der Website wurden neu eingelesen."
 msgid "Please enter the Ollama URL and choose a model first."
 msgstr "Bitte tragen Sie zuerst die Adresse von Ollama ein und wählen Sie ein Modell."
 
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:69
+msgid "The settings for sending emails have been saved."
+msgstr "Die Einstellungen für den E-Mail-Versand wurden gespeichert."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:83
+msgid "Please enter a valid address for the test email."
+msgstr "Bitte geben Sie eine gültige Adresse für die Testmail an."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:97
+msgid "Test email from %s"
+msgstr "Testmail von %s"
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:99
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:29
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:39
+msgid "Hello,"
+msgstr "Guten Tag,"
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:100
+msgid "this test email confirms that the inquiry form of %s can send emails."
+msgstr "diese Testmail bestätigt, dass das Anfrageformular von %s E-Mails verschicken kann."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:102
+msgid "Sent via the SMTP mailbox %1$s (port %2$s) with the sender %3$s."
+msgstr "Verschickt über das SMTP-Postfach %1$s (Port %2$s) mit dem Absender %3$s."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:103
+msgid "Sent with the email settings of Concrete."
+msgstr "Verschickt mit den E-Mail-Einstellungen von Concrete."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:104
+msgid "Sent on %s."
+msgstr "Verschickt am %s."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:108
+msgid "The test email could not be sent: %s"
+msgstr "Die Testmail konnte nicht verschickt werden: %s"
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:114
+msgid "Sending emails is switched off in Concrete. The test email was only logged, not sent."
+msgstr "Der E-Mail-Versand ist in Concrete abgeschaltet. Die Testmail wurde nur protokolliert, nicht verschickt."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/mail.php:116
+msgid "The test email has been sent to %s."
+msgstr "Die Testmail wurde an %s verschickt."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/news.php:51
+msgid "The settings for the news have been saved."
+msgstr "Die Einstellungen für die Neuigkeiten wurden gespeichert."
+
 #: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/prices.php:49
 msgid "\"%1$s\": %2$s"
 msgstr "„%1$s“: %2$s"
@@ -1051,7 +1295,7 @@ msgstr "Bildergalerie mit Großansicht aus einem Ordner der Dateiverwaltung oder
 
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:62
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:66
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:60
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:61
 #: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:67
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:52
 #: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:63
@@ -1105,7 +1349,7 @@ msgid "Order"
 msgstr "Reihenfolge"
 
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/form.php:42
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:32
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:40
 msgid "Columns"
 msgstr "Spalten"
 
@@ -1137,39 +1381,31 @@ msgstr "Nächstes Bild"
 msgid "Image %1$s of %2$s"
 msgstr "Bild %1$s von %2$s"
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:43
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:44
 msgid "Shows the current news of a holiday apartment from Fewo-Office – each one only during its period of validity."
 msgstr "Zeigt die aktuellen Neuigkeiten einer Ferienwohnung aus Fewo-Office – jede nur in ihrem Gültigkeitszeitraum."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:74
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:76
 msgid "No news URL is stored for this apartment."
 msgstr "Für diese Wohnung ist keine Adresse der Neuigkeiten hinterlegt."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:95
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:98
 #: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:152
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:73
 #: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:113
 msgid "Please select an apartment."
 msgstr "Bitte wählen Sie eine Wohnung aus."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:97
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:100
 msgid "No news URL is stored for the apartment \"%s\". Please add it in the dashboard under Fewo Toolkit 2 › Apartments."
 msgstr "Für die Wohnung „%s“ ist keine Adresse der Neuigkeiten hinterlegt. Bitte im Dashboard unter Fewo Toolkit 2 › Wohnungen ergänzen."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:101
-msgid "Each importance level needs a code (letters, digits, \"-\" or \"_\", e.g. info)."
-msgstr "Jede Stufe braucht einen Code (Buchstaben, Ziffern, „-“ oder „_“, z. B. info)."
-
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:104
-msgid "Each code may only be assigned to one importance level."
-msgstr "Jeder Code darf nur einer Stufe zugeordnet sein."
-
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:21
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:20
 msgid "The news of this apartment are loaded from Fewo-Office (news URL of the apartment)."
 msgstr "Die Neuigkeiten dieser Wohnung werden aus Fewo-Office geladen (Adresse der Neuigkeiten bei der Wohnung)."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:25
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:26
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:24
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:28
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:27
 #: packages/fewo_tk2/blocks/fewo_preisrechner/form.php:26
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:96
@@ -1178,23 +1414,15 @@ msgstr "Die Neuigkeiten dieser Wohnung werden aus Fewo-Office geladen (Adresse d
 msgid "Heading (optional)"
 msgstr "Überschrift (optional)"
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:27
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:26
 msgid "Only shown when there is current news."
 msgstr "Erscheint nur, wenn es aktuelle Neuigkeiten gibt."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:32
-msgid "Show the period of validity"
-msgstr "Gültigkeitszeitraum anzeigen"
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:30
+msgid "Importance levels, colours and the period of validity apply to all news blocks: <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › News</a>."
+msgstr "Stufen der Wichtigkeit, Farben und Gültigkeitszeitraum gelten für alle Neuigkeiten-Blöcke: <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › Neuigkeiten</a>."
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:33
-msgid "Below the title, e.g. „Valid from 01.12. to 24.12.“. When switched off, only the title and text are shown."
-msgstr "Unter dem Titel, z. B. „Gültig vom 01.12. bis 24.12.“. Ausgeschaltet erscheinen nur Titel und Text."
-
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:37
-msgid "Importance levels"
-msgstr "Stufen der Wichtigkeit"
-
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:42
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:34
 msgid "News are written in Fewo-Office. Each one appears here from the first to the last day of its period; when there is no current news, the block shows nothing."
 msgstr "Neuigkeiten werden in Fewo-Office geschrieben. Jede erscheint hier vom ersten bis zum letzten Tag ihres Zeitraums; gibt es keine aktuelle Neuigkeit, zeigt der Block nichts an."
 
@@ -1210,37 +1438,61 @@ msgstr "Gültig am %s"
 msgid "Valid from %1$s to %2$s"
 msgstr "Gültig vom %1$s bis %2$s"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:28
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:32
 msgid "Amenities List"
 msgstr "Ausstattungsliste"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:33
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:37
 msgid "List of amenities with optional notes."
 msgstr "Liste der Ausstattung mit optionalen Anmerkungen."
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:15
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:70
+msgid "Plain – bullet points"
+msgstr "Schlicht – Aufzählungspunkte"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:71
+msgid "Check marks"
+msgstr "Häkchen"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:72
+msgid "Tiles"
+msgstr "Kacheln"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:73
+msgid "Card with header"
+msgstr "Karte mit Kopfzeile"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:74
+msgid "List with dividing lines"
+msgstr "Liste mit Trennlinien"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:75
+msgid "Labels side by side"
+msgstr "Etiketten nebeneinander"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:17
 msgid "e.g. Dishwasher"
 msgstr "z. B. Geschirrspüler"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:16
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:18
 msgid "optional"
 msgstr "optional"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:18
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:20
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:35
 #: packages/fewo_tk2/elements/importance_rows.php:26
 #: packages/fewo_tk2/elements/question_rows.php:19
 msgid "Move up"
 msgstr "Nach oben"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:19
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:21
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:36
 #: packages/fewo_tk2/elements/importance_rows.php:26
 #: packages/fewo_tk2/elements/question_rows.php:20
 msgid "Move down"
 msgstr "Nach unten"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:20
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:22
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:37
 #: packages/fewo_tk2/elements/importance_rows.php:26
 #: packages/fewo_tk2/elements/note_rows.php:22
@@ -1249,39 +1501,47 @@ msgstr "Nach unten"
 msgid "Remove"
 msgstr "Entfernen"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:27
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:29
 msgid "e.g. Kitchen"
 msgstr "z. B. Küche"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:38
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:33
+msgid "Style"
+msgstr "Stil"
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:35
+msgid "\"Labels side by side\" fills the width line by line and ignores the number of columns."
+msgstr "„Etiketten nebeneinander“ füllt die Breite Zeile für Zeile und beachtet die Spaltenzahl nicht."
+
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:46
 msgid "Collapsed by default (expandable)"
 msgstr "Zunächst eingeklappt (aufklappbar)"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:47
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:55
 msgid "Amenity"
 msgstr "Ausstattung"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:48
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:56
 msgid "Note (shown as footnote)"
 msgstr "Anmerkung (erscheint als Fußnote)"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:61
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:69
 msgid "Add amenity"
 msgstr "Eintrag hinzufügen"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:62
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:70
 msgid "Tip: press Enter in the last row to add a new one."
 msgstr "Tipp: Die Eingabetaste in der letzten Zeile legt eine neue Zeile an."
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:15
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:16
 msgid "Amenities list: no entries yet."
 msgstr "Ausstattungsliste: noch keine Einträge."
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:38
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:39
 msgid "Notes"
 msgstr "Anmerkungen"
 
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:50
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/view.php:51
 msgid "Amenities"
 msgstr "Ausstattung"
 
@@ -1335,56 +1595,52 @@ msgstr "Mehr dazu:"
 msgid "You"
 msgstr "Sie"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:57
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:54
 msgid "Booking Inquiry Form"
 msgstr "Anfrageformular"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:62
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:59
 msgid "Inquiry form for travel dates, guests and contact details. Every inquiry is sent by email to the address set in the block."
 msgstr "Anfrageformular für Reisezeitraum, Gäste und Kontaktdaten. Jede Anfrage geht per E-Mail an die im Block hinterlegte Adresse."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:71
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:68
 msgid "Search engine"
 msgstr "Suchmaschine"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:72
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:69
 msgid "Holiday rental portal"
 msgstr "Urlaubsportal"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:73
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:70
 msgid "Recommendation by friends"
 msgstr "Empfehlung von Bekannten"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:74
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:71
 msgid "Tourist information"
 msgstr "Tourist-Information"
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:76
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:73
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:52
 msgid "Thank you for your inquiry! We will get back to you as soon as possible."
 msgstr "Vielen Dank für Ihre Anfrage! Wir melden uns so schnell wie möglich bei Ihnen."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:82
-msgid "None"
-msgstr "Keine"
-
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:117
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:114
 msgid "The form has expired. Please submit it again."
 msgstr "Das Formular ist abgelaufen. Bitte senden Sie es erneut ab."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:122
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:119
 msgid "Please check your details and submit the form again."
 msgstr "Bitte prüfen Sie Ihre Angaben und senden Sie das Formular erneut ab."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:131
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:128
 msgid "The security code is incorrect."
 msgstr "Der Sicherheitscode ist nicht korrekt."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:147
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:139
 msgid "Your inquiry could not be sent. Please try again later or contact us directly by email or phone."
 msgstr "Ihre Anfrage konnte nicht gesendet werden. Bitte versuchen Sie es später noch einmal oder wenden Sie sich per E-Mail oder Telefon direkt an uns."
 
-#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:160
+#: packages/fewo_tk2/blocks/fewo_kontaktformular/controller.php:152
 msgid "Please enter a valid recipient email address."
 msgstr "Bitte geben Sie eine gültige Empfängeradresse an."
 
@@ -1401,8 +1657,8 @@ msgid "Every inquiry is sent to this address by email; the website does not stor
 msgstr "Jede Anfrage geht per E-Mail an diese Adresse; die Website speichert keine Anfragen."
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:29
-msgid "Emails are sent with the settings under Dashboard › System & Settings › Email. Please configure SMTP there."
-msgstr "E-Mails werden mit den Einstellungen unter Verwaltung › System & Einstellungen › E-Mail › E-Mail Versandmethode verschickt. Bitte richten Sie dort SMTP ein."
+msgid "How the emails are sent – with the settings of Concrete or an SMTP mailbox of its own – is set under <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › Sending Emails</a>."
+msgstr "Wie die E-Mails verschickt werden – mit den Einstellungen von Concrete oder über ein eigenes SMTP-Postfach –, legen Sie unter <a href=\"%s\" target=\"_blank\">Fewo Toolkit 2 › E-Mail-Versand</a> fest."
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:32
 msgid "Name of the form (optional)"
@@ -1425,8 +1681,8 @@ msgid "Fields"
 msgstr "Felder"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:52
-msgid "Its price list determines the maximum number of guests. The non-binding price is included in the notification."
-msgstr "Ihre Preisliste bestimmt die maximale Gästeanzahl. Der unverbindliche Preis steht in der Benachrichtigung."
+msgid "Its price list determines the maximum number of guests."
+msgstr "Ihre Preisliste bestimmt die höchste Zahl der Gäste."
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/form.php:56
 msgid "Max. guests"
@@ -1492,7 +1748,7 @@ msgstr "Ihr Aufenthalt"
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:74
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:48
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:82
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:21
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:19
 #: packages/fewo_tk2/mail/fewo_inquiry_notification.php:19
 msgid "Arrival"
 msgstr "Anreise"
@@ -1500,7 +1756,7 @@ msgstr "Anreise"
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:79
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:52
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:83
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:22
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:20
 #: packages/fewo_tk2/mail/fewo_inquiry_notification.php:20
 msgid "Departure"
 msgstr "Abreise"
@@ -1516,7 +1772,7 @@ msgid "Children"
 msgstr "Kinder"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:105
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:20
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:18
 #: packages/fewo_tk2/mail/fewo_inquiry_notification.php:18
 msgid "Accommodation"
 msgstr "Unterkunft"
@@ -1542,13 +1798,13 @@ msgid "Last name"
 msgstr "Nachname"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:141
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:26
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:25
 #: packages/fewo_tk2/mail/fewo_inquiry_notification.php:62
 msgid "Email"
 msgstr "E-Mail"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:146
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:27
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:26
 msgid "Phone"
 msgstr "Telefon"
 
@@ -1579,7 +1835,6 @@ msgid "Message"
 msgstr "Nachricht"
 
 #: packages/fewo_tk2/blocks/fewo_kontaktformular/view.php:183
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:33
 msgid "How did you find us?"
 msgstr "Wie sind Sie auf uns aufmerksam geworden?"
 
@@ -1663,7 +1918,7 @@ msgid "Price calculator"
 msgstr "Preisrechner"
 
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:56
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:23
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:21
 msgid "Guests"
 msgstr "Gäste"
 
@@ -1933,12 +2188,6 @@ msgstr "Bilder aus der Dateiverwaltung hinzufügen"
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:122
 msgid "Scene editor"
 msgstr "Szenen-Editor"
-
-#: packages/fewo_tk2/blocks/fewo_rundgang/form.php:147
-#: packages/fewo_tk2/blocks/fewo_karte/form.php:46
-#: packages/fewo_tk2/blocks/fewo_belegungsplan/form.php:38
-msgid "Display"
-msgstr "Darstellung"
 
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:150
 msgid "Aspect ratio"
@@ -2272,29 +2521,19 @@ msgid "On request"
 msgstr "Auf Anfrage"
 
 #: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:24
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:24
-msgid "Non-binding price"
-msgstr "Unverbindlicher Preis"
-
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:27
 msgid "Your inquiry at %s"
 msgstr "Ihre Anfrage bei %s"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:29
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:26
 msgid "Thank you for your inquiry. We have received the following details and will get back to you as soon as possible:"
 msgstr "vielen Dank für Ihre Anfrage. Wir haben folgende Angaben erhalten und melden uns so schnell wie möglich bei Ihnen:"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:30
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:27
 msgid "This is an automatically generated confirmation. Availability is only confirmed by our reply."
 msgstr "Dies ist eine automatisch erstellte Eingangsbestätigung. Ob der Zeitraum frei ist, erfahren Sie mit unserer Antwort."
 
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:32
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:42
-msgid "Hello,"
-msgstr "Guten Tag,"
-
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:34
-#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:53
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:31
+#: packages/fewo_tk2/mail/fewo_inquiry_confirmation.php:50
 msgid "Kind regards"
 msgstr "Freundliche Grüße"
 
@@ -2306,9 +2545,13 @@ msgstr "Formular"
 msgid "Nights"
 msgstr "Nächte"
 
-#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:28
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:27
 msgid "Address"
 msgstr "Anschrift"
+
+#: packages/fewo_tk2/mail/fewo_inquiry_notification.php:33
+msgid "Where found?"
+msgstr "Wo gefunden?"
 
 #: packages/fewo_tk2/mail/fewo_inquiry_notification.php:37
 msgid "New inquiry"

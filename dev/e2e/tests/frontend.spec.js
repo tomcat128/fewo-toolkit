@@ -400,7 +400,7 @@ test('Karte: lädt erst nach Zustimmung; "Karten immer laden" merkt sich die Ent
 test.describe('auf dem Smartphone (390 × 844)', () => {
   test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
 
-  for (const path of [DEMO, '/index.php/fewo-anfrage', '/index.php/fewo-doppelt']) {
+  for (const path of [DEMO, '/index.php/fewo-anfrage', '/index.php/fewo-doppelt', '/index.php/fewo-ausstattung']) {
     test(`${path} passt in die Bildschirmbreite`, async ({ page }, testInfo) => {
       await trackExternal(page);
       await page.goto(path);

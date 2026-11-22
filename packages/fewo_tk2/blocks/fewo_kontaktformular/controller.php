@@ -13,10 +13,7 @@ use FewoTk2\Block\ApartmentBlock;
 use FewoTk2\Inquiry\Inquiry;
 use FewoTk2\Inquiry\InquiryMailer;
 use FewoTk2\Inquiry\InquiryValidator;
-use FewoTk2\Pricing\PriceCalculator;
 use FewoTk2\Pricing\Pricelist;
-use FewoTk2\Pricing\PricingException;
-use FewoTk2\Pricing\Quote;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Throwable;
 
@@ -136,12 +133,7 @@ class Controller extends BlockController
             $inquiry = $validator->fill(new Inquiry(), $input);
             $page = Page::getCurrentPage();
             $inquiry->setFormName($this->formName ?: ($page instanceof Page ? (string) $page->getCollectionName() : ''));
-            $quote = $this->tryQuote($inquiry);
-            if ($quote !== null) {
-                $inquiry->setQuotedTotal($quote->getTotal())->setCurrency($quote->currency);
-            }
-
-            if ($this->deliver($inquiry, $quote)) {
+            if ($this->deliver($inquiry)) {
                 return $this->redirectToSuccess();
             }
             $errors['form'] = t('Your inquiry could not be sent. Please try again later or contact us directly by email or phone.');
@@ -228,30 +220,17 @@ class Controller extends BlockController
         return 'fewo_inquiry_' . (int) $this->bID;
     }
 
-    private function tryQuote(Inquiry $inquiry): ?Quote
-    {
-        $pricelist = $this->getPricelist();
-        if ($pricelist === null) {
-            return null;
-        }
-        try {
-            return (new PriceCalculator())->quote($pricelist, $inquiry->getArrival(), $inquiry->getDeparture(), $inquiry->getGuests());
-        } catch (PricingException) {
-            return null;
-        }
-    }
-
     /**
      * Verschickt die Anfrage per E-Mail an die im Block hinterlegte Adresse. Gespeichert wird nichts.
      *
      * @return bool false, wenn die E-Mail an den Vermieter nicht verschickt werden konnte
      */
-    private function deliver(Inquiry $inquiry, ?Quote $quote): bool
+    private function deliver(Inquiry $inquiry): bool
     {
         $logger = $this->app->make(LoggerFactory::class)->createLogger(Channels::CHANNEL_APPLICATION);
         $mailer = $this->app->make(InquiryMailer::class);
         try {
-            $mailer->sendNotification($inquiry, (string) $this->recipientEmail, $quote);
+            $mailer->sendNotification($inquiry, (string) $this->recipientEmail);
         } catch (Throwable $e) {
             $logger->error('Fewo Toolkit: inquiry notification could not be sent: ' . $e->getMessage());
 
@@ -260,7 +239,7 @@ class Controller extends BlockController
 
         if ($this->sendConfirmation) {
             try {
-                $mailer->sendConfirmation($inquiry, $quote, (string) $this->recipientEmail);
+                $mailer->sendConfirmation($inquiry, (string) $this->recipientEmail);
             } catch (Throwable $e) {
                 $logger->warning('Fewo Toolkit: inquiry confirmation could not be sent: ' . $e->getMessage());
             }

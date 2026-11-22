@@ -177,6 +177,9 @@ test('Anfrageformular: Vorgaben, Prüfung der Empfängeradresse, Captcha einscha
 test('Ausstattungsliste: Zeilen hinzufügen, verschieben und entfernen', async ({ page }) => {
   let dialog = await openAddDialog(page, 'fewo_ausstattungsliste');
   await expect(dialog.getByLabel('Spalten')).toHaveValue('2');
+  // Stil: Vorgabe "Schlicht" (so sahen die Listen bisher aus), fünf weitere zur Wahl
+  await expect(dialog.getByLabel('Stil')).toHaveValue('plain');
+  await expect(dialog.getByLabel('Stil').locator('option')).toHaveText(['Schlicht – Aufzählungspunkte', 'Häkchen', 'Kacheln', 'Karte mit Kopfzeile', 'Liste mit Trennlinien', 'Etiketten nebeneinander']);
   const rows = dialog.locator('tr.fewo-item-row');
   await expect(rows).toHaveCount(1);
   await dialog.locator('[name="title"]').fill('Küche');
@@ -204,6 +207,7 @@ test('Ausstattungsliste: Zeilen hinzufügen, verschieben und entfernen', async (
 
   const block = blocks(page, 'fewo_ausstattungsliste');
   await expect(block.locator('.fewo-amenities__title')).toHaveText('Küche');
+  await expect(block.locator('.fewo-amenities')).toHaveClass(/fewo-amenities--plain/);
   await expect(block.locator('.fewo-amenities__list > li')).toHaveCount(2);
   await expect(block.locator('.fewo-amenities__list > li').first()).toHaveText('Toaster');
   await expect(block.locator('.fewo-amenities__notes li')).toContainText('mit Tabs');
@@ -214,8 +218,21 @@ test('Ausstattungsliste: Zeilen hinzufügen, verschieben und entfernen', async (
   await expect.poll(() => values(dialog.locator('tr.fewo-item-row [name="itemName[]"]'))).toEqual(['Toaster', 'Spülmaschine']);
   await expect.poll(() => values(dialog.locator('tr.fewo-item-row [name="itemNote[]"]'))).toEqual(['', 'mit Tabs']);
   await dialog.getByLabel(/Zunächst eingeklappt/).check();
+  await dialog.getByLabel('Stil').selectOption('card');
   await submitDialog(page, dialog);
   await expect(block.locator('details.fewo-amenities__details summary')).toHaveText('Küche');
+  // Karte: Kopfzeile in der Akzentfarbe, Einträge mit Häkchen
+  await expect(block.locator('.fewo-amenities')).toHaveClass(/fewo-amenities--card/);
+  expect(await block.locator('summary').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(42, 127, 98)');
+  expect(record('btFewoAusstattungsliste')).toMatchObject({ listStyle: 'card', collapsible: 1 });
+
+  dialog = await openEditDialog(page, 'fewo_ausstattungsliste');
+  await expect(dialog.getByLabel('Stil')).toHaveValue('card');
+  await dialog.getByLabel(/Zunächst eingeklappt/).uncheck();
+  await dialog.getByLabel('Stil').selectOption('checks');
+  await submitDialog(page, dialog);
+  await expect(block.locator('.fewo-amenities')).toHaveClass(/fewo-amenities--checks/);
+  expect(await block.locator('.fewo-amenities__list > li').first().evaluate((el) => getComputedStyle(el, '::before').width)).not.toBe('auto');
 });
 
 test('Bildergalerie: Quelle umschalten, Ordner wählen', async ({ page }) => {
@@ -376,19 +393,16 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   let dialog = await openAddDialog(page, 'fewo_neuigkeiten');
   await expect(dialog.locator('.ui-dialog-title')).toHaveText('Neuigkeiten hinzufügen');
   await expect(dialog.getByLabel('Wohnung').locator('option')).toHaveText(APARTMENTS);
-  await expect(dialog.getByRole('switch', { name: 'Gültigkeitszeitraum anzeigen' })).toBeChecked();
-  // Stufen der Wichtigkeit: Vorgaben wie in Fewo-Office, "Information" statt "Info"
-  const levels = dialog.locator('#fewo-news-levels');
-  expect(await values(levels.locator('[name="levelCode[]"]'))).toEqual(['important', 'notice', 'info']);
-  expect(await values(levels.locator('[name="levelLabel[]"]'))).toEqual(['Wichtige Mitteilung', 'Hinweis', 'Information']);
-  expect(await values(levels.locator('[name="levelColor[]"]'))).toEqual(['#c62828', '#f9a825', '#2e7d32']);
+  // Stufen, Farben und Zeitraum gelten für alle Blöcke und stehen im Dashboard
+  await expect(dialog.locator('[name="levelCode[]"], [name="showPeriod"]')).toHaveCount(0);
+  await expect(dialog.getByRole('link', { name: 'Fewo Toolkit 2 › Neuigkeiten' })).toHaveAttribute('href', /dashboard\/fewo_tk2\/news$/);
 
   // Die Wohnung hat keine Adresse der Neuigkeiten: Der Block ließe sich anlegen, bliebe aber immer leer
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz – Belegung als ICS (Demo)' });
   expect(await submitExpectingErrors(page, dialog)).toContain('Für die Wohnung „Seeherz – Belegung als ICS (Demo)“ ist keine Adresse der Neuigkeiten hinterlegt.');
 
   // In den Demo-Daten stehen vier Neuigkeiten: abgelaufen, zwei aktuelle und eine erst in zehn Tagen gültige.
-  // Die Wichtige Mitteilung steht vor der Info, obwohl Fewo-Office sie danach liefert
+  // Die Wichtige Mitteilung steht vor der Information, obwohl Fewo-Office sie danach liefert
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz (Demo)' });
   await dialog.getByLabel('Überschrift (optional)').fill('Aktuelles');
   await submitDialog(page, dialog);
@@ -399,58 +413,28 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   const items = block.locator('.fewo-news__item');
   await expect(items.locator('.fewo-news__importance')).toHaveText(['Wichtige Mitteilung', 'Information']);
   await expect(items.nth(0)).toHaveClass(/fewo-news__item--important/);
-  await expect(items.nth(1)).toHaveClass(/fewo-news__item--info/);
   // rot und grün wie in Fewo-Office
   expect(await items.nth(0).locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(198, 40, 40)');
   expect(await items.nth(1).locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(46, 125, 50)');
   const [from, to] = [-5, 20].map((days) => isoDate(days).split('-').reverse().join('.'));
   await expect(items.nth(0).locator('.fewo-news__period')).toHaveText(`Gültig vom ${from} bis ${to}`);
   await expect(items.nth(0).locator('.fewo-news__text')).toHaveText(['Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.', 'Die Therme in Konstanz hat geöffnet.']);
-  expect(record('btFewoNeuigkeiten')).toMatchObject({ apartmentID: apartmentId('Seeherz (Demo)'), title: 'Aktuelles', showPeriod: 1 });
+  expect(record('btFewoNeuigkeiten')).toMatchObject({ apartmentID: apartmentId('Seeherz (Demo)'), title: 'Aktuelles' });
 
   // Neuigkeiten als XML, nur heute gültig; ohne Überschrift sind die Titel die Überschriften der zweiten Ebene
   dialog = await openEditDialog(page, 'fewo_neuigkeiten');
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherzchen (Demo)' });
   await dialog.getByLabel('Überschrift (optional)').fill('');
-  await dialog.getByLabel('Gültigkeitszeitraum anzeigen').uncheck();
   await submitDialog(page, dialog);
   await expect(block.locator('h2')).toHaveText(['Fahrräder kostenlos']);
   await expect(block.locator('.fewo-news__importance')).toHaveText(['Hinweis']);
   expect(await block.locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(249, 168, 37)');
-  await expect(block.locator('.fewo-news__period')).toHaveCount(0);
   expect(await block.locator('.fewo-news__text').innerHTML()).toBe('Zwei Fahrräder stehen im Keller bereit.<br>\nDen Schlüssel finden Sie in der Wohnung.');
 
-  // Stufen einstellen: "info" heißt "Gut zu wissen", wird blau und steht oben; "important" entfällt
   dialog = await openEditDialog(page, 'fewo_neuigkeiten');
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz (Demo)' });
   await dialog.getByLabel('Überschrift (optional)').fill('Aktuelles');
-  await dialog.getByRole('switch', { name: 'Gültigkeitszeitraum anzeigen' }).check();
-  const rows = dialog.locator('#fewo-news-levels tbody tr');
-  await rows.nth(2).locator('[name="levelLabel[]"]').fill('Gut zu wissen');
-  await rows.nth(2).locator('[name="levelColor[]"]').fill('#1565c0');
-  await rows.nth(2).getByRole('button', { name: 'Nach oben' }).click();
-  await rows.nth(1).getByRole('button', { name: 'Nach oben' }).click();
-  await rows.nth(2).getByRole('button', { name: 'Entfernen' }).click();
-  expect(await values(dialog.locator('[name="levelCode[]"]'))).toEqual(['info', 'important']);
-  // Jeder Code nur einmal
-  await dialog.locator('[name="levelCode[]"]').nth(1).fill('info');
-  expect(await submitExpectingErrors(page, dialog)).toContain('Jeder Code darf nur einer Stufe zugeordnet sein.');
-  await dialog.locator('[name="levelCode[]"]').nth(1).fill('important');
   await submitDialog(page, dialog);
-  await expect(items.locator('.fewo-news__importance')).toHaveText(['Gut zu wissen', 'Wichtige Mitteilung']);
-  await expect(block.locator('.fewo-news__item-title')).toHaveText(['Weihnachtsmarkt', 'Schwimmbadpause']);
-  expect(await items.nth(0).locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(21, 101, 192)');
-  expect(JSON.parse(record('btFewoNeuigkeiten').importanceLevels)).toEqual([
-    { code: 'info', label: 'Gut zu wissen', color: '#1565c0' },
-    { code: 'important', label: 'Wichtige Mitteilung', color: '#c62828' },
-  ]);
-
-  // Vorgaben wiederherstellen
-  dialog = await openEditDialog(page, 'fewo_neuigkeiten');
-  await dialog.getByRole('button', { name: 'Vorgaben wiederherstellen' }).click();
-  expect(await values(dialog.locator('[name="levelCode[]"]'))).toEqual(['important', 'notice', 'info']);
-  await submitDialog(page, dialog);
-  await expect(items.locator('.fewo-news__importance')).toHaveText(['Wichtige Mitteilung', 'Information']);
 });
 
 test('Veröffentlichen: Besucher sehen alle neun Blöcke, das Log bleibt sauber', async ({ page, browser }) => {
