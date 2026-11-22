@@ -13,15 +13,20 @@ final class ImageMemory
 {
     /**
      * Speicher je Bildpunkt beim Verkleinern: Die Bildbibliothek (GD über Imagine) hält das entpackte Original
-     * und eine Arbeitskopie mit je rund 6 Byte je Bildpunkt (gemessen: 50 MB für 4096 × 2048).
+     * und eine Arbeitskopie. Gemessen mit Concrete 9.5.7 an einem Panorama von 5000 × 2500: 11,9 bis
+     * 12,6 Byte je Bildpunkt; gerechnet wird mit etwas mehr.
      */
-    private const BYTES_PER_PIXEL = 12;
+    private const BYTES_PER_PIXEL = 14;
+
+    /** Reserve für alles, was die Seite nach dem Verkleinern noch braucht. */
+    private const HEADROOM = 8 * 1024 * 1024;
 
     /**
+     * @param int $fileSize Größe der Bilddatei in Byte: Sie wird zum Entpacken vollständig eingelesen
      * @param int|null $limit Speichergrenze in Byte (null = Einstellung von PHP), -1 = unbegrenzt
      * @param int|null $used bereits belegter Speicher in Byte (null = aktueller Stand)
      */
-    public static function canResize(int $width, int $height, ?int $limit = null, ?int $used = null): bool
+    public static function canResize(int $width, int $height, int $fileSize = 0, ?int $limit = null, ?int $used = null): bool
     {
         if ($width < 1 || $height < 1) {
             // Größe unbekannt (z. B. SVG): Concrete entscheidet selbst
@@ -32,7 +37,11 @@ final class ImageMemory
             return true;
         }
 
-        return ($used ?? memory_get_usage(true)) + $width * $height * self::BYTES_PER_PIXEL <= $limit;
+        $needed = $width * $height * self::BYTES_PER_PIXEL + 2 * max(0, $fileSize) + self::HEADROOM;
+
+        // Der tatsächlich belegte Speicher zählt, nicht der einmal vom System geholte: Nach dem ersten großen Bild
+        // einer Seite bliebe der sonst hoch, und alle weiteren Bilder würden grundlos nicht mehr verkleinert.
+        return ($used ?? memory_get_usage()) + $needed <= $limit;
     }
 
     /**

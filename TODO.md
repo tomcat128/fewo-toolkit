@@ -134,6 +134,13 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
   auf bestimmten Seiten“ mit einer Liste von Pfaden (Unterseiten gehören dazu, `/` = Startseite, eingefügte
   Adressen werden zum Pfad gekürzt). Der Abschnitt heißt jetzt „Chat unten rechts“ statt „Chat auf jeder Seite“
 
+- [x] **Version 2.5.1 – Speicherprüfung nachgeschärft:** Auf dem Server (128 MB) brach der Dialog „360°-Rundgang
+  bearbeiten“ beim Vorschaubild trotzdem ab. Die Schätzung war zu knapp (gemessen 11,9–12,6 Byte je Bildpunkt,
+  gerechnet wird jetzt mit 14 plus Dateigröße und Reserve), und gezählt wird der tatsächlich belegte Speicher.
+  Unter 128 MB nachgemessen: bis etwa 6,5 Megapixel wird verkleinert (Spitze 119 MB), darüber bleibt das Original.
+  **Empfehlung für den Server:** `memory_limit` auf 256–512 MB anheben, sonst gibt es von großen Panoramen keine
+  kleineren Fassungen für Mobilgeräte
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung

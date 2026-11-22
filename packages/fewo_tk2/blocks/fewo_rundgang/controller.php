@@ -211,7 +211,7 @@ class Controller extends BlockController
         if ($width <= self::MOBILE_MAX_WIDTH || $height < 1) {
             return null;
         }
-        if (!ImageMemory::canResize($width, $height)) {
+        if (!ImageMemory::canResize($width, $height, (int) $version->getFullSize())) {
             // zu wenig Arbeitsspeicher für dieses Bild: es bleibt beim Original (ein Abbruch wäre nicht abzufangen)
             return null;
         }
@@ -230,7 +230,7 @@ class Controller extends BlockController
 
     private function getThumbnailUrl(Version $version): string
     {
-        if (!ImageMemory::canResize((int) $version->getAttribute('width'), (int) $version->getAttribute('height'))) {
+        if (!ImageMemory::canResize((int) $version->getAttribute('width'), (int) $version->getAttribute('height'), (int) $version->getFullSize())) {
             return $this->localUrl((string) $version->getURL());
         }
         try {

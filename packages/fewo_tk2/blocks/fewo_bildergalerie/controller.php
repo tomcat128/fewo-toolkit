@@ -93,7 +93,7 @@ class Controller extends BlockController
             }
             $width = (int) $version->getAttribute('width');
             $height = (int) $version->getAttribute('height');
-            if (ImageMemory::canResize($width, $height)) {
+            if (ImageMemory::canResize($width, $height, (int) $version->getFullSize())) {
                 $thumb = $imageHelper->getThumbnail($file, $thumbWidth, $thumbHeight, true);
                 $large = $imageHelper->getThumbnail($file, 2000, 2000, false);
             } else {
