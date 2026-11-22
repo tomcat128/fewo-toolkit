@@ -158,8 +158,38 @@
 
 .fewo-calendar__more-toggle {
     cursor: pointer;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
     font-weight: 600;
+    list-style: none;
+}
+
+.fewo-calendar__more-toggle::-webkit-details-marker {
+    display: none;
+}
+
+/* Pfeil vor dem Text: nach unten = weitere Monate aufklappen, nach oben = wieder einklappen.
+ * Als Maske gezeichnet, damit er die Schriftfarbe des Themes annimmt – ohne Icon-Schrift. */
+.fewo-calendar__more-toggle::before {
+    content: "";
+    flex: none;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 5.5 8 11l5.5-5.5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 5.5 8 11l5.5-5.5' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform .15s;
+}
+
+.fewo-calendar__more[open] > .fewo-calendar__more-toggle::before {
+    transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fewo-calendar__more-toggle::before {
+        transition: none;
+    }
 }
 
 .fewo-calendar__more-hide,
