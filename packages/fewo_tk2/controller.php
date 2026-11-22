@@ -48,7 +48,7 @@ class Controller extends Package implements ProviderAggregateInterface
 
     protected $pkgHandle = 'fewo_tk2';
 
-    protected $pkgVersion = '2.6.1';
+    protected $pkgVersion = '2.7.0';
 
     protected $appVersionRequired = '9.5.0';
 

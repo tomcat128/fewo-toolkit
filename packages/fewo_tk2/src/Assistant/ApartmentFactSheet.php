@@ -4,6 +4,7 @@ namespace FewoTk2\Assistant;
 
 use DateTimeImmutable;
 use FewoTk2\Calendar\Occupancy;
+use FewoTk2\News\ImportanceLevels;
 use FewoTk2\Pricing\Pricelist;
 use FewoTk2\Pricing\PriceTable;
 use FewoTk2\Support\Money;
@@ -143,9 +144,14 @@ final class ApartmentFactSheet
     public static function news(array $items): string
     {
         $lines = [];
+        $levels = ImportanceLevels::defaults();
         foreach ($items as $item) {
             $text = trim((string) preg_replace('/\s+/u', ' ', $item->text));
-            $lines[] = '- ' . trim(t('%1$s – %2$s (valid until %3$s):', $item->getImportanceLabel(), $item->title, $item->dateTo->format('d.m.Y')) . ' ' . $text);
+            $label = ImportanceLevels::find($levels, $item->importance)['label'] ?? '';
+            $heading = $label !== ''
+                ? t('%1$s – %2$s (valid until %3$s):', $label, $item->title, $item->dateTo->format('d.m.Y'))
+                : t('%1$s (valid until %2$s):', $item->title, $item->dateTo->format('d.m.Y'));
+            $lines[] = '- ' . trim($heading . ' ' . $text);
         }
 
         return $lines === [] ? '' : t('Current news from the hosts:') . "\n" . implode("\n", $lines);

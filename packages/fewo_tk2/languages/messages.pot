@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: fewo_tk2 2.6.1\n"
+"Project-Id-Version: fewo_tk2 2.7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-22T18:51:46+01:00\n"
-"PO-Revision-Date: 2026-11-22T18:51:46+01:00\n"
+"POT-Creation-Date: 2026-11-22T19:51:54+01:00\n"
+"PO-Revision-Date: 2026-11-22T19:51:54+01:00\n"
 "Language: en_US\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -48,69 +48,73 @@ msgstr ""
 msgid "Occupancy calendar, prices, price calculator and news with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:54
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:55
 msgid "Prices per night by month:"
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:56
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:57
 msgid "Final cleaning: %s once per stay, in addition to the price per night."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:59
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:60
 msgid "Minimum stay: %d nights."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:62
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:63
 msgid "Maximum number of guests: %d."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:65
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:66
 msgid "Down payment: %s %% of the total price."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:99
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:100
 msgid "%1$s – %2$d periods with different prices:"
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:130
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:178
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:131
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:184
 #: packages/fewo_tk2/src/Assistant/StayQuote.php:86
 msgid "%1$s to %2$s"
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:148
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:152
 msgid "%1$s – %2$s (valid until %3$s):"
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:151
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:153
+msgid "%1$s (valid until %2$s):"
+msgstr ""
+
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:157
 msgid "Current news from the hosts:"
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:172
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:178
 msgid "%2$s to %3$s (%1$d night)"
 msgid_plural "%2$s to %3$s (%1$d nights)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:180
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:186
 msgid "Availability %s: fully booked, no free nights."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:183
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:189
 msgid "Free periods %s (first date = earliest arrival, second date = latest departure; every other night in this time is booked):"
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:187
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:193
 msgid "Next free period: %s."
 msgstr ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:191
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:197
 msgid "Next free period for a stay of %1$d week (%2$d nights or more): %3$s."
 msgid_plural "Next free period for a stay of %1$d weeks (%2$d nights or more): %3$s."
 msgstr[0] ""
 msgstr[1] ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:219
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:225
 #: packages/fewo_tk2/src/Assistant/StayQuote.php:71
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:16
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:51
@@ -121,7 +125,7 @@ msgid_plural "%s guests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:220
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:226
 #: packages/fewo_tk2/src/Assistant/StayQuote.php:72
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/view.php:40
 msgid "%1$s–%2$s guests"
@@ -231,16 +235,16 @@ msgstr ""
 msgid "No apartment has been selected or it no longer exists."
 msgstr ""
 
-#: packages/fewo_tk2/src/News/NewsItem.php:41
-msgid "Notice"
-msgstr ""
-
-#: packages/fewo_tk2/src/News/NewsItem.php:42
+#: packages/fewo_tk2/src/News/ImportanceLevels.php:30
 msgid "Important notice"
 msgstr ""
 
-#: packages/fewo_tk2/src/News/NewsItem.php:43
-msgid "Info"
+#: packages/fewo_tk2/src/News/ImportanceLevels.php:31
+msgid "Notice"
+msgstr ""
+
+#: packages/fewo_tk2/src/News/ImportanceLevels.php:32
+msgid "Information"
 msgstr ""
 
 #: packages/fewo_tk2/src/News/NewsLoader.php:23
@@ -792,10 +796,10 @@ msgid "Price list"
 msgstr ""
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:58
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:36
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:21
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:40
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:46
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:38
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:22
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:41
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:47
 msgid "News"
 msgstr ""
 
@@ -1047,7 +1051,7 @@ msgstr ""
 
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:62
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:66
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:58
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:60
 #: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:67
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:52
 #: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:63
@@ -1096,6 +1100,7 @@ msgid "All images directly in this folder are shown. Use the image description o
 msgstr ""
 
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/form.php:38
+#: packages/fewo_tk2/elements/importance_rows.php:40
 msgid "Order"
 msgstr ""
 
@@ -1132,30 +1137,38 @@ msgstr ""
 msgid "Image %1$s of %2$s"
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:41
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:43
 msgid "Shows the current news of a holiday apartment from Fewo-Office – each one only during its period of validity."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:70
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:74
 msgid "No news URL is stored for this apartment."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:90
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:95
 #: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:152
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:73
 #: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:113
 msgid "Please select an apartment."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:92
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:97
 msgid "No news URL is stored for the apartment \"%s\". Please add it in the dashboard under Fewo Toolkit 2 › Apartments."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:20
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:101
+msgid "Each importance level needs a code (letters, digits, \"-\" or \"_\", e.g. info)."
+msgstr ""
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:104
+msgid "Each code may only be assigned to one importance level."
+msgstr ""
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:21
 msgid "The news of this apartment are loaded from Fewo-Office (news URL of the apartment)."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:24
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:25
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:26
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:27
 #: packages/fewo_tk2/blocks/fewo_preisrechner/form.php:26
@@ -1165,27 +1178,35 @@ msgstr ""
 msgid "Heading (optional)"
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:26
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:27
 msgid "Only shown when there is current news."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:31
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:32
 msgid "Show the period of validity"
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:35
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:33
+msgid "Below the title, e.g. „Valid from 01.12. to 24.12.“. When switched off, only the title and text are shown."
+msgstr ""
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:37
+msgid "Importance levels"
+msgstr ""
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:42
 msgid "News are written in Fewo-Office. Each one appears here from the first to the last day of its period; when there is no current news, the block shows nothing."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:24
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:25
 msgid "News: there is no current news at the moment. The block is only visible while there is."
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:34
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:35
 msgid "Valid on %s"
 msgstr ""
 
-#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:37
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:38
 msgid "Valid from %1$s to %2$s"
 msgstr ""
 
@@ -1207,18 +1228,21 @@ msgstr ""
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:18
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:35
+#: packages/fewo_tk2/elements/importance_rows.php:26
 #: packages/fewo_tk2/elements/question_rows.php:19
 msgid "Move up"
 msgstr ""
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:19
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:36
+#: packages/fewo_tk2/elements/importance_rows.php:26
 #: packages/fewo_tk2/elements/question_rows.php:20
 msgid "Move down"
 msgstr ""
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:20
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:37
+#: packages/fewo_tk2/elements/importance_rows.php:26
 #: packages/fewo_tk2/elements/note_rows.php:22
 #: packages/fewo_tk2/elements/note_rows.php:32
 #: packages/fewo_tk2/elements/question_rows.php:21
@@ -2343,6 +2367,41 @@ msgstr ""
 
 #: packages/fewo_tk2/elements/feed_notice.php:25
 msgid "The last update failed (%s). The data from %s is shown."
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:20
+#: packages/fewo_tk2/elements/importance_rows.php:37
+msgid "Code in the feed"
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:22
+#: packages/fewo_tk2/elements/importance_rows.php:38
+msgid "Label"
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:22
+msgid "e.g. Information"
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:24
+#: packages/fewo_tk2/elements/importance_rows.php:39
+msgid "Colour"
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:24
+msgid "Choose a colour"
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:32
+msgid "Fewo-Office marks each news item with a code: info, notice or important. Here you decide which label and colour each code gets. The order of the rows is the order on the page – the first level is shown at the top. News with a code that is not listed are shown in grey without a label."
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:54
+msgid "Add level"
+msgstr ""
+
+#: packages/fewo_tk2/elements/importance_rows.php:55
+msgid "Restore defaults"
 msgstr ""
 
 #: packages/fewo_tk2/elements/note_rows.php:18

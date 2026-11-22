@@ -52,20 +52,19 @@ class NewsReader
     }
 
     /**
-     * Die Neuigkeiten, in deren Zeitraum der Tag fällt – wichtige zuerst (Wichtige Mitteilung, Hinweis, Info),
-     * innerhalb einer Stufe in der Reihenfolge von Fewo-Office.
+     * Die Neuigkeiten, in deren Zeitraum der Tag fällt, in der Reihenfolge der Stufen (Vorgabe: Wichtige Mitteilung,
+     * Hinweis, Information), innerhalb einer Stufe in der Reihenfolge von Fewo-Office.
      *
      * @param NewsItem[] $items
+     * @param array<int, array{code: string, label: string, color: string}>|null $levels null = Vorgaben
      *
      * @return NewsItem[]
      */
-    public static function current(array $items, DateTimeImmutable $today): array
+    public static function current(array $items, DateTimeImmutable $today, ?array $levels = null): array
     {
-        $current = array_values(array_filter($items, static fn (NewsItem $item): bool => $item->isCurrent($today)));
-        // usort ist seit PHP 8.0 stabil: Gleich wichtige behalten ihre Reihenfolge
-        usort($current, static fn (NewsItem $a, NewsItem $b): int => $b->getImportanceRank() <=> $a->getImportanceRank());
+        $current = array_filter($items, static fn (NewsItem $item): bool => $item->isCurrent($today));
 
-        return $current;
+        return ImportanceLevels::sort($current, $levels ?? ImportanceLevels::defaults());
     }
 
     private function line(mixed $value): string

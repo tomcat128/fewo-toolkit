@@ -21,12 +21,14 @@ final class LoadedNews
     }
 
     /**
-     * Die Neuigkeiten, in deren Zeitraum der Tag fällt.
+     * Die Neuigkeiten, in deren Zeitraum der Tag fällt, in der Reihenfolge der Stufen.
+     *
+     * @param array<int, array{code: string, label: string, color: string}>|null $levels null = Vorgaben
      *
      * @return NewsItem[]
      */
-    public function current(DateTimeImmutable $today): array
+    public function current(DateTimeImmutable $today, ?array $levels = null): array
     {
-        return NewsReader::current($this->items, $today);
+        return NewsReader::current($this->items, $today, $levels);
     }
 }

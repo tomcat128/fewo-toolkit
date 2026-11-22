@@ -376,7 +376,12 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   let dialog = await openAddDialog(page, 'fewo_neuigkeiten');
   await expect(dialog.locator('.ui-dialog-title')).toHaveText('Neuigkeiten hinzufügen');
   await expect(dialog.getByLabel('Wohnung').locator('option')).toHaveText(APARTMENTS);
-  await expect(dialog.getByLabel('Gültigkeitszeitraum anzeigen')).toBeChecked();
+  await expect(dialog.getByRole('switch', { name: 'Gültigkeitszeitraum anzeigen' })).toBeChecked();
+  // Stufen der Wichtigkeit: Vorgaben wie in Fewo-Office, "Information" statt "Info"
+  const levels = dialog.locator('#fewo-news-levels');
+  expect(await values(levels.locator('[name="levelCode[]"]'))).toEqual(['important', 'notice', 'info']);
+  expect(await values(levels.locator('[name="levelLabel[]"]'))).toEqual(['Wichtige Mitteilung', 'Hinweis', 'Information']);
+  expect(await values(levels.locator('[name="levelColor[]"]'))).toEqual(['#c62828', '#f9a825', '#2e7d32']);
 
   // Die Wohnung hat keine Adresse der Neuigkeiten: Der Block ließe sich anlegen, bliebe aber immer leer
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz – Belegung als ICS (Demo)' });
@@ -392,7 +397,7 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   await expect(block.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause', 'Weihnachtsmarkt']);
   await expect(block.locator('h3')).toHaveText(['Schwimmbadpause', 'Weihnachtsmarkt']);
   const items = block.locator('.fewo-news__item');
-  await expect(items.locator('.fewo-news__importance')).toHaveText(['Wichtige Mitteilung', 'Info']);
+  await expect(items.locator('.fewo-news__importance')).toHaveText(['Wichtige Mitteilung', 'Information']);
   await expect(items.nth(0)).toHaveClass(/fewo-news__item--important/);
   await expect(items.nth(1)).toHaveClass(/fewo-news__item--info/);
   // rot und grün wie in Fewo-Office
@@ -415,11 +420,37 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   await expect(block.locator('.fewo-news__period')).toHaveCount(0);
   expect(await block.locator('.fewo-news__text').innerHTML()).toBe('Zwei Fahrräder stehen im Keller bereit.<br>\nDen Schlüssel finden Sie in der Wohnung.');
 
+  // Stufen einstellen: "info" heißt "Gut zu wissen", wird blau und steht oben; "important" entfällt
   dialog = await openEditDialog(page, 'fewo_neuigkeiten');
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz (Demo)' });
   await dialog.getByLabel('Überschrift (optional)').fill('Aktuelles');
-  await dialog.getByLabel('Gültigkeitszeitraum anzeigen').check();
+  await dialog.getByRole('switch', { name: 'Gültigkeitszeitraum anzeigen' }).check();
+  const rows = dialog.locator('#fewo-news-levels tbody tr');
+  await rows.nth(2).locator('[name="levelLabel[]"]').fill('Gut zu wissen');
+  await rows.nth(2).locator('[name="levelColor[]"]').fill('#1565c0');
+  await rows.nth(2).getByRole('button', { name: 'Nach oben' }).click();
+  await rows.nth(1).getByRole('button', { name: 'Nach oben' }).click();
+  await rows.nth(2).getByRole('button', { name: 'Entfernen' }).click();
+  expect(await values(dialog.locator('[name="levelCode[]"]'))).toEqual(['info', 'important']);
+  // Jeder Code nur einmal
+  await dialog.locator('[name="levelCode[]"]').nth(1).fill('info');
+  expect(await submitExpectingErrors(page, dialog)).toContain('Jeder Code darf nur einer Stufe zugeordnet sein.');
+  await dialog.locator('[name="levelCode[]"]').nth(1).fill('important');
   await submitDialog(page, dialog);
+  await expect(items.locator('.fewo-news__importance')).toHaveText(['Gut zu wissen', 'Wichtige Mitteilung']);
+  await expect(block.locator('.fewo-news__item-title')).toHaveText(['Weihnachtsmarkt', 'Schwimmbadpause']);
+  expect(await items.nth(0).locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(21, 101, 192)');
+  expect(JSON.parse(record('btFewoNeuigkeiten').importanceLevels)).toEqual([
+    { code: 'info', label: 'Gut zu wissen', color: '#1565c0' },
+    { code: 'important', label: 'Wichtige Mitteilung', color: '#c62828' },
+  ]);
+
+  // Vorgaben wiederherstellen
+  dialog = await openEditDialog(page, 'fewo_neuigkeiten');
+  await dialog.getByRole('button', { name: 'Vorgaben wiederherstellen' }).click();
+  expect(await values(dialog.locator('[name="levelCode[]"]'))).toEqual(['important', 'notice', 'info']);
+  await submitDialog(page, dialog);
+  await expect(items.locator('.fewo-news__importance')).toHaveText(['Wichtige Mitteilung', 'Information']);
 });
 
 test('Veröffentlichen: Besucher sehen alle neun Blöcke, das Log bleibt sauber', async ({ page, browser }) => {

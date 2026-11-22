@@ -158,6 +158,12 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
   Testdaten jetzt aus dem echten Feed (`fewo-office.com/api/neuigkeiten/seeherz.*`); die Seeherz-Testinstanz liest
   ihn direkt
 
+- [x] **Version 2.7.0 – Stufen der Wichtigkeit im Block einstellbar:** je Zeile Code aus dem Feed, Bezeichnung und
+  Farbe (Farbwähler des Browsers), Reihenfolge der Zeilen = Reihenfolge der Anzeige, „Vorgaben wiederherstellen“.
+  Vorgabe „Information“ statt „Info“. Unbekannte Codes grau ohne Bezeichnung. Schriftfarbe auf dem Schild und
+  Hintergrund der Meldung werden aus der Farbe berechnet (`ImportanceLevels`). Die CSS-Variablen je Stufe aus
+  2.6.1 entfallen
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung

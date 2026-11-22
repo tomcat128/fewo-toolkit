@@ -18,5 +18,8 @@
             <default value="1"/>
             <notnull/>
         </field>
+        <!-- Stufen der Wichtigkeit als JSON: [{code, label, color}, …]; leer = Vorgaben -->
+        <field name="importanceLevels" type="text">
+        </field>
     </table>
 </schema>

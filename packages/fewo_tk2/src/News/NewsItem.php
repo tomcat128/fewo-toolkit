@@ -6,7 +6,8 @@ use DateTimeImmutable;
 
 /**
  * Eine Neuigkeit aus Fewo-Office: Titel und Text, gültig von $dateFrom bis $dateTo (beide Tage zählen mit),
- * mit ihrer Wichtigkeit wie in Fewo-Office: Info (grün), Hinweis (gelb), Wichtige Mitteilung (rot).
+ * mit dem Code ihrer Wichtigkeit aus Fewo-Office ("info", "notice", "important"). Wie eine Stufe aussieht, legt der
+ * Block fest (siehe ImportanceLevels).
  */
 final class NewsItem
 {
@@ -14,9 +15,7 @@ final class NewsItem
     public const NOTICE = 'notice';
     public const IMPORTANT = 'important';
 
-    /** Von wenig zu sehr wichtig. */
-    public const IMPORTANCE_LEVELS = [self::INFO, self::NOTICE, self::IMPORTANT];
-
+    /** Code der Wichtigkeit in Kleinbuchstaben. */
     public readonly string $importance;
 
     public function __construct(
@@ -27,29 +26,9 @@ final class NewsItem
         public readonly DateTimeImmutable $dateTo,
         string $importance = self::INFO,
     ) {
-        // Unbekannte Stufe (etwa eine spätere Erweiterung in Fewo-Office) oder ältere Daten ohne Angabe: Info
-        $importance = strtolower(trim($importance));
-        $this->importance = in_array($importance, self::IMPORTANCE_LEVELS, true) ? $importance : self::INFO;
-    }
-
-    /**
-     * Bezeichnung der Wichtigkeit in der Sprache der Website.
-     */
-    public function getImportanceLabel(): string
-    {
-        return match ($this->importance) {
-            self::NOTICE => t('Notice'),
-            self::IMPORTANT => t('Important notice'),
-            default => t('Info'),
-        };
-    }
-
-    /**
-     * Rangfolge zum Sortieren: wichtige zuerst.
-     */
-    public function getImportanceRank(): int
-    {
-        return (int) array_search($this->importance, self::IMPORTANCE_LEVELS, true);
+        // Ältere Daten ohne Angabe: Info. Unbekannte Codes bleiben erhalten – der Block kann sie einer Stufe zuordnen
+        $code = ImportanceLevels::code($importance);
+        $this->importance = $code !== '' ? $code : self::INFO;
     }
 
     /**

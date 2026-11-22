@@ -8,6 +8,7 @@ use DateTimeZone;
 use FewoTk2\Apartment\ApartmentRepository;
 use FewoTk2\Block\AddDefaults;
 use FewoTk2\Block\ApartmentBlock;
+use FewoTk2\News\ImportanceLevels;
 use FewoTk2\News\NewsLoader;
 
 /**
@@ -22,10 +23,11 @@ class Controller extends BlockController
     public $apartmentID = 0;
     public $title = '';
     public $showPeriod = true;
+    public $importanceLevels = '';
 
     protected $btTable = 'btFewoNeuigkeiten';
-    protected $btInterfaceWidth = 560;
-    protected $btInterfaceHeight = 400;
+    protected $btInterfaceWidth = 680;
+    protected $btInterfaceHeight = 600;
     protected $btDefaultSet = 'fewo_tk2';
     protected $btCacheBlockRecord = true;
     // Kein Output-Cache: Was angezeigt wird, hängt vom Tag und vom Stand in Fewo-Office ab.
@@ -56,12 +58,14 @@ class Controller extends BlockController
     public function edit()
     {
         $this->setApartmentOptions(t('** Please select'));
+        $this->set('levels', ImportanceLevels::decode((string) $this->importanceLevels));
     }
 
     public function view()
     {
         $today = new DateTimeImmutable('today', new DateTimeZone(date_default_timezone_get()));
         $apartment = $this->getApartment();
+        $levels = ImportanceLevels::decode((string) $this->importanceLevels);
         $items = [];
         $feed = null;
         if ($apartment === null) {
@@ -70,12 +74,13 @@ class Controller extends BlockController
             $error = t('No news URL is stored for this apartment.');
         } else {
             $loaded = $this->app->make(NewsLoader::class)->load($apartment->getNewsUrl(), $apartment->getRefreshMinutes());
-            $items = $loaded->current($today);
+            $items = $loaded->current($today, $levels);
             $feed = $loaded->feed;
             $error = $loaded->error;
         }
 
         $this->set('items', $items);
+        $this->set('levels', $levels);
         $this->set('feed', $feed);
         $this->set('error', $error);
         $this->set('canEdit', $this->canEditPage());
@@ -91,6 +96,13 @@ class Controller extends BlockController
         } elseif ($apartment->getNewsUrl() === '') {
             $errors->add(t('No news URL is stored for the apartment "%s". Please add it in the dashboard under Fewo Toolkit 2 › Apartments.', $apartment->getName()));
         }
+        $codes = array_map(ImportanceLevels::code(...), is_array($args['levelCode'] ?? null) ? $args['levelCode'] : []);
+        if (in_array('', $codes, true)) {
+            $errors->add(t('Each importance level needs a code (letters, digits, "-" or "_", e.g. info).'));
+        }
+        if (count($codes) !== count(array_unique($codes))) {
+            $errors->add(t('Each code may only be assigned to one importance level.'));
+        }
 
         return $errors;
     }
@@ -101,6 +113,7 @@ class Controller extends BlockController
             'apartmentID' => (int) ($args['apartmentID'] ?? 0),
             'title' => trim((string) ($args['title'] ?? '')),
             'showPeriod' => !empty($args['showPeriod']) ? 1 : 0,
+            'importanceLevels' => ImportanceLevels::encode(ImportanceLevels::fromForm($args['levelCode'] ?? [], $args['levelLabel'] ?? [], $args['levelColor'] ?? [])),
         ]);
     }
 }

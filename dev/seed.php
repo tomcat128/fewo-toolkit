@@ -347,8 +347,9 @@ $map = static fn (string $title, string $lat, string $lng): array => ['fewo_kart
     'markerLat' => [$lat], 'markerLng' => [$lng], 'markerTitle' => [$title], 'markerText' => [''], 'zoom' => 13, 'height' => 300, 'requireConsent' => 1,
 ]];
 $makePage('fewo-doppelt', 'Fewo Doppelt', [
-    // Neuigkeiten als XML, ohne Überschrift und Zeitraum
-    ['fewo_neuigkeiten', ['apartmentID' => $seeherzchen, 'title' => '', 'showPeriod' => 0]],
+    // Neuigkeiten als XML, ohne Überschrift und Zeitraum, mit eigener Bezeichnung und Farbe für "notice"
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherzchen, 'title' => '', 'showPeriod' => 0,
+        'levelCode' => ['notice', 'info'], 'levelLabel' => ['Gut zu wissen', 'Information'], 'levelColor' => ['#1565c0', '#2e7d32']]],
     ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Aktuelles Seeherz', 'showPeriod' => 1]],
     // Belegung im ICS-Format; "Betriebsferien" wird hier als "auf Anfrage" dargestellt
     $calendar('Belegung Seeherz', $seeherzIcs, 'Betriebsferien'),

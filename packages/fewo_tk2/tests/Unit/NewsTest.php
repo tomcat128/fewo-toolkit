@@ -5,6 +5,7 @@ namespace FewoTk2\Tests\Unit;
 use DateTimeImmutable;
 use FewoTk2\Assistant\ApartmentFactSheet;
 use FewoTk2\Feed\InvalidFeedException;
+use FewoTk2\News\ImportanceLevels;
 use FewoTk2\News\NewsItem;
 use FewoTk2\News\NewsReader;
 use PHPUnit\Framework\TestCase;
@@ -52,19 +53,73 @@ final class NewsTest extends TestCase
         self::assertStringStartsWith('In der Schlossstraße gibt es aufgrund von Bauarbeiten keine Stellplätze.', $json[0]->text);
     }
 
-    public function testImportanceLevelsLikeInFewoOffice(): void
+    public function testImportanceCodesFromTheFeed(): void
     {
         $items = (new NewsReader())->read($this->fixture('json'));
-        self::assertSame(['Notice', 'Info', 'Important notice'], array_map(static fn (NewsItem $item) => $item->getImportanceLabel(), $items));
+        self::assertSame(['notice', 'info', 'important'], array_map(static fn (NewsItem $item) => $item->importance, $items));
 
-        // Ohne Angabe (Daten vor Einführung der Stufen) und bei unbekannter Stufe: Info
+        // Ohne Angabe (Daten vor Einführung der Stufen): info. Unbekannte Codes bleiben erhalten, der Block ordnet sie zu
         $other = (new NewsReader())->read($this->json([
             ['id' => 1, 'title' => 'Ohne Stufe', 'text' => 'x', 'date_start' => '2026-11-01', 'date_end' => '2026-11-30'],
-            ['id' => 2, 'title' => 'Unbekannt', 'text' => 'x', 'importance' => 'urgent', 'date_start' => '2026-11-01', 'date_end' => '2026-11-30'],
+            ['id' => 2, 'title' => 'Neue Stufe', 'text' => 'x', 'importance' => 'urgent', 'date_start' => '2026-11-01', 'date_end' => '2026-11-30'],
             ['id' => 3, 'title' => 'Groß geschrieben', 'text' => 'x', 'importance' => ' IMPORTANT ', 'date_start' => '2026-11-01', 'date_end' => '2026-11-30'],
             ['id' => 4, 'title' => 'Kein Text', 'text' => 'x', 'importance' => ['notice'], 'date_start' => '2026-11-01', 'date_end' => '2026-11-30'],
+            ['id' => 5, 'title' => 'Ungültig', 'text' => 'x', 'importance' => '<b>', 'date_start' => '2026-11-01', 'date_end' => '2026-11-30'],
         ]));
-        self::assertSame(['info', 'info', 'important', 'info'], array_map(static fn (NewsItem $item) => $item->importance, $other));
+        self::assertSame(['info', 'urgent', 'important', 'info', 'info'], array_map(static fn (NewsItem $item) => $item->importance, $other));
+    }
+
+    public function testDefaultLevelsLikeInFewoOffice(): void
+    {
+        self::assertSame([
+            ['code' => 'important', 'label' => 'Important notice', 'color' => '#c62828'],
+            ['code' => 'notice', 'label' => 'Notice', 'color' => '#f9a825'],
+            ['code' => 'info', 'label' => 'Information', 'color' => '#2e7d32'],
+        ], ImportanceLevels::defaults());
+        // Ein Block ohne gespeicherte Stufen (oder mit unlesbaren) nimmt die Vorgaben
+        self::assertSame(ImportanceLevels::defaults(), ImportanceLevels::decode(''));
+        self::assertSame(ImportanceLevels::defaults(), ImportanceLevels::decode('[]'));
+        self::assertSame(ImportanceLevels::defaults(), ImportanceLevels::decode('kein JSON'));
+    }
+
+    public function testLevelsFromTheBlockForm(): void
+    {
+        $levels = ImportanceLevels::fromForm(
+            [' Info ', 'urgent', '', 'info', 'mit Leerzeichen', 'notice'],
+            ["Information\n zum Haus", 'Dringend', 'ohne Code', 'doppelt', 'x', str_repeat('L', 100)],
+            ['#1E88E5', '#f00', '#000000', '#ffffff', '#123456', 'rot'],
+        );
+        self::assertSame([
+            ['code' => 'info', 'label' => 'Information zum Haus', 'color' => '#1e88e5'],
+            ['code' => 'urgent', 'label' => 'Dringend', 'color' => '#ff0000'],
+            ['code' => 'notice', 'label' => str_repeat('L', ImportanceLevels::MAX_LABEL_CHARS), 'color' => ImportanceLevels::NEUTRAL_COLOR],
+        ], $levels);
+        // gespeichert und wieder gelesen
+        self::assertSame($levels, ImportanceLevels::decode(ImportanceLevels::encode($levels)));
+        self::assertSame(['code' => 'urgent', 'label' => 'Dringend', 'color' => '#ff0000'], ImportanceLevels::find($levels, 'urgent'));
+        self::assertNull(ImportanceLevels::find($levels, 'important'));
+    }
+
+    public function testColoursOfALevel(): void
+    {
+        // Schrift auf dem Schild: weiß auf dunklen, schwarz auf hellen Farben; Hintergrund: 10 % der Farbe auf Weiß
+        self::assertSame(['color' => '#c62828', 'text' => '#fff', 'background' => '#f9eaea'], ImportanceLevels::colors('#c62828'));
+        self::assertSame(['color' => '#2e7d32', 'text' => '#fff', 'background' => '#eaf2eb'], ImportanceLevels::colors('#2e7d32'));
+        self::assertSame(['color' => '#f9a825', 'text' => '#000', 'background' => '#fef6e9'], ImportanceLevels::colors('#f9a825'));
+        self::assertSame('#000', ImportanceLevels::colors('#ffffff')['text']);
+        self::assertSame(ImportanceLevels::NEUTRAL_COLOR, ImportanceLevels::colors('kaputt')['color']);
+    }
+
+    public function testOrderFollowsTheLevelsOfTheBlock(): void
+    {
+        $items = (new NewsReader())->read($this->fixture('json'));
+        $today = new DateTimeImmutable('2026-11-22');
+        $levels = [
+            ['code' => 'info', 'label' => 'Information', 'color' => '#2e7d32'],
+            ['code' => 'important', 'label' => 'Wichtig', 'color' => '#c62828'],
+        ];
+        // Information zuerst, dann Wichtig; "notice" ist nicht eingetragen und kommt zuletzt
+        self::assertSame([3, 1, 2], array_map(static fn (NewsItem $item) => $item->id, NewsReader::current($items, $today, $levels)));
     }
 
     public function testCurrentNewsShowTheImportantOnesFirst(): void
@@ -162,7 +217,7 @@ final class NewsTest extends TestCase
             "Current news from the hosts:\n"
             . "- Important notice – Schwimmbadpause (valid until 15.12.2026): Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis. Ab dem 15.11.2026 wird es wieder geöffnet haben.\n"
             . "- Notice – Parksituation eingeschränkt (valid until 25.11.2026): In der Schlossstraße gibt es aufgrund von Bauarbeiten keine Stellplätze. Bitte nutzen sie die Parkplätze entlang der Markusstraße.\n"
-            . "- Info – Weihnachtsmarkt in Konstanz (valid until 31.12.2026): Der Weihnachtsmarkt öffnet am 28.11.2026 in Konstanz!",
+            . "- Information – Weihnachtsmarkt in Konstanz (valid until 31.12.2026): Der Weihnachtsmarkt öffnet am 28.11.2026 in Konstanz!",
             ApartmentFactSheet::news($items)
         );
         self::assertSame('', ApartmentFactSheet::news([]));

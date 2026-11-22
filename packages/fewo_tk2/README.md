@@ -63,8 +63,8 @@ Mindestens eine der Adressen ist nötig. Die Übersicht zeigt je Wohnung den Sta
 der heute gültigen Neuigkeiten.
 
 **Neuigkeiten** werden in Fewo-Office unter „Neuigkeiten“ geschrieben: Titel, Text, Wichtigkeit (Info, Hinweis,
-Wichtige Mitteilung), Zeitraum (von–bis) und die betroffenen Wohnungen. Fehlt die Wichtigkeit oder ist sie
-unbekannt, gilt „Info“. Das Kürzel in der Adresse ist klein geschrieben (`…/neuigkeiten/seeherz.json`, nicht
+Wichtige Mitteilung; im Feed als Code `info`, `notice`, `important`), Zeitraum (von–bis) und die betroffenen
+Wohnungen. Fehlt die Wichtigkeit (ältere Daten), gilt `info`. Das Kürzel in der Adresse ist klein geschrieben (`…/neuigkeiten/seeherz.json`, nicht
 `Seeherz`); mit Komma getrennt lassen sich mehrere Wohnungen zusammenfassen (`…/neuigkeiten/see,shz.json`).
 Angenommen werden `.json` und `.xml`. Das RSS-Format (`.rss`) zum Abonnieren in einem Feedreader taugt hier
 nicht, weil darin das Ende des Zeitraums fehlt – die Website lehnt es mit einem Hinweis ab. Die Neuigkeiten
@@ -333,7 +333,7 @@ der Website – dort bleibt es fehleranfällig.
 | --- | --- | --- |
 | **Belegungsplan** | Freie und belegte Tage der gewählten Wohnung | An- und Abreisetage werden halb belegt dargestellt. Pro Zeile stehen so viele Kalenderblätter, wie anfangs Monate sichtbar sind – auch bei den aufgeklappten Monaten; auf schmalen Bildschirmen entsprechend weniger. |
 | **Preisübersicht** | Saisons und Preise der gewählten Wohnung | Anordnung wählbar: **Kacheln nebeneinander** oder **Liste untereinander**. Gleiche Preise werden zu Bereichen zusammengefasst („1–2 Gäste“). Der Standardpreis der Wohnung erscheint als „Übrige Zeiträume“. Bedingungen: Mindestaufenthalt, Endreinigung, Anzahlung. |
-| **Neuigkeiten** | Aktuelle Hinweise der Gastgeber aus Fewo-Office (z. B. „Schwimmbad geschlossen“) | Markiert nach der Wichtigkeit aus Fewo-Office: **Info** (grün), **Hinweis** (gelb), **Wichtige Mitteilung** (rot) – farbig und mit der Bezeichnung als Text; wichtige stehen oben. Jede Neuigkeit erscheint vom ersten bis zum letzten Tag ihres Zeitraums – auch wenn die Daten seit dem Ende nicht neu abgerufen wurden. Gibt es keine, zeigt der Block nichts an (im Bearbeitungsmodus einen Platzhalter). Überschrift und Anzeige des Zeitraums wählbar. Absätze und Zeilenumbrüche des Textes bleiben erhalten. Nur für Wohnungen mit Adresse der Neuigkeiten. |
+| **Neuigkeiten** | Aktuelle Hinweise der Gastgeber aus Fewo-Office (z. B. „Schwimmbad geschlossen“) | Markiert nach der Wichtigkeit aus Fewo-Office – farbig und mit der Bezeichnung als Text. Im Block einstellbar unter **Stufen der Wichtigkeit**: je Zeile der Code aus dem Feed (`info`, `notice`, `important`), die Bezeichnung und die Farbe (Farbwähler); die Reihenfolge der Zeilen ist die Reihenfolge der Anzeige. Vorgabe: **Wichtige Mitteilung** (rot), **Hinweis** (gelb), **Information** (grün). Neuigkeiten mit einem Code, der im Block fehlt, erscheinen grau ohne Bezeichnung. Die Schrift auf dem Schild wird je nach Farbe schwarz oder weiß. Jede Neuigkeit erscheint vom ersten bis zum letzten Tag ihres Zeitraums – auch wenn die Daten seit dem Ende nicht neu abgerufen wurden. Gibt es keine, zeigt der Block nichts an (im Bearbeitungsmodus einen Platzhalter). Überschrift wählbar; der Gültigkeitszeitraum lässt sich mit einem Schalter ein- und ausblenden. Absätze und Zeilenumbrüche des Textes bleiben erhalten. Nur für Wohnungen mit Adresse der Neuigkeiten. |
 | **Preisrechner** | Gäste berechnen den Preis ihres Aufenthalts | Rechnet wie Fewo-Office und prüft die Belegung der Wohnung (siehe unten). Funktioniert auch ohne JavaScript. Optional führt eine Schaltfläche mit Reisedaten zum Anfrageformular. |
 | **Anfrageformular** | Unverbindliche Anfrage mit Reisezeitraum, Gästen und Kontaktdaten | Die Anfrage geht per E-Mail an die im Block hinterlegte Adresse; gespeichert wird nichts, und eine Buchung entsteht dadurch nicht. Mit einer Wohnung steht der unverbindliche Preis in der Benachrichtigung. |
 | **Ausstattungsliste** | Liste mit optionalen Fußnoten, auf Wunsch aufklappbar | Spaltenzahl wählbar (1 bis 4); auf schmalen Bildschirmen werden es automatisch weniger. |
@@ -462,7 +462,6 @@ Themes. Farben und Rundungen lassen sich im Theme über CSS-Variablen anpassen, 
     --fewo-radius: 6px;
 }
 .fewo-prices { --fewo-card-bg: #f6f3ee; }
-.fewo-news   { --fewo-news-important: #a50e0e; --fewo-news-important-bg: #fbe9e7; }
 .fewo-form   { --fewo-focus: #0b6e4f; --fewo-error: #b42318; }
 ```
 
@@ -474,9 +473,8 @@ eines Kalenderblatts im Belegungsplan), `--fewo-card-border`
 (Preisübersicht), `--fewo-muted` (Preisrechner), `--fewo-success-bg`, `--fewo-success-text`
 (Anfrageformular), `--fewo-gap` (Bildergalerie), `--fewo-selected` (gewählter Zeitraum im Kalender der
 Datumsfelder des Preisrechners), `--fewo-tour-ratio` und `--fewo-tour-height` (360°-Rundgang),
-`--fewo-news-info`, `--fewo-news-notice`, `--fewo-news-important` (Neuigkeiten: Farbe der Stufe für Streifen links
-und Bezeichnung) mit je `…-text` (Schrift auf dieser Farbe) und `…-bg` (Hintergrund der Meldung), dazu
-`--fewo-news-text` und `--fewo-news-period` (Text, Zeile mit dem Zeitraum), `--fewo-chat-bg`, `--fewo-chat-user-bg`, `--fewo-chat-assistant-bg` und `--fewo-chat-height` (Chat: Hintergrund
+`--fewo-news-text` und `--fewo-news-period` (Neuigkeiten: Text, Zeile mit dem Zeitraum; die Farben der Stufen
+werden im Block eingestellt), `--fewo-chat-bg`, `--fewo-chat-user-bg`, `--fewo-chat-assistant-bg` und `--fewo-chat-height` (Chat: Hintergrund
 des Gesprächs, der eigenen Fragen und der Antworten, größte Höhe des Gesprächs). Wer Farben ändert, sollte die
 Kontraste prüfen.
 

@@ -6,6 +6,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
  * @var string $title
  * @var bool $showPeriod
  * @var FewoTk2\News\NewsItem[] $items
+ * @var array<int, array{code: string, label: string, color: string}> $levels
  * @var FewoTk2\Entity\RemoteFeed|null $feed
  * @var string|null $error
  * @var bool $canEdit
@@ -46,10 +47,17 @@ $period = static function (FewoTk2\News\NewsItem $item): string {
         Concrete\Core\View\View::element('feed_notice', ['label' => t('News'), 'error' => $error, 'feed' => $feed], 'fewo_tk2');
     } ?>
 
-    <?php foreach ($items as $item) { ?>
-        <article class="fewo-news__item fewo-news__item--<?= h($item->importance) ?>" data-fewo-importance="<?= h($item->importance) ?>">
+    <?php foreach ($items as $item) {
+        // Farben der Stufe aus dem Block; Meldungen mit unbekanntem Code neutral und ohne Bezeichnung
+        $level = FewoTk2\News\ImportanceLevels::find($levels, $item->importance);
+        $colors = FewoTk2\News\ImportanceLevels::colors($level['color'] ?? FewoTk2\News\ImportanceLevels::NEUTRAL_COLOR);
+        ?>
+        <article class="fewo-news__item fewo-news__item--<?= h($item->importance) ?>" data-fewo-importance="<?= h($item->importance) ?>"
+                 style="--fewo-news-level: <?= h($colors['color']) ?>; --fewo-news-level-text: <?= h($colors['text']) ?>; --fewo-news-level-bg: <?= h($colors['background']) ?>">
             <?php // Die Stufe steht auch als Text da: Die Farbe allein erreicht nicht alle Besucher ?>
-            <p class="fewo-news__importance"><?= h($item->getImportanceLabel()) ?></p>
+            <?php if (($level['label'] ?? '') !== '') { ?>
+                <p class="fewo-news__importance"><?= h($level['label']) ?></p>
+            <?php } ?>
             <?php if ($item->title !== '') { ?>
                 <<?= $itemHeading ?> class="fewo-news__item-title"><?= h($item->title) ?></<?= $itemHeading ?>>
             <?php } ?>
