@@ -6,7 +6,7 @@ use JsonException;
 use SimpleXMLElement;
 
 /**
- * Liest die Export-Schnittstellen von Fewo-Office (Belegung und Preisliste)
+ * Liest die Export-Schnittstellen von Fewo-Office (Belegung, Preisliste und Neuigkeiten)
  * als JSON oder XML und liefert beide Formate in derselben Struktur:
  *
  *   status:         {type, message}
@@ -15,6 +15,7 @@ use SimpleXMLElement;
  *   pricelist:      {name, title, cleaning, min_stay, max_guests, commission}
  *   seasons:        [{name, date_start, date_end, prices: [{persons, value}, …]}, …]
  *   default_prices: [{persons, value}, …]
+ *   news:           [{id, title, text, date_start, date_end}, …]
  */
 final class FewoOfficeDocument
 {
@@ -76,6 +77,10 @@ final class FewoOfficeDocument
         if ($xml === false) {
             throw new InvalidFeedException(t('The data is not valid XML.'));
         }
+        if (strtolower($xml->getName()) === 'rss') {
+            // Fewo-Office bietet die Neuigkeiten auch als RSS an – dort fehlt aber das Ende des Zeitraums
+            throw new InvalidFeedException(t('This is the RSS format, which does not contain the period of validity. Please use the address ending in .json.'));
+        }
 
         $data = [];
         foreach (['status', 'occupancy', 'pricelist'] as $key) {
@@ -97,6 +102,12 @@ final class FewoOfficeDocument
         }
         if (isset($xml->default_prices)) {
             $data['default_prices'] = self::prices($xml->default_prices);
+        }
+        if (isset($xml->news)) {
+            $data['news'] = [];
+            foreach ($xml->news->item as $item) {
+                $data['news'][] = self::scalars($item);
+            }
         }
 
         return $data;

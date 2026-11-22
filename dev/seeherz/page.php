@@ -1,15 +1,16 @@
 <?php
 
 /**
- * Legt in der lokalen Seeherz-Instanz die Seite /fewo-toolkit-2 an: alle neun Blöcke des neuen Pakets
+ * Legt in der lokalen Seeherz-Instanz die Seite /fewo-toolkit-2 an: alle zehn Blöcke des neuen Pakets
  * (fewo_tk2) mit den echten Inhalten der Website – neben den unveränderten Seiten mit den alten Blöcken.
  *
- * - Belegung und Preise: Wohnung "Seeherz" mit den Adressen in Fewo-Office
+ * - Belegung und Preise: Wohnung "Seeherz" mit den Adressen in Fewo-Office; Neuigkeiten von der als zweites
+ *   Argument übergebenen Adresse (restore.sh: das lokale Fewo-Office, solange fewo-office.com sie noch nicht hat)
  * - Ausstattung, Bilder, Rundgang: aus den alten Blöcken der Seiten /ausstattung, /bilder, /rundgang übernommen
  * - Anfragen gehen an eine Testadresse (Mailpit)
  * - Chat: Der KI-Assistent wird eingeschaltet und mit dem Ollama der Instanz verbunden (http://ollama:11434)
  *
- *   docker compose exec -u www-data web ./concrete/bin/concrete c5:exec /seed/page.php [Modell]
+ *   docker compose exec -u www-data web ./concrete/bin/concrete c5:exec /seed/page.php [Modell] [Adresse der Neuigkeiten]
  *
  * Kann beliebig oft aufgerufen werden: Die Blöcke der Seite werden jedes Mal neu angelegt.
  */
@@ -49,6 +50,7 @@ $apartment = $em->getRepository(Apartment::class)->findOneBy(['name' => 'Seeherz
 $apartment->setName('Seeherz')
     ->setOccupancyUrl(FEWO_OFFICE . 'belegung.json')
     ->setPricelistUrl(FEWO_OFFICE . 'preise.json')
+    ->setNewsUrl((string) (($args ?? [])[1] ?? ''))
     ->setRefreshMinutes(60);
 $em->persist($apartment);
 $em->flush();
@@ -196,6 +198,7 @@ $blocks = array_merge(
     [
         ['content', ['content' => '<h1>Fewo Toolkit 2</h1><p>Testseite: alle Blöcke des neuen Pakets mit den Inhalten dieser Website. Belegung und Preise kommen aus Fewo-Office, Ausstattung, Bilder und Rundgang aus den bisherigen Blöcken.</p>']],
         $chat,
+        ['fewo_neuigkeiten', ['apartmentID' => $apartmentID, 'title' => 'Neuigkeiten', 'showPeriod' => 1]],
         ['fewo_belegungsplan', ['title' => 'Belegungsplan', 'apartmentID' => $apartmentID, 'monthsVisible' => 3, 'monthsTotal' => 15, 'onRequestKeywords' => '', 'showLegend' => 1]],
         ['fewo_preisuebersicht', ['apartmentID' => $apartmentID, 'title' => 'Preise', 'layout' => 'tiles', 'showConditions' => 1]],
         // "Jetzt anfragen" führt zum Anfrageformular weiter unten auf derselben Seite

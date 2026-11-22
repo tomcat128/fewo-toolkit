@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+ <channel>
+  <title>Neuigkeiten – Seeherz</title>
+  <link>http://webserver/api/neuigkeiten/see.rss</link>
+  <description>Neuigkeiten zu den Ferienwohnungen</description>
+  <language>de-de</language>
+  <item>
+   <title>Schwimmbadpause</title>
+   <description>Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis. Ab dem 15.11.2026 wird es wieder geöffnet haben.</description>
+   <guid isPermaLink="false">news-1@fewo-office</guid>
+   <pubDate>Thu, 01 Oct 2026 00:00:00 +0200</pubDate>
+   <category>see</category>
+   <category>shz</category>
+   <category>ssz</category>
+  </item>
+ </channel>
+</rss>

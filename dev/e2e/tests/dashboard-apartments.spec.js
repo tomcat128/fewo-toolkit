@@ -1,4 +1,4 @@
-// Dashboard › Fewo Toolkit › Wohnungen: Adressen in Fewo-Office je Wohnung, Stand des Abrufs, "Jetzt aktualisieren"
+// Dashboard › Fewo Toolkit › Wohnungen: Adressen in Fewo-Office je Wohnung (Belegung, Preise, Neuigkeiten), Stand des Abrufs, "Jetzt aktualisieren"
 const { test, expect, sql, webExec } = require('./helpers');
 
 const DASHBOARD = '/index.php/dashboard/fewo_tk2/apartments';
@@ -7,6 +7,7 @@ const DEMO = '/index.php/fewo-demo';
 const FILES = 'localhost/application/files';
 const OCCUPANCY_URL = `http://${FILES}/fewo-demo-belegung.json`;
 const PRICES_URL = `http://${FILES}/fewo-demo-preise.json`;
+const NEWS_URL = `http://${FILES}/fewo-demo-neuigkeiten.json`;
 const NAME = 'E2E Wohnung';
 
 const row = (page, name) => page.locator('#fewo-apartments tbody tr').filter({ has: page.getByRole('link', { name, exact: true }) });
@@ -14,7 +15,7 @@ const updateNow = (page, name) => row(page, name).getByRole('button', { name: 'J
 const cleanUp = () => {
   sql(`DELETE FROM FewoApartments WHERE name LIKE '${NAME}%'`);
   // Zwischenspeicher der absichtlich falschen Adressen aus dem Test
-  sql(`DELETE FROM FewoFeeds WHERE url LIKE 'https://${FILES}/%' OR (kind = 'pricelist' AND url = '${OCCUPANCY_URL}')`);
+  sql(`DELETE FROM FewoFeeds WHERE url LIKE 'https://${FILES}/%' OR (kind = 'pricelist' AND url = '${OCCUPANCY_URL}') OR (kind = 'news' AND url = '${PRICES_URL}')`);
 };
 
 test.describe.configure({ mode: 'serial' });
@@ -22,11 +23,11 @@ test.beforeAll(cleanUp);
 test.afterAll(cleanUp);
 
 test('Übersicht zeigt die Demo-Wohnungen mit dem Stand des letzten Abrufs', async ({ page }) => {
-  await page.goto(DEMO); // lädt Belegung und Preisliste der Wohnung "Seeherz (Demo)", falls noch nicht geschehen
+  await page.goto(DEMO); // lädt Belegung, Preisliste und Neuigkeiten der Wohnung "Seeherz (Demo)", falls noch nicht geschehen
   await page.goto(DASHBOARD);
   await expect(page.getByRole('heading', { name: 'Wohnungen', exact: true })).toBeVisible();
-  await expect(page.getByText('Belegung und Preise werden nicht auf der Website gepflegt, sie kommen immer aus Fewo-Office.')).toBeVisible();
-  await expect(page.locator('#fewo-apartments thead th')).toHaveText(['Wohnung', 'Belegung', 'Preisliste', 'Aktualisierung alle', 'Aktionen']);
+  await expect(page.getByText('Belegung, Preise und Neuigkeiten werden nicht auf der Website gepflegt, sie kommen immer aus Fewo-Office.')).toBeVisible();
+  await expect(page.locator('#fewo-apartments thead th')).toHaveText(['Wohnung', 'Belegung', 'Preisliste', 'Neuigkeiten', 'Aktualisierung alle', 'Aktionen']);
 
   const seeherz = row(page, 'Seeherz (Demo)');
   await expect(seeherz.locator('td').nth(1)).toContainText('OK');
@@ -34,9 +35,14 @@ test('Übersicht zeigt die Demo-Wohnungen mit dem Stand des letzten Abrufs', asy
   await expect(seeherz.locator('td').nth(1)).toContainText(OCCUPANCY_URL);
   // Die abgelaufene Saison aus den Demo-Daten zählt nicht mit
   await expect(seeherz.locator('td').nth(2)).toContainText('3 Saisons');
-  await expect(seeherz.locator('td').nth(3)).toHaveText('1 Stunde');
-  // Wohnung ohne Preisliste
+  // Von den drei Neuigkeiten der Demo-Daten gilt heute nur eine
+  await expect(seeherz.locator('td').nth(3)).toContainText('OK');
+  await expect(seeherz.locator('td').nth(3)).toContainText('1 aktuelle Neuigkeit');
+  await expect(seeherz.locator('td').nth(3)).toContainText(NEWS_URL);
+  await expect(seeherz.locator('td').nth(4)).toHaveText('1 Stunde');
+  // Wohnung ohne Preisliste und ohne Neuigkeiten
   await expect(row(page, 'Seeherz – Belegung als ICS (Demo)').locator('td').nth(2)).toHaveText('nicht hinterlegt');
+  await expect(row(page, 'Seeherz – Belegung als ICS (Demo)').locator('td').nth(3)).toHaveText('nicht hinterlegt');
 
   // Die Startseite des Pakets im Dashboard führt zu den Wohnungen
   await page.goto('/index.php/dashboard/fewo_tk2');
@@ -101,14 +107,16 @@ test('Wohnung anlegen: Prüfung der Eingaben, nicht erreichbare Adresse, korrigi
   // ... der Server verlangt mindestens eine Adresse und nimmt nur http(s) und webcal; Eingaben bleiben erhalten
   await page.getByLabel('Adresse der Belegung in Fewo-Office').fill('');
   await page.getByRole('button', { name: 'Speichern' }).click();
-  await expect(page.getByText('Bitte geben Sie mindestens eine der beiden Adressen an.')).toBeVisible();
+  await expect(page.getByText('Bitte geben Sie mindestens eine der Adressen an.')).toBeVisible();
   await expect(page.getByLabel('Name')).toHaveValue(NAME);
   await page.getByLabel('Adresse der Belegung in Fewo-Office').fill('ftp://example.org/belegung.json');
   await page.getByLabel('Adresse der Preisliste in Fewo-Office').fill('ftp://example.org/preise.json');
+  await page.getByLabel('Adresse der Neuigkeiten in Fewo-Office (optional)').fill('ftp://example.org/neuigkeiten.json');
   await page.getByLabel('Aktualisierung alle').selectOption('120');
   await page.getByRole('button', { name: 'Speichern' }).click();
   await expect(page.getByText('Bitte geben Sie eine gültige Adresse der Belegung an (https://…).')).toBeVisible();
   await expect(page.getByText('Bitte geben Sie eine gültige Adresse der Preisliste an (https://…).')).toBeVisible();
+  await expect(page.getByText('Bitte geben Sie eine gültige Adresse der Neuigkeiten an (https://…).')).toBeVisible();
   await expect(page.getByLabel('Adresse der Belegung in Fewo-Office')).toHaveValue('ftp://example.org/belegung.json');
   await expect(page.getByLabel('Aktualisierung alle')).toHaveValue('120');
   expect(sql(`SELECT COUNT(*) FROM FewoApartments WHERE name = '${NAME}'`)).toBe('0');
@@ -117,16 +125,20 @@ test('Wohnung anlegen: Prüfung der Eingaben, nicht erreichbare Adresse, korrigi
   // Gespeichert wird trotzdem, der Fehlschlag wird gemeldet. Unter der zweiten Adresse liegt die Belegung statt der Preisliste.
   await page.getByLabel('Adresse der Belegung in Fewo-Office').fill(`webcal://${FILES}/fewo-demo-belegung.json`);
   await page.getByLabel('Adresse der Preisliste in Fewo-Office').fill(OCCUPANCY_URL);
+  // ... und unter der Adresse der Neuigkeiten die Preisliste
+  await page.getByLabel('Adresse der Neuigkeiten in Fewo-Office (optional)').fill(PRICES_URL);
   await page.getByRole('button', { name: 'Speichern' }).click();
   await expect(page).toHaveURL(/dashboard\/fewo_tk2\/apartments(\/view)?$/);
   await expect(page.getByText(`„${NAME}“: Die Daten konnten nicht aus Fewo-Office geladen werden.`)).toBeVisible();
   await expect(page.getByText('Preisliste: Die Daten enthalten keine Preisliste.')).toBeVisible();
-  expect(sql(`SELECT CONCAT_WS('|', occupancyUrl, pricelistUrl, refreshMinutes) FROM FewoApartments WHERE name = '${NAME}'`))
-    .toBe(`https://${FILES}/fewo-demo-belegung.json|${OCCUPANCY_URL}|120`);
+  await expect(page.getByText('Neuigkeiten: Die Daten enthalten keine Neuigkeiten.')).toBeVisible();
+  expect(sql(`SELECT CONCAT_WS('|', occupancyUrl, pricelistUrl, newsUrl, refreshMinutes) FROM FewoApartments WHERE name = '${NAME}'`))
+    .toBe(`https://${FILES}/fewo-demo-belegung.json|${OCCUPANCY_URL}|${PRICES_URL}|120`);
   const apartment = row(page, NAME);
   await expect(apartment.locator('td').nth(1)).toContainText('noch nicht geladen');
   await expect(apartment.locator('td').nth(1).locator('.text-danger')).not.toBeEmpty();
-  await expect(apartment.locator('td').nth(3)).toHaveText('2 Stunden');
+  await expect(apartment.locator('td').nth(3)).toContainText('noch nicht geladen');
+  await expect(apartment.locator('td').nth(4)).toHaveText('2 Stunden');
   // Die falsch eingetragene Adresse stört die Wohnung nicht, die dieselbe Adresse richtig als Belegung verwendet
   await expect(row(page, 'Seeherz (Demo)').locator('td').nth(1)).toContainText('OK');
   await expect(row(page, 'Seeherz (Demo)').locator('td').nth(1).locator('.text-danger')).toHaveCount(0);
@@ -137,8 +149,10 @@ test('Wohnung anlegen: Prüfung der Eingaben, nicht erreichbare Adresse, korrigi
   await expect(page.getByLabel('Name')).toHaveValue(NAME);
   await page.getByLabel('Adresse der Belegung in Fewo-Office').fill(OCCUPANCY_URL);
   await page.getByLabel('Adresse der Preisliste in Fewo-Office').fill(PRICES_URL);
+  await page.getByLabel('Adresse der Neuigkeiten in Fewo-Office (optional)').fill(NEWS_URL);
   await page.getByRole('button', { name: 'Speichern' }).click();
   await expect(page.getByText('Die Wohnung wurde gespeichert.')).toBeVisible();
+  await expect(apartment.locator('td').nth(3)).toContainText('1 aktuelle Neuigkeit');
   await expect(apartment.locator('td').nth(1)).toContainText('OK');
   await expect(apartment.locator('td').nth(2)).toContainText('OK');
   await expect(apartment.locator('td').nth(2)).toContainText('3 Saisons');

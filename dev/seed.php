@@ -88,12 +88,26 @@ $writeFeed('fewo-demo-preise-2.xml', '<?xml version="1.0" encoding="UTF-8" stand
     . '<prices><persons>1</persons><value>55.00</value></prices><prices><persons>2</persons><value>55.00</value></prices></season></seasons>'
     . "<default_prices/></fewobacher>\n");
 
+// Neuigkeiten wie aus Fewo-Office (/api/neuigkeiten/{kürzel}.json bzw. .xml). Fewo-Office liefert nur, was am
+// Tag des Abrufs gilt; die künftige und die abgelaufene Neuigkeit prüfen, dass der Block trotzdem selbst filtert.
+$writeFeed('fewo-demo-neuigkeiten.json', $json(['status' => $status, 'news' => [
+    ['id' => 3, 'title' => 'Neue Sauna im Haus', 'text' => 'Ab nächstem Monat steht unseren Gästen eine Sauna zur Verfügung.', 'date_start' => $day(10), 'date_end' => $day(40), 'apartments' => ['seeherz']],
+    ['id' => 2, 'title' => 'Schwimmbadpause', 'text' => "Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.\n\nDie Therme in Konstanz hat geöffnet.", 'date_start' => $day(-5), 'date_end' => $day(20), 'apartments' => ['seeherz', 'seeherzchen']],
+    ['id' => 1, 'title' => 'Baustelle in der Seestraße', 'text' => 'Die Zufahrt ist nur von Norden möglich.', 'date_start' => $day(-30), 'date_end' => $day(-1), 'apartments' => ['seeherz']],
+]]));
+$writeFeed('fewo-demo-neuigkeiten-2.xml', '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' . "\n"
+    . '<fewobacher data="news"><status><type>OK</type><message>Okay!</message></status><news>'
+    . '<item><id>4</id><title>Fahrräder kostenlos</title><text>Zwei Fahrräder stehen im Keller bereit.' . "\n" . 'Den Schlüssel finden Sie in der Wohnung.</text>'
+    . '<date_start>' . $day(0) . '</date_start><date_end>' . $day(0) . '</date_end><apartments><apartment>seeherzchen</apartment></apartments></item>'
+    . "</news></fewobacher>\n");
+
 // Wohnungen im Dashboard (Fewo Toolkit › Wohnungen): Die Blöcke wählen nur noch die Wohnung aus.
-$apartment = static function (string $name, string $occupancyFile, string $pricelistFile) use ($em, $feedUrl): int {
+$apartment = static function (string $name, string $occupancyFile, string $pricelistFile, string $newsFile = '') use ($em, $feedUrl): int {
     $apartment = $em->getRepository(Apartment::class)->findOneBy(['name' => $name]) ?? new Apartment();
     $apartment->setName($name)
         ->setOccupancyUrl($occupancyFile !== '' ? $feedUrl($occupancyFile) : '')
         ->setPricelistUrl($pricelistFile !== '' ? $feedUrl($pricelistFile) : '')
+        ->setNewsUrl($newsFile !== '' ? $feedUrl($newsFile) : '')
         ->setRefreshMinutes(60);
     $em->persist($apartment);
     $em->flush();
@@ -101,8 +115,8 @@ $apartment = static function (string $name, string $occupancyFile, string $price
 
     return (int) $apartment->getId();
 };
-$seeherz = $apartment('Seeherz (Demo)', 'fewo-demo-belegung.json', 'fewo-demo-preise.json');
-$seeherzchen = $apartment('Seeherzchen (Demo)', 'fewo-demo-belegung-2.xml', 'fewo-demo-preise-2.xml');
+$seeherz = $apartment('Seeherz (Demo)', 'fewo-demo-belegung.json', 'fewo-demo-preise.json', 'fewo-demo-neuigkeiten.json');
+$seeherzchen = $apartment('Seeherzchen (Demo)', 'fewo-demo-belegung-2.xml', 'fewo-demo-preise-2.xml', 'fewo-demo-neuigkeiten-2.xml');
 // Dieselbe Belegung im ICS-Format, ohne Preisliste
 $seeherzIcs = $apartment('Seeherz – Belegung als ICS (Demo)', 'fewo-demo-belegung.ics', '');
 // Die Demo-Daten sind eben neu geschrieben worden (Termine relativ zu heute): den Zwischenspeicher der Website
@@ -277,6 +291,7 @@ $inquiryPage = $makePage('fewo-anfrage', 'Anfrage', [
 ]);
 
 $makePage('fewo-demo', 'Fewo Demo', [
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Neuigkeiten', 'showPeriod' => 1]],
     ['fewo_belegungsplan', [
         'title' => 'Belegungsplan',
         'apartmentID' => $seeherz,
@@ -331,6 +346,9 @@ $map = static fn (string $title, string $lat, string $lng): array => ['fewo_kart
     'markerLat' => [$lat], 'markerLng' => [$lng], 'markerTitle' => [$title], 'markerText' => [''], 'zoom' => 13, 'height' => 300, 'requireConsent' => 1,
 ]];
 $makePage('fewo-doppelt', 'Fewo Doppelt', [
+    // Neuigkeiten als XML, ohne Überschrift und Zeitraum
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherzchen, 'title' => '', 'showPeriod' => 0]],
+    ['fewo_neuigkeiten', ['apartmentID' => $seeherz, 'title' => 'Aktuelles Seeherz', 'showPeriod' => 1]],
     // Belegung im ICS-Format; "Betriebsferien" wird hier als "auf Anfrage" dargestellt
     $calendar('Belegung Seeherz', $seeherzIcs, 'Betriebsferien'),
     $calendar('Belegung Seeherzchen', $seeherzchen, ''),

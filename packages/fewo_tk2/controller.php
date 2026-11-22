@@ -32,7 +32,7 @@ use GuzzleHttp\Client as GuzzleClient;
 /**
  * Fewo Toolkit – Werkzeuge für Ferienwohnungs-Websites.
  *
- * Belegung und Preise werden nicht auf der Website gepflegt, sondern aus
+ * Belegung, Preise und Neuigkeiten werden nicht auf der Website gepflegt, sondern aus
  * Fewo-Office abgerufen (siehe FewoTk2\Feed). Der KI-Assistent (FewoTk2\Assistant) beantwortet
  * Fragen der Besucher mit einem Sprachmodell, das über Ollama auf dem eigenen Server läuft.
  */
@@ -48,7 +48,7 @@ class Controller extends Package implements ProviderAggregateInterface
 
     protected $pkgHandle = 'fewo_tk2';
 
-    protected $pkgVersion = '2.5.1';
+    protected $pkgVersion = '2.6.0';
 
     protected $appVersionRequired = '9.5.0';
 
@@ -65,6 +65,7 @@ class Controller extends Package implements ProviderAggregateInterface
         'fewo_belegungsplan',
         'fewo_preisuebersicht',
         'fewo_preisrechner',
+        'fewo_neuigkeiten',
         'fewo_kontaktformular',
         'fewo_ausstattungsliste',
         'fewo_bildergalerie',
@@ -78,7 +79,7 @@ class Controller extends Package implements ProviderAggregateInterface
      */
     private const SINGLE_PAGES = [
         '/dashboard/fewo_tk2' => [self::DISPLAY_NAME, 'Apartments and the AI assistant.'],
-        '/dashboard/fewo_tk2/apartments' => ['Apartments', 'Fewo-Office URLs for occupancy and prices of each apartment.'],
+        '/dashboard/fewo_tk2/apartments' => ['Apartments', 'Fewo-Office URLs for occupancy, prices and news of each apartment.'],
         '/dashboard/fewo_tk2/prices' => ['Prices', 'Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.'],
         '/dashboard/fewo_tk2/assistant' => ['AI Assistant', 'Chat that answers visitors\' questions with a local language model (Ollama).'],
     ];
@@ -90,7 +91,7 @@ class Controller extends Package implements ProviderAggregateInterface
     {
         t('Apartments and the AI assistant.');
         t('Apartments');
-        t('Fewo-Office URLs for occupancy and prices of each apartment.');
+        t('Fewo-Office URLs for occupancy, prices and news of each apartment.');
         t('Prices');
         t('Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office.');
         t('AI Assistant');
@@ -104,7 +105,7 @@ class Controller extends Package implements ProviderAggregateInterface
 
     public function getPackageDescription()
     {
-        return t('Occupancy calendar, prices and price calculator with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites.');
+        return t('Occupancy calendar, prices, price calculator and news with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites.');
     }
 
     public function getEntityManagerProvider()

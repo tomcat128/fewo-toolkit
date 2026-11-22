@@ -141,6 +141,18 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
   **Empfehlung für den Server:** `memory_limit` auf 256–512 MB anheben, sonst gibt es von großen Panoramen keine
   kleineren Fassungen für Mobilgeräte
 
+- [x] **Version 2.6.0 – Neuigkeiten aus Fewo-Office:**
+  - Wohnung: neues Feld **Adresse der Neuigkeiten** (`…/api/neuigkeiten/<kürzel>.json` oder `.xml`), abgerufen
+    und zwischengespeichert wie Belegung und Preise (Art `news` in `FewoFeeds`), „Jetzt aktualisieren“ inklusive;
+    die Übersicht zeigt die Zahl der heute gültigen Neuigkeiten. RSS wird mit Hinweis abgelehnt (ohne Enddatum)
+  - **Block „Neuigkeiten“:** zeigt jede Neuigkeit nur, solange der heutige Tag in ihrem Zeitraum liegt – geprüft
+    auf der Website selbst, nicht nur in Fewo-Office; ohne aktuelle Neuigkeit unsichtbar. Optionen: Überschrift,
+    Zeitraum anzeigen. Speichern nur mit einer Wohnung, die eine Adresse der Neuigkeiten hat
+  - **KI-Assistent** kennt die aktuellen Neuigkeiten (bei „Preise, freie Zeiträume … einbeziehen“).
+    Mit `gemma3:4b` geprüft: „Kann ich im Schwimmbad schwimmen gehen?“ → „Das Schwimmbad macht Betriebspause!“
+  - **Offen:** fewo-office.com liefert `/api/neuigkeiten` noch nicht (404); die Seeherz-Testinstanz liest deshalb
+    das lokale Fewo-Office (`NEWS_URL` in `restore.sh`, Kürzel lokal `see`)
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung
@@ -224,7 +236,7 @@ cd dev/seeherz
 
 - Website: http://localhost:8096 (Admin: `admin` / `admin`), E-Mails: http://localhost:8026 (Mailpit);
   von anderen Rechnern im Netz unter `http://<Rechner>:8096` – die Instanz hat bewusst keine feste Adresse
-- Testseite mit allen neun neuen Blöcken: http://localhost:8096/fewo-toolkit-2 (`page.php`) – Belegung und Preise aus
+- Testseite mit allen zehn neuen Blöcken: http://localhost:8096/fewo-toolkit-2 (`page.php`) – Belegung und Preise aus
   Fewo-Office (`…/api/wohnungen/seeherz/…`), Ausstattung, Bilder und Rundgang aus den alten Blöcken übernommen
 - Die alten Seiten (`/preise-verfuegbarkeit`, `/rundgang`, `/kontakt` …) laufen unverändert mit den alten Blöcken
 - Nach außen abgeschottet (`local.php`): E-Mails von Concrete und vom alten Kontaktformular (eigenes SMTP-Konto im

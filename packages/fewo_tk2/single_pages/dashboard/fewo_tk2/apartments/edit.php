@@ -5,7 +5,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 /**
  * @var Concrete\Core\Page\View\PageView $view
  * @var FewoTk2\Entity\Apartment $apartment
- * @var array{name: string, occupancyUrl: string, pricelistUrl: string, refreshMinutes: int} $values
+ * @var array{name: string, occupancyUrl: string, pricelistUrl: string, newsUrl: string, refreshMinutes: int} $values
  * @var array<int, string> $refreshOptions
  */
 
@@ -39,6 +39,12 @@ $form = app('helper/form');
             <?= $form->label('pricelistUrl', t('Price list URL from Fewo-Office')) ?>
             <?= $form->url('pricelistUrl', $values['pricelistUrl'], ['placeholder' => 'https://fewo-office.com/api/wohnungen/…/preise.json']) ?>
             <div class="form-text"><?= t('For the price overview, the price calculator and the inquiry form. Both formats of the interface are accepted (.json, .xml); JSON is recommended. Only published seasons that have not ended yet are shown.') ?></div>
+        </div>
+
+        <div class="mb-3">
+            <?= $form->label('newsUrl', t('News URL from Fewo-Office (optional)')) ?>
+            <?= $form->url('newsUrl', $values['newsUrl'], ['placeholder' => 'https://fewo-office.com/api/neuigkeiten/….json']) ?>
+            <div class="form-text"><?= t('For the block "News", which shows the news of this apartment as long as they are valid. The address contains the short name of the apartment in Fewo-Office in lower case; several short names separated by commas are possible. Use the format .json or .xml.') ?></div>
         </div>
 
         <div class="mb-3" style="max-width: 20rem">

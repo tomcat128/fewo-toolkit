@@ -4,7 +4,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 
 /**
  * @var Concrete\Core\Page\View\PageView $view
- * @var array<int, array{apartment: FewoTk2\Entity\Apartment, occupancyFeed: ?FewoTk2\Entity\RemoteFeed, pricelistFeed: ?FewoTk2\Entity\RemoteFeed, seasonCount: ?int}> $rows
+ * @var array<int, array{apartment: FewoTk2\Entity\Apartment, occupancyFeed: ?FewoTk2\Entity\RemoteFeed, pricelistFeed: ?FewoTk2\Entity\RemoteFeed, newsFeed: ?FewoTk2\Entity\RemoteFeed, seasonCount: ?int, newsCount: ?int}> $rows
  */
 
 $token = app('token');
@@ -42,11 +42,11 @@ $feedStatus = static function (string $url, ?FewoTk2\Entity\RemoteFeed $feed, ?s
 </div>
 
 <p class="text-muted">
-    <?= t('Occupancy and prices are not maintained on the website, they always come from Fewo-Office. Store the Fewo-Office URLs of each apartment here once; the blocks only select the apartment.') ?>
+    <?= t('Occupancy, prices and news are not maintained on the website, they always come from Fewo-Office. Store the Fewo-Office URLs of each apartment here once; the blocks only select the apartment.') ?>
 </p>
 
 <?php if ($rows === []) { ?>
-    <div class="alert alert-info"><?= t('There are no apartments yet. Add an apartment to use the occupancy calendar, the price overview and the price calculator.') ?></div>
+    <div class="alert alert-info"><?= t('There are no apartments yet. Add an apartment to use the occupancy calendar, the price overview, the price calculator and the news.') ?></div>
 <?php } else { ?>
     <div class="table-responsive">
         <table class="table table-striped align-middle" id="fewo-apartments">
@@ -55,6 +55,7 @@ $feedStatus = static function (string $url, ?FewoTk2\Entity\RemoteFeed $feed, ?s
                     <th><?= t('Apartment') ?></th>
                     <th><?= t('Occupancy') ?></th>
                     <th><?= t('Price list') ?></th>
+                    <th><?= t('News') ?></th>
                     <th><?= t('Update interval') ?></th>
                     <th class="text-end"><?= t('Actions') ?></th>
                 </tr>
@@ -71,6 +72,11 @@ $feedStatus = static function (string $url, ?FewoTk2\Entity\RemoteFeed $feed, ?s
                             $apartment->getPricelistUrl(),
                             $row['pricelistFeed'],
                             $row['seasonCount'] !== null ? t2('%s season', '%s seasons', $row['seasonCount']) : null
+                        ) ?></td>
+                        <td><?= $feedStatus(
+                            $apartment->getNewsUrl(),
+                            $row['newsFeed'],
+                            $row['newsCount'] !== null ? t2('%s current news item', '%s current news items', $row['newsCount']) : null
                         ) ?></td>
                         <td class="text-nowrap"><?= $minutes < 60 ? t2('%s minute', '%s minutes', $minutes) : t2('%s hour', '%s hours', intdiv($minutes, 60)) ?></td>
                         <td class="text-end text-nowrap">

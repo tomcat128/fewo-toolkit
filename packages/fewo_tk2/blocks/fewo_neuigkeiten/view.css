@@ -1,0 +1,73 @@
+/* Fewo Toolkit – Neuigkeiten
+ * Alle Maße in em: Der Block folgt der Schriftgröße des Themes.
+ */
+/* Maße einschließlich Rand und Innenabstand – auch in Themes, die das nicht selbst festlegen.
+ * Ohne Gewicht (:where), damit Regeln des Themes und eingebundener Bibliotheken Vorrang behalten. */
+:where(.fewo-news),
+:where(.fewo-news) *,
+:where(.fewo-news) *::before,
+:where(.fewo-news) *::after {
+    box-sizing: border-box;
+}
+
+.fewo-news {
+    --fewo-news-bg: #fdf6e7;
+    --fewo-news-text: inherit;
+    --fewo-news-accent: #f0b54a;
+    --fewo-news-period: #5c5c5c;
+    --fewo-radius: 8px;
+    margin-block: 1em;
+}
+
+.fewo-news__title {
+    margin-block: 0 .5em;
+}
+
+.fewo-news__item {
+    background: var(--fewo-news-bg);
+    color: var(--fewo-news-text);
+    border-left: .3em solid var(--fewo-news-accent);
+    border-radius: var(--fewo-radius);
+    padding: .9em 1.25em;
+}
+
+.fewo-news__item + .fewo-news__item {
+    margin-top: .75em;
+}
+
+.fewo-news__item-title {
+    font-size: 1.125em;
+    margin: 0 0 .35em;
+}
+
+.fewo-news__period {
+    font-size: .875em;
+    color: var(--fewo-news-period);
+    margin: 0 0 .5em;
+}
+
+.fewo-news__text {
+    margin: 0;
+}
+
+.fewo-news__text + .fewo-news__text {
+    margin-top: .6em;
+}
+
+/* Hinweise zum Datenabruf – nur für Redakteure sichtbar */
+.fewo-notice {
+    padding: .85em 1.15em;
+    border-radius: var(--fewo-radius, 6px);
+    margin-bottom: 1.15em;
+    font-size: .875em;
+}
+
+.fewo-notice--error {
+    background: #fdecec;
+    color: #8a1c1c;
+}
+
+.fewo-notice--warning {
+    background: #fff6e0;
+    color: #6b4b00;
+}

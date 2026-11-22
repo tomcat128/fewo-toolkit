@@ -162,7 +162,7 @@ $number = static fn (int $value): string => number_format($value, 0, ',', '.');
         <div class="form-text mb-3"><?= t('Best: the whole website fits (see "What the assistant knows" below). The model then always gets everything; Ollama reads it once and afterwards answers start within seconds. If the website has more text, only the sections that match the question best are passed on – slower and less accurate.') ?></div>
         <div class="form-check mb-3">
             <?= $form->checkbox('includeApartments', 1, $settings->includeApartments) ?>
-            <?= $form->label('includeApartments', t('Include prices and free periods of the apartments (from Fewo-Office)'), ['class' => 'form-check-label']) ?>
+            <?= $form->label('includeApartments', t('Include prices, free periods and current news of the apartments (from Fewo-Office)'), ['class' => 'form-check-label']) ?>
         </div>
         <div class="mb-3">
             <?= $form->label('excludedPaths', t('Pages the assistant should not know')) ?>

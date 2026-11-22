@@ -3,11 +3,15 @@
 namespace Concrete\Package\FewoTk2\Controller\SinglePage\Dashboard\FewoTk2;
 
 use Concrete\Core\Page\Controller\DashboardPageController;
+use DateTimeImmutable;
+use DateTimeZone;
 use FewoTk2\Apartment\ApartmentRepository;
 use FewoTk2\Calendar\OccupancyLoader;
 use FewoTk2\Entity\Apartment;
 use FewoTk2\Feed\FeedLoader;
 use FewoTk2\Feed\InvalidFeedException;
+use FewoTk2\News\NewsLoader;
+use FewoTk2\News\NewsReader;
 use FewoTk2\Pricing\PricelistLoader;
 use FewoTk2\Pricing\PricelistReader;
 
@@ -24,11 +28,14 @@ class Apartments extends DashboardPageController
             // Nur der zwischengespeicherte Stand: Die Übersicht ruft Fewo-Office nicht selbst ab.
             $occupancyFeed = $apartment->getOccupancyUrl() !== '' ? $feedLoader->getFeed(FeedLoader::OCCUPANCY, $apartment->getOccupancyUrl()) : null;
             $pricelistFeed = $apartment->getPricelistUrl() !== '' ? $feedLoader->getFeed(FeedLoader::PRICELIST, $apartment->getPricelistUrl()) : null;
+            $newsFeed = $apartment->getNewsUrl() !== '' ? $feedLoader->getFeed(FeedLoader::NEWS, $apartment->getNewsUrl()) : null;
             $rows[] = [
                 'apartment' => $apartment,
                 'occupancyFeed' => $occupancyFeed,
                 'pricelistFeed' => $pricelistFeed,
+                'newsFeed' => $newsFeed,
                 'seasonCount' => $this->countSeasons($pricelistFeed?->getBody()),
+                'newsCount' => $this->countCurrentNews($newsFeed?->getBody()),
             ];
         }
         $this->set('rows', $rows);
@@ -67,10 +74,12 @@ class Apartments extends DashboardPageController
             'name' => trim((string) $post->get('name', '')),
             'occupancyUrl' => trim((string) $post->get('occupancyUrl', '')),
             'pricelistUrl' => trim((string) $post->get('pricelistUrl', '')),
+            'newsUrl' => trim((string) $post->get('newsUrl', '')),
             'refreshMinutes' => (int) $post->get('refreshMinutes', FeedLoader::DEFAULT_REFRESH_MINUTES),
         ];
         $occupancyUrl = FeedLoader::normalizeUrl($values['occupancyUrl']);
         $pricelistUrl = FeedLoader::normalizeUrl($values['pricelistUrl']);
+        $newsUrl = FeedLoader::normalizeUrl($values['newsUrl']);
 
         if ($values['name'] === '') {
             $this->error->add(t('Please enter a name.'));
@@ -81,8 +90,11 @@ class Apartments extends DashboardPageController
         if ($values['pricelistUrl'] !== '' && $pricelistUrl === null) {
             $this->error->add(t('Please enter a valid price list URL (https://…).'));
         }
-        if ($values['occupancyUrl'] === '' && $values['pricelistUrl'] === '') {
-            $this->error->add(t('Please enter at least one of the two URLs.'));
+        if ($values['newsUrl'] !== '' && $newsUrl === null) {
+            $this->error->add(t('Please enter a valid news URL (https://…).'));
+        }
+        if ($values['occupancyUrl'] === '' && $values['pricelistUrl'] === '' && $values['newsUrl'] === '') {
+            $this->error->add(t('Please enter at least one of the URLs.'));
         }
 
         if ($this->error->has()) {
@@ -96,6 +108,7 @@ class Apartments extends DashboardPageController
             ->setName($values['name'])
             ->setOccupancyUrl((string) $occupancyUrl)
             ->setPricelistUrl((string) $pricelistUrl)
+            ->setNewsUrl((string) $newsUrl)
             ->setRefreshMinutes($values['refreshMinutes']);
         $repository->save($apartment);
 
@@ -106,7 +119,7 @@ class Apartments extends DashboardPageController
     }
 
     /**
-     * "Jetzt aktualisieren": Belegung und Preisliste sofort neu aus Fewo-Office abrufen.
+     * "Jetzt aktualisieren": Belegung, Preisliste und Neuigkeiten sofort neu aus Fewo-Office abrufen.
      */
     public function refresh($id = null)
     {
@@ -130,7 +143,7 @@ class Apartments extends DashboardPageController
     }
 
     /**
-     * Ruft beide Adressen neu ab und meldet Erfolg oder die Gründe für einen Fehlschlag.
+     * Ruft alle Adressen der Wohnung neu ab und meldet Erfolg oder die Gründe für einen Fehlschlag.
      */
     private function flashRefreshResult(Apartment $apartment, string $successMessage): void
     {
@@ -145,6 +158,12 @@ class Apartments extends DashboardPageController
             $feed = $this->app->make(PricelistLoader::class)->load($apartment->getPricelistUrl(), $apartment->getRefreshMinutes(), true)->feed;
             if ($feed !== null && $feed->getLastError()) {
                 $problems[] = t('Price list: %s', $feed->getLastError());
+            }
+        }
+        if ($apartment->getNewsUrl() !== '') {
+            $feed = $this->app->make(NewsLoader::class)->load($apartment->getNewsUrl(), $apartment->getRefreshMinutes(), true)->feed;
+            if ($feed !== null && $feed->getLastError()) {
+                $problems[] = t('News: %s', $feed->getLastError());
             }
         }
 
@@ -168,7 +187,24 @@ class Apartments extends DashboardPageController
     }
 
     /**
-     * @param array{name: string, occupancyUrl: string, pricelistUrl: string, refreshMinutes: int}|null $values Eingaben nach einem Fehler
+     * Zahl der Neuigkeiten, die heute gelten – null, wenn es noch keinen lesbaren Stand gibt.
+     */
+    private function countCurrentNews(?string $body): ?int
+    {
+        if ($body === null) {
+            return null;
+        }
+        try {
+            $today = new DateTimeImmutable('today', new DateTimeZone(date_default_timezone_get()));
+
+            return count(NewsReader::current($this->app->make(NewsReader::class)->read($body), $today));
+        } catch (InvalidFeedException) {
+            return null;
+        }
+    }
+
+    /**
+     * @param array{name: string, occupancyUrl: string, pricelistUrl: string, newsUrl: string, refreshMinutes: int}|null $values Eingaben nach einem Fehler
      */
     private function renderForm(Apartment $apartment, ?array $values = null): void
     {
@@ -183,6 +219,7 @@ class Apartments extends DashboardPageController
             'name' => $apartment->getName(),
             'occupancyUrl' => $apartment->getOccupancyUrl(),
             'pricelistUrl' => $apartment->getPricelistUrl(),
+            'newsUrl' => $apartment->getNewsUrl(),
             'refreshMinutes' => $apartment->getRefreshMinutes(),
         ]);
         $this->set('refreshOptions', $refreshOptions);

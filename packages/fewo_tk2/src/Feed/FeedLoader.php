@@ -11,7 +11,7 @@ use Psr\Log\NullLogger;
 use Throwable;
 
 /**
- * Ruft Belegung und Preislisten aus Fewo-Office ab und hält sie in der Datenbank vor.
+ * Ruft Belegung, Preislisten und Neuigkeiten aus Fewo-Office ab und hält sie in der Datenbank vor.
  *
  * Unabhängig vom Concrete-Cache: Auch wenn der Cache abgeschaltet ist, wird
  * eine Adresse höchstens einmal pro Aktualisierungsintervall abgerufen.
@@ -21,6 +21,7 @@ class FeedLoader
     /** Arten von Daten; jede hat ihren eigenen Zwischenspeicher. */
     public const OCCUPANCY = 'occupancy';
     public const PRICELIST = 'pricelist';
+    public const NEWS = 'news';
 
     public const DEFAULT_REFRESH_MINUTES = 60;
 
@@ -69,7 +70,7 @@ class FeedLoader
     /**
      * Liefert die Daten und ruft sie neu ab, wenn sie älter als $refreshMinutes sind.
      *
-     * @param string $kind self::OCCUPANCY oder self::PRICELIST
+     * @param string $kind self::OCCUPANCY, self::PRICELIST oder self::NEWS
      * @param callable(string): mixed $validate wirft eine Ausnahme, wenn sich die Antwort nicht auswerten lässt;
      *                                          eine unbrauchbare Antwort ersetzt so nie den letzten guten Stand
      */

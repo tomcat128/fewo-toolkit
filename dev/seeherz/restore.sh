@@ -14,6 +14,9 @@ URL=http://localhost:8096
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin}"
 # Sprachmodell für den KI-Assistenten (Block "Chat"); wird beim ersten Mal heruntergeladen (gemma3:4b: 3,3 GB)
 OLLAMA_MODEL="${OLLAMA_MODEL:-gemma3:4b}"
+# Neuigkeiten für den Block "Neuigkeiten": fewo-office.com hat die Schnittstelle noch nicht, deshalb das lokale
+# Fewo-Office über die Adresse dieses Rechners im Netz (localhost wäre im Container der Container selbst)
+NEWS_URL="${NEWS_URL:-http://$(hostname -I | cut -d' ' -f1):4200/api/neuigkeiten/see.json}"
 
 c5() { docker compose exec -T -u www-data -w /srv/app/public web ./concrete/bin/concrete "$@"; }
 
@@ -62,11 +65,13 @@ if c5 c5:info 2>/dev/null | grep -Eq 'Fewo Toolkit( 2)? \([2-9]\.'; then
 else
   c5 c5:package:install fewo_tk2 2>&1 | grep -v Deprecated
 fi
+# Nach dem Update kennt der Zwischenspeicher von Concrete neue Felder der Wohnungen sonst erst beim nächsten Lauf
+c5 c5:clear-cache -q 2>&1 | grep -v Deprecated || true
 docker compose exec -T ollama ollama list | grep -q "^${OLLAMA_MODEL}[[:space:]]" || {
   echo "Lade das Sprachmodell ${OLLAMA_MODEL} …"
   docker compose exec -T ollama ollama pull "${OLLAMA_MODEL}" 2>&1 | tail -1
 }
-c5 c5:exec /seed/page.php "${OLLAMA_MODEL}" 2>&1 | grep -v Deprecated
+c5 c5:exec /seed/page.php "${OLLAMA_MODEL}" "${NEWS_URL}" 2>&1 | grep -v Deprecated
 c5 c5:clear-cache -q 2>&1 | grep -v Deprecated || true
 
 echo "Fertig: ${URL}/fewo-toolkit-2  (E-Mails: http://localhost:8026) – von anderen Rechnern im Netz: http://$(hostname -I | cut -d' ' -f1):8096"

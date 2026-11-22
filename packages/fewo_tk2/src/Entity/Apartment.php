@@ -9,7 +9,7 @@ use FewoTk2\Feed\FeedLoader;
  * Eine Ferienwohnung mit ihren Adressen in Fewo-Office.
  *
  * Die Adressen werden einmal im Dashboard hinterlegt; die Blöcke wählen nur
- * noch die Wohnung aus. Belegung und Preise selbst werden nicht gespeichert,
+ * noch die Wohnung aus. Belegung, Preise und Neuigkeiten selbst werden nicht gespeichert,
  * sondern aus Fewo-Office abgerufen (siehe RemoteFeed).
  *
  * @ORM\Entity
@@ -42,6 +42,13 @@ class Apartment
      * @ORM\Column(type="text")
      */
     protected string $pricelistUrl = '';
+
+    /**
+     * Adresse der Neuigkeiten, z. B. https://fewo-office.com/api/neuigkeiten/{kürzel}.json (leer = keine).
+     *
+     * @ORM\Column(type="text")
+     */
+    protected string $newsUrl = '';
 
     /**
      * Nach so vielen Minuten werden die Daten beim nächsten Seitenaufruf neu abgerufen.
@@ -87,6 +94,18 @@ class Apartment
     public function setPricelistUrl(string $url): self
     {
         $this->pricelistUrl = trim($url);
+
+        return $this;
+    }
+
+    public function getNewsUrl(): string
+    {
+        return $this->newsUrl;
+    }
+
+    public function setNewsUrl(string $url): self
+    {
+        $this->newsUrl = trim($url);
 
         return $this;
     }

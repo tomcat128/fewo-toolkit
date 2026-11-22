@@ -6,7 +6,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Zwischenspeicher für abgerufene Daten aus Fewo-Office (Belegung oder Preisliste).
+ * Zwischenspeicher für abgerufene Daten aus Fewo-Office (Belegung, Preisliste oder Neuigkeiten).
  *
  * Der letzte erfolgreich geladene Stand bleibt erhalten, auch wenn ein
  * späterer Abruf fehlschlägt – Belegungsplan und Preise bleiben so sichtbar.
@@ -28,7 +28,7 @@ class RemoteFeed
     protected string $urlHash;
 
     /**
-     * Art der Daten: "occupancy" (Belegung) oder "pricelist" (Preisliste).
+     * Art der Daten: "occupancy" (Belegung), "pricelist" (Preisliste) oder "news" (Neuigkeiten).
      *
      * @ORM\Column(type="string", length=16)
      */

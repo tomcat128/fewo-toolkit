@@ -136,6 +136,22 @@ final class ApartmentFactSheet
     }
 
     /**
+     * Aktuelle Neuigkeiten der Gastgeber (aus Fewo-Office), je Zeile Titel, Ende des Zeitraums und Text.
+     *
+     * @param \FewoTk2\News\NewsItem[] $items nur die heute gültigen
+     */
+    public static function news(array $items): string
+    {
+        $lines = [];
+        foreach ($items as $item) {
+            $text = trim((string) preg_replace('/\s+/u', ' ', $item->text));
+            $lines[] = '- ' . trim(t('%1$s (valid until %2$s):', $item->title, $item->dateTo->format('d.m.Y')) . ' ' . $text);
+        }
+
+        return $lines === [] ? '' : t('Current news from the hosts:') . "\n" . implode("\n", $lines);
+    }
+
+    /**
      * Freie Zeiträume der nächsten zwölf Monate. Lücken unter dem Mindestaufenthalt fehlen – sie lassen
      * sich nicht buchen. Die Antwort auf die häufigste Frage ("Wann ist frei?", "… für eine Woche?")
      * steht ausformuliert dabei: Kleine Sprachmodelle vergleichen Zeiträume sonst unzuverlässig.

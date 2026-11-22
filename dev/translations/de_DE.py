@@ -654,4 +654,44 @@ TRANSLATIONS = {
     "e.g. Is there a parking space?": "z. B. Gibt es einen Parkplatz?",
     "Send": "Senden",
     "The chat requires JavaScript.": "Der Chat benötigt JavaScript.",
+
+    # Neuigkeiten aus Fewo-Office (Block "Neuigkeiten")
+    "Occupancy calendar, prices, price calculator and news with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites.":
+        "Belegungsplan, Preise, Preisrechner und Neuigkeiten mit Daten aus Fewo-Office, Anfrageformular, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites.",
+    "Fewo-Office URLs for occupancy, prices and news of each apartment.": "Adressen in Fewo-Office für Belegung, Preise und Neuigkeiten jeder Wohnung.",
+    "The data does not contain any news.": "Die Daten enthalten keine Neuigkeiten.",
+    "This is the RSS format, which does not contain the period of validity. Please use the address ending in .json.":
+        "Das ist das RSS-Format, darin fehlt der Gültigkeitszeitraum. Bitte die Adresse mit der Endung .json verwenden.",
+    "No valid news URL has been configured.": "Es ist keine gültige Adresse für die Neuigkeiten hinterlegt.",
+    "The news could not be loaded yet.": "Die Neuigkeiten konnten noch nicht geladen werden.",
+    "The news data is invalid.": "Die Daten der Neuigkeiten sind ungültig.",
+    "Please enter a valid news URL (https://…).": "Bitte geben Sie eine gültige Adresse der Neuigkeiten an (https://…).",
+    "Please enter at least one of the URLs.": "Bitte geben Sie mindestens eine der Adressen an.",
+    "News: %s": "Neuigkeiten: %s",
+    "News URL from Fewo-Office (optional)": "Adresse der Neuigkeiten in Fewo-Office (optional)",
+    "For the block \"News\", which shows the news of this apartment as long as they are valid. The address contains the short name of the apartment in Fewo-Office in lower case; several short names separated by commas are possible. Use the format .json or .xml.":
+        "Für den Block „Neuigkeiten“, der die Neuigkeiten dieser Wohnung zeigt, solange sie gültig sind. Die Adresse enthält das Kürzel der Wohnung in Fewo-Office in Kleinbuchstaben; mehrere Kürzel mit Komma getrennt sind möglich. Format .json oder .xml.",
+    "News": "Neuigkeiten",
+    "%s current news item": ["%s aktuelle Neuigkeit", "%s aktuelle Neuigkeiten"],
+    "Occupancy, prices and news are not maintained on the website, they always come from Fewo-Office. Store the Fewo-Office URLs of each apartment here once; the blocks only select the apartment.":
+        "Belegung, Preise und Neuigkeiten werden nicht auf der Website gepflegt, sie kommen immer aus Fewo-Office. Hinterlegen Sie hier einmal die Adressen jeder Wohnung in Fewo-Office; die Blöcke wählen nur noch die Wohnung aus.",
+    "There are no apartments yet. Add an apartment to use the occupancy calendar, the price overview, the price calculator and the news.":
+        "Es sind noch keine Wohnungen angelegt. Legen Sie eine Wohnung an, um Belegungsplan, Preisübersicht, Preisrechner und Neuigkeiten zu verwenden.",
+    "Shows the current news of a holiday apartment from Fewo-Office – each one only during its period of validity.":
+        "Zeigt die aktuellen Neuigkeiten einer Ferienwohnung aus Fewo-Office – jede nur in ihrem Gültigkeitszeitraum.",
+    "No news URL is stored for this apartment.": "Für diese Wohnung ist keine Adresse der Neuigkeiten hinterlegt.",
+    "No news URL is stored for the apartment \"%s\". Please add it in the dashboard under Fewo Toolkit 2 › Apartments.":
+        "Für die Wohnung „%s“ ist keine Adresse der Neuigkeiten hinterlegt. Bitte im Dashboard unter Fewo Toolkit 2 › Wohnungen ergänzen.",
+    "The news of this apartment are loaded from Fewo-Office (news URL of the apartment).": "Die Neuigkeiten dieser Wohnung werden aus Fewo-Office geladen (Adresse der Neuigkeiten bei der Wohnung).",
+    "Only shown when there is current news.": "Erscheint nur, wenn es aktuelle Neuigkeiten gibt.",
+    "Show the period of validity": "Gültigkeitszeitraum anzeigen",
+    "News are written in Fewo-Office. Each one appears here from the first to the last day of its period; when there is no current news, the block shows nothing.":
+        "Neuigkeiten werden in Fewo-Office geschrieben. Jede erscheint hier vom ersten bis zum letzten Tag ihres Zeitraums; gibt es keine aktuelle Neuigkeit, zeigt der Block nichts an.",
+    "News: there is no current news at the moment. The block is only visible while there is.":
+        "Neuigkeiten: Zurzeit gibt es keine aktuelle Neuigkeit. Der Block ist nur sichtbar, solange es eine gibt.",
+    "Valid on %s": "Gültig am %s",
+    "Valid from %1$s to %2$s": "Gültig vom %1$s bis %2$s",
+    "Current news from the hosts:": "Aktuelle Neuigkeiten der Gastgeber:",
+    "%1$s (valid until %2$s):": "%1$s (gültig bis %2$s):",
+    "Include prices, free periods and current news of the apartments (from Fewo-Office)": "Preise, freie Zeiträume und aktuelle Neuigkeiten der Wohnungen einbeziehen (aus Fewo-Office)",
 }

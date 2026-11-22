@@ -1,52 +1,52 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: fewo_tk2 2.5.1\n"
+"Project-Id-Version: fewo_tk2 2.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-22T08:55:19+01:00\n"
-"PO-Revision-Date: 2026-11-22T08:55:19+01:00\n"
+"POT-Creation-Date: 2026-11-22T18:14:26+01:00\n"
+"PO-Revision-Date: 2026-11-22T18:14:26+01:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: packages/fewo_tk2/controller.php:91
+#: packages/fewo_tk2/controller.php:92
 msgid "Apartments and the AI assistant."
 msgstr "Wohnungen und KI-Assistent."
 
-#: packages/fewo_tk2/controller.php:92
+#: packages/fewo_tk2/controller.php:93
 msgid "Apartments"
 msgstr "Wohnungen"
 
-#: packages/fewo_tk2/controller.php:93
-msgid "Fewo-Office URLs for occupancy and prices of each apartment."
-msgstr "Fewo-Office-Adressen für Belegung und Preise je Wohnung."
-
 #: packages/fewo_tk2/controller.php:94
+msgid "Fewo-Office URLs for occupancy, prices and news of each apartment."
+msgstr "Adressen in Fewo-Office für Belegung, Preise und Neuigkeiten jeder Wohnung."
+
+#: packages/fewo_tk2/controller.php:95
 msgid "Prices"
 msgstr "Preise"
 
-#: packages/fewo_tk2/controller.php:95
+#: packages/fewo_tk2/controller.php:96
 msgid "Prices, minimum occupancy, minimum stay and final cleaning of each apartment, as delivered by Fewo-Office."
 msgstr "Preise, Mindestbelegung, Mindestdauer und Endreinigung jeder Wohnung, wie Fewo-Office sie liefert."
 
-#: packages/fewo_tk2/controller.php:96
+#: packages/fewo_tk2/controller.php:97
 msgid "AI Assistant"
 msgstr "KI-Assistent"
 
-#: packages/fewo_tk2/controller.php:97
+#: packages/fewo_tk2/controller.php:98
 msgid "Chat that answers visitors' questions with a local language model (Ollama)."
 msgstr "Chat, der Fragen der Besucher mit einem lokalen Sprachmodell (Ollama) beantwortet."
 
-#: packages/fewo_tk2/controller.php:102
+#: packages/fewo_tk2/controller.php:103
 msgid "Fewo Toolkit 2"
 msgstr "Fewo Toolkit 2"
 
-#: packages/fewo_tk2/controller.php:107
-msgid "Occupancy calendar, prices and price calculator with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites."
-msgstr "Belegungsplan, Preise und Preisrechner mit Daten aus Fewo-Office, Anfrageformular, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites."
+#: packages/fewo_tk2/controller.php:108
+msgid "Occupancy calendar, prices, price calculator and news with data from Fewo-Office, an inquiry form, 360° tours, an AI assistant and more for holiday apartment websites."
+msgstr "Belegungsplan, Preise, Preisrechner und Neuigkeiten mit Daten aus Fewo-Office, Anfrageformular, 360°-Rundgänge, ein KI-Assistent und mehr für Ferienwohnungs-Websites."
 
 #: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:54
 msgid "Prices per night by month:"
@@ -73,36 +73,44 @@ msgid "%1$s – %2$d periods with different prices:"
 msgstr "%1$s – %2$d Zeiträume mit unterschiedlichen Preisen:"
 
 #: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:130
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:162
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:178
 #: packages/fewo_tk2/src/Assistant/StayQuote.php:86
 msgid "%1$s to %2$s"
 msgstr "%1$s bis %2$s"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:156
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:148
+msgid "%1$s (valid until %2$s):"
+msgstr "%1$s (gültig bis %2$s):"
+
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:151
+msgid "Current news from the hosts:"
+msgstr "Aktuelle Neuigkeiten der Gastgeber:"
+
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:172
 msgid "%2$s to %3$s (%1$d night)"
 msgid_plural "%2$s to %3$s (%1$d nights)"
 msgstr[0] "%2$s bis %3$s (%1$d Nacht)"
 msgstr[1] "%2$s bis %3$s (%1$d Nächte)"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:164
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:180
 msgid "Availability %s: fully booked, no free nights."
 msgstr "Verfügbarkeit %s: ausgebucht, keine freien Nächte."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:167
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:183
 msgid "Free periods %s (first date = earliest arrival, second date = latest departure; every other night in this time is booked):"
 msgstr "Freie Zeiträume %s (erstes Datum = früheste Anreise, zweites Datum = späteste Abreise; alle anderen Nächte in dieser Zeit sind belegt):"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:171
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:187
 msgid "Next free period: %s."
 msgstr "Nächster freier Zeitraum: %s."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:175
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:191
 msgid "Next free period for a stay of %1$d week (%2$d nights or more): %3$s."
 msgid_plural "Next free period for a stay of %1$d weeks (%2$d nights or more): %3$s."
 msgstr[0] "Nächster freier Zeitraum für %1$d Woche (%2$d Nächte oder mehr): %3$s."
 msgstr[1] "Nächster freier Zeitraum für %1$d Wochen (%2$d Nächte oder mehr): %3$s."
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:203
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:219
 #: packages/fewo_tk2/src/Assistant/StayQuote.php:71
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:16
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:51
@@ -113,7 +121,7 @@ msgid_plural "%s guests"
 msgstr[0] "%s Gast"
 msgstr[1] "%s Gäste"
 
-#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:204
+#: packages/fewo_tk2/src/Assistant/ApartmentFactSheet.php:220
 #: packages/fewo_tk2/src/Assistant/StayQuote.php:72
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/view.php:40
 msgid "%1$s–%2$s guests"
@@ -137,11 +145,11 @@ msgstr "Der Assistent ist gerade stark gefragt. Bitte versuchen Sie es später n
 msgid "The assistant cannot answer at the moment. Please try again later or contact us directly."
 msgstr "Der Assistent kann gerade nicht antworten. Bitte versuchen Sie es später noch einmal oder schreiben Sie uns direkt."
 
-#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:135
+#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:136
 msgid "Prices per night according to the booking system (plus final cleaning once per stay):"
 msgstr "Preise pro Nacht laut Buchungssystem (zuzüglich einmalig Endreinigung je Aufenthalt):"
 
-#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:168
+#: packages/fewo_tk2/src/Assistant/KnowledgeBase.php:172
 msgid "Prices and availability: %s"
 msgstr "Preise und Verfügbarkeit: %s"
 
@@ -223,23 +231,43 @@ msgstr "Anzahlung %s"
 msgid "No apartment has been selected or it no longer exists."
 msgstr "Es ist keine Wohnung ausgewählt oder sie existiert nicht mehr."
 
-#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:31
+#: packages/fewo_tk2/src/News/NewsLoader.php:23
+msgid "No valid news URL has been configured."
+msgstr "Es ist keine gültige Adresse für die Neuigkeiten hinterlegt."
+
+#: packages/fewo_tk2/src/News/NewsLoader.php:28
+msgid "The news could not be loaded yet."
+msgstr "Die Neuigkeiten konnten noch nicht geladen werden."
+
+#: packages/fewo_tk2/src/News/NewsLoader.php:34
+msgid "The news data is invalid."
+msgstr "Die Daten der Neuigkeiten sind ungültig."
+
+#: packages/fewo_tk2/src/News/NewsReader.php:32
+msgid "The data does not contain any news."
+msgstr "Die Daten enthalten keine Neuigkeiten."
+
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:32
 msgid "The data is neither JSON nor XML."
 msgstr "Die Daten sind weder JSON noch XML."
 
-#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:36
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:37
 msgid "Fewo-Office reports an error: %s"
 msgstr "Fewo-Office meldet einen Fehler: %s"
 
-#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:50
-#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:53
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:51
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:54
 msgid "The data is not valid JSON."
 msgstr "Die Daten sind kein gültiges JSON."
 
-#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:66
-#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:77
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:67
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:78
 msgid "The data is not valid XML."
 msgstr "Die Daten sind kein gültiges XML."
+
+#: packages/fewo_tk2/src/Feed/FewoOfficeDocument.php:82
+msgid "This is the RSS format, which does not contain the period of validity. Please use the address ending in .json."
+msgstr "Das ist das RSS-Format, darin fehlt der Gültigkeitszeitraum. Bitte die Adresse mit der Endung .json verwenden."
 
 #: packages/fewo_tk2/src/Calendar/BookingReader.php:40
 msgid "The data does not contain an occupancy list."
@@ -527,8 +555,8 @@ msgid "Best: the whole website fits (see \"What the assistant knows\" below). Th
 msgstr "Am besten passt die ganze Website hinein (siehe unten „Was der Assistent weiß“). Das Modell bekommt dann immer alles; Ollama liest es einmal ein, danach beginnen Antworten nach wenigen Sekunden. Hat die Website mehr Text, werden nur die Abschnitte weitergegeben, die am besten zur Frage passen – langsamer und ungenauer."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:165
-msgid "Include prices and free periods of the apartments (from Fewo-Office)"
-msgstr "Preise und freie Zeiträume der Wohnungen einbeziehen (aus Fewo-Office)"
+msgid "Include prices, free periods and current news of the apartments (from Fewo-Office)"
+msgstr "Preise, freie Zeiträume und aktuelle Neuigkeiten der Wohnungen einbeziehen (aus Fewo-Office)"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:168
 msgid "Pages the assistant should not know"
@@ -575,7 +603,7 @@ msgid "Protects the server from overload. Questions in the last hour: %1$s, in t
 msgstr "Schützt den Server vor Überlastung. Fragen in der letzten Stunde: %1$s, in den letzten 24 Stunden: %2$s. Fragen und Antworten werden nicht gespeichert."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:207
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:54
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:60
 msgid "Save"
 msgstr "Speichern"
 
@@ -686,15 +714,23 @@ msgid "For the price overview, the price calculator and the inquiry form. Both f
 msgstr "Für Preisübersicht, Preisrechner und Anfrageformular. Beide Formate der Schnittstelle werden angenommen (.json, .xml); empfohlen ist JSON. Angezeigt werden nur veröffentlichte Saisons, die noch nicht abgelaufen sind."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:45
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:58
+msgid "News URL from Fewo-Office (optional)"
+msgstr "Adresse der Neuigkeiten in Fewo-Office (optional)"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:47
+msgid "For the block \"News\", which shows the news of this apartment as long as they are valid. The address contains the short name of the apartment in Fewo-Office in lower case; several short names separated by commas are possible. Use the format .json or .xml."
+msgstr "Für den Block „Neuigkeiten“, der die Neuigkeiten dieser Wohnung zeigt, solange sie gültig sind. Die Adresse enthält das Kürzel der Wohnung in Fewo-Office in Kleinbuchstaben; mehrere Kürzel mit Komma getrennt sind möglich. Format .json oder .xml."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:51
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:59
 msgid "Update interval"
 msgstr "Aktualisierung alle"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:47
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:53
 msgid "The data is loaded again on the next page view after this time. No cron job is required."
 msgstr "Nach Ablauf dieser Zeit werden die Daten beim nächsten Seitenaufruf neu geladen. Ein Cronjob ist nicht nötig."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:53
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:59
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:50
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -722,12 +758,12 @@ msgid "As of %s"
 msgstr "Stand: %s"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:45
-msgid "Occupancy and prices are not maintained on the website, they always come from Fewo-Office. Store the Fewo-Office URLs of each apartment here once; the blocks only select the apartment."
-msgstr "Belegung und Preise werden nicht auf der Website gepflegt, sie kommen immer aus Fewo-Office. Hinterlegen Sie hier einmal je Wohnung die Adressen in Fewo-Office; in den Blöcken wird nur noch die Wohnung ausgewählt."
+msgid "Occupancy, prices and news are not maintained on the website, they always come from Fewo-Office. Store the Fewo-Office URLs of each apartment here once; the blocks only select the apartment."
+msgstr "Belegung, Preise und Neuigkeiten werden nicht auf der Website gepflegt, sie kommen immer aus Fewo-Office. Hinterlegen Sie hier einmal die Adressen jeder Wohnung in Fewo-Office; die Blöcke wählen nur noch die Wohnung aus."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:49
-msgid "There are no apartments yet. Add an apartment to use the occupancy calendar, the price overview and the price calculator."
-msgstr "Es gibt noch keine Wohnungen. Legen Sie eine Wohnung an, um Belegungsplan, Preisübersicht und Preisrechner zu verwenden."
+msgid "There are no apartments yet. Add an apartment to use the occupancy calendar, the price overview, the price calculator and the news."
+msgstr "Es sind noch keine Wohnungen angelegt. Legen Sie eine Wohnung an, um Belegungsplan, Preisübersicht, Preisrechner und Neuigkeiten zu verwenden."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:55
 #: packages/fewo_tk2/elements/apartment_select.php:17
@@ -743,47 +779,61 @@ msgstr "Belegung"
 msgid "Price list"
 msgstr "Preisliste"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:59
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:58
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:36
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:21
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:40
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:46
+msgid "News"
+msgstr "Neuigkeiten"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:60
 msgid "Actions"
 msgstr "Aktionen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:73
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:74
 msgid "%s season"
 msgid_plural "%s seasons"
 msgstr[0] "%s Saison"
 msgstr[1] "%s Saisons"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:75
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:178
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:79
+msgid "%s current news item"
+msgid_plural "%s current news items"
+msgstr[0] "%s aktuelle Neuigkeit"
+msgstr[1] "%s aktuelle Neuigkeiten"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:81
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:214
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] "%s Minute"
 msgstr[1] "%s Minuten"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:75
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:179
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:81
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:215
 msgid "%s hour"
 msgid_plural "%s hours"
 msgstr[0] "%s Stunde"
 msgstr[1] "%s Stunden"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:77
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:83
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:75
 #: packages/fewo_tk2/blocks/fewo_rundgang/form.php:31
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:80
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:86
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:22
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/prices/view.php:68
 msgid "Update now"
 msgstr "Jetzt aktualisieren"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:83
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:89
 msgid "Delete the apartment \"%s\"? Blocks using it will no longer show any data."
 msgstr "Die Wohnung „%s“ löschen? Blöcke, die sie verwenden, zeigen dann keine Daten mehr an."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:85
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/view.php:91
 msgid "Delete"
 msgstr "Löschen"
 
@@ -870,47 +920,55 @@ msgstr "Standardpreis"
 msgid "Prices per night. Minimum occupancy: up to this number of guests the lowest price applies – fewer guests pay the same. A night costs the price of the season in which it ends."
 msgstr "Preise je Nacht. Mindestbelegung: Bis zu dieser Gästezahl gilt der niedrigste Preis – weniger Gäste zahlen dasselbe. Eine Nacht kostet den Preis der Saison, in der sie endet."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:46
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:53
 msgid "The apartment was not found."
 msgstr "Die Wohnung wurde nicht gefunden."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:76
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:85
 msgid "Please enter a name."
 msgstr "Bitte geben Sie einen Namen an."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:79
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:88
 msgid "Please enter a valid occupancy URL (https://…)."
 msgstr "Bitte geben Sie eine gültige Adresse der Belegung an (https://…)."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:82
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:91
 msgid "Please enter a valid price list URL (https://…)."
 msgstr "Bitte geben Sie eine gültige Adresse der Preisliste an (https://…)."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:85
-msgid "Please enter at least one of the two URLs."
-msgstr "Bitte geben Sie mindestens eine der beiden Adressen an."
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:94
+msgid "Please enter a valid news URL (https://…)."
+msgstr "Bitte geben Sie eine gültige Adresse der Neuigkeiten an (https://…)."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:103
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:97
+msgid "Please enter at least one of the URLs."
+msgstr "Bitte geben Sie mindestens eine der Adressen an."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:116
 msgid "The apartment has been saved."
 msgstr "Die Wohnung wurde gespeichert."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:115
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:128
 msgid "The data of \"%s\" has been reloaded from Fewo-Office."
 msgstr "Die Daten von „%s“ wurden neu aus Fewo-Office geladen."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:126
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:139
 msgid "The apartment has been deleted."
 msgstr "Die Wohnung wurde gelöscht."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:141
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:154
 msgid "Occupancy: %s"
 msgstr "Belegung: %s"
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:147
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:160
 msgid "Price list: %s"
 msgstr "Preisliste: %s"
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:154
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:166
+msgid "News: %s"
+msgstr "Neuigkeiten: %s"
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/apartments.php:173
 msgid "\"%1$s\": The data could not be loaded from Fewo-Office. %2$s"
 msgstr "„%1$s“: Die Daten konnten nicht aus Fewo-Office geladen werden. %2$s"
 
@@ -977,6 +1035,7 @@ msgstr "Bildergalerie mit Großansicht aus einem Ordner der Dateiverwaltung oder
 
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:62
 #: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:66
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:58
 #: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:67
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:52
 #: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:63
@@ -1061,6 +1120,63 @@ msgstr "Nächstes Bild"
 msgid "Image %1$s of %2$s"
 msgstr "Bild %1$s von %2$s"
 
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:41
+msgid "Shows the current news of a holiday apartment from Fewo-Office – each one only during its period of validity."
+msgstr "Zeigt die aktuellen Neuigkeiten einer Ferienwohnung aus Fewo-Office – jede nur in ihrem Gültigkeitszeitraum."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:70
+msgid "No news URL is stored for this apartment."
+msgstr "Für diese Wohnung ist keine Adresse der Neuigkeiten hinterlegt."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:90
+#: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:152
+#: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:73
+#: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:113
+msgid "Please select an apartment."
+msgstr "Bitte wählen Sie eine Wohnung aus."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/controller.php:92
+msgid "No news URL is stored for the apartment \"%s\". Please add it in the dashboard under Fewo Toolkit 2 › Apartments."
+msgstr "Für die Wohnung „%s“ ist keine Adresse der Neuigkeiten hinterlegt. Bitte im Dashboard unter Fewo Toolkit 2 › Wohnungen ergänzen."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:20
+msgid "The news of this apartment are loaded from Fewo-Office (news URL of the apartment)."
+msgstr "Die Neuigkeiten dieser Wohnung werden aus Fewo-Office geladen (Adresse der Neuigkeiten bei der Wohnung)."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:24
+#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:26
+#: packages/fewo_tk2/blocks/fewo_chat/form.php:27
+#: packages/fewo_tk2/blocks/fewo_preisrechner/form.php:26
+#: packages/fewo_tk2/blocks/fewo_rundgang/form.php:96
+#: packages/fewo_tk2/blocks/fewo_preisuebersicht/form.php:26
+#: packages/fewo_tk2/blocks/fewo_belegungsplan/form.php:41
+msgid "Heading (optional)"
+msgstr "Überschrift (optional)"
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:26
+msgid "Only shown when there is current news."
+msgstr "Erscheint nur, wenn es aktuelle Neuigkeiten gibt."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:31
+msgid "Show the period of validity"
+msgstr "Gültigkeitszeitraum anzeigen"
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/form.php:35
+msgid "News are written in Fewo-Office. Each one appears here from the first to the last day of its period; when there is no current news, the block shows nothing."
+msgstr "Neuigkeiten werden in Fewo-Office geschrieben. Jede erscheint hier vom ersten bis zum letzten Tag ihres Zeitraums; gibt es keine aktuelle Neuigkeit, zeigt der Block nichts an."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:24
+msgid "News: there is no current news at the moment. The block is only visible while there is."
+msgstr "Neuigkeiten: Zurzeit gibt es keine aktuelle Neuigkeit. Der Block ist nur sichtbar, solange es eine gibt."
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:34
+msgid "Valid on %s"
+msgstr "Gültig am %s"
+
+#: packages/fewo_tk2/blocks/fewo_neuigkeiten/view.php:37
+msgid "Valid from %1$s to %2$s"
+msgstr "Gültig vom %1$s bis %2$s"
+
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/controller.php:28
 msgid "Amenities List"
 msgstr "Ausstattungsliste"
@@ -1096,15 +1212,6 @@ msgstr "Nach unten"
 #: packages/fewo_tk2/elements/question_rows.php:21
 msgid "Remove"
 msgstr "Entfernen"
-
-#: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:26
-#: packages/fewo_tk2/blocks/fewo_chat/form.php:27
-#: packages/fewo_tk2/blocks/fewo_preisrechner/form.php:26
-#: packages/fewo_tk2/blocks/fewo_rundgang/form.php:96
-#: packages/fewo_tk2/blocks/fewo_preisuebersicht/form.php:26
-#: packages/fewo_tk2/blocks/fewo_belegungsplan/form.php:41
-msgid "Heading (optional)"
-msgstr "Überschrift (optional)"
 
 #: packages/fewo_tk2/blocks/fewo_ausstattungsliste/form.php:27
 msgid "e.g. Kitchen"
@@ -1480,12 +1587,6 @@ msgstr "Bitte geben Sie ein gültiges Abreisedatum an."
 #: packages/fewo_tk2/blocks/fewo_preisrechner/view.php:87
 msgid "The apartment is already booked in the selected period. Please choose different dates."
 msgstr "Die Wohnung ist im gewählten Zeitraum bereits belegt. Bitte wählen Sie einen anderen Zeitraum."
-
-#: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:152
-#: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:73
-#: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:113
-msgid "Please select an apartment."
-msgstr "Bitte wählen Sie eine Wohnung aus."
 
 #: packages/fewo_tk2/blocks/fewo_preisrechner/form.php:22
 msgid "The calculation follows Fewo-Office: each night costs the price of the day on which it ends."

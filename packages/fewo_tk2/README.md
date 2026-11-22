@@ -1,10 +1,10 @@
 # Fewo Toolkit 2.0
 
 Paket für Concrete CMS mit den Bausteinen einer Ferienwohnungs-Website:
-Belegungsplan, Preisübersicht, Preisrechner, Anfrageformular, Ausstattungsliste,
+Belegungsplan, Preisübersicht, Preisrechner, Neuigkeiten, Anfrageformular, Ausstattungsliste,
 Bildergalerie, Karte, 360°-Rundgang und ein Chat mit KI-Assistent.
 
-**Belegung und Preise kommen immer aus Fewo-Office.** Auf der Website werden weder Preise gepflegt noch
+**Belegung, Preise und Neuigkeiten kommen immer aus Fewo-Office.** Auf der Website werden weder Preise gepflegt noch
 Buchungen angelegt: Die Blöcke rufen die öffentlichen Export-Schnittstellen von Fewo-Office ab und zeigen an,
 was dort hinterlegt ist. Im Dashboard der Website (Verwaltung › **Fewo Toolkit 2**) stehen die Wohnungen mit
 ihren Adressen in Fewo-Office und die Einstellungen des KI-Assistenten. **Buchungsanfragen gibt es auf der
@@ -50,15 +50,24 @@ Die Adressen in Fewo-Office werden **einmal je Wohnung** hinterlegt: Verwaltung 
 *Wohnung hinzufügen*. In den Blöcken (Belegungsplan, Preisübersicht, Preisrechner, Anfrageformular) wird danach
 nur noch die Wohnung ausgewählt.
 
-Jede Wohnung hat in Fewo-Office ein Kürzel (z. B. `sonnenseele`). Daraus ergeben sich die beiden Adressen:
+Jede Wohnung hat in Fewo-Office ein Kürzel (z. B. `sonnenseele`). Daraus ergeben sich die Adressen:
 
 | Feld | Adresse | Verwendet von |
 | --- | --- | --- |
 | Adresse der Belegung | `https://fewo-office.com/api/wohnungen/<kürzel>/belegung.json` | Belegungsplan, Preisrechner (Verfügbarkeit) |
 | Adresse der Preisliste | `https://fewo-office.com/api/wohnungen/<kürzel>/preise.json` | Preisübersicht, Preisrechner, Anfrageformular (optional) |
+| Adresse der Neuigkeiten (optional) | `https://fewo-office.com/api/neuigkeiten/<kürzel>.json` | Neuigkeiten, KI-Assistent |
 
-Mindestens eine der beiden Adressen ist nötig. Die Übersicht zeigt je Wohnung den Stand des letzten Abrufs
-(OK, noch nicht geladen, letzte Aktualisierung fehlgeschlagen – mit Grund) und die Zahl der aktuellen Saisons.
+Mindestens eine der Adressen ist nötig. Die Übersicht zeigt je Wohnung den Stand des letzten Abrufs
+(OK, noch nicht geladen, letzte Aktualisierung fehlgeschlagen – mit Grund), die Zahl der aktuellen Saisons und
+der heute gültigen Neuigkeiten.
+
+**Neuigkeiten** werden in Fewo-Office unter „Neuigkeiten“ geschrieben: Titel, Text, Zeitraum (von–bis) und die
+betroffenen Wohnungen. Das Kürzel in der Adresse ist klein geschrieben (`…/neuigkeiten/seeherz.json`, nicht
+`Seeherz`); mit Komma getrennt lassen sich mehrere Wohnungen zusammenfassen (`…/neuigkeiten/see,shz.json`).
+Angenommen werden `.json` und `.xml`. Das RSS-Format (`.rss`) zum Abonnieren in einem Feedreader taugt hier
+nicht, weil darin das Ende des Zeitraums fehlt – die Website lehnt es mit einem Hinweis ab. Die Neuigkeiten
+werden wie Belegung und Preise im Intervall der Wohnung neu abgerufen.
 
 - **Format:** Empfohlen ist **JSON**. Angenommen werden alle Formate der Schnittstelle – Belegung als `.json`,
   `.xml` oder `.ics`, Preisliste als `.json` oder `.xml`. Das Format wird am Inhalt erkannt, die Endung der
@@ -142,7 +151,8 @@ Sprachmodell, das mit [Ollama](https://ollama.com) auf dem eigenen Server läuft
   dem Attribut „Vom Suchindex ausschließen“ und die im Dashboard ausgeschlossenen Pfade gehören nicht dazu.
 - **Preise und freie Zeiträume** der Wohnungen aus Fewo-Office (Verwaltung › Fewo Toolkit 2 › Wohnungen): Preise
   pro Nacht nach Monaten für die nächsten 15 Monate, Endreinigung, Mindestaufenthalt, Anzahlung und die freien
-  Zeiträume der nächsten 12 Monate.
+  Zeiträume der nächsten 12 Monate – dazu die heute gültigen **Neuigkeiten** der Wohnung („Hat das Schwimmbad
+  geöffnet?“).
 - Änderungen gelten sofort: Sobald eine Seite veröffentlicht, verschoben oder gelöscht wird, liest der
   Assistent die Inhalte neu ein (spätestens nach zehn Minuten); Preise und Belegung folgen dem
   Aktualisierungsintervall der Wohnung.
@@ -242,7 +252,7 @@ Weitere Einstellungen:
 | Einstellung | Bedeutung |
 | --- | --- |
 | Website-Inhalte je Frage | So viel Text bekommt das Modell höchstens (Vorgabe 48.000 Zeichen). Passt die ganze Website hinein, bekommt es immer alles – das ist der genaue und schnelle Fall. Sonst werden je Frage nur die passendsten Abschnitte ausgewählt; das Dashboard warnt dann. |
-| Preise und freie Zeiträume einbeziehen | Angaben aus Fewo-Office mitgeben (Vorgabe: ja). |
+| Preise, freie Zeiträume und aktuelle Neuigkeiten einbeziehen | Angaben aus Fewo-Office mitgeben (Vorgabe: ja). |
 | Seiten, die der Assistent nicht kennen soll | Pfade, je Zeile einer, z. B. `/impressum`; gilt auch für Unterseiten. |
 | Zusätzliche Anweisungen | Tonfall („Sprich die Gäste mit du an“) oder Angaben, die nicht auf der Website stehen („Hunde auf Anfrage“). |
 | Erklärungen zu Stichwörtern | Je Zeile Stichwörter (durch Komma getrennt) und eine Erklärung. Kommt eines der Stichwörter in der Frage vor, bekommt das Modell die Erklärung direkt bei der Frage mit – sie gilt vor den Inhalten der Website. Damit stellen Sie falsche Antworten richtig („Stellplatz, Parkplatz, parken“ → „Die Wohnung hat keinen privaten Stellplatz. Parken ist … möglich.“). Groß-/Kleinschreibung und Umlaute spielen keine Rolle, ein Stichwort trifft auch als Teil eines Wortes („Stellplätze“, „Tiefgaragenstellplatz“); Stichwörter mit weniger als vier Zeichen („TV“) nur als ganzes Wort. Bei einer Nachfrage zählt die Frage davor mit. Je genauer die Erklärung, desto besser die Antwort: Steht dort nur, was es nicht gibt, kann das Modell auch nicht sagen, was es stattdessen gibt. Höchstens 30 Erklärungen. |
@@ -322,6 +332,7 @@ der Website – dort bleibt es fehleranfällig.
 | --- | --- | --- |
 | **Belegungsplan** | Freie und belegte Tage der gewählten Wohnung | An- und Abreisetage werden halb belegt dargestellt. Pro Zeile stehen so viele Kalenderblätter, wie anfangs Monate sichtbar sind – auch bei den aufgeklappten Monaten; auf schmalen Bildschirmen entsprechend weniger. |
 | **Preisübersicht** | Saisons und Preise der gewählten Wohnung | Anordnung wählbar: **Kacheln nebeneinander** oder **Liste untereinander**. Gleiche Preise werden zu Bereichen zusammengefasst („1–2 Gäste“). Der Standardpreis der Wohnung erscheint als „Übrige Zeiträume“. Bedingungen: Mindestaufenthalt, Endreinigung, Anzahlung. |
+| **Neuigkeiten** | Aktuelle Hinweise der Gastgeber aus Fewo-Office (z. B. „Schwimmbad geschlossen“) | Jede Neuigkeit erscheint vom ersten bis zum letzten Tag ihres Zeitraums – auch wenn die Daten seit dem Ende nicht neu abgerufen wurden. Gibt es keine, zeigt der Block nichts an (im Bearbeitungsmodus einen Platzhalter). Überschrift und Anzeige des Zeitraums wählbar. Absätze und Zeilenumbrüche des Textes bleiben erhalten. Nur für Wohnungen mit Adresse der Neuigkeiten. |
 | **Preisrechner** | Gäste berechnen den Preis ihres Aufenthalts | Rechnet wie Fewo-Office und prüft die Belegung der Wohnung (siehe unten). Funktioniert auch ohne JavaScript. Optional führt eine Schaltfläche mit Reisedaten zum Anfrageformular. |
 | **Anfrageformular** | Unverbindliche Anfrage mit Reisezeitraum, Gästen und Kontaktdaten | Die Anfrage geht per E-Mail an die im Block hinterlegte Adresse; gespeichert wird nichts, und eine Buchung entsteht dadurch nicht. Mit einer Wohnung steht der unverbindliche Preis in der Benachrichtigung. |
 | **Ausstattungsliste** | Liste mit optionalen Fußnoten, auf Wunsch aufklappbar | Spaltenzahl wählbar (1 bis 4); auf schmalen Bildschirmen werden es automatisch weniger. |
@@ -450,6 +461,7 @@ Themes. Farben und Rundungen lassen sich im Theme über CSS-Variablen anpassen, 
     --fewo-radius: 6px;
 }
 .fewo-prices { --fewo-card-bg: #f6f3ee; }
+.fewo-news   { --fewo-news-bg: #eef6fb; --fewo-news-accent: #2aa9dd; }
 .fewo-form   { --fewo-focus: #0b6e4f; --fewo-error: #b42318; }
 ```
 
@@ -461,7 +473,8 @@ eines Kalenderblatts im Belegungsplan), `--fewo-card-border`
 (Preisübersicht), `--fewo-muted` (Preisrechner), `--fewo-success-bg`, `--fewo-success-text`
 (Anfrageformular), `--fewo-gap` (Bildergalerie), `--fewo-selected` (gewählter Zeitraum im Kalender der
 Datumsfelder des Preisrechners), `--fewo-tour-ratio` und `--fewo-tour-height` (360°-Rundgang),
-`--fewo-chat-bg`, `--fewo-chat-user-bg`, `--fewo-chat-assistant-bg` und `--fewo-chat-height` (Chat: Hintergrund
+`--fewo-news-bg`, `--fewo-news-accent`, `--fewo-news-text` und `--fewo-news-period` (Neuigkeiten: Hintergrund,
+Randstreifen links, Text, Zeile mit dem Zeitraum), `--fewo-chat-bg`, `--fewo-chat-user-bg`, `--fewo-chat-assistant-bg` und `--fewo-chat-height` (Chat: Hintergrund
 des Gesprächs, der eigenen Fragen und der Antworten, größte Höhe des Gesprächs). Wer Farben ändert, sollte die
 Kontraste prüfen.
 

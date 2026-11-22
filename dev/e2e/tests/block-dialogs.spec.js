@@ -1,4 +1,4 @@
-// Dialoge zum Hinzufügen und Bearbeiten der acht Blöcke im Bearbeitungsmodus von Concrete
+// Dialoge zum Hinzufügen und Bearbeiten der neun Blöcke (ohne Chat) im Bearbeitungsmodus von Concrete
 const { test, expect, sql, concrete, webExec, phpLog, mail, isoDate, pickStay } = require('./helpers');
 const { enterEditMode, openAddDialog, openEditDialog, submitDialog, submitExpectingErrors, publish, blocks } = require('./editmode');
 
@@ -372,8 +372,48 @@ test('360°-Rundgang: Fehler in den Einstellungen sehen Redakteure mit Grund, da
   await submitDialog(page, dialog);
 });
 
-test('Veröffentlichen: Besucher sehen alle acht Blöcke, das Log bleibt sauber', async ({ page, browser }) => {
-  for (const handle of ['fewo_preisuebersicht', 'fewo_belegungsplan', 'fewo_preisrechner', 'fewo_kontaktformular', 'fewo_ausstattungsliste', 'fewo_bildergalerie', 'fewo_karte', 'fewo_rundgang']) {
+test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeiten', async ({ page }) => {
+  let dialog = await openAddDialog(page, 'fewo_neuigkeiten');
+  await expect(dialog.locator('.ui-dialog-title')).toHaveText('Neuigkeiten hinzufügen');
+  await expect(dialog.getByLabel('Wohnung').locator('option')).toHaveText(APARTMENTS);
+  await expect(dialog.getByLabel('Gültigkeitszeitraum anzeigen')).toBeChecked();
+
+  // Die Wohnung hat keine Adresse der Neuigkeiten: Der Block ließe sich anlegen, bliebe aber immer leer
+  await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz – Belegung als ICS (Demo)' });
+  expect(await submitExpectingErrors(page, dialog)).toContain('Für die Wohnung „Seeherz – Belegung als ICS (Demo)“ ist keine Adresse der Neuigkeiten hinterlegt.');
+
+  // In den Demo-Daten stehen drei Neuigkeiten: abgelaufen, aktuell und erst in zehn Tagen gültig
+  await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz (Demo)' });
+  await dialog.getByLabel('Überschrift (optional)').fill('Aktuelles');
+  await submitDialog(page, dialog);
+  const block = blocks(page, 'fewo_neuigkeiten');
+  await expect(block.locator('h2')).toHaveText('Aktuelles');
+  await expect(block.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause']);
+  await expect(block.locator('h3')).toHaveText(['Schwimmbadpause']);
+  const [from, to] = [-5, 20].map((days) => isoDate(days).split('-').reverse().join('.'));
+  await expect(block.locator('.fewo-news__period')).toHaveText(`Gültig vom ${from} bis ${to}`);
+  await expect(block.locator('.fewo-news__text')).toHaveText(['Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.', 'Die Therme in Konstanz hat geöffnet.']);
+  expect(record('btFewoNeuigkeiten')).toMatchObject({ apartmentID: apartmentId('Seeherz (Demo)'), title: 'Aktuelles', showPeriod: 1 });
+
+  // Neuigkeiten als XML, nur heute gültig; ohne Überschrift sind die Titel die Überschriften der zweiten Ebene
+  dialog = await openEditDialog(page, 'fewo_neuigkeiten');
+  await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherzchen (Demo)' });
+  await dialog.getByLabel('Überschrift (optional)').fill('');
+  await dialog.getByLabel('Gültigkeitszeitraum anzeigen').uncheck();
+  await submitDialog(page, dialog);
+  await expect(block.locator('h2')).toHaveText(['Fahrräder kostenlos']);
+  await expect(block.locator('.fewo-news__period')).toHaveCount(0);
+  expect(await block.locator('.fewo-news__text').innerHTML()).toBe('Zwei Fahrräder stehen im Keller bereit.<br>\nDen Schlüssel finden Sie in der Wohnung.');
+
+  dialog = await openEditDialog(page, 'fewo_neuigkeiten');
+  await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz (Demo)' });
+  await dialog.getByLabel('Überschrift (optional)').fill('Aktuelles');
+  await dialog.getByLabel('Gültigkeitszeitraum anzeigen').check();
+  await submitDialog(page, dialog);
+});
+
+test('Veröffentlichen: Besucher sehen alle neun Blöcke, das Log bleibt sauber', async ({ page, browser }) => {
+  for (const handle of ['fewo_neuigkeiten', 'fewo_preisuebersicht', 'fewo_belegungsplan', 'fewo_preisrechner', 'fewo_kontaktformular', 'fewo_ausstattungsliste', 'fewo_bildergalerie', 'fewo_karte', 'fewo_rundgang']) {
     await expect(blocks(page, handle), handle).toHaveCount(1);
   }
   await publish(page);
@@ -386,6 +426,7 @@ test('Veröffentlichen: Besucher sehen alle acht Blöcke, das Log bleibt sauber'
     return route.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64') });
   });
   await view.goto(PAGE);
+  await expect(view.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause']);
   await expect(view.locator('.fewo-prices, .fewo-pricelist, [class^="fewo-price"]').first()).toBeVisible();
   await expect(view.locator('.fewo-calendar .fewo-notice')).toHaveCount(0); // Hinweise nur für Redakteure
   await expect(view.locator('.fewo-calendar__month:visible')).toHaveCount(2);

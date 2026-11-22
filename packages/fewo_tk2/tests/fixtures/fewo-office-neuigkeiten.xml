@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fewobacher data="news">
+ <status>
+  <type>OK</type>
+  <message>Okay!</message>
+ </status>
+ <news>
+  <item>
+   <id>1</id>
+   <title>Schwimmbadpause</title>
+   <text>Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis. Ab dem 15.11.2026 wird es wieder geöffnet haben.</text>
+   <date_start>2026-10-01</date_start>
+   <date_end>2026-12-31</date_end>
+   <apartments>
+    <apartment>see</apartment>
+    <apartment>shz</apartment>
+    <apartment>ssz</apartment>
+   </apartments>
+  </item>
+ </news>
+</fewobacher>

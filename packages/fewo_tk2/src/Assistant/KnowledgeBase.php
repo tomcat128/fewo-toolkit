@@ -14,6 +14,7 @@ use FewoTk2\Calendar\BookingReader;
 use FewoTk2\Calendar\Occupancy;
 use FewoTk2\Calendar\OccupancyLoader;
 use FewoTk2\Feed\FeedLoader;
+use FewoTk2\News\NewsLoader;
 use FewoTk2\Pricing\PricelistLoader;
 use Throwable;
 
@@ -136,7 +137,7 @@ class KnowledgeBase
     }
 
     /**
-     * Preise und freie Zeiträume je Wohnung. Nicht zwischengespeichert: Die Daten aus Fewo-Office
+     * Preise, freie Zeiträume und aktuelle Neuigkeiten je Wohnung. Nicht zwischengespeichert: Die Daten aus Fewo-Office
      * haben ihren eigenen Zwischenspeicher (siehe FeedLoader) und sind so immer auf dessen Stand.
      *
      * @return Chunk[]
@@ -159,6 +160,9 @@ class KnowledgeBase
                 if ($body !== null) {
                     $bookings = (new BookingReader($today->getTimezone()))->read($body, $today->modify('-1 day'), $today->modify('+' . (ApartmentFactSheet::MONTHS_AHEAD + 1) . ' months'));
                     $parts[] = ApartmentFactSheet::availability(new Occupancy($bookings), $today, $pricelist?->minNights ?? 1);
+                }
+                if ($apartment->getNewsUrl() !== '') {
+                    $parts[] = ApartmentFactSheet::news($this->app->make(NewsLoader::class)->load($apartment->getNewsUrl(), $apartment->getRefreshMinutes())->current($today));
                 }
             } catch (Throwable) {
                 // Daten nicht lesbar: Der Assistent kennt diese Angaben dann nicht und sagt das auch
