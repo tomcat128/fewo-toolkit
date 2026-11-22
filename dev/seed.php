@@ -105,6 +105,10 @@ $seeherz = $apartment('Seeherz (Demo)', 'fewo-demo-belegung.json', 'fewo-demo-pr
 $seeherzchen = $apartment('Seeherzchen (Demo)', 'fewo-demo-belegung-2.xml', 'fewo-demo-preise-2.xml');
 // Dieselbe Belegung im ICS-Format, ohne Preisliste
 $seeherzIcs = $apartment('Seeherz – Belegung als ICS (Demo)', 'fewo-demo-belegung.ics', '');
+// Die Demo-Daten sind eben neu geschrieben worden (Termine relativ zu heute): den Zwischenspeicher der Website
+// verwerfen, sonst zeigt sie bis zum Ablauf des Intervalls noch den Stand des letzten Laufs – am nächsten Tag
+// mit Terminen, die um einen Tag verschoben sind.
+$em->getConnection()->executeStatement('DELETE FROM FewoFeeds');
 
 // 2. Beispielbilder in einem Ordner "Fewo Demo"
 $filesystem = new Filesystem();
