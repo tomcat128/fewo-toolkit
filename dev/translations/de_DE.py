@@ -613,8 +613,15 @@ TRANSLATIONS = {
     "e.g. Emma": "z. B. Emma",
     "Shown in the chat above each answer; the assistant also knows its name. Without a name it is called \"Assistant\".":
         "Steht im Chat über jeder Antwort; auch der Assistent selbst kennt seinen Namen. Ohne Namen heißt er „Assistent“.",
-    "Chat on every page": "Chat auf jeder Seite",
-    "Show the chat on every page of the website (bottom right)": "Chat auf jeder Seite der Website anzeigen (unten rechts)",
+    "Chat at the bottom right": "Chat unten rechts",
+    "Show the chat at the bottom right of the website": "Chat unten rechts auf der Website anzeigen",
+    "On all pages": "Auf allen Seiten",
+    "Only on certain pages": "Nur auf bestimmten Seiten",
+    "Pages with the chat": "Seiten mit dem Chat",
+    "One path per line, e.g. /prices – subpages are included. A single / stands for the home page. You can also paste the address of a page from the browser.":
+        "Ein Pfad pro Zeile, z. B. /preise – Unterseiten gehören dazu. Ein einzelnes / steht für die Startseite. Sie können auch die Adresse einer Seite aus dem Browser einfügen.",
+    "Please enter at least one page for the chat at the bottom right, or show it on all pages.":
+        "Bitte geben Sie mindestens eine Seite für den Chat unten rechts an, oder zeigen Sie ihn auf allen Seiten.",
     "Visitors first see a small button with the hint text; a click opens the chat. It needs no chat block and appears once the assistant is switched on. On pages that contain a chat block, only the block is shown.":
         "Besucher sehen zuerst eine kleine Schaltfläche mit dem Hinweistext; ein Klick öffnet den Chat. Ein Chat-Block ist dafür nicht nötig. Der Chat erscheint, sobald der Assistent eingeschaltet ist. Auf Seiten mit einem Chat-Block wird nur der Block angezeigt.",
     "Hint text of the button": "Hinweistext der Schaltfläche",

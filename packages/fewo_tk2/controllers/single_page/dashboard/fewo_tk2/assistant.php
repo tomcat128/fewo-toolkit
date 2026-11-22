@@ -83,6 +83,9 @@ class Assistant extends DashboardPageController
         if ($settings->getBaseUrl() === null) {
             $this->error->add(t('Please enter a valid Ollama URL (http://… or https://…).'));
         }
+        if ($settings->widgetEnabled && $settings->widgetPagesOnly && $settings->getWidgetPages() === []) {
+            $this->error->add(t('Please enter at least one page for the chat at the bottom right, or show it on all pages.'));
+        }
         if ($settings->enabled && $settings->model === '') {
             $this->error->add(t('Please choose a model before switching on the assistant.'));
         }

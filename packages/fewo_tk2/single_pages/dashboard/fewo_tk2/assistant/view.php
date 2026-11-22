@@ -55,12 +55,38 @@ $number = static fn (int $value): string => number_format($value, 0, ',', '.');
     </fieldset>
 
     <fieldset class="mb-4" id="fewo-assistant-widget">
-        <legend><?= t('Chat on every page') ?></legend>
+        <legend><?= t('Chat at the bottom right') ?></legend>
         <div class="form-check">
             <?= $form->checkbox('widgetEnabled', 1, $settings->widgetEnabled) ?>
-            <?= $form->label('widgetEnabled', t('Show the chat on every page of the website (bottom right)'), ['class' => 'form-check-label']) ?>
+            <?= $form->label('widgetEnabled', t('Show the chat at the bottom right of the website'), ['class' => 'form-check-label']) ?>
         </div>
         <div class="form-text mb-3"><?= t('Visitors first see a small button with the hint text; a click opens the chat. It needs no chat block and appears once the assistant is switched on. On pages that contain a chat block, only the block is shown.') ?></div>
+        <div class="mb-3" id="fewo-assistant-widget-pages">
+            <div class="form-check">
+                <?= $form->radio('widgetPagesOnly', 0, $settings->widgetPagesOnly ? 1 : 0, ['id' => 'widgetPagesAll']) ?>
+                <label class="form-check-label" for="widgetPagesAll"><?= t('On all pages') ?></label>
+            </div>
+            <div class="form-check">
+                <?= $form->radio('widgetPagesOnly', 1, $settings->widgetPagesOnly ? 1 : 0, ['id' => 'widgetPagesSelected']) ?>
+                <label class="form-check-label" for="widgetPagesSelected"><?= t('Only on certain pages') ?></label>
+            </div>
+            <div class="mt-2" data-fewo-widget-pages<?= $settings->widgetPagesOnly ? '' : ' hidden' ?>>
+                <?= $form->label('widgetPages', t('Pages with the chat')) ?>
+                <?= $form->textarea('widgetPages', $settings->widgetPages, ['rows' => 4, 'placeholder' => "/\n/ferienwohnung\n/preise", 'style' => 'max-width: 28rem']) ?>
+                <div class="form-text"><?= t('One path per line, e.g. /prices – subpages are included. A single / stands for the home page. You can also paste the address of a page from the browser.') ?></div>
+            </div>
+        </div>
+        <script>
+        (() => {
+            const root = document.getElementById('fewo-assistant-widget-pages');
+            const field = root.querySelector('[data-fewo-widget-pages]');
+            const update = () => {
+                field.hidden = !root.querySelector('#widgetPagesSelected').checked;
+            };
+            root.querySelectorAll('input[type="radio"]').forEach((radio) => radio.addEventListener('change', update));
+            update();
+        })();
+        </script>
         <div class="mb-3">
             <?= $form->label('widgetHint', t('Hint text of the button')) ?>
             <?= $form->text('widgetHint', $settings->widgetHint, ['maxlength' => FewoTk2\Assistant\AssistantSettings::MAX_HINT_CHARS, 'style' => 'max-width: 28rem']) ?>

@@ -23,6 +23,9 @@ Website nicht:** Das Anfrageformular schickt eine E-Mail an die im Block hinterl
 ## Installation
 
 1. `fewo_tk2-<Version>.zip` entpacken und den Ordner `fewo_tk2` nach `packages/` der Website kopieren.
+   Der Ordner muss genau `fewo_tk2` heißen: Concrete leitet aus dem Ordnernamen die Kennung und den Namen der
+   Klasse ab. Unter einem anderen Namen (z. B. `fewo_toolkit_2`) erscheint „Defektes Paket … Make sure it has a
+   valid controller.php“.
 2. Verwaltung › Concrete erweitern › **Funktionen hinzufügen** › Fewo Toolkit 2 › **Installieren**
    (oder `concrete/bin/concrete c5:package:install fewo_tk2`).
 3. Die Blöcke stehen danach im Block-Set **Fewo Toolkit 2** bereit, die Verwaltung unter
@@ -202,19 +205,23 @@ am besten mit Fragen nach Preisen und freien Terminen, dort unterscheiden sich d
 2. **Modell** wählen, unter **Ausprobieren** ein paar typische Fragen stellen (geht, bevor der Assistent
    eingeschaltet ist; zeigt bei Problemen die Fehlermeldung von Ollama).
 3. **Assistent einschalten** und den Block **Chat (KI-Assistent)** auf einer Seite einfügen – oder den
-   **Chat auf jeder Seite** einschalten (siehe unten).
+   **Chat unten rechts** einschalten (siehe unten).
 
 **Name des Assistenten**
 
 Unter **Name des Assistenten** bekommt der Assistent einen Namen, z. B. „Emma“. Er steht im Chat über jeder
 Antwort, und auch das Sprachmodell kennt ihn („Wie heißt du?“). Ohne Namen heißt er „Assistent“.
 
-**Chat auf jeder Seite**
+**Chat unten rechts**
 
-Mit dem Häkchen **Chat auf jeder Seite der Website anzeigen (unten rechts)** erscheint der Chat ohne Block auf
-allen Seiten: zuerst nur als kleine Schaltfläche mit dem Hinweistext („Fragen? Ich helfe gern.“), nach einem
+Mit dem Häkchen **Chat unten rechts auf der Website anzeigen** erscheint der Chat ohne Block:
+zuerst nur als kleine Schaltfläche mit dem Hinweistext („Fragen? Ich helfe gern.“), nach einem
 Klick als Chat-Fenster. Hinweistext, Begrüßung, Beispielfragen und der Hinweis unter dem Eingabefeld werden
 an derselben Stelle im Dashboard gepflegt.
+
+Darunter wählen Sie, wo er erscheint: **Auf allen Seiten** oder **Nur auf bestimmten Seiten**. Für bestimmte
+Seiten tragen Sie je Zeile einen Pfad ein, z. B. `/preise` – Unterseiten gehören dazu, ein einzelnes `/` steht
+für die Startseite. Eine aus dem Browser kopierte Adresse wird beim Speichern zum Pfad gekürzt.
 
 - Das Gespräch und der Zustand (offen oder geschlossen) bleiben beim Wechsel der Seite erhalten – gespeichert
   nur im Browser des Besuchers (`sessionStorage`), bis der Tab geschlossen wird.

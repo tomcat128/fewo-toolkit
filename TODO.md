@@ -124,6 +124,16 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
   Farben des alten Belegungsplans (`#f7d291`, `#eddabb`; im Theme über `--fewo-month-bg`, `--fewo-weekdays-bg`
   änderbar). Behoben: Vergangene belegte Tage hatten weiße Zahlen auf Grau
 
+- [x] **Version 2.4.3:** Pfeil vor „Weitere Monate anzeigen“. **Speicher:** Bildergalerie und 360°-Rundgang
+  verkleinern ein Bild nur noch, wenn der Arbeitsspeicher von PHP dafür reicht (`ImageMemory`), sonst zeigen sie
+  das Original – vorher fiel mit `memory_limit = 128M` und einem Panorama von 4096 × 2048 die ganze Seite aus
+  (gefunden mit `dev/test-package.sh`). **Installation:** Der Ordner in `packages/` muss `fewo_tk2` heißen;
+  unter anderem Namen meldet Concrete „Defektes Paket … valid controller.php“
+
+- [x] **Version 2.5.0 – Chat unten rechts nur auf bestimmten Seiten:** Im Dashboard „Auf allen Seiten“ oder „Nur
+  auf bestimmten Seiten“ mit einer Liste von Pfaden (Unterseiten gehören dazu, `/` = Startseite, eingefügte
+  Adressen werden zum Pfad gekürzt). Der Abschnitt heißt jetzt „Chat unten rechts“ statt „Chat auf jeder Seite“
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung

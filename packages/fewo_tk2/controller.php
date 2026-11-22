@@ -48,7 +48,7 @@ class Controller extends Package implements ProviderAggregateInterface
 
     protected $pkgHandle = 'fewo_tk2';
 
-    protected $pkgVersion = '2.4.2';
+    protected $pkgVersion = '2.5.0';
 
     protected $appVersionRequired = '9.5.0';
 
@@ -158,7 +158,7 @@ class Controller extends Package implements ProviderAggregateInterface
             $director->addListener($event, fn () => $this->app->make(KnowledgeBase::class)->clear());
         }
 
-        // Chat auf jeder Seite (unten rechts), wenn er im Dashboard eingeschaltet ist
+        // Chat unten rechts auf der Website (alle oder bestimmte Seiten), wenn er im Dashboard eingeschaltet ist
         $this->app->bind(ChatResponder::class, static fn ($app) => new ChatResponder($app));
         $router = $this->app->make(RouterInterface::class);
         $router->get('/fewo_tk2/chat/token', 'Concrete\Package\FewoTk2\Controller\ChatWidget::token');
@@ -191,7 +191,7 @@ class Controller extends Package implements ProviderAggregateInterface
     }
 
     /**
-     * Hängt den Chat an das Ende der Seite. Nicht im Dashboard, auf Systemseiten (Anmeldung …) und im
+     * Hängt den Chat an das Ende der Seite – auf allen Seiten oder nur auf den im Dashboard genannten. Nicht im Dashboard, auf Systemseiten (Anmeldung …) und im
      * Bearbeitungsmodus – dort würde er die Werkzeuge von Concrete verdecken.
      */
     private function addChatWidget($page): void
@@ -200,7 +200,7 @@ class Controller extends Package implements ProviderAggregateInterface
             return;
         }
         $settings = $this->app->make(SettingsRepository::class)->get();
-        if (!$settings->isWidgetActive()) {
+        if (!$settings->isWidgetActive() || !$settings->isWidgetPage((string) $page->getCollectionPath())) {
             return;
         }
         ob_start();

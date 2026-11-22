@@ -230,4 +230,40 @@ final class StayTest extends TestCase
         self::assertFalse($off->isWidgetActive(), 'nur mit eingeschaltetem Assistenten');
         self::assertSame('', (new AssistantSettings())->name);
     }
+
+    public function testChatAtTheBottomRightCanBeLimitedToPages(): void
+    {
+        // ohne Beschränkung: jede Seite
+        $all = AssistantSettings::fromArray(['widgetPages' => "/preise"]);
+        self::assertFalse($all->widgetPagesOnly);
+        self::assertTrue($all->isWidgetPage(''));
+        self::assertTrue($all->isWidgetPage('/kontakt'));
+
+        $settings = AssistantSettings::fromArray([
+            'widgetPagesOnly' => '1',
+            'widgetPages' => " preise/ \n\nhttps://example.com/index.php/ferienwohnung/seeherz?x=1#oben\n/index.php/kontakt\n/preise",
+        ]);
+        self::assertSame(['/preise', '/ferienwohnung/seeherz', '/kontakt'], $settings->getWidgetPages());
+        self::assertTrue($settings->isWidgetPage('/preise'));
+        self::assertTrue($settings->isWidgetPage('/preise/winter'));      // Unterseiten gehören dazu
+        self::assertFalse($settings->isWidgetPage('/preise-archiv'));      // nur ganze Pfadteile
+        self::assertTrue($settings->isWidgetPage('/ferienwohnung/seeherz'));
+        self::assertFalse($settings->isWidgetPage('/ferienwohnung'));
+        self::assertFalse($settings->isWidgetPage(''));                    // Startseite nicht genannt
+
+        // "/" meint nur die Startseite, nicht alle Seiten
+        $home = AssistantSettings::fromArray(['widgetPagesOnly' => 1, 'widgetPages' => "/\nhttps://example.com"]);
+        self::assertSame(['/'], $home->getWidgetPages());
+        self::assertTrue($home->isWidgetPage(''));
+        self::assertTrue($home->isWidgetPage('/'));
+        self::assertFalse($home->isWidgetPage('/preise'));
+
+        // beschränkt, aber keine Seite genannt: nirgends
+        self::assertFalse(AssistantSettings::fromArray(['widgetPagesOnly' => 1])->isWidgetPage('/preise'));
+        // bei den ausgeschlossenen Seiten des Assistenten bleibt "/" ohne Wirkung
+        self::assertSame(['/impressum'], AssistantSettings::fromArray(['excludedPaths' => "/\n/impressum"])->getExcludedPaths());
+        // gespeichert und wieder gelesen
+        self::assertSame($settings->getWidgetPages(), AssistantSettings::fromArray($settings->toArray())->getWidgetPages());
+        self::assertTrue(AssistantSettings::fromArray($settings->toArray())->widgetPagesOnly);
+    }
 }

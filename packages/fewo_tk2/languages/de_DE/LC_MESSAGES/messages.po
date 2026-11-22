@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: fewo_tk2 2.4.0\n"
+"Project-Id-Version: fewo_tk2 2.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-21T23:45:11+01:00\n"
-"PO-Revision-Date: 2026-11-21T23:45:12+01:00\n"
+"POT-Creation-Date: 2026-11-22T08:10:54+01:00\n"
+"PO-Revision-Date: 2026-11-22T08:10:54+01:00\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
@@ -409,217 +409,233 @@ msgid "Shown in the chat above each answer; the assistant also knows its name. W
 msgstr "Steht im Chat über jeder Antwort; auch der Assistent selbst kennt seinen Namen. Ohne Namen heißt er „Assistent“."
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:58
-msgid "Chat on every page"
-msgstr "Chat auf jeder Seite"
+msgid "Chat at the bottom right"
+msgstr "Chat unten rechts"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:61
-msgid "Show the chat on every page of the website (bottom right)"
-msgstr "Chat auf jeder Seite der Website anzeigen (unten rechts)"
+msgid "Show the chat at the bottom right of the website"
+msgstr "Chat unten rechts auf der Website anzeigen"
 
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:63
 msgid "Visitors first see a small button with the hint text; a click opens the chat. It needs no chat block and appears once the assistant is switched on. On pages that contain a chat block, only the block is shown."
 msgstr "Besucher sehen zuerst eine kleine Schaltfläche mit dem Hinweistext; ein Klick öffnet den Chat. Ein Chat-Block ist dafür nicht nötig. Der Chat erscheint, sobald der Assistent eingeschaltet ist. Auf Seiten mit einem Chat-Block wird nur der Block angezeigt."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:65
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:67
+msgid "On all pages"
+msgstr "Auf allen Seiten"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:71
+msgid "Only on certain pages"
+msgstr "Nur auf bestimmten Seiten"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:74
+msgid "Pages with the chat"
+msgstr "Seiten mit dem Chat"
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:76
+msgid "One path per line, e.g. /prices – subpages are included. A single / stands for the home page. You can also paste the address of a page from the browser."
+msgstr "Ein Pfad pro Zeile, z. B. /preise – Unterseiten gehören dazu. Ein einzelnes / steht für die Startseite. Sie können auch die Adresse einer Seite aus dem Browser einfügen."
+
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:91
 msgid "Hint text of the button"
 msgstr "Hinweistext der Schaltfläche"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:67
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:93
 msgid "Short invitation next to the chat symbol. Leave empty to show only the symbol."
 msgstr "Kurze Einladung neben dem Chat-Symbol. Leer lassen, um nur das Symbol zu zeigen."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:70
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:96
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:32
 msgid "Greeting"
 msgstr "Begrüßung"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:72
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:98
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:35
 msgid "First message of the assistant in the chat."
 msgstr "Erste Nachricht des Assistenten im Chat."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:75
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:101
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:44
 #: packages/fewo_tk2/elements/chat_body.php:27
 msgid "Example questions"
 msgstr "Beispielfragen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:84
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:110
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:54
 msgid "Note below the input field"
 msgstr "Hinweis unter dem Eingabefeld"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:86
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:112
 #: packages/fewo_tk2/blocks/fewo_chat/form.php:57
 msgid "Tell your visitors that an AI is answering."
 msgstr "Sagen Sie Ihren Besuchern, dass eine KI antwortet."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:91
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:117
 msgid "Ollama"
 msgstr "Ollama"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:93
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:119
 msgid "Ollama URL"
 msgstr "Adresse von Ollama"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:95
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:121
 msgid "Address at which this web server reaches Ollama, e.g. http://localhost:11434 – or http://ollama:11434 if Ollama runs as a Docker container in the same network."
 msgstr "Adresse, unter der dieser Webserver Ollama erreicht, z. B. http://localhost:11434 – oder http://ollama:11434, wenn Ollama als Docker-Container im selben Netz läuft."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:98
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:124
 msgid "Model"
 msgstr "Modell"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:107
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:133
 msgid "Installed in Ollama: %s"
 msgstr "In Ollama installiert: %s"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:109
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:135
 msgid "Name of a model installed in Ollama, e.g. gemma3:4b."
 msgstr "Name eines in Ollama installierten Modells, z. B. gemma3:4b."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:114
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:140
 msgid "API key (optional)"
 msgstr "API-Schlüssel (optional)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:115
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:141
 msgid "saved – leave empty to keep it"
 msgstr "gespeichert – leer lassen, um ihn zu behalten"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:116
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:142
 msgid "Only needed if Ollama is protected by a reverse proxy that expects a bearer token. Ollama itself needs no key."
 msgstr "Nur nötig, wenn Ollama hinter einem Reverse-Proxy liegt, der ein Bearer-Token erwartet. Ollama selbst braucht keinen Schlüssel."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:120
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:146
 msgid "Delete the saved key"
 msgstr "Gespeicherten Schlüssel löschen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:125
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:151
 msgid "Maximum waiting time for an answer (seconds)"
 msgstr "Längste Wartezeit auf eine Antwort (Sekunden)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:131
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:157
 msgid "Knowledge"
 msgstr "Wissen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:133
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:159
 msgid "Website content per question"
 msgstr "Website-Inhalte je Frage"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:136
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:162
 msgid "Best: the whole website fits (see \"What the assistant knows\" below). The model then always gets everything; Ollama reads it once and afterwards answers start within seconds. If the website has more text, only the sections that match the question best are passed on – slower and less accurate."
 msgstr "Am besten passt die ganze Website hinein (siehe unten „Was der Assistent weiß“). Das Modell bekommt dann immer alles; Ollama liest es einmal ein, danach beginnen Antworten nach wenigen Sekunden. Hat die Website mehr Text, werden nur die Abschnitte weitergegeben, die am besten zur Frage passen – langsamer und ungenauer."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:139
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:165
 msgid "Include prices and free periods of the apartments (from Fewo-Office)"
 msgstr "Preise und freie Zeiträume der Wohnungen einbeziehen (aus Fewo-Office)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:142
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:168
 msgid "Pages the assistant should not know"
 msgstr "Seiten, die der Assistent nicht kennen soll"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:144
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:170
 msgid "One path per line; subpages are excluded as well. Pages that are not public or are excluded from the search index are never included."
 msgstr "Ein Pfad pro Zeile; Unterseiten sind mit ausgeschlossen. Nicht öffentliche Seiten und Seiten, die vom Suchindex ausgenommen sind, gehören nie dazu."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:147
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:173
 msgid "Additional instructions for the assistant (optional)"
 msgstr "Zusätzliche Anweisungen für den Assistenten (optional)"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:148
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:174
 msgid "e.g. Address visitors informally. Pets are welcome on request."
 msgstr "z. B. Sprich die Besucher mit „du“ an. Haustiere sind auf Anfrage willkommen."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:149
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:175
 msgid "Tone of voice or facts that are not on the website. The basic rules (answer only from the website content, no invented prices) always apply."
 msgstr "Tonfall oder Angaben, die nicht auf der Website stehen. Die Grundregeln (nur aus den Inhalten der Website antworten, keine erfundenen Preise) gelten immer."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:154
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:180
 msgid "Explanations for keywords"
 msgstr "Erklärungen zu Stichwörtern"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:155
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:181
 msgid "If a visitor's question contains one of the keywords, the assistant receives your explanation with it and answers accordingly – even if the website says something different. Use this to correct wrong answers or to add what the website does not say. Separate several keywords with commas; upper and lower case and umlauts do not matter, and a keyword also matches inside longer words (\"parking\" in \"parking space\")."
 msgstr "Kommt in der Frage eines Besuchers eines der Stichwörter vor, bekommt der Assistent Ihre Erklärung dazu und antwortet entsprechend – auch wenn auf der Website etwas anderes steht. So stellen Sie falsche Antworten richtig oder ergänzen, was auf der Website fehlt. Mehrere Stichwörter mit Komma trennen; Groß- und Kleinschreibung sowie Umlaute spielen keine Rolle, und ein Stichwort trifft auch als Teil eines längeren Wortes („Stellplatz“ in „Tiefgaragenstellplatz“)."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:165
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:191
 msgid "Limits"
 msgstr "Grenzen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:168
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:194
 msgid "Questions per visitor and hour"
 msgstr "Fragen je Besucher und Stunde"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:172
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:198
 msgid "Questions per hour in total"
 msgstr "Fragen pro Stunde insgesamt"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:176
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:202
 msgid "Protects the server from overload. Questions in the last hour: %1$s, in the last 24 hours: %2$s. Questions and answers are not stored."
 msgstr "Schützt den Server vor Überlastung. Fragen in der letzten Stunde: %1$s, in den letzten 24 Stunden: %2$s. Fragen und Antworten werden nicht gespeichert."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:181
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:207
 #: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/apartments/edit.php:54
 msgid "Save"
 msgstr "Speichern"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:188
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:214
 msgid "Try it out"
 msgstr "Ausprobieren"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:192
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:218
 msgid "e.g. What does a night cost?"
 msgstr "z. B. Was kostet eine Nacht?"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:192
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:218
 msgid "Test question"
 msgstr "Testfrage"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:193
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:219
 msgid "Ask"
 msgstr "Fragen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:195
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:221
 msgid "Uses the saved settings and also works while the assistant is still switched off."
 msgstr "Verwendet die gespeicherten Einstellungen und geht auch, solange der Assistent noch ausgeschaltet ist."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:202
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:228
 msgid "Answered in %s seconds."
 msgstr "Beantwortet in %s Sekunden."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:210
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:236
 msgid "What the assistant knows"
 msgstr "Was der Assistent weiß"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:211
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:237
 msgid "Public pages of this website with the text of their blocks, plus prices and free periods from Fewo-Office. Changes are taken over when a page is published, at the latest after ten minutes."
 msgstr "Öffentliche Seiten dieser Website mit den Texten ihrer Blöcke, dazu Preise und freie Zeiträume aus Fewo-Office. Änderungen werden übernommen, sobald eine Seite veröffentlicht wird, spätestens nach zehn Minuten."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:213
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:239
 msgid "No content found yet."
 msgstr "Noch keine Inhalte gefunden."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:216
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:242
 msgid "The website has more text (%1$s characters) than is passed on per question (%2$s). Increase \"Website content per question\" or exclude pages – otherwise the assistant only sees a selection for each question."
 msgstr "Die Website hat mehr Text (%1$s Zeichen), als je Frage weitergegeben wird (%2$s). Erhöhen Sie „Website-Inhalte je Frage“ oder schließen Sie Seiten aus – sonst sieht der Assistent bei jeder Frage nur eine Auswahl."
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:222
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:248
 msgid "Page"
 msgstr "Seite"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:223
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:249
 msgid "Path"
 msgstr "Pfad"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:224
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:250
 msgid "Characters"
 msgstr "Zeichen"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:238
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:264
 msgid "Total"
 msgstr "Gesamt"
 
-#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:247
+#: packages/fewo_tk2/single_pages/dashboard/fewo_tk2/assistant/view.php:273
 msgid "Read the content again now"
 msgstr "Inhalte jetzt neu einlesen"
 
@@ -908,18 +924,22 @@ msgid "%s characters"
 msgstr "%s Zeichen"
 
 #: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:87
+msgid "Please enter at least one page for the chat at the bottom right, or show it on all pages."
+msgstr "Bitte geben Sie mindestens eine Seite für den Chat unten rechts an, oder zeigen Sie ihn auf allen Seiten."
+
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:90
 msgid "Please choose a model before switching on the assistant."
 msgstr "Bitte wählen Sie ein Modell, bevor Sie den Assistenten einschalten."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:101
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:104
 msgid "The settings have been saved."
 msgstr "Die Einstellungen wurden gespeichert."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:110
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:113
 msgid "The content of the website has been read again."
 msgstr "Die Inhalte der Website wurden neu eingelesen."
 
-#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:131
+#: packages/fewo_tk2/controllers/single_page/dashboard/fewo_tk2/assistant.php:134
 msgid "Please enter the Ollama URL and choose a model first."
 msgstr "Bitte tragen Sie zuerst die Adresse von Ollama ein und wählen Sie ein Modell."
 
@@ -947,39 +967,39 @@ msgstr "Der Chat ist nicht verfügbar."
 msgid "The chat has expired. Please reload the page."
 msgstr "Der Chat ist abgelaufen. Bitte laden Sie die Seite neu."
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:45
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:46
 msgid "Image Gallery"
 msgstr "Bildergalerie"
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:50
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:51
 msgid "Image gallery with lightbox from a file manager folder or file set."
 msgstr "Bildergalerie mit Großansicht aus einem Ordner der Dateiverwaltung oder einem Dateiset."
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:61
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:65
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:62
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:66
 #: packages/fewo_tk2/blocks/fewo_preisrechner/controller.php:67
 #: packages/fewo_tk2/blocks/fewo_preisuebersicht/controller.php:52
 #: packages/fewo_tk2/blocks/fewo_belegungsplan/controller.php:63
 msgid "** Please select"
 msgstr "** Bitte wählen"
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:72
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:73
 msgid "Order in the file set / file manager"
 msgstr "Reihenfolge im Dateiset / in der Dateiverwaltung"
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:73
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:74
 msgid "Title (A–Z)"
 msgstr "Titel (A–Z)"
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:74
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:75
 msgid "Newest first"
 msgstr "Neueste zuerst"
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:75
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:76
 msgid "Oldest first"
 msgstr "Älteste zuerst"
 
-#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:133
+#: packages/fewo_tk2/blocks/fewo_bildergalerie/controller.php:142
 msgid "Please choose where the images come from."
 msgstr "Bitte wählen Sie, woher die Bilder kommen."
 
@@ -1559,23 +1579,23 @@ msgstr "Frei"
 msgid "Booked"
 msgstr "Belegt"
 
-#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:57
+#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:58
 msgid "360° Tour"
 msgstr "360°-Rundgang"
 
-#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:62
+#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:63
 msgid "360° panoramas and virtual tours with several rooms (Pannellum viewer)."
 msgstr "360°-Panoramen und virtuelle Rundgänge durch mehrere Räume (Pannellum-Viewer)."
 
-#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:104
+#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:105
 msgid "Manual (height from the CSS class of the theme)"
 msgstr "Manuell (Höhe über die CSS-Klasse im Theme)"
 
-#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:159
+#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:160
 msgid "Please enter the Pannellum settings."
 msgstr "Bitte tragen Sie die Pannellum-Einstellungen ein."
 
-#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:162
+#: packages/fewo_tk2/blocks/fewo_rundgang/controller.php:163
 msgid "Please add at least one room with an image."
 msgstr "Bitte fügen Sie mindestens einen Raum mit Bild hinzu."
 

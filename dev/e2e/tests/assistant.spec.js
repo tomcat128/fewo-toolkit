@@ -493,4 +493,43 @@ test('Name des Assistenten und Chat auf jeder Seite', async ({ page, browser }) 
   await expect(guest.getByRole('button', { name: 'Chat mit Emma öffnen' })).toBeVisible();
   await expect(guest.locator('.fewo-chat-widget__hint')).toHaveCount(0);
   await guest.context().close();
+
+  // Nur auf bestimmten Seiten: Das Feld für die Seiten erscheint erst mit dieser Auswahl; ohne Seite kein Speichern
+  await page.goto(DASHBOARD);
+  await expect(page.locator('#widgetPagesAll')).toBeChecked();
+  await expect(page.locator('#widgetPages')).toBeHidden();
+  await page.check('#widgetPagesSelected');
+  await expect(page.locator('#widgetPages')).toBeVisible();
+  await save(page);
+  await expect(page.getByText('Bitte geben Sie mindestens eine Seite für den Chat unten rechts an, oder zeigen Sie ihn auf allen Seiten.')).toBeVisible();
+  // aus der Adresszeile kopiert oder als Pfad getippt – gespeichert wird der Pfad, Doppelte entfallen
+  await page.fill('#widgetPages', 'http://localhost:8095' + OTHER + '?x=1\n\n' + OTHER.replace('/index.php', '') + '/');
+  await save(page);
+  await expect(page.getByText('Die Einstellungen wurden gespeichert.')).toBeVisible();
+  await expect(page.locator('#widgetPagesSelected')).toBeChecked();
+  await expect(page.locator('#widgetPages')).toHaveValue(OTHER.replace('/index.php', ''));
+  guest = await (await browser.newContext(GUEST)).newPage();
+  await guest.goto(OTHER);
+  await expect(guest.getByRole('button', { name: 'Chat mit Emma öffnen' })).toBeVisible();
+  await guest.goto(HOME);
+  await expect(guest.locator('h1, h2').first()).toBeVisible();
+  await expect(guest.locator('[data-fewo-chat-widget]')).toHaveCount(0);
+
+  // "/" steht für die Startseite allein
+  await page.fill('#widgetPages', '/');
+  await save(page);
+  await expect(page.locator('#widgetPages')).toHaveValue('/');
+  await guest.goto(HOME);
+  await expect(guest.getByRole('button', { name: 'Chat mit Emma öffnen' })).toBeVisible();
+  await guest.goto(OTHER);
+  await expect(guest.locator('form[data-fewo-inquiry], h1').first()).toBeVisible();
+  await expect(guest.locator('[data-fewo-chat-widget]')).toHaveCount(0);
+
+  // zurück auf alle Seiten: die Liste bleibt gespeichert, gilt aber nicht
+  await page.check('#widgetPagesAll');
+  await save(page);
+  await expect(page.locator('#widgetPagesAll')).toBeChecked();
+  await guest.goto(OTHER);
+  await expect(guest.getByRole('button', { name: 'Chat mit Emma öffnen' })).toBeVisible();
+  await guest.context().close();
 });

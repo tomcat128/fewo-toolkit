@@ -39,7 +39,7 @@ final class AssistantSettings
         public readonly int $siteLimit = 200,
         /** Name des Assistenten, z. B. "Emma"; leer = kein eigener Name (im Chat steht dann "Assistent") */
         public readonly string $name = '',
-        /** Chat auf jeder Seite der Website (unten rechts), unabhängig von Chat-Blöcken */
+        /** Chat unten rechts auf der Website, unabhängig von Chat-Blöcken – auf allen oder nur auf bestimmten Seiten */
         public readonly bool $widgetEnabled = false,
         /** Kurzer Text der Schaltfläche, die den Chat öffnet, z. B. "Fragen? Ich helfe gern." */
         public readonly string $widgetHint = '',
@@ -56,6 +56,10 @@ final class AssistantSettings
          * @var array<int, array{keywords: string, text: string}>
          */
         public readonly array $notes = [],
+        /** true: Der Chat unten rechts erscheint nur auf den Seiten aus $widgetPages, false: auf allen Seiten */
+        public readonly bool $widgetPagesOnly = false,
+        /** Pfade der Seiten mit Chat unten rechts, einer pro Zeile; gilt auch für Unterseiten, "/" ist die Startseite */
+        public readonly string $widgetPages = '',
     ) {
     }
 
@@ -90,6 +94,8 @@ final class AssistantSettings
             implode("\n", self::questionLines($data['widgetQuestions'] ?? '')),
             $text('widgetNotice', 1000),
             KeywordNotes::sanitize($data['notes'] ?? []),
+            !empty($data['widgetPagesOnly']),
+            implode("\n", self::lines((string) ($data['widgetPages'] ?? ''), true)),
         );
     }
 
@@ -134,11 +140,40 @@ final class AssistantSettings
     }
 
     /**
-     * Wird der Chat auf jeder Seite angezeigt?
+     * Ist der Chat unten rechts eingeschaltet? Auf welchen Seiten er erscheint, sagt isWidgetPage().
      */
     public function isWidgetActive(): bool
     {
         return $this->widgetEnabled && $this->isReady();
+    }
+
+    /**
+     * @return string[] Pfade der Seiten, auf die der Chat unten rechts beschränkt ist
+     */
+    public function getWidgetPages(): array
+    {
+        return self::lines($this->widgetPages, true);
+    }
+
+    /**
+     * Gehört die Seite mit diesem Pfad zu denen, auf denen der Chat unten rechts erscheint?
+     * Ohne Beschränkung jede. Sonst die genannten Seiten und ihre Unterseiten; "/" meint nur die Startseite.
+     *
+     * @param string $path Pfad der Seite; leer oder "/" = Startseite
+     */
+    public function isWidgetPage(string $path): bool
+    {
+        if (!$this->widgetPagesOnly) {
+            return true;
+        }
+        $path = '/' . trim($path, '/');
+        foreach ($this->getWidgetPages() as $allowed) {
+            if ($path === $allowed || ($allowed !== '/' && str_starts_with($path, $allowed . '/'))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -198,15 +233,26 @@ final class AssistantSettings
     }
 
     /**
+     * @param bool $allowHome true: "/" (die Startseite) ist ein gültiger Eintrag
+     *
      * @return string[] bereinigte Pfade, je einer pro Zeile der Eingabe
      */
-    private static function lines(string $value): array
+    private static function lines(string $value, bool $allowHome = false): array
     {
         $lines = [];
         foreach (preg_split('/\R/', $value) ?: [] as $line) {
             $line = trim($line);
-            if ($line !== '' && $line !== '/') {
-                $lines[] = '/' . trim(mb_substr($line, 0, 255), '/');
+            // aus der Adresszeile kopiert: nur der Pfad zählt ("https://example.com/index.php/wohnung?x=1" -> "/wohnung")
+            if (preg_match('~^https?://[^/]+(/[^?#]*)?~i', $line, $match)) {
+                $line = $match[1] ?? '/';
+            }
+            $line = (string) preg_replace('~^/?index\.php(?=/|$)~', '', $line);
+            if ($line === '') {
+                continue;
+            }
+            $line = '/' . trim(mb_substr($line, 0, 255), '/');
+            if ($line !== '/' || $allowHome) {
+                $lines[] = $line;
             }
         }
 
