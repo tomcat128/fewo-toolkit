@@ -447,7 +447,9 @@ Themes. Farben und Rundungen lassen sich im Theme über CSS-Variablen anpassen, 
 ```
 
 Weitere Variablen: `--fewo-free-text`, `--fewo-booked-text`, `--fewo-request-text`, `--fewo-past`,
-`--fewo-past-text`, `--fewo-border`, `--fewo-month-min` und `--fewo-month-max` (kleinste und größte Breite
+`--fewo-past-text`, `--fewo-border`, `--fewo-month-bg` und `--fewo-month-text` (Monatsname über einem
+Kalenderblatt), `--fewo-weekdays-bg` und `--fewo-weekdays-text` (Zeile der Wochentage; beide in den Farben
+des alten Belegungsplans, `#f7d291` und `#eddabb`), `--fewo-month-min` und `--fewo-month-max` (kleinste und größte Breite
 eines Kalenderblatts im Belegungsplan), `--fewo-card-border`
 (Preisübersicht), `--fewo-muted` (Preisrechner), `--fewo-success-bg`, `--fewo-success-text`
 (Anfrageformular), `--fewo-gap` (Bildergalerie), `--fewo-selected` (gewählter Zeitraum im Kalender der

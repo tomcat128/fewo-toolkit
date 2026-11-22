@@ -23,6 +23,11 @@
     --fewo-past-text: #9a9a9a;
     --fewo-border: rgba(0, 0, 0, .08);
     --fewo-radius: 6px;
+    /* Kopf eines Kalenderblatts: Monatsname und Zeile der Wochentage, Farben des alten Belegungsplans */
+    --fewo-month-bg: #f7d291;
+    --fewo-month-text: #222;
+    --fewo-weekdays-bg: #eddabb;
+    --fewo-weekdays-text: #545454;
     /* Breite eines Kalenderblatts: feste Maße, damit die Zahl der Spalten nicht von der Schriftgröße abhängt */
     --fewo-month-min: 15rem;
     --fewo-month-max: 24rem;
@@ -51,8 +56,13 @@
 .fewo-calendar__month-title {
     font-size: 1em;
     font-weight: 600;
-    margin: 0 0 .5em;
+    line-height: 1.3;
+    margin: 0 0 1px;
+    padding: .3em .5em;
     text-align: center;
+    color: var(--fewo-month-text);
+    background: var(--fewo-month-bg);
+    border-radius: var(--fewo-radius) var(--fewo-radius) 0 0;
 }
 
 .fewo-calendar__weekdays,
@@ -64,9 +74,12 @@
 
 .fewo-calendar__weekdays {
     font-size: .75em;
-    opacity: .7;
+    line-height: 1.3;
+    padding-block: .4em;
     text-align: center;
     margin-bottom: 3px;
+    color: var(--fewo-weekdays-text);
+    background: var(--fewo-weekdays-bg);
 }
 
 .fewo-calendar__days {
@@ -112,7 +125,9 @@
     text-shadow: none;
 }
 
-.fewo-day--past {
+/* .fewo-day doppelt: Vergangene Tage bleiben grau mit grauer Zahl, auch wenn sie belegt waren
+ * (sonst gewinnt die weiße Schrift belegter Tage und die Zahl ist nicht zu lesen). */
+.fewo-day.fewo-day--past {
     --am: var(--fewo-past);
     --pm: var(--fewo-past);
     --text: var(--fewo-past-text);

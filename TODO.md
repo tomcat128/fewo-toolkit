@@ -120,6 +120,10 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
     Mindestbelegung liefert Fewo-Office nicht als Feld – sie ist aus den Preisen abgeleitet (bis zu welcher
     Gästezahl der niedrigste Preis gilt). **Entscheidung offen:** Soll Fewo-Office sie als eigenes Feld liefern?
 
+- [x] **Version 2.4.2 – Belegungsplan:** Monatsname und Zeile der Wochentage haben einen eigenen Hintergrund in den
+  Farben des alten Belegungsplans (`#f7d291`, `#eddabb`; im Theme über `--fewo-month-bg`, `--fewo-weekdays-bg`
+  änderbar). Behoben: Vergangene belegte Tage hatten weiße Zahlen auf Grau
+
 ## Offen
 
 ### Braucht echte Daten bzw. eine Entscheidung
