@@ -91,14 +91,15 @@ $writeFeed('fewo-demo-preise-2.xml', '<?xml version="1.0" encoding="UTF-8" stand
 // Neuigkeiten wie aus Fewo-Office (/api/neuigkeiten/{kürzel}.json bzw. .xml). Fewo-Office liefert nur, was am
 // Tag des Abrufs gilt; die künftige und die abgelaufene Neuigkeit prüfen, dass der Block trotzdem selbst filtert.
 $writeFeed('fewo-demo-neuigkeiten.json', $json(['status' => $status, 'news' => [
-    ['id' => 3, 'title' => 'Neue Sauna im Haus', 'text' => 'Ab nächstem Monat steht unseren Gästen eine Sauna zur Verfügung.', 'date_start' => $day(10), 'date_end' => $day(40), 'apartments' => ['seeherz']],
-    ['id' => 2, 'title' => 'Schwimmbadpause', 'text' => "Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.\n\nDie Therme in Konstanz hat geöffnet.", 'date_start' => $day(-5), 'date_end' => $day(20), 'apartments' => ['seeherz', 'seeherzchen']],
-    ['id' => 1, 'title' => 'Baustelle in der Seestraße', 'text' => 'Die Zufahrt ist nur von Norden möglich.', 'date_start' => $day(-30), 'date_end' => $day(-1), 'apartments' => ['seeherz']],
+    ['id' => 5, 'title' => 'Weihnachtsmarkt', 'text' => 'Der Weihnachtsmarkt in Konstanz hat geöffnet.', 'importance' => 'info', 'importance_label' => 'Info', 'date_start' => $day(-10), 'date_end' => $day(30), 'apartments' => ['seeherz']],
+    ['id' => 3, 'title' => 'Neue Sauna im Haus', 'text' => 'Ab nächstem Monat steht unseren Gästen eine Sauna zur Verfügung.', 'importance' => 'info', 'importance_label' => 'Info', 'date_start' => $day(10), 'date_end' => $day(40), 'apartments' => ['seeherz']],
+    ['id' => 2, 'title' => 'Schwimmbadpause', 'text' => "Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.\n\nDie Therme in Konstanz hat geöffnet.", 'importance' => 'important', 'importance_label' => 'Wichtige Mitteilung', 'date_start' => $day(-5), 'date_end' => $day(20), 'apartments' => ['seeherz', 'seeherzchen']],
+    ['id' => 1, 'title' => 'Baustelle in der Seestraße', 'text' => 'Die Zufahrt ist nur von Norden möglich.', 'importance' => 'notice', 'importance_label' => 'Hinweis', 'date_start' => $day(-30), 'date_end' => $day(-1), 'apartments' => ['seeherz']],
 ]]));
 $writeFeed('fewo-demo-neuigkeiten-2.xml', '<?xml version="1.0" encoding="UTF-8" standalone="no"?>' . "\n"
     . '<fewobacher data="news"><status><type>OK</type><message>Okay!</message></status><news>'
     . '<item><id>4</id><title>Fahrräder kostenlos</title><text>Zwei Fahrräder stehen im Keller bereit.' . "\n" . 'Den Schlüssel finden Sie in der Wohnung.</text>'
-    . '<date_start>' . $day(0) . '</date_start><date_end>' . $day(0) . '</date_end><apartments><apartment>seeherzchen</apartment></apartments></item>'
+    . '<importance>notice</importance><importance_label>Hinweis</importance_label><date_start>' . $day(0) . '</date_start><date_end>' . $day(0) . '</date_end><apartments><apartment>seeherzchen</apartment></apartments></item>'
     . "</news></fewobacher>\n");
 
 // Wohnungen im Dashboard (Fewo Toolkit › Wohnungen): Die Blöcke wählen nur noch die Wohnung aus.

@@ -44,14 +44,16 @@ class NewsReader
             if (($title === '' && $text === '') || $from === null || $to === null || $to < $from) {
                 continue;
             }
-            $items[] = new NewsItem(is_numeric($entry['id'] ?? null) ? (int) $entry['id'] : 0, $title, $text, $from, $to);
+            $importance = is_string($entry['importance'] ?? null) ? $entry['importance'] : NewsItem::INFO;
+            $items[] = new NewsItem(is_numeric($entry['id'] ?? null) ? (int) $entry['id'] : 0, $title, $text, $from, $to, $importance);
         }
 
         return $items;
     }
 
     /**
-     * Die Neuigkeiten, in deren Zeitraum der Tag fällt.
+     * Die Neuigkeiten, in deren Zeitraum der Tag fällt – wichtige zuerst (Wichtige Mitteilung, Hinweis, Info),
+     * innerhalb einer Stufe in der Reihenfolge von Fewo-Office.
      *
      * @param NewsItem[] $items
      *
@@ -59,7 +61,11 @@ class NewsReader
      */
     public static function current(array $items, DateTimeImmutable $today): array
     {
-        return array_values(array_filter($items, static fn (NewsItem $item): bool => $item->isCurrent($today)));
+        $current = array_values(array_filter($items, static fn (NewsItem $item): bool => $item->isCurrent($today)));
+        // usort ist seit PHP 8.0 stabil: Gleich wichtige behalten ihre Reihenfolge
+        usort($current, static fn (NewsItem $a, NewsItem $b): int => $b->getImportanceRank() <=> $a->getImportanceRank());
+
+        return $current;
     }
 
     private function line(mixed $value): string

@@ -11,10 +11,19 @@
 }
 
 .fewo-news {
-    --fewo-news-bg: #fdf6e7;
+    /* Wichtigkeit wie in Fewo-Office: Info grün, Hinweis gelb, Wichtige Mitteilung rot.
+     * Je Stufe: Farbe (Streifen links, Hintergrund der Bezeichnung), Schrift auf dieser Farbe, Hintergrund der Meldung. */
+    --fewo-news-info: #2e7d32;
+    --fewo-news-info-text: #fff;
+    --fewo-news-info-bg: #edf7ee;
+    --fewo-news-notice: #f9a825;
+    --fewo-news-notice-text: #000;
+    --fewo-news-notice-bg: #fff8e1;
+    --fewo-news-important: #c62828;
+    --fewo-news-important-text: #fff;
+    --fewo-news-important-bg: #fdecea;
     --fewo-news-text: inherit;
-    --fewo-news-accent: #f0b54a;
-    --fewo-news-period: #5c5c5c;
+    --fewo-news-period: #555;
     --fewo-radius: 8px;
     margin-block: 1em;
 }
@@ -24,11 +33,39 @@
 }
 
 .fewo-news__item {
-    background: var(--fewo-news-bg);
+    --fewo-news-level: var(--fewo-news-info);
+    --fewo-news-level-text: var(--fewo-news-info-text);
+    --fewo-news-level-bg: var(--fewo-news-info-bg);
+    background: var(--fewo-news-level-bg);
     color: var(--fewo-news-text);
-    border-left: .3em solid var(--fewo-news-accent);
+    border-left: .3em solid var(--fewo-news-level);
     border-radius: var(--fewo-radius);
     padding: .9em 1.25em;
+}
+
+.fewo-news__item--notice {
+    --fewo-news-level: var(--fewo-news-notice);
+    --fewo-news-level-text: var(--fewo-news-notice-text);
+    --fewo-news-level-bg: var(--fewo-news-notice-bg);
+}
+
+.fewo-news__item--important {
+    --fewo-news-level: var(--fewo-news-important);
+    --fewo-news-level-text: var(--fewo-news-important-text);
+    --fewo-news-level-bg: var(--fewo-news-important-bg);
+}
+
+/* Bezeichnung der Stufe ("Info", "Hinweis", "Wichtige Mitteilung") über dem Titel */
+.fewo-news__importance {
+    display: inline-block;
+    margin: 0 0 .4em;
+    padding: .1em .65em;
+    border-radius: 1em;
+    background: var(--fewo-news-level);
+    color: var(--fewo-news-level-text);
+    font-size: .8125em;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 .fewo-news__item + .fewo-news__item {

@@ -15,7 +15,7 @@ use SimpleXMLElement;
  *   pricelist:      {name, title, cleaning, min_stay, max_guests, commission}
  *   seasons:        [{name, date_start, date_end, prices: [{persons, value}, …]}, …]
  *   default_prices: [{persons, value}, …]
- *   news:           [{id, title, text, date_start, date_end}, …]
+ *   news:           [{id, title, text, importance, importance_label, date_start, date_end}, …]
  */
 final class FewoOfficeDocument
 {

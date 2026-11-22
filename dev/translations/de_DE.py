@@ -692,6 +692,9 @@ TRANSLATIONS = {
     "Valid on %s": "Gültig am %s",
     "Valid from %1$s to %2$s": "Gültig vom %1$s bis %2$s",
     "Current news from the hosts:": "Aktuelle Neuigkeiten der Gastgeber:",
-    "%1$s (valid until %2$s):": "%1$s (gültig bis %2$s):",
+    "%1$s – %2$s (valid until %3$s):": "%1$s – %2$s (gültig bis %3$s):",
+    "Notice": "Hinweis",
+    "Important notice": "Wichtige Mitteilung",
+    "Info": "Info",
     "Include prices, free periods and current news of the apartments (from Fewo-Office)": "Preise, freie Zeiträume und aktuelle Neuigkeiten der Wohnungen einbeziehen (aus Fewo-Office)",
 }

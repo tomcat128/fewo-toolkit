@@ -14,9 +14,9 @@ URL=http://localhost:8096
 ADMIN_PASSWORD="${ADMIN_PASSWORD:-admin}"
 # Sprachmodell für den KI-Assistenten (Block "Chat"); wird beim ersten Mal heruntergeladen (gemma3:4b: 3,3 GB)
 OLLAMA_MODEL="${OLLAMA_MODEL:-gemma3:4b}"
-# Neuigkeiten für den Block "Neuigkeiten": fewo-office.com hat die Schnittstelle noch nicht, deshalb das lokale
-# Fewo-Office über die Adresse dieses Rechners im Netz (localhost wäre im Container der Container selbst)
-NEWS_URL="${NEWS_URL:-http://$(hostname -I | cut -d' ' -f1):4200/api/neuigkeiten/see.json}"
+# Neuigkeiten für den Block "Neuigkeiten" (für das lokale Fewo-Office die Adresse dieses Rechners im Netz angeben,
+# z. B. http://192.168.…:4200/api/neuigkeiten/see.json – localhost wäre im Container der Container selbst)
+NEWS_URL="${NEWS_URL:-https://fewo-office.com/api/neuigkeiten/seeherz.json}"
 
 c5() { docker compose exec -T -u www-data -w /srv/app/public web ./concrete/bin/concrete "$@"; }
 

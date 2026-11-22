@@ -136,7 +136,7 @@ final class ApartmentFactSheet
     }
 
     /**
-     * Aktuelle Neuigkeiten der Gastgeber (aus Fewo-Office), je Zeile Titel, Ende des Zeitraums und Text.
+     * Aktuelle Neuigkeiten der Gastgeber (aus Fewo-Office), je Zeile Wichtigkeit, Titel, Ende des Zeitraums und Text.
      *
      * @param \FewoTk2\News\NewsItem[] $items nur die heute gültigen
      */
@@ -145,7 +145,7 @@ final class ApartmentFactSheet
         $lines = [];
         foreach ($items as $item) {
             $text = trim((string) preg_replace('/\s+/u', ' ', $item->text));
-            $lines[] = '- ' . trim(t('%1$s (valid until %2$s):', $item->title, $item->dateTo->format('d.m.Y')) . ' ' . $text);
+            $lines[] = '- ' . trim(t('%1$s – %2$s (valid until %3$s):', $item->getImportanceLabel(), $item->title, $item->dateTo->format('d.m.Y')) . ' ' . $text);
         }
 
         return $lines === [] ? '' : t('Current news from the hosts:') . "\n" . implode("\n", $lines);

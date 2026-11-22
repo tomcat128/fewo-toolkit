@@ -6,15 +6,46 @@
  </status>
  <news>
   <item>
+   <id>2</id>
+   <title>Parksituation eingeschränkt</title>
+   <text>In der Schlossstraße gibt es aufgrund von Bauarbeiten keine Stellplätze. Bitte nutzen sie die Parkplätze entlang der Markusstraße.</text>
+   <importance>notice</importance>
+   <importance_label>Hinweis</importance_label>
+   <date_start>2026-11-05</date_start>
+   <date_end>2026-11-25</date_end>
+   <apartments>
+    <apartment>seeherz</apartment>
+    <apartment>seeherzchen</apartment>
+    <apartment>seeschatz</apartment>
+   </apartments>
+  </item>
+  <item>
+   <id>3</id>
+   <title>Weihnachtsmarkt in Konstanz</title>
+   <text>Der Weihnachtsmarkt öffnet am 28.11.2026 in Konstanz!</text>
+   <importance>info</importance>
+   <importance_label>Info</importance_label>
+   <date_start>2026-11-02</date_start>
+   <date_end>2026-12-31</date_end>
+   <apartments>
+    <apartment>seeherz</apartment>
+    <apartment>seeherzchen</apartment>
+    <apartment>seeschatz</apartment>
+    <apartment>sonnenseele</apartment>
+   </apartments>
+  </item>
+  <item>
    <id>1</id>
    <title>Schwimmbadpause</title>
    <text>Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis. Ab dem 15.11.2026 wird es wieder geöffnet haben.</text>
+   <importance>important</importance>
+   <importance_label>Wichtige Mitteilung</importance_label>
    <date_start>2026-10-01</date_start>
-   <date_end>2026-12-31</date_end>
+   <date_end>2026-12-15</date_end>
    <apartments>
-    <apartment>see</apartment>
-    <apartment>shz</apartment>
-    <apartment>ssz</apartment>
+    <apartment>seeherz</apartment>
+    <apartment>seeherzchen</apartment>
+    <apartment>seeschatz</apartment>
    </apartments>
   </item>
  </news>

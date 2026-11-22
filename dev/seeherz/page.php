@@ -4,8 +4,8 @@
  * Legt in der lokalen Seeherz-Instanz die Seite /fewo-toolkit-2 an: alle zehn Blöcke des neuen Pakets
  * (fewo_tk2) mit den echten Inhalten der Website – neben den unveränderten Seiten mit den alten Blöcken.
  *
- * - Belegung und Preise: Wohnung "Seeherz" mit den Adressen in Fewo-Office; Neuigkeiten von der als zweites
- *   Argument übergebenen Adresse (restore.sh: das lokale Fewo-Office, solange fewo-office.com sie noch nicht hat)
+ * - Belegung, Preise und Neuigkeiten: Wohnung "Seeherz" mit den Adressen in Fewo-Office (die Adresse der
+ *   Neuigkeiten als zweites Argument, siehe NEWS_URL in restore.sh)
  * - Ausstattung, Bilder, Rundgang: aus den alten Blöcken der Seiten /ausstattung, /bilder, /rundgang übernommen
  * - Anfragen gehen an eine Testadresse (Mailpit)
  * - Chat: Der KI-Assistent wird eingeschaltet und mit dem Ollama der Instanz verbunden (http://ollama:11434)

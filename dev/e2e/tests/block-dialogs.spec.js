@@ -382,17 +382,25 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz – Belegung als ICS (Demo)' });
   expect(await submitExpectingErrors(page, dialog)).toContain('Für die Wohnung „Seeherz – Belegung als ICS (Demo)“ ist keine Adresse der Neuigkeiten hinterlegt.');
 
-  // In den Demo-Daten stehen drei Neuigkeiten: abgelaufen, aktuell und erst in zehn Tagen gültig
+  // In den Demo-Daten stehen vier Neuigkeiten: abgelaufen, zwei aktuelle und eine erst in zehn Tagen gültige.
+  // Die Wichtige Mitteilung steht vor der Info, obwohl Fewo-Office sie danach liefert
   await dialog.getByLabel('Wohnung').selectOption({ label: 'Seeherz (Demo)' });
   await dialog.getByLabel('Überschrift (optional)').fill('Aktuelles');
   await submitDialog(page, dialog);
   const block = blocks(page, 'fewo_neuigkeiten');
   await expect(block.locator('h2')).toHaveText('Aktuelles');
-  await expect(block.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause']);
-  await expect(block.locator('h3')).toHaveText(['Schwimmbadpause']);
+  await expect(block.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause', 'Weihnachtsmarkt']);
+  await expect(block.locator('h3')).toHaveText(['Schwimmbadpause', 'Weihnachtsmarkt']);
+  const items = block.locator('.fewo-news__item');
+  await expect(items.locator('.fewo-news__importance')).toHaveText(['Wichtige Mitteilung', 'Info']);
+  await expect(items.nth(0)).toHaveClass(/fewo-news__item--important/);
+  await expect(items.nth(1)).toHaveClass(/fewo-news__item--info/);
+  // rot und grün wie in Fewo-Office
+  expect(await items.nth(0).locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(198, 40, 40)');
+  expect(await items.nth(1).locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(46, 125, 50)');
   const [from, to] = [-5, 20].map((days) => isoDate(days).split('-').reverse().join('.'));
-  await expect(block.locator('.fewo-news__period')).toHaveText(`Gültig vom ${from} bis ${to}`);
-  await expect(block.locator('.fewo-news__text')).toHaveText(['Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.', 'Die Therme in Konstanz hat geöffnet.']);
+  await expect(items.nth(0).locator('.fewo-news__period')).toHaveText(`Gültig vom ${from} bis ${to}`);
+  await expect(items.nth(0).locator('.fewo-news__text')).toHaveText(['Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis.', 'Die Therme in Konstanz hat geöffnet.']);
   expect(record('btFewoNeuigkeiten')).toMatchObject({ apartmentID: apartmentId('Seeherz (Demo)'), title: 'Aktuelles', showPeriod: 1 });
 
   // Neuigkeiten als XML, nur heute gültig; ohne Überschrift sind die Titel die Überschriften der zweiten Ebene
@@ -402,6 +410,8 @@ test('Neuigkeiten: nur Wohnungen mit Adresse, nur die heute gültigen Neuigkeite
   await dialog.getByLabel('Gültigkeitszeitraum anzeigen').uncheck();
   await submitDialog(page, dialog);
   await expect(block.locator('h2')).toHaveText(['Fahrräder kostenlos']);
+  await expect(block.locator('.fewo-news__importance')).toHaveText(['Hinweis']);
+  expect(await block.locator('.fewo-news__importance').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(249, 168, 37)');
   await expect(block.locator('.fewo-news__period')).toHaveCount(0);
   expect(await block.locator('.fewo-news__text').innerHTML()).toBe('Zwei Fahrräder stehen im Keller bereit.<br>\nDen Schlüssel finden Sie in der Wohnung.');
 
@@ -426,7 +436,7 @@ test('Veröffentlichen: Besucher sehen alle neun Blöcke, das Log bleibt sauber'
     return route.fulfill({ status: 200, contentType: 'image/png', body: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64') });
   });
   await view.goto(PAGE);
-  await expect(view.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause']);
+  await expect(view.locator('.fewo-news__item-title')).toHaveText(['Schwimmbadpause', 'Weihnachtsmarkt']);
   await expect(view.locator('.fewo-prices, .fewo-pricelist, [class^="fewo-price"]').first()).toBeVisible();
   await expect(view.locator('.fewo-calendar .fewo-notice')).toHaveCount(0); // Hinweise nur für Redakteure
   await expect(view.locator('.fewo-calendar__month:visible')).toHaveCount(2);

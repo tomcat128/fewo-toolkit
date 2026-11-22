@@ -2,17 +2,39 @@
 <rss version="2.0">
  <channel>
   <title>Neuigkeiten – Seeherz</title>
-  <link>http://webserver/api/neuigkeiten/see.rss</link>
+  <link>https://fewo-office.com/api/neuigkeiten/seeherz.rss</link>
   <description>Neuigkeiten zu den Ferienwohnungen</description>
   <language>de-de</language>
   <item>
+   <title>Parksituation eingeschränkt</title>
+   <description>In der Schlossstraße gibt es aufgrund von Bauarbeiten keine Stellplätze. Bitte nutzen sie die Parkplätze entlang der Markusstraße.</description>
+   <category domain="importance">notice</category>
+   <guid isPermaLink="false">news-2@fewo-office</guid>
+   <pubDate>Thu, 05 Nov 2026 00:00:00 +0100</pubDate>
+   <category>seeherz</category>
+   <category>seeherzchen</category>
+   <category>seeschatz</category>
+  </item>
+  <item>
+   <title>Weihnachtsmarkt in Konstanz</title>
+   <description>Der Weihnachtsmarkt öffnet am 28.11.2026 in Konstanz!</description>
+   <category domain="importance">info</category>
+   <guid isPermaLink="false">news-3@fewo-office</guid>
+   <pubDate>Mon, 02 Nov 2026 00:00:00 +0100</pubDate>
+   <category>seeherz</category>
+   <category>seeherzchen</category>
+   <category>seeschatz</category>
+   <category>sonnenseele</category>
+  </item>
+  <item>
    <title>Schwimmbadpause</title>
    <description>Das Schwimmbad macht Betriebspause! Wir bitten um Verständnis. Ab dem 15.11.2026 wird es wieder geöffnet haben.</description>
+   <category domain="importance">important</category>
    <guid isPermaLink="false">news-1@fewo-office</guid>
    <pubDate>Thu, 01 Oct 2026 00:00:00 +0200</pubDate>
-   <category>see</category>
-   <category>shz</category>
-   <category>ssz</category>
+   <category>seeherz</category>
+   <category>seeherzchen</category>
+   <category>seeschatz</category>
   </item>
  </channel>
 </rss>

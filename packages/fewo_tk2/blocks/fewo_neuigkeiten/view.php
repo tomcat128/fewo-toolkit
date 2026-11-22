@@ -47,7 +47,9 @@ $period = static function (FewoTk2\News\NewsItem $item): string {
     } ?>
 
     <?php foreach ($items as $item) { ?>
-        <article class="fewo-news__item">
+        <article class="fewo-news__item fewo-news__item--<?= h($item->importance) ?>" data-fewo-importance="<?= h($item->importance) ?>">
+            <?php // Die Stufe steht auch als Text da: Die Farbe allein erreicht nicht alle Besucher ?>
+            <p class="fewo-news__importance"><?= h($item->getImportanceLabel()) ?></p>
             <?php if ($item->title !== '') { ?>
                 <<?= $itemHeading ?> class="fewo-news__item-title"><?= h($item->title) ?></<?= $itemHeading ?>>
             <?php } ?>

@@ -150,8 +150,13 @@ einmal je Wohnung im Dashboard hinterlegt (Fewo Toolkit 2 › Wohnungen), die Bl
     Zeitraum anzeigen. Speichern nur mit einer Wohnung, die eine Adresse der Neuigkeiten hat
   - **KI-Assistent** kennt die aktuellen Neuigkeiten (bei „Preise, freie Zeiträume … einbeziehen“).
     Mit `gemma3:4b` geprüft: „Kann ich im Schwimmbad schwimmen gehen?“ → „Das Schwimmbad macht Betriebspause!“
-  - **Offen:** fewo-office.com liefert `/api/neuigkeiten` noch nicht (404); die Seeherz-Testinstanz liest deshalb
-    das lokale Fewo-Office (`NEWS_URL` in `restore.sh`, Kürzel lokal `see`)
+
+- [x] **Version 2.6.1 – Wichtigkeit der Neuigkeiten:** Fewo-Office liefert `importance` (`info`, `notice`,
+  `important`). Der Block markiert danach: Info grün, Hinweis gelb, Wichtige Mitteilung rot (Farben wie in
+  Fewo-Office), mit der Bezeichnung als Text über dem Titel; wichtige zuerst, innerhalb einer Stufe in der
+  Reihenfolge von Fewo-Office. Ohne oder mit unbekannter Angabe: Info. Der Assistent bekommt die Stufe mit.
+  Testdaten jetzt aus dem echten Feed (`fewo-office.com/api/neuigkeiten/seeherz.*`); die Seeherz-Testinstanz liest
+  ihn direkt
 
 ## Offen
 

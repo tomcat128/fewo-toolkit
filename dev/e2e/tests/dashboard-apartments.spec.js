@@ -35,9 +35,9 @@ test('Übersicht zeigt die Demo-Wohnungen mit dem Stand des letzten Abrufs', asy
   await expect(seeherz.locator('td').nth(1)).toContainText(OCCUPANCY_URL);
   // Die abgelaufene Saison aus den Demo-Daten zählt nicht mit
   await expect(seeherz.locator('td').nth(2)).toContainText('3 Saisons');
-  // Von den drei Neuigkeiten der Demo-Daten gilt heute nur eine
+  // Von den vier Neuigkeiten der Demo-Daten gelten heute zwei
   await expect(seeherz.locator('td').nth(3)).toContainText('OK');
-  await expect(seeherz.locator('td').nth(3)).toContainText('1 aktuelle Neuigkeit');
+  await expect(seeherz.locator('td').nth(3)).toContainText('2 aktuelle Neuigkeiten');
   await expect(seeherz.locator('td').nth(3)).toContainText(NEWS_URL);
   await expect(seeherz.locator('td').nth(4)).toHaveText('1 Stunde');
   // Wohnung ohne Preisliste und ohne Neuigkeiten
@@ -152,7 +152,7 @@ test('Wohnung anlegen: Prüfung der Eingaben, nicht erreichbare Adresse, korrigi
   await page.getByLabel('Adresse der Neuigkeiten in Fewo-Office (optional)').fill(NEWS_URL);
   await page.getByRole('button', { name: 'Speichern' }).click();
   await expect(page.getByText('Die Wohnung wurde gespeichert.')).toBeVisible();
-  await expect(apartment.locator('td').nth(3)).toContainText('1 aktuelle Neuigkeit');
+  await expect(apartment.locator('td').nth(3)).toContainText('2 aktuelle Neuigkeiten');
   await expect(apartment.locator('td').nth(1)).toContainText('OK');
   await expect(apartment.locator('td').nth(2)).toContainText('OK');
   await expect(apartment.locator('td').nth(2)).toContainText('3 Saisons');
